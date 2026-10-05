@@ -10,7 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -20,6 +23,15 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium webkit
       - run: xvfb-run -a npm run test:browser
+      - name: Read unchanged flight baseline for visual comparison
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: 98119b5ae6604ad5975024b0e523b78eef369662
+          path: .throttle-baseline
+          persist-credentials: false
+      - run: npm ci --prefix .throttle-baseline
+      - name: Compare baseline and candidate at the same viewport and input
+        run: node scripts/capture-throttle-comparison.mjs .throttle-baseline
       - uses: actions/upload-artifact@v4
         if: always()
         with:
