@@ -16,7 +16,9 @@ P1実装候補: `e432dd6` (`feat: start Gekichin flight and controls prototype`)
 
 2026-10-05 00:33 UTCの最終ローカルChromium一式は16/16成功、fail 0、skip 0。検査したソースとブラウザspecは後にcommit `e432dd6` として記録され、検査後の差分はこの証拠文書だけである。コマンドは `PLAYWRIGHT_BROWSERS_PATH=/workspace/.playwright-browsers npm run test:browser -- --project=chromium`。記録は [chromium.log](evidence/p1/chromium.log) と [chromium-results.json](evidence/p1/chromium-results.json)。この一式は通常飛行／停止／再出撃、入力所有と解除、Easy／Normalと10回再出撃、WebGL loss／restore、明示再開、visibilitychange fixture、AudioContext再利用、Enter所有、2.1秒gap、WebGL初期化失敗、設定保存／future version／multi-key rollback、タッチpreviewの縮尺と外部保存キー保持、画面寸法・200%文字を含む。
 
-PR CIは合計23検査を予定している（Chromium 16、WebKit UI 6、headed Chromium 1）。この記録作成時点で、WebKitとheadedのローカル実行は環境制約により未実施、CI結果とCI URLも未確定。最終headとCI結果は、CI完了後に追記する。
+PR初回CI（head `3efa0d6`、[run 37248357323](https://github.com/chameleonjp-lab/gekichin/actions/runs/37248357323)）はunit/build成功、Chromium 16/16、WebKit UI 6/6成功、native visibility 1件失敗で合計22/23だった。原票は [ci-first-failed.log](evidence/p1/ci-first-failed.log)。Playwright標準接続のfocus emulationが非アクティブタブも可視扱いにしていたため、検査用の新しいChromium・一時profileへ公開API `connectOverCDP({noDefaults:true,isLocal:true})` で接続するfixtureへ修正した。製品コードの変更やhidden値の注入はない。
+
+当初ローカルはXvfb不在だったが、Debian配布物を一時ディレクトリへ展開した仮想displayでheaded検査を実行した。Chromium `149.0.7827.55`、実viewport 1365×624 CSS px、DPR1。同一windowの別タブでnative `document.hidden=true`、停止と時計凍結、戻っても停止を保持、明示再開後の進行を確認した。原票は [native.log](evidence/p1/native.log) と [native-results.json](evidence/p1/native-results.json)。修正後の全23件CIは結果待ち。
 
 ## P1対象の結果
 
@@ -27,7 +29,7 @@ PR CIは合計23検査を予定している（Chromium 16、WebKit UI 6、headed
 | R63 | 9操作、Enterを停止へ割り当てた場合のホーム／結果ボタン所有、他作品キーを読み書きしない | 単体12/12、Chromium 16/16 |
 | R64 | 保存途中失敗のrollback、future versionを上書きしない、ドラフトを明示保存するまで適用しない | 単体12/12、Chromium 16/16 |
 | R73 | 2秒以上のgapで巨大dtを取り込まない。WebGL初期化失敗時に案内し安全に開始を止める。context loss復帰時は明示再開 | 単体12/12、Chromium 16/16。context loss／restore、描画初期化失敗、2.1秒gapを画面で検査 |
-| R74 | 停止時計とフォーカス復帰、素早い再出撃／disposeで二重ループや残留資源を作らない | Chromium 16/16。停止／再出撃と10回反復、1 canvas／settings／audio資源、visibilitychangeの明示再開を確認。OS tab-hiddenのheaded CI検査は未完了 |
+| R74 | 停止時計とフォーカス復帰、素早い再出撃／disposeで二重ループや残留資源を作らない | Chromium 16/16。停止／再出撃と10回反復、1 canvas／settings／audio資源、visibilitychangeの明示再開を確認。native tab-hiddenはローカルheaded検査成功、修正後CIは結果待ち |
 
 この結果はP1プロトタイプの対象範囲だけを示す。Combat、100基の撃沈経路、勝敗、得点、性能、実機操作、iPhone Safari、聴感、全受入A07／A16／A17／A19／A21を通過したという意味ではない。
 
