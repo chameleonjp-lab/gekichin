@@ -47,17 +47,17 @@ test('nine keyboard actions reject duplicate, reserved, modifier and IME input; 
 
 test('home editors offer both modes and persist touch size, opacity and placement only after save', async ({ page }) => {
   await home(page); await editor(page); await expect(page.locator('#control-mode')).toBeEnabled();
-  await page.locator('#control-mode').selectOption('normal'); await expect(page.locator('#control-target option:not([hidden])')).toHaveCount(4);
+  await page.locator('#control-mode').selectOption('normal'); await expect(page.locator('#control-target option:not([hidden])')).toHaveCount(3);
   await range(page, '#control-x', 55); await range(page, '#control-size', 100); await range(page, '#control-opacity', 65);
   expect(await page.locator('#fire').evaluate(element => element.style.getPropertyValue('--control-size'))).toBe('96px');
-  await page.locator('#control-cancel').click(); expect(await page.evaluate(() => localStorage.getItem('gekichin-controls-v1'))).toBeNull();
+  await page.locator('#control-cancel').click(); expect(await page.evaluate(() => localStorage.getItem('gekichin-controls-v2'))).toBeNull();
   await editor(page); await page.locator('#control-mode').selectOption('normal');
   await range(page, '#control-x', 55); await range(page, '#control-size', 100); await range(page, '#control-opacity', 65);
   await page.locator('#control-mode').selectOption('easy'); await expect(page.locator('#control-target option:not([hidden])')).toHaveCount(1);
   await expect(page.locator('#control-target')).toBeDisabled(); await range(page, '#control-x', 60); await page.locator('#control-save').click();
-  const saved = await page.evaluate(() => [localStorage.getItem('gekichin-controls-v1'), localStorage.getItem('gekichin-controls-easy-v1')]);
-  expect(JSON.parse(saved[0]!)).toMatchObject({ version: 1, controls: { fire: { x: .55, size: 100, opacity: .65 } } });
-  expect(JSON.parse(saved[1]!)).toMatchObject({ version: 1, controls: { loop: { x: .6 } } });
+  const saved = await page.evaluate(() => [localStorage.getItem('gekichin-controls-v2'), localStorage.getItem('gekichin-controls-easy-v2')]);
+  expect(JSON.parse(saved[0]!)).toMatchObject({ version: 2, controls: { fire: { x: .55, size: 100, opacity: .65 } } });
+  expect(JSON.parse(saved[1]!)).toMatchObject({ version: 2, controls: { loop: { x: .6 } } });
   await page.reload(); await expect(page.locator('#home-controls')).toBeVisible();
   expect(await page.locator('#loop').evaluate(element => element.style.getPropertyValue('--control-x'))).toBe('60%');
   await page.getByRole('radio', { name: /Normal/ }).check();
@@ -71,7 +71,7 @@ test('a multi-key save failure rolls back and only explicit session use changes 
     localStorage.setItem('gekichin-controls-easy-v1', JSON.stringify({ version: 1, controls: {} }));
     const original = Storage.prototype.setItem; let writes = 0;
     Storage.prototype.setItem = function (key, value) {
-      if (key.startsWith('gekichin-') && ++writes === 2) throw new DOMException('Synthetic quota failure', 'QuotaExceededError');
+      if (key.startsWith('gekichin-') && ++writes === 3) throw new DOMException('Synthetic quota failure', 'QuotaExceededError');
       original.call(this, key, value);
     };
   });

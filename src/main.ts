@@ -56,8 +56,11 @@ app.innerHTML = `
     <p id="fire-status" class="fire-status" hidden>射撃入力：OFF（発射未実装）</p>
     <button id="fire" data-flight-control="fire" type="button" aria-pressed="false"><b>射撃</b><small>入力確認</small></button>
     <button id="loop" data-flight-control="loop" type="button" aria-pressed="false" aria-disabled="false"><b>宙返り</b><small id="loop-status">L</small></button>
-    <button id="accelerate" data-flight-control="accelerate" type="button" aria-pressed="false"><b>加速</b><small>＋</small></button>
-    <button id="brake" data-flight-control="brake" type="button" aria-pressed="false"><b>減速</b><small>−</small></button>
+    <div id="throttle" class="throttle-lever" data-flight-control="throttle" role="slider" tabindex="0" aria-label="速度レバー" aria-describedby="throttle-help" aria-orientation="vertical" aria-valuemin="-100" aria-valuemax="100" aria-valuenow="0" aria-valuetext="保持（速度を維持）">
+          <span class="throttle-up">加速</span><span class="throttle-center">保持</span><span class="throttle-down">減速</span><i class="throttle-handle" aria-hidden="true"></i>
+        </div>
+        <p id="throttle-layout-note" class="throttle-layout-note" role="status" hidden>速度レバーの配置が重なっています。画面を回転するか、操作設定で位置や大きさを調整してください。</p>
+        <span id="throttle-help" class="visually-hidden">上で加速、下で減速。離すと中央に戻り、調整した速度を保持します。フォーカス中は矢印キーで調整できます。</span>
   </section>
   <section id="paused" class="overlay" aria-labelledby="pause-title" hidden>
     <div class="panel compact-panel">
@@ -89,7 +92,7 @@ app.innerHTML = `
       <p class="prototype-badge">現在はP1の飛行確認段階です</p>
       <h3>作戦の目標</h3><p>超大型母艦の主砲20基・大型機銃80基、合計100基を全破壊します。味方50機は自機を含み、同時出撃は8機。残機があれば復帰します。</p>
       <h3>飛行の操作</h3><p>画面のどこからでも、触れた位置を基準にドラッグできます。右へドラッグで右旋回、上へドラッグで上昇。離すと操縦入力を解除します。</p><p id="guide-keys"></p>
-      <p>Easyは巡航速度、宙返りボタン1つ。Normalは射撃・宙返り・加速・減速の4ボタン。宙返り中に新しく操縦すると中止できます。</p>
+      <p>Easyは巡航速度、宙返りボタン1つ。Normalは射撃・宙返りボタンと速度レバー。上で加速、下で減速、離すと中央に戻り速度を保持します。宙返り中に新しく操縦すると中止できます。</p>
       <h3>現在確認できること</h3><p>機体の飛行、カメラ、操縦モード、操作設定、停止・再開。Normalの射撃は入力表示のみで、弾は発射されません。母艦には衝突・砲台・HPがありません。照準補助と自動射撃は砲台・遮蔽の実装後に接続します。</p>
       <h3>設定と停止</h3><p>設定は保存後に適用されます。「変更を破棄」やEscで編集を取り消せます。設定や説明を閉じても飛行は停止したままです。音は初期OFF、ONで飛行中のプロペラ音を確認できます。</p>
     </div>
@@ -104,7 +107,7 @@ const inputPresentation = new ControlInputPresentation();
 const audio = new FlightAudio();
 const abort = new AbortController();
 const buttons: FlightControlButtons = {
-  fire: element('#fire'), loop: element('#loop'), accelerate: element('#accelerate'), brake: element('#brake'),
+  fire: element('#fire'), loop: element('#loop'), throttle: element('#throttle'),
 };
 const guide = element<HTMLDialogElement>('#guide');
 const controls = new FlightControls(element('#flight-surface'), buttons,
@@ -137,7 +140,7 @@ function renderUi(focus = false): void {
   const playing = session.phase === 'playing';
   element('#hud').hidden = !playing;
   element('#flight-surface').hidden = !playing;
-  for (const name of ['fire', 'accelerate', 'brake'] as const) buttons[name].hidden = session.mode !== 'normal';
+  for (const name of ['fire', 'throttle'] as const) buttons[name]!.hidden = session.mode !== 'normal';
   element('#fire-status').hidden = session.mode !== 'normal';
   element('#hud-mode').textContent = session.mode.toUpperCase();
   element('#home-key-guide').textContent = keyboard.describe(selectedMode());

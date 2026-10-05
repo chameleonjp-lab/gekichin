@@ -38,7 +38,7 @@ test('touch preview controls fit their scroller and Gekichin settings leave othe
   await page.locator('#home-controls').tap();
   await expect(page.locator('#control-mode')).toHaveValue('easy');
   await expect(page.locator('.preview-control[data-control="loop"]')).toBeVisible();
-  for (const name of ['fire', 'accelerate', 'brake']) {
+  for (const name of ['fire', 'throttle']) {
     await expect(page.locator(`.preview-control[data-control="${name}"]`)).toBeHidden();
   }
 
@@ -49,7 +49,7 @@ test('touch preview controls fit their scroller and Gekichin settings leave othe
     return Boolean(box && box.height > 0);
   }).toBe(true);
   await page.locator('#control-mode').selectOption('normal');
-  await expect(page.locator('.preview-control:not([hidden])')).toHaveCount(4);
+  await expect(page.locator('.preview-control:not([hidden])')).toHaveCount(3);
 
   const geometry = await page.evaluate(() => {
     const region = document.querySelector('#control-settings .settings-main')!.getBoundingClientRect();
@@ -67,7 +67,7 @@ test('touch preview controls fit their scroller and Gekichin settings leave othe
   expect(geometry.preview.y).toBeGreaterThanOrEqual(geometry.region.y - 1);
   expect(geometry.preview.right).toBeLessThanOrEqual(geometry.region.right + 1);
   expect(geometry.preview.bottom).toBeLessThanOrEqual(geometry.region.bottom + 1);
-  const baseSizes: Record<string, number> = { fire: 96, loop: 72, accelerate: 76, brake: 76 };
+  const baseSizes: Record<string, number> = { fire: 96, loop: 72, throttle: 64 };
   for (const control of geometry.controls) {
     expect(control.width, `${control.name} preview diameter`).toBeGreaterThan(0);
     expect(Math.abs(control.width - baseSizes[control.name!] * geometry.preview.width / geometry.appWidth),
@@ -87,9 +87,9 @@ test('touch preview controls fit their scroller and Gekichin settings leave othe
     foreign: Object.fromEntries(['kaisen-controls-v1', 'kaisen-controls-easy-v1', 'kaisen-keyboard-v1',
       'faitofuraito-controls-v1', 'faitofuraito-controls-easy-v1', 'faitofuraito-keyboard-v1']
       .map(key => [key, localStorage.getItem(key)])),
-    gekichin: JSON.parse(localStorage.getItem('gekichin-controls-easy-v1') ?? 'null'),
+    gekichin: JSON.parse(localStorage.getItem('gekichin-controls-easy-v2') ?? 'null'),
   }));
   expect(storage.foreign).toEqual(foreignBefore);
-  expect(storage.gekichin.version).toBe(1);
+  expect(storage.gekichin.version).toBe(2);
   expect(storage.gekichin.controls.loop.x).toBe(0.7);
 });

@@ -126,7 +126,7 @@ test('resize and blur clear held pointer and keyboard state so stale input canno
 
 test('settings writes roll back earlier keys after a later write fails', () => {
   const values = new Map([
-    ['gekichin-controls-v1', 'old layout'],
+    ['gekichin-controls-v2', 'old layout'],
     ['gekichin-keyboard-v1', 'old keys'],
   ]);
   const storage = {
@@ -139,17 +139,17 @@ test('settings writes roll back earlier keys after a later write fails', () => {
   };
 
   assert.equal(persistControlSettings([
-    { key: 'gekichin-controls-v1', value: 'new layout' },
+    { key: 'gekichin-controls-v2', value: 'new layout' },
     { key: 'gekichin-keyboard-v1', value: 'new keys' },
   ], storage), false);
-  assert.equal(values.get('gekichin-controls-v1'), 'old layout');
+  assert.equal(values.get('gekichin-controls-v2'), 'old layout');
   assert.equal(values.get('gekichin-keyboard-v1'), 'old keys');
 });
 
 test('future settings versions block the whole save without touching any stored value', () => {
   const future = JSON.stringify({ version: 2, bindings: { future: 'format' } });
   const values = new Map([
-    ['gekichin-controls-v1', 'old layout'],
+    ['gekichin-controls-v2', 'old layout'],
     ['gekichin-keyboard-v1', future],
   ]);
   let writes = 0;
@@ -160,11 +160,11 @@ test('future settings versions block the whole save without touching any stored 
   };
 
   assert.equal(persistControlSettings([
-    { key: 'gekichin-controls-v1', value: 'new layout' },
+    { key: 'gekichin-controls-v2', value: 'new layout' },
     { key: 'gekichin-keyboard-v1', value: 'old-format replacement' },
   ], storage), false);
   assert.equal(writes, 0);
-  assert.equal(values.get('gekichin-controls-v1'), 'old layout');
+  assert.equal(values.get('gekichin-controls-v2'), 'old layout');
   assert.equal(values.get('gekichin-keyboard-v1'), future);
 });
 

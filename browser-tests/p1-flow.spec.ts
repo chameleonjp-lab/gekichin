@@ -8,7 +8,7 @@ async function start(page: Page, mode = 'easy') {
 
 test('Normal keyboard flight, loop interruption, pause, settings, report and reflight use one operation', async ({ page }, info) => {
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
-  await start(page, 'normal'); await expect(page.locator('[data-flight-control]:visible')).toHaveCount(4);
+  await start(page, 'normal'); await expect(page.locator('[data-flight-control]:visible')).toHaveCount(3);
   await page.keyboard.down('w'); await expect.poll(async () => Number((await page.locator('#speed').textContent())!.split(' ')[0])).toBeGreaterThan(115); await page.keyboard.up('w');
   await page.keyboard.down('Space'); await expect(page.locator('#fire-status')).toContainText('ON');
   await page.keyboard.up('Space'); await expect(page.locator('#fire-status')).toContainText('OFF');

@@ -1,0 +1,34 @@
+{
+  "baseline": "98119b5ae6604ad5975024b0e523b78eef369662",
+  "canonical": {
+    "src/throttle-lever.ts": "e83fe3c570581d16cb76e08ef9a039bbe9d4a50da6575366ac7e126bf3f30cf0",
+    "tests/fixtures/throttle-lever-v1.json": "416c5ac01d4d14d1f45d94385e07233090740db04382e468db1f0c64689df8ca",
+    "docs/THROTTLE_LEVER_CONTRACT.md": "cd0e7db83c54cf349fb6a178a8abcd22bf09f78376cb4b836784faa2ae721864"
+  },
+  "preserved": {
+    "src/aircraft.ts": {
+      "baselineGitBlob": "e4e3009464bb8c4ae473b7cfc46d010198c27149",
+      "candidateSha256": "1a9c18f93e5a48869882b2aa2946cdeb352dc4a8acd76b4fd9beade8ded621d5"
+    },
+    "src/scene.ts": {
+      "baselineGitBlob": "963875bd42751b9d85f2190fb3562a4322f3dec0",
+      "candidateSha256": "e74642e66439c9154bab19a3350cc1aca2101b3446f7b54aa0e37d8825d6a103"
+    },
+    "src/flight-view.ts": {
+      "baselineGitBlob": "5e6df456cac0d12abf26b02ffd7b5874c9445b65",
+      "candidateSha256": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32"
+    },
+    "src/flight-assist.ts": {
+      "baselineGitBlob": "e4011df17ae2a13c506de27fa0c149d1a6ae44ae",
+      "candidateSha256": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413"
+    },
+    "src/audio.ts": {
+      "baselineGitBlob": "8852e40ee74de68c222f2431ff6e9d039a6b8422",
+      "candidateSha256": "b724ee9da137e1c99c391bb0663b8624231e179f66bb7d60e51d1509eadb0ec6"
+    },
+    "src/game-state.ts": {
+      "baselineGitBlob": "a95bea075553a6b1e04d0491bfef9404f8ff3f8c",
+      "candidateSha256": "f408108028679ad86d8190a718d814ca0082fedd9f36ef9f12cab454d0527659"
+    }
+  }
+}
