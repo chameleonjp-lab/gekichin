@@ -3,17 +3,19 @@
 更新日: 2026-10-05 UTC  
 対象: `chameleonjp-lab/gekichin`  
 作業ブランチ: `feat/gekichin-combat-completion`  
-提出: [Draft PR #5](https://github.com/chameleonjp-lab/gekichin/pull/5)
+提出: [PR #5](https://github.com/chameleonjp-lab/gekichin/pull/5)（ready for review。提出HEADと最終CI結果はPR本文／Checksに紐づける）
 
-固定計画P2–P6の実装候補とP7の自動検査を記録する。実PC・iPhone 17 Pro/Safariの性能、実機タッチ、人間の試遊と聴感は未実施であり、P7/P8の全面受入は未完了。詳細な受入番号別の判定は [COMPLETION_ACCEPTANCE.md](./COMPLETION_ACCEPTANCE.md)、出典と素材の境界は [COMBAT_PROVENANCE.md](./COMBAT_PROVENANCE.md) を参照する。
+本書の結果表は、主にPR4 speed-lever mergeより前のPR5 combat candidateを対象にした履歴記録である。個々のraw artifactは自身のmanifest/logに記録されたsource snapshotに結び付け、evidence commit `c0cf927fcf7dd75edae6fee539072e4b3498c86e` はその収録commitを示す。全artifactが同一source hashではない。多くの最終combat proofはsource `5db76f68b53c846ae4e4aec4754f78e108107a37` を使うが、一部の記録は以前の候補である。いずれも最新main `595feb719c9b65697ab319fa40a939d6ee1b356b` へ統合した作業treeの検査結果ではない。現在のconflict integrationと未完了gateは [PR5_CONFLICT_RESOLUTION.md](./PR5_CONFLICT_RESOLUTION.md) に分けて記録する。実PC・iPhone 17 Pro/Safariの性能、実機タッチ、人間の試遊と聴感は未実施であり、P7/P8の全面受入は未完了。詳細な受入番号別の判定は [COMPLETION_ACCEPTANCE.md](./COMPLETION_ACCEPTANCE.md)、出典と素材の境界は [COMBAT_PROVENANCE.md](./COMBAT_PROVENANCE.md) を参照する。
 
 ## 固定基準と検査対象
 
-起点はPR #3採用後のmain `98119b5ae6604ad5975024b0e523b78eef369662`。戦闘実装は `01804b95078317bb0129d0750b6a7f73184cee6f`、中断結果の即時表示修正を含む最終製品ソースは `5db76f68b53c846ae4e4aec4754f78e108107a37`、treeは `63d4bc7cb8ee52e3389b6cd720f6288fcacc5db1`。両commitを同一SHAで作業ブランチへ保存した。検査原票を追加する後続commitは、この製品ソースとの違いを記録する。
+combat candidateの起点はPR #3採用後のmain `98119b5ae6604ad5975024b0e523b78eef369662`。戦闘実装は `01804b95078317bb0129d0750b6a7f73184cee6f`、中断結果の即時表示修正を含むcombat sourceは `5db76f68b53c846ae4e4aec4754f78e108107a37`、treeは `63d4bc7cb8ee52e3389b6cd720f6288fcacc5db1`。evidence追加commit `c0cf927fcf7dd75edae6fee539072e4b3498c86e` は証拠collectionをarchiveするcommitで、個別のsource bindingは各manifest/logを参照する。最新mainはPR4 merge `595feb719c9b65697ab319fa40a939d6ee1b356b`。そのユーザー承認lever addendumを含む `docs/REQUIREMENTS.md` working-tree blobは `c072b57dbdef3a48ac7e5717890e2bb4ed2baeb3`。元要件blob `1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c`、README blob `9d0cfacf52833d90d39f02a9ab1c1c57dee30aa0`、plan blob `11dec1af2004ec3d71357d9eae029e324c6fdf3c` をそれぞれ履歴と現行appendに分けて記録する。
 
 固定要件commitは `e9212a73a7b36c33dff7e88d3a7308be6cdcea35`、要件blobは `1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c`。README blob `9d0cfacf52833d90d39f02a9ab1c1c57dee30aa0`、計画blob `11dec1af2004ec3d71357d9eae029e324c6fdf3c` は不変。ルール版 `gekichin-combat-v1`、60Hz、標準seed `1196097537` を用いた。他作品のファイルは変更していない。
 
-## 実行結果
+## 履歴source 5dbの実行結果
+
+以下の原票・CI・画像・録画は履歴証拠であり、それぞれのmanifest/logが示す候補に結び付く。多くの最終戦闘記録はsource5dbで取得したが、全項目が同じsnapshotではない。PR4を含む現行integration sourceに対する再実行結果として読まない。
 
 | 検査 | 結果 | 原票と条件 |
 | --- | --- | --- |
@@ -31,11 +33,11 @@
 | 全入力の30/60/120Hz再生 | 成功、両mode×3周期の6件 | [replay/README.md](./evidence/acceptance/replay/README.md)。各54,329入力、最終snapshot・全event列・原report・HP・全ID・残機・発射数・終端freezeを照合し、各modeで3周期完全一致 |
 | 製品DOMの全撃破・撃沈・結果・10再出撃 | 成功、両modeとも54,329tick | [browser-product/acceptance-manifest.json](./evidence/acceptance/browser-product/acceptance-manifest.json)、[product-run.json](./evidence/acceptance/browser-product/product-run.json)、[録画](./evidence/acceptance/browser-product/full-product-run.webm)。Start・通常pointer/keyboard入力のみ、全100ID・HP0・敵実弾・生成失敗0を確認 |
 | 全画面の5viewport×文字倍率2条件 | 成功、10戦闘＋60画面 | [ui/manifest.json](./evidence/acceptance/ui/manifest.json)。home/guide/両設定/戦闘/停止/結果。44px以上・scroll到達・Tab/Esc/focus/名前、外国作品の実保存key6個不変、HAR3件の同一origin静的GETを確認 |
-| 製品ソースcommitのCI | 成功、単体76/76、browser28/28、build成功 | [5db76f6のPR CI](https://github.com/chameleonjp-lab/gekichin/actions/runs/37265544385)、[push CI](https://github.com/chameleonjp-lab/gekichin/actions/runs/37265539764)。Chromium21・WebKit UI6・native visibility1。証拠・追加caseを含む提出headのSHAとCI結果は[PR #5](https://github.com/chameleonjp-lab/gekichin/pull/5)の本文とChecksに結びつける |
+| source5db候補のCI（historical） | 成功、単体76/76、browser28/28、build成功 | [5db76f6のPR CI](https://github.com/chameleonjp-lab/gekichin/actions/runs/37265544385)、[push CI](https://github.com/chameleonjp-lab/gekichin/actions/runs/37265539764)。Chromium21・WebKit UI6・native visibility1。この結果はPR4 merge後のcurrent integration sourceには結び付かない |
 
 全撃破の両engine実行は各905.483秒の能動時間、全100個の一意ID・六面・20主砲/80機銃・24,000HPを確認した。僚機が全100基を破壊し、自機破壊0、僚機損失40、自機損失0、味方10機残、敵発射20,530、弾生成失敗0。内部HP・位置・残機の書換え、敵停止、無敵化を使っていない。自機の照準成功や人間による試遊の証拠としては扱わない。
 
-ローカルの `unit.log` は中断結果表示の修正前に取得したengine検査で、この修正はengineソースを変更していない。修正後の `5db76f6` ではCIが76件を再実行して成功した。後続の検査fixture・browser caseの追加は提出headのCIで再検査する。
+ローカルの `unit.log` は中断結果表示の修正前に取得したengine検査で、この修正はengineソースを変更していない。修正後の `5db76f6` ではCIが76件を再実行して成功した。captureのsource範囲は上表の各manifestを参照し、後続のPR4 integrationには適用しない。
 
 合成15分負荷では100基のHPと8機の固定姿勢を保つ介入を明記した。主砲4/機銃12の合法な攻撃枠と自機＋僚機射撃を毎tick検査し、味方弾最大160、敵主砲弾最大6、敵機銃弾最大134、弾生成失敗0。描画ありの資源推移は別の製品DOM検査で記録する。
 
@@ -62,6 +64,12 @@ node --import tsx scripts/core-load-runner.ts
 
 入力再生・画像・UI・回避映像・製品DOM長時間runnerの条件とコマンドは各manifest/READMEに記録する。ローカルブラウザ配置を変えた場合は `PLAYWRIGHT_BROWSERS_PATH` を指定する。製品ソースを書き換えたら関係する検査と証拠を再取得する。
 
+## PR4 merge後のPR5 integration status
+
+PR5はready for review状態で、現行main `595feb7` からのintegration gateを確認している。実際のsource conflictは `src/main.ts` と `src/style.css`。combat画面/HUDとlever v2入力/settingsを併存させた。main/style以外のlever settings geometry correctionと `throttle=0` core guard correctionは別の修正であり、conflict解決と混同しない。凍結worktreeのper-file source hash inventoryは [COMBAT_PROVENANCE.md](./COMBAT_PROVENANCE.md) に記録する。提出HEADと最終CI結果はPR本文／Checksに紐づける。
+
+`throttle=0` core guardとfinal tagged-peer placement correctionを含む統合treeでunit 102/102とbuild passを確認した。current browser captureはChromium＋headed native 39 pass、WebKit 18はlocal host dependency不足でtest body開始前に起動できず、skipは0。logsとPlaywright結果は [`pr5-integration/`](./evidence/pr5-integration/) に保存した。六組の主砲／機銃回避fixture browser recorderも統合sourceで1/1実行した。fresh output一式は [`evasion-recorder-manifest.json`](./evidence/pr5-integration/evasion-recorder-manifest.json) でhash-boundされ、PR5 CI evidence artifactの収集対象に設定した。 このartifact hashはlocal captureを示し、CIで別途再生成する動画・gzipのhashとは同一としない。追跡済みの元72秒動画と18 PNGはsource5dbのhistorical captureのままで、current sourceへ付け替えない。別途、archived c0 combat baselineとcurrent integrated candidateのmatched public-flow comparisonを実施した。command receiptはexit 0、異なるportrait／landscape viewportで各before/afterの4 captureを取得し、tick 12のphase/mode/time/speed/altitude/loop/fire fieldsは全て一致した。原票は [`comparison-command.json`](./evidence/pr5-integration/comparison-command.json)、[`comparison/conditions.json`](./evidence/pr5-integration/comparison/conditions.json)、同manifestに記録した。比較は`98119b5`との比較ではない。overlap修正前の初期4 captureは最終比較に含めない。Easy/Normal full mission、30/60/120Hz replay、70-screen UI、既存DOM mission runは再記録していない。これらは履歴証拠のままとし、現行PR5 sourceの合格と読まない。
+
 ## 残る受入
 
-実PCとiPhone 17 Pro/Safariで、固定manifestに従う30秒ウォームアップ＋180秒性能測定、実機タッチ/safe-area/アドレスバー変化、音出力、人間による全周戦の試遊を行う必要がある。機材または実測結果がないため、この部分は阻害として残す。最終責任者による受入と、mainへのマージ/配備/公開は本作業では実行していない。
+実PCとiPhone 17 Pro/Safariで、固定manifestに従う30秒ウォームアップ＋180秒性能測定、実機タッチ/safe-area/アドレスバー変化、音出力、人間による全周戦の試遊を行う必要がある。機材または実測結果がないため、この部分は阻害として残す。ソフトウェアPR4 integrationのfinal verificationと、実機・人間の受入は別々に未完了として扱う。mainへのマージ/配備/公開は本作業では実行していない。

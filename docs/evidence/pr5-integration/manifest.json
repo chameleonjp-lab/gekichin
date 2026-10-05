@@ -1,0 +1,112 @@
+{
+  "capturedAtUTC": "2026-10-05T06:53:08.771406+00:00",
+  "integrationMain": "595feb719c9b65697ab319fa40a939d6ee1b356b",
+  "preThrottleCombatBaseline": "c0cf927fcf7dd75edae6fee539072e4b3498c86e",
+  "sourceSHA256": {
+    "src/aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
+    "src/aircraft.ts": "1a9c18f93e5a48869882b2aa2946cdeb352dc4a8acd76b4fd9beade8ded621d5",
+    "src/audio.ts": "99057cd1e53413459802ada6d442a31de7feb8ee91008df540901b085d2731ab",
+    "src/boundary-guidance.ts": "7deac567a22cf2cf64693bb6777adf3e0491cc0d213ac6ecc53d9c5cfc7ebb21",
+    "src/collision-world.ts": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519",
+    "src/combat-types.ts": "24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0",
+    "src/control-obstacles.ts": "1717aefae64cd5b9b1d33a27c0cd3cccb4505cd4e07fc71b48c7e02c2f32abf2",
+    "src/control-settings.css": "a1f847ead95f731cf1f4f127bd3de82581d4fe3aaebd0b388cf72ddf3f438618",
+    "src/control-settings.ts": "005d66d0af205faf91c64c9aedfd72920bcb997b8867e9c90f8af297dc3f6726",
+    "src/dialog-focus.ts": "86d631a4d618558e1ca671004c12ccc1fbdfe75516e6c5d04f962acd2c5e1996",
+    "src/fleet.ts": "de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90",
+    "src/flight-assist.ts": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413",
+    "src/flight-view.ts": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
+    "src/flight.ts": "41675b4e1f3bfecee95dad5b6ee2bebbd3930545ed35e6fa8260fca25a4b49b3",
+    "src/game-state.ts": "378bc600e3b32a598ef88d1ab93879eb7ba23524d130e9e17ab3338212cecd3e",
+    "src/input.ts": "569455763b08fabb046145aa21ed473aa55de5ac4c481eb884b067263b925c7a",
+    "src/keyboard-settings.ts": "cdf9495e1e8e68c9c7c75a8210ab44a7dcb2b2c94c27506d4615fd3ee90c86f6",
+    "src/main.ts": "9c679f77b16d482c613d6f87fca7109a796d60751605fa219f8a4fc703aa3106",
+    "src/mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+    "src/mothership.ts": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466",
+    "src/rules.ts": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414",
+    "src/scene.ts": "6dc42220163e8abfe10935994ddb316622dfa2b341ced773b3d7acd787552635",
+    "src/scoring.ts": "95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494",
+    "src/settings-storage.ts": "dcc3d156e6872f3876624d285bb327c421073785afd6e00ada1f83a6f33cfb28",
+    "src/style.css": "7b26f83f5bf1881ef53bd9e8b6268fc7fc23db71f0b3fef10362620b41748c55",
+    "src/throttle-control.ts": "99b45ef5b506ee7a051f80152bf3ce1dcf7a5f521a7c446f6021e76a67163466",
+    "src/throttle-lever.ts": "e83fe3c570581d16cb76e08ef9a039bbe9d4a50da6575366ac7e126bf3f30cf0",
+    "src/turret-combat.ts": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71",
+    "src/types.ts": "b950b23044ab0520c14cfbcbe7edf7e021652dcffdd5f455d1230e2b26015c1f",
+    "src/wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f",
+    "public/third-party-notices.txt": "97de7ac302052bcea7f20e5ae89635c10e049614f56409288d554d63fceb614f",
+    "package.json": "4d9f6a16baca06e6987ae7a8ce48f760d9f23ea75c7e598869ff01b670d40dce",
+    "package-lock.json": "7c7391f0288eb0590012f80e0ee447a2c54341fb2966b2258a65505f01d5a888",
+    "playwright.config.ts": "19dd68a4f07628ac7e56f0cc6ce0bd1cf99126733fc96bd4eaa9032259b2b137",
+    ".github/workflows/ci.yml": "ae2be4d5712992a42736ccc76dd0d8ed4571e87138a5235873610a5fa7c58986",
+    "docs/REQUIREMENTS.md": "80991bc7ac7eaf972433470a228cee554031fe71026ff6841a7432703cc85e38",
+    "docs/IMPLEMENTATION_PLAN.md": "fe247dc61f7f8e767f0ea7385fb11e3706268943f9d4a4bf42fa9bbbaa541f48",
+    "README.md": "e2991caaf3803131b5c8d224d3bf31d19917a470cfd832700f96e1dfc363c2a2",
+    "browser-tests/combat-throttle.spec.ts": "90aab4c7f8c5215fd6b2c6cf65728c16e8cb00cabb4c898e8d7e4fa4ac6a9900",
+    "tests/throttle-combat.test.ts": "b275d3faab53c95b93d0bb92a20fab465489548c5e21e06c19511352a4e653d4",
+    "tests/throttle-input-storage.test.ts": "bb7b69f6202c347388f5c84a685397c035a70cd38b08fe7751020d4fa99847cb",
+    "scripts/capture-throttle-comparison.mjs": "e3ca97f3e9e3da83589eef52f416ea96a9bbecf9158f8111902f7e4f7e0991b8"
+  },
+  "protectedGitBlobs": {
+    "README.md": "9d0cfacf52833d90d39f02a9ab1c1c57dee30aa0",
+    "docs/REQUIREMENTS.md": "c072b57dbdef3a48ac7e5717890e2bb4ed2baeb3",
+    "docs/IMPLEMENTATION_PLAN.md": "11dec1af2004ec3d71357d9eae029e324c6fdf3c"
+  },
+  "localChecks": {
+    "unit": {
+      "passed": 102,
+      "failed": 0,
+      "skipped": 0
+    },
+    "build": "tsc and production Vite build passed",
+    "browserInitial": {
+      "startTime": "2026-10-05T06:41:56.189Z",
+      "duration": 475618.625,
+      "expected": 39,
+      "skipped": 0,
+      "unexpected": 18,
+      "flaky": 0
+    },
+    "browserInitialScope": "38 Chromium and 1 native headed test passed; 18 WebKit launch failures due to missing host libraries, before test bodies. Recheck through properly provisioned exact-head CI; any local environment retry is recorded in the PR.",
+    "comparison": {
+      "captures": 4,
+      "viewports": [
+        [
+          393,
+          852
+        ],
+        [
+          852,
+          393
+        ]
+      ],
+      "tick": 12,
+      "input": "UI Start followed by neutral flight",
+      "allComparedStateFieldsIdentical": true,
+      "exitCode": 0,
+      "commandReceipt": "comparison-command.json",
+      "stdoutStderrBytes": 0
+    },
+    "evasion": "six paired fixtures recorder passed; fresh 21 artifacts separately preserved under /tmp/gekichin-pr5-evasion-final and Playwright output. Historical committed acceptance artifacts restored byte-for-byte."
+  },
+  "commands": [
+    "npm test",
+    "npm run build",
+    "DISPLAY=:98 PLAYWRIGHT_BROWSERS_PATH=/workspace/.playwright-browsers npm run test:browser",
+    "PLAYWRIGHT_BROWSERS_PATH=/workspace/.playwright-browsers node scripts/capture-throttle-comparison.mjs /tmp/gekichin-throttle-baseline-c0cf"
+  ],
+  "artifactSHA256": {
+    "browser-results.json": "05f2460540368e553c0ddbc61b900d3ab0a8cd09efb977b5568d2bfb19dacce3",
+    "browser.log": "e1d80791f0bd639851d554a184712f5cd787881ad84d859e85956e25abd5eeb4",
+    "build.log": "81959e5169d3b1aea44f78a5c043b8829f7ca2af06deddda0b755a5c7e4db73e",
+    "comparison/after-393x852.png": "8b13ffec0e1956cc0ddb2fddea81756f8fac7229f04f62ccf6bff638a59c54ff",
+    "comparison/after-852x393.png": "4bf2efe2d7d53835fda145c6f035b06748d0132753294eb21b7d68e6611b1b66",
+    "comparison/before-393x852.png": "77781f18d553a61b0fdc7e060393f5038c31e28ffdbd1467761e845a253c6b30",
+    "comparison/before-852x393.png": "269834b929e33143f371ceb453450210d706fec5b0e813819ca678875f44102c",
+    "comparison/conditions.json": "da1f7f47d381b11129c4197d47ac14b97ac93801eb93bbba5d1349e763a14825",
+    "comparison.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evasion-recorder-manifest.json": "72669b6f131f5fa8b6bcd54887bb3dbbf1a0e26c5734193262e1577568897e1f",
+    "unit.log": "f91ade039cfe9b75dcdb02bd9eaffb30719b34cbe4688a45aced599549296fa5",
+    "comparison-command.json": "0cc425f514baca7887b2aa200cc708a9a5b7685979aabb0e3ddf2de7d4d1fdfe"
+  },
+  "scope": "Content hashes bind the collected checks to the reviewed source freeze. Submitted commit and final CI are bound by PR #5 body/Checks. No physical device, human play, or hardware FPS claim. CI artifact packaging also includes the fresh recorder gzip trace alongside its existing video/frame output; this packaging-only workflow edit followed local product checks."
+}

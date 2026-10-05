@@ -1,0 +1,538 @@
+[
+  {
+    "label": "before",
+    "width": 393,
+    "height": 852,
+    "mode": "normal",
+    "input": "UI Start then neutral until exact logical tick 12",
+    "readout": "110 m/s",
+    "state": {
+      "phase": "playing",
+      "mode": "normal",
+      "elapsed": "0.20 s",
+      "speed": "110 m/s",
+      "altitude": "1,000 m",
+      "loop": "準備OK",
+      "fire": "射撃：待機"
+    },
+    "clock": {
+      "epoch": "2026-10-05T00:00:00Z",
+      "targetTick": 12,
+      "actualTick": 12,
+      "clockStepMs": 16,
+      "maxClockSteps": 120,
+      "clockSteps": 16,
+      "advancedMs": 256,
+      "clockStart": 1791158402070,
+      "clockEnd": 1791158402326,
+      "observations": [
+        {
+          "clockSteps": 0,
+          "tick": 0,
+          "phase": "preparing"
+        },
+        {
+          "clockSteps": 1,
+          "tick": 0,
+          "phase": "preparing"
+        },
+        {
+          "clockSteps": 2,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 3,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 4,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 5,
+          "tick": 1,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 6,
+          "tick": 2,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 7,
+          "tick": 3,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 8,
+          "tick": 4,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 9,
+          "tick": 5,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 10,
+          "tick": 6,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 11,
+          "tick": 7,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 12,
+          "tick": 8,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 13,
+          "tick": 9,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 14,
+          "tick": 10,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 15,
+          "tick": 11,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 16,
+          "tick": 12,
+          "phase": "playing"
+        }
+      ],
+      "observation": "Math.round(parseFloat(document.getElementById('elapsed').textContent) * 60)",
+      "procedure": "Pause the installed clock before the UI Start click; leave flight controls neutral; run 16ms steps and read existing state after each step until exact tick 12; keep the clock paused for capture",
+      "pauseAt": 1791158402070
+    },
+    "browser": "149.0.7827.55",
+    "environment": {
+      "engine": "chromium",
+      "headless": true,
+      "args": [
+        "--use-gl=angle",
+        "--use-angle=swiftshader",
+        "--enable-unsafe-swiftshader"
+      ],
+      "node": "v24.19.0",
+      "platform": "linux",
+      "arch": "x64",
+      "hasTouch": true,
+      "deviceScaleFactor": 1,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36"
+    }
+  },
+  {
+    "label": "before",
+    "width": 852,
+    "height": 393,
+    "mode": "normal",
+    "input": "UI Start then neutral until exact logical tick 12",
+    "readout": "110 m/s",
+    "state": {
+      "phase": "playing",
+      "mode": "normal",
+      "elapsed": "0.20 s",
+      "speed": "110 m/s",
+      "altitude": "1,000 m",
+      "loop": "準備OK",
+      "fire": "射撃：待機"
+    },
+    "clock": {
+      "epoch": "2026-10-05T00:00:00Z",
+      "targetTick": 12,
+      "actualTick": 12,
+      "clockStepMs": 16,
+      "maxClockSteps": 120,
+      "clockSteps": 16,
+      "advancedMs": 256,
+      "clockStart": 1791158401813,
+      "clockEnd": 1791158402069,
+      "observations": [
+        {
+          "clockSteps": 0,
+          "tick": 0,
+          "phase": "preparing"
+        },
+        {
+          "clockSteps": 1,
+          "tick": 0,
+          "phase": "preparing"
+        },
+        {
+          "clockSteps": 2,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 3,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 4,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 5,
+          "tick": 1,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 6,
+          "tick": 2,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 7,
+          "tick": 3,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 8,
+          "tick": 4,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 9,
+          "tick": 5,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 10,
+          "tick": 6,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 11,
+          "tick": 7,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 12,
+          "tick": 8,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 13,
+          "tick": 9,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 14,
+          "tick": 10,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 15,
+          "tick": 11,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 16,
+          "tick": 12,
+          "phase": "playing"
+        }
+      ],
+      "observation": "Math.round(parseFloat(document.getElementById('elapsed').textContent) * 60)",
+      "procedure": "Pause the installed clock before the UI Start click; leave flight controls neutral; run 16ms steps and read existing state after each step until exact tick 12; keep the clock paused for capture",
+      "pauseAt": 1791158401813
+    },
+    "browser": "149.0.7827.55",
+    "environment": {
+      "engine": "chromium",
+      "headless": true,
+      "args": [
+        "--use-gl=angle",
+        "--use-angle=swiftshader",
+        "--enable-unsafe-swiftshader"
+      ],
+      "node": "v24.19.0",
+      "platform": "linux",
+      "arch": "x64",
+      "hasTouch": true,
+      "deviceScaleFactor": 1,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36"
+    }
+  },
+  {
+    "label": "after",
+    "width": 393,
+    "height": 852,
+    "mode": "normal",
+    "input": "UI Start then neutral until exact logical tick 12",
+    "readout": "110 m/s",
+    "state": {
+      "phase": "playing",
+      "mode": "normal",
+      "elapsed": "0.20 s",
+      "speed": "110 m/s",
+      "altitude": "1,000 m",
+      "loop": "準備OK",
+      "fire": "射撃：待機"
+    },
+    "clock": {
+      "epoch": "2026-10-05T00:00:00Z",
+      "targetTick": 12,
+      "actualTick": 12,
+      "clockStepMs": 16,
+      "maxClockSteps": 120,
+      "clockSteps": 16,
+      "advancedMs": 256,
+      "clockStart": 1791158401900,
+      "clockEnd": 1791158402156,
+      "observations": [
+        {
+          "clockSteps": 0,
+          "tick": 0,
+          "phase": "preparing"
+        },
+        {
+          "clockSteps": 1,
+          "tick": 0,
+          "phase": "preparing"
+        },
+        {
+          "clockSteps": 2,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 3,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 4,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 5,
+          "tick": 1,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 6,
+          "tick": 2,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 7,
+          "tick": 3,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 8,
+          "tick": 4,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 9,
+          "tick": 5,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 10,
+          "tick": 6,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 11,
+          "tick": 7,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 12,
+          "tick": 8,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 13,
+          "tick": 9,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 14,
+          "tick": 10,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 15,
+          "tick": 11,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 16,
+          "tick": 12,
+          "phase": "playing"
+        }
+      ],
+      "observation": "Math.round(parseFloat(document.getElementById('elapsed').textContent) * 60)",
+      "procedure": "Pause the installed clock before the UI Start click; leave flight controls neutral; run 16ms steps and read existing state after each step until exact tick 12; keep the clock paused for capture",
+      "pauseAt": 1791158401900
+    },
+    "browser": "149.0.7827.55",
+    "environment": {
+      "engine": "chromium",
+      "headless": true,
+      "args": [
+        "--use-gl=angle",
+        "--use-angle=swiftshader",
+        "--enable-unsafe-swiftshader"
+      ],
+      "node": "v24.19.0",
+      "platform": "linux",
+      "arch": "x64",
+      "hasTouch": true,
+      "deviceScaleFactor": 1,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36"
+    }
+  },
+  {
+    "label": "after",
+    "width": 852,
+    "height": 393,
+    "mode": "normal",
+    "input": "UI Start then neutral until exact logical tick 12",
+    "readout": "110 m/s",
+    "state": {
+      "phase": "playing",
+      "mode": "normal",
+      "elapsed": "0.20 s",
+      "speed": "110 m/s",
+      "altitude": "1,000 m",
+      "loop": "準備OK",
+      "fire": "射撃：待機"
+    },
+    "clock": {
+      "epoch": "2026-10-05T00:00:00Z",
+      "targetTick": 12,
+      "actualTick": 12,
+      "clockStepMs": 16,
+      "maxClockSteps": 120,
+      "clockSteps": 16,
+      "advancedMs": 256,
+      "clockStart": 1791158401755,
+      "clockEnd": 1791158402011,
+      "observations": [
+        {
+          "clockSteps": 0,
+          "tick": 0,
+          "phase": "preparing"
+        },
+        {
+          "clockSteps": 1,
+          "tick": 0,
+          "phase": "preparing"
+        },
+        {
+          "clockSteps": 2,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 3,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 4,
+          "tick": 0,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 5,
+          "tick": 1,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 6,
+          "tick": 2,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 7,
+          "tick": 3,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 8,
+          "tick": 4,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 9,
+          "tick": 5,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 10,
+          "tick": 6,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 11,
+          "tick": 7,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 12,
+          "tick": 8,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 13,
+          "tick": 9,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 14,
+          "tick": 10,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 15,
+          "tick": 11,
+          "phase": "playing"
+        },
+        {
+          "clockSteps": 16,
+          "tick": 12,
+          "phase": "playing"
+        }
+      ],
+      "observation": "Math.round(parseFloat(document.getElementById('elapsed').textContent) * 60)",
+      "procedure": "Pause the installed clock before the UI Start click; leave flight controls neutral; run 16ms steps and read existing state after each step until exact tick 12; keep the clock paused for capture",
+      "pauseAt": 1791158401755
+    },
+    "browser": "149.0.7827.55",
+    "environment": {
+      "engine": "chromium",
+      "headless": true,
+      "args": [
+        "--use-gl=angle",
+        "--use-angle=swiftshader",
+        "--enable-unsafe-swiftshader"
+      ],
+      "node": "v24.19.0",
+      "platform": "linux",
+      "arch": "x64",
+      "hasTouch": true,
+      "deviceScaleFactor": 1,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36"
+    }
+  }
+]

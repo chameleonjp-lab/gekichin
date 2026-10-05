@@ -1,11 +1,13 @@
 # 戦闘実装の来歴・素材台帳
 
-記録日: 2026-10-05 UTC  
+記録日: 2026-10-05 UTC
 対象: `chameleonjp-lab/gekichin` / `feat/gekichin-combat-completion`  
-固定要件: `e9212a73a7b36c33dff7e88d3a7308be6cdcea35` (`docs/REQUIREMENTS.md`, blob `1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c`)  
+原要件: `e9212a73a7b36c33dff7e88d3a7308be6cdcea35` (`docs/REQUIREMENTS.md`, blob `1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c`); 承認済みappendを含むworking-tree blob `c072b57dbdef3a48ac7e5717890e2bb4ed2baeb3`
 操縦・共通コード参照: Kaisen `3d751051dc6212482a129e8da596ddd349b2f9f5`
 
-この台帳は、ゲキチン側の実装ソースと固定参照の関係を記録する。ゲキチン側のSHA-256はファイル内容そのもののダイジェストであり、最終候補を変更した場合は再計算する。Kaisen側は固定コミットにおけるGit blob SHA-1を記す。検証用スクリーンショットや入力ログは製品素材ではない。
+この台帳は、ゲキチン側の実装ソースと固定参照の関係を記録する。上の既存表にあるゲキチンSHA-256値はPR4 merge前のcombat source5db候補の履歴値で、現在のPR5統合sourceのhashは末尾の別表に記す。各manifestのartifactはそれぞれが記録したsource snapshotに結び付く。Kaisen側は固定コミットにおけるGit blob SHA-1を記す。検証用スクリーンショットや入力ログは製品素材ではない。
+
+PR5統合hash表はsource freeze時点の `src/` 30ファイルの内容hashである。これはコミットIDではなく、後続のPR文書・CI checkにはGitHub上で別途結び付ける。PR4 leverの旧契約・検査票・parity JSONはPR4/P1-era記録であり、下表の現在hashや統合結果の証明ではない。
 
 ## 固定参照から保持・適応したコード
 
@@ -45,6 +47,45 @@
 | `src/audio.ts` | `99057cd1e53413459802ada6d442a31de7feb8ee91008df540901b085d2731ab` | Web Audioで生成する効果音。外部録音・音声ファイルは使わず、人の聴感確認とは区別する。 |
 | `src/style.css` | `c13420fc69d84f4881b24084503b796fff93ee944cfeda38149650aad0be536f` | 本作の画面とHUD用スタイル。外部フォント／画像を読み込まない。 |
 | `src/aircraft-weapons.ts` | `9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a` | ゲキチンの弾倉、発射間隔、有限プール、距離減衰、所有・命中処理。限定的な散布・銃口式の出典は下記。 |
+
+## PR5統合source freezeのファイルhash
+
+次表はPR4 speed-lever merge後、combat画面とのconflict解決と統合修正を反映した現在source freezeのSHA-256である。30ファイルすべてを列挙する。Kaisen由来と明記したファイルは固定blobを前段に記し、今回hashが異なるファイルは適応箇所も合わせて示す。
+
+| 現行ファイル | SHA-256 | 来歴・役割 |
+| --- | --- | --- |
+| `src/aircraft-weapons.ts` | `9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a` | 新規combat code。固定要件の弾倉・発射・命中に接続。Kaisen散布／銃口式は後段で限定記録。 |
+| `src/aircraft.ts` | `1a9c18f93e5a48869882b2aa2946cdeb352dc4a8acd76b4fd9beade8ded621d5` | Kaisen固定blobと同一の手続き的機体・補助texture。 |
+| `src/audio.ts` | `99057cd1e53413459802ada6d442a31de7feb8ee91008df540901b085d2731ab` | 新規Web Audio合成。外部音声assetなし。 |
+| `src/boundary-guidance.ts` | `7deac567a22cf2cf64693bb6777adf3e0491cc0d213ac6ecc53d9c5cfc7ebb21` | 新規純関数。機首方向と境界から相対帰還矢印を計算。 |
+| `src/collision-world.ts` | `7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519` | 新規combat geometry。砲台／船体／機体遮蔽、sweep衝突、候補検索。 |
+| `src/combat-types.ts` | `24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0` | 新規combatイベント・弾・所有・作戦型。 |
+| `src/control-obstacles.ts` | `1717aefae64cd5b9b1d33a27c0cd3cccb4505cd4e07fc71b48c7e02c2f32abf2` | PR4 lever integration geometry helper. Tagged fire/loop peer geometry from detached HUD clone is shared across live placement, editor preview and Save, including pending control styles and dynamic sizing. |
+| `src/control-settings.css` | `a1f847ead95f731cf1f4f127bd3de82581d4fe3aaebd0b388cf72ddf3f438618` | Kaisen fixed CSS rules adapted for Gekichin control editor and PR4 lever. Combat/fly input boundaries retained; placement styles work with shared obstacle measurements. |
+| `src/control-settings.ts` | `005d66d0af205faf91c64c9aedfd72920bcb997b8867e9c90f8af297dc3f6726` | Kaisen-derived touch control settings UI adapted to Gekichin storage/modes; integrates lever v2, explicit Save/cancel, safe bounds and common tagged-peer geometry for live UI, preview and save. |
+| `src/dialog-focus.ts` | `86d631a4d618558e1ca671004c12ccc1fbdfe75516e6c5d04f962acd2c5e1996` | Kaisen fixed blob exact copy; modal focus containment/restore. |
+| `src/fleet.ts` | `de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90` | New combat fleet accounting: 50 tokens, eight simultaneous slots, loss/re-entry ownership. |
+| `src/flight-assist.ts` | `efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413` | Kaisen finite assist equations adapted to Gekichin target exposure and `FlightAssistTarget`. |
+| `src/flight-view.ts` | `b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32` | Kaisen camera/projection helpers adapted to local types. |
+| `src/flight.ts` | `41675b4e1f3bfecee95dad5b6ee2bebbd3930545ed35e6fa8260fca25a4b49b3` | Kaisen flight equations adapted to Gekichin rules; integrates explicit analog throttle commands with existing acceleration/brake behavior. |
+| `src/game-state.ts` | `378bc600e3b32a598ef88d1ab93879eb7ba23524d130e9e17ab3338212cecd3e` | New fixed-60Hz combat state; validates/guards optional throttle command at core input boundary. |
+| `src/input.ts` | `569455763b08fabb046145aa21ed473aa55de5ac4c481eb884b067263b925c7a` | Kaisen input ownership adapted to Gekichin's nine combat inputs; PR4 adds one owned throttle control and cleanup/neutral input semantics. |
+| `src/keyboard-settings.ts` | `cdf9495e1e8e68c9c7c75a8210ab44a7dcb2b2c94c27506d4615fd3ee90c86f6` | Kaisen keyboard settings adapted to Gekichin's action map/storage; retains nine actions and excludes bomb/torpedo mapping. |
+| `src/main.ts` | `9c679f77b16d482c613d6f87fca7109a796d60751605fa219f8a4fc703aa3106` | PR5 conflict-resolved screen owner: combat home/briefing/playing/pause/result, HUD, combat lifecycle plus PR4 speed-lever UI; no retained P1-only screen. |
+| `src/mothership-layout.ts` | `8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937` | New six-face/100 mount static layout, hit geometry, muzzle and route data. |
+| `src/mothership.ts` | `10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466` | New turret HP, damage stages, one-time destruction events. |
+| `src/rules.ts` | `897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414` | New fixed `gekichin-combat-v1` values and combat limits. |
+| `src/scene.ts` | `6dc42220163e8abfe10935994ddb316622dfa2b341ced773b3d7acd787552635` | New procedural Three.js carrier, mounts, projectiles, warning and sink scene. No external model/image assets. |
+| `src/scoring.ts` | `95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494` | New confirmed-event scoring, report freeze and per-mode best validation. |
+| `src/settings-storage.ts` | `dcc3d156e6872f3876624d285bb327c421073785afd6e00ada1f83a6f33cfb28` | PR4 new bounded v2 settings batch/journal and rollback; legacy v1 data is preserved/read without becoming a v2 write target. |
+| `src/style.css` | `7b26f83f5bf1881ef53bd9e8b6268fc7fc23db71f0b3fef10362620b41748c55` | PR5 conflict-resolved combat presentation plus PR4 lever styling. No external fonts or images. |
+| `src/throttle-control.ts` | `99b45ef5b506ee7a051f80152bf3ce1dcf7a5f521a7c446f6021e76a67163466` | PR4 adapter owns pointer/keyboard rate commands, cancellation and neutralization; feeds existing flight input. |
+| `src/throttle-lever.ts` | `e83fe3c570581d16cb76e08ef9a039bbe9d4a50da6575366ac7e126bf3f30cf0` | PR4 shared v1 rate-lever equations and contract, finite clamp, deadzone, pointer mapping, command combination and legacy fallback. |
+| `src/turret-combat.ts` | `fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71` | New finite main/MG tracking, warning, fire, reservation and cooldown logic. |
+| `src/types.ts` | `b950b23044ab0520c14cfbcbe7edf7e021652dcffdd5f455d1230e2b26015c1f` | New Gekichin state types and optional throttle field for flight input. |
+| `src/wingman-ai.ts` | `06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f` | New finite wingman target assignment, approach/attack/retreat and six-face route logic. |
+
+The preserved notice file `public/third-party-notices.txt` has SHA-256 `97de7ac302052bcea7f20e5ae89635c10e049614f56409288d554d63fceb614f` and retains the Three.js notice.
 
 ## 武器式の限定的な由来
 

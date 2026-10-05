@@ -81,8 +81,11 @@ app.innerHTML = `
     <p id="fire-status" class="fire-status" hidden>射撃：待機</p>
     <button id="fire" data-flight-control="fire" type="button" aria-pressed="false"><b>射撃</b><small>MG・機関砲</small></button>
     <button id="loop" data-flight-control="loop" type="button" aria-pressed="false" aria-disabled="false"><b>宙返り</b><small id="loop-status">L</small></button>
-    <button id="accelerate" data-flight-control="accelerate" type="button" aria-pressed="false"><b>加速</b><small>＋</small></button>
-    <button id="brake" data-flight-control="brake" type="button" aria-pressed="false"><b>減速</b><small>−</small></button>
+    <div id="throttle" class="throttle-lever" data-flight-control="throttle" role="slider" tabindex="0" aria-label="速度レバー" aria-describedby="throttle-help" aria-orientation="vertical" aria-valuemin="-100" aria-valuemax="100" aria-valuenow="0" aria-valuetext="保持（速度を維持）">
+      <span class="throttle-up">加速</span><span class="throttle-center">保持</span><span class="throttle-down">減速</span><i class="throttle-handle" aria-hidden="true"></i>
+    </div>
+    <p id="throttle-layout-note" class="throttle-layout-note" role="status" hidden>速度レバーの配置が重なっています。画面を回転するか、操作設定で位置や大きさを調整してください。</p>
+    <span id="throttle-help" class="visually-hidden">上で加速、下で減速。離すと中央に戻り、調整した速度を保持します。フォーカス中は矢印キーで調整できます。</span>
   </section>
   <section id="paused" class="overlay" aria-labelledby="pause-title" hidden>
     <div class="panel compact-panel">
@@ -120,7 +123,7 @@ app.innerHTML = `
 
       <h3>作戦の目標</h3><p>超大型母艦の主砲20基・大型機銃80基、合計100基を全破壊します。味方50機は自機を含み、同時出撃は8機。残機があれば復帰します。</p>
       <h3>飛行の操作</h3><p>画面のどこからでも、触れた位置を基準にドラッグできます。右へドラッグで右旋回、上へドラッグで上昇。離すと操縦入力を解除します。</p><p id="guide-keys"></p>
-      <p>Easyは巡航速度で、遮蔽されない砲台が照準内へ入ると自動射撃。宙返りボタン1つです。Normalは射撃・宙返り・加速・減速の4ボタン。宙返り中に新しく操縦すると中止できます。</p>
+      <p>Easyは巡航速度で、遮蔽されない砲台が照準内へ入ると自動射撃。宙返りボタン1つです。Normalは射撃・宙返りボタンと速度レバー。上で加速、下で減速、離すと中央に戻り速度を保持します。宙返り中に新しく操縦すると中止できます。</p>
       <h3>攻略と補給</h3><p>母艦の上・下・左右・前後に砲台があります。船体の反対側へは射撃できません。六面の残数を見ながら外周を回り込みましょう。主砲は1秒、大型機銃は0.3秒の固定照準予告があり、旋回や宙返りで射線から離脱できます。予告は音OFFでも見えます。</p>
       <p>自機と僚機のHPは80。MG288発・機関砲96発が両方空になると6秒で全装填します。補給回数に制限はありません。Normalの自機弾は味方にも当たります。Easyと僚機弾は味方を損傷させませんが、接触で弾は止まります。</p>
       <h3>残機と復帰</h3><p>50機は自機込みの総残機です。同時出撃は8機。機体を失うと予備から3秒後に復帰し、待機中も戦闘は続きます。予備がなくても生存僚機がいれば、3秒後にその機体の状態を引き継ぎます。味方残機0で敗北です。</p>
@@ -139,7 +142,7 @@ const inputPresentation = new ControlInputPresentation();
 const audio = new FlightAudio();
 const abort = new AbortController();
 const buttons: FlightControlButtons = {
-  fire: element('#fire'), loop: element('#loop'), accelerate: element('#accelerate'), brake: element('#brake'),
+  fire: element('#fire'), loop: element('#loop'), throttle: element('#throttle'),
 };
 const guide = element<HTMLDialogElement>('#guide');
 const controls = new FlightControls(element('#flight-surface'), buttons,
@@ -188,7 +191,7 @@ function renderUi(focus = false): void {
   const playing = session.phase === 'playing';
   element('#hud').hidden = !playing;
   element('#flight-surface').hidden = !playing;
-  for (const name of ['fire', 'accelerate', 'brake'] as const) buttons[name].hidden = session.mode !== 'normal';
+  for (const name of ['fire', 'throttle'] as const) buttons[name]!.hidden = session.mode !== 'normal';
   element('#fire-status').hidden = session.mode !== 'normal';
   element('#hud-mode').textContent = session.mode.toUpperCase();
   element('#home-key-guide').textContent = keyboard.describe(selectedMode());
@@ -215,6 +218,7 @@ function renderUi(focus = false): void {
 function fitHud(): void {
   const largeText = parseFloat(getComputedStyle(document.documentElement).fontSize) >= 24;
   const small = app.clientHeight <= 450 || largeText;
+  const layoutChanged = app.dataset.compactHud !== String(small) || app.dataset.largeText !== String(largeText);
   if (small !== compactHud) {
     compactHud = small;
     element<HTMLDetailsElement>('#combat-panel').open = !small;
@@ -222,6 +226,7 @@ function fitHud(): void {
   }
   app.dataset.compactHud = String(small);
   app.dataset.largeText = String(largeText);
+  if (layoutChanged) { controls.clear(); settings.refresh(); }
 }
 
 function pause(reason: PauseReason): void {

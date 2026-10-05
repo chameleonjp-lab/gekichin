@@ -10,7 +10,7 @@ export default defineConfig({
   projects: [
     { name: 'chromium', testIgnore: /p1-native-visibility\.spec\.ts/, use: { browserName: 'chromium', launchOptions: { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } } },
     // Linux WebKit has no WebGL in this runner: this project tests the DOM editors.
-    { name: 'webkit-ui', testMatch: /p1-(settings|independent-ui)\.spec\.ts/, use: { browserName: 'webkit' } },
+    { name: 'webkit-ui', testMatch: /(p1-(settings|independent-ui)|throttle-lever)\.spec\.ts/, use: { browserName: 'webkit' } },
     { name: 'chromium-headed', testMatch: /p1-native-visibility\.spec\.ts/, use: { browserName: 'chromium', headless: false,
       launchOptions: { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } } },
   ],

@@ -143,7 +143,7 @@ export class FlightSession {
     if (this.phase !== 'playing') return;
     const tick = this.tick + 1;
     const aircraft = this.fleet.active;
-    const accepted = this.ignoreInputOnce ? { ...input, turn: 0, climb: 0, fire: false, loop: false, accelerate: false, brake: false } : input;
+    const accepted = this.ignoreInputOnce ? { ...input, turn: 0, climb: 0, fire: false, loop: false, throttle: 0, accelerate: false, brake: false } : input;
     this.ignoreInputOnce = false;
     const player = this.fleet.player;
     if (player && this.controllerRevision !== this.fleet.ownershipRevision) {

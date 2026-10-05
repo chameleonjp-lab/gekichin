@@ -1,0 +1,48 @@
+{
+  "source": {
+    "requirements": "R40\u2013R45 / A10\u2013A12",
+    "implementationPlan": "P4 / P7",
+    "sha256ByFile": {
+      "docs/REQUIREMENTS.md": "80991bc7ac7eaf972433470a228cee554031fe71026ff6841a7432703cc85e38",
+      "docs/IMPLEMENTATION_PLAN.md": "fe247dc61f7f8e767f0ea7385fb11e3706268943f9d4a4bf42fa9bbbaa541f48",
+      "src/rules.ts": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414",
+      "src/flight.ts": "41675b4e1f3bfecee95dad5b6ee2bebbd3930545ed35e6fa8260fca25a4b49b3",
+      "src/flight-view.ts": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
+      "src/game-state.ts": "378bc600e3b32a598ef88d1ab93879eb7ba23524d130e9e17ab3338212cecd3e",
+      "src/turret-combat.ts": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71",
+      "src/collision-world.ts": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519",
+      "src/mothership.ts": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466",
+      "src/mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+      "src/scene.ts": "6dc42220163e8abfe10935994ddb316622dfa2b341ced773b3d7acd787552635",
+      "tests/evasion-fixture.ts": "645fa9554f593b4d70881e99ac54982cb738cbb30fa51751d3dc584f9cc28c20",
+      "tests/evasion.test.ts": "44e77deb54d9939fb520edcab7ebe8d9f253860e761ef69a893b14bb2db2bfee",
+      "browser-tests/evasion-recorder.html": "29fc55b43d86e8e57a01a2cbf2554c1885f8e179357f874d45b800f8b7c7f1e0",
+      "browser-tests/evasion-recorder.ts": "fe7f7f1e7654048bf41b283791f53a67c32b152d772ab29b4520654861bf0e03",
+      "browser-tests/evasion-recording.spec.ts": "bd111b47240df7973d7eed4769edd9501b028aff9d465eb4cbd9b5c3620692ab"
+    }
+  },
+  "files": {
+    "evasion-browser-trials.json.gz": "336bffe83063a23fd8c8481d1322de840cc5112d6056726f60951118006c2c69",
+    "evasion-six-cases-normal-camera.webm": "ce23c2eb6ec6a586e7c93a2320ad32b1ab9bb80bd577fc0867354f5e59e1ad9d",
+    "evasion-six-cases-final-frame.png": "00d8172dca060b0bdd88323d6560675fc41586ee2f0b1c3422946db0993c42ad",
+    "browser-frames/top-main-warning-normal-camera.png": "c77e32589a073a81f8538bb29f11683e16b9a3b881aeb769756412362aa2612f",
+    "browser-frames/top-main-maneuver-normal-camera.png": "6620802a08d6d9bd0331df25b3835f41e75ae3337cf5b04304c102492a320f98",
+    "browser-frames/top-main-projectile-normal-camera.png": "8870a2fdb22ccf753a9d8e55f79a1bed7e3a33667cce946d16ec78e8fcd37041",
+    "browser-frames/top-mg-warning-normal-camera.png": "1b2bae74b7c0dc4c1ce882f235f78b3e712c5319c98442c54a98ab6fe6e1ce7b",
+    "browser-frames/top-mg-projectile-normal-camera.png": "e13cac8cc1a31c1b4604fcb86c60c39bda6867f14f183a60a578100146730595",
+    "browser-frames/top-mg-maneuver-normal-camera.png": "99204991a2340064b2110f895961badba4e484bedef297d2dc57a1f41a021061",
+    "browser-frames/bottom-main-warning-normal-camera.png": "89d0305a9bb38fa272f0bdd051b515f1b5ec5909df61f36dbe9e26b945bbe4cd",
+    "browser-frames/bottom-main-maneuver-normal-camera.png": "72021206bbe2648597abf3738f60f74d9abaf87d4a1b07f6af1881f64fc95450",
+    "browser-frames/bottom-main-projectile-normal-camera.png": "0fbf081d67d8afb5c7b59d92c068ce10519d2420f7e55cc63ba69dc8bf6a9fbf",
+    "browser-frames/bottom-mg-warning-normal-camera.png": "b095bb71f318789b338d55ee076df74f35e351a8b9c39dfc49555f14ae044f97",
+    "browser-frames/bottom-mg-projectile-normal-camera.png": "c80f3e0ef77d79de14a42ab1e511795478ca217e9533fdf757f7083aad3d6937",
+    "browser-frames/bottom-mg-maneuver-normal-camera.png": "7271dc8c6908d9dff5c7d6d1265d7440dedce5cf300d029fda60f490c73e488f",
+    "browser-frames/left-main-warning-normal-camera.png": "17cacb672f220cc7460329e671d6d36f6a3e31288d6abb1125e050d94d0e91ea",
+    "browser-frames/left-main-maneuver-normal-camera.png": "2a76fbf995e49e7d80b78230c4153077c24c84213a2644f697cda79b937141eb",
+    "browser-frames/left-main-projectile-normal-camera.png": "8d2a54bee73a2dabe80013e07ee2ff388ec4997ccaab0dd2c0aec7be996de73b",
+    "browser-frames/left-mg-warning-normal-camera.png": "a75d93cff30125fbf358b197f9ac68ae67e47541b8e529ea71dcc973f32808e5",
+    "browser-frames/left-mg-projectile-normal-camera.png": "15daf619a69f83cb519d9de1d38afef7f27481a5036f9a4222f3747b9699e443",
+    "browser-frames/left-mg-maneuver-normal-camera.png": "184b872a680cbd7f345bb35c4b0145791bfd934137e2b2a5ec378e4bc9b4cdc7"
+  },
+  "scope": "New integrated-source full-suite recorder output; historical acceptance files restored separately. No human or physical-device claim."
+}

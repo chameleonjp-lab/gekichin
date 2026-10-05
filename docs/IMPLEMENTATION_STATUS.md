@@ -4,29 +4,35 @@
 対象: `chameleonjp-lab/gekichin`  
 作業ブランチ: `feat/gekichin-combat-completion`
 
-固定計画のP2–P6を実装し、母艦100砲台・有限50機・実弾・敵砲台・僚機・採点・戦闘HUD・結果・端末内記録・撃沈表現・合成音を接続した。Easy/Normalとも、通常FlightInputの統合実行と、製品画面のStart・ドラッグ/キー入力によるブラウザ実行で100基全破壊に到達した。最終検査の原票と受入状態は [COMPLETION_VERIFICATION.md](./COMPLETION_VERIFICATION.md) と [COMPLETION_ACCEPTANCE.md](./COMPLETION_ACCEPTANCE.md) に記録する。提出は [Draft PR #5](https://github.com/chameleonjp-lab/gekichin/pull/5)。
+戦闘candidate source `5db76f68b53c846ae4e4aec4754f78e108107a37` はP2–P6を実装し、通常入力のEasy/Normal全100基破壊を記録した。証拠commit `c0cf927fcf7dd75edae6fee539072e4b3498c86e` は各manifestの記録とともに保管する。受入フォルダー内の全ファイルが同じsource hashとは限らず、多くの最終戦闘証拠はsource5dbに紐づくが、一部はそれ以前の候補で取得された。最新main `595feb719c9b65697ab319fa40a939d6ee1b356b` にPR4 speed leverを統合したPR5作業treeでは、実際のconflict `src/main.ts` / `src/style.css` を解決し、lever v2と戦闘画面を併存させた。現行統合sourceではunit 102/102とproduction build pass、Chromium＋headed nativeで39件passを確認済み。WebKit 18件はローカルhost dependency不足でtest body開始前に起動できず、test skipではない。archived c0 baselineとのmatched public-flow comparisonは異なる2 viewportの4 captureでtick 12まで一致した。旧evidenceはmerged sourceの検査結果ではない。原票と履歴の境界は [COMPLETION_VERIFICATION.md](./COMPLETION_VERIFICATION.md)、[COMPLETION_ACCEPTANCE.md](./COMPLETION_ACCEPTANCE.md)、[PR5_CONFLICT_RESOLUTION.md](./PR5_CONFLICT_RESOLUTION.md) に記録する。PR #5はready for review状態。提出HEADと最終CI結果はPR #5本文／Checksに紐づける。
 
 実PCとiPhone 17 Pro/Safariの性能、人間による試遊と聴感は未実施である。ソフトウェア実装・自動検査と、これらの製品受入を区別する。実機を必要とするP7の残項目があるため、P7/P8全完了とは扱わない。
 
 ## 固定基準
 
-P0/P1のPR [#3](https://github.com/chameleonjp-lab/gekichin/pull/3) は採用済みで、今回の起点はmain `98119b5ae6604ad5975024b0e523b78eef369662`。PRのマージ操作は本作業では行っていない。P1の履歴は [P0_BASELINE.md](./P0_BASELINE.md)、[P1_VERIFICATION.md](./P1_VERIFICATION.md) に保つ。
+P0/P1のPR [#3](https://github.com/chameleonjp-lab/gekichin/pull/3) は採用済み。combat候補の開始点はmain `98119b5ae6604ad5975024b0e523b78eef369662`、最新のPR5 integration baseはPR4 speed leverをmergeしたmain `595feb719c9b65697ab319fa40a939d6ee1b356b`。P1の履歴は [P0_BASELINE.md](./P0_BASELINE.md)、[P1_VERIFICATION.md](./P1_VERIFICATION.md) に保つ。
 
-固定要件commitは `e9212a73a7b36c33dff7e88d3a7308be6cdcea35`、要件blobは `1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c`。README blob `9d0cfacf52833d90d39f02a9ab1c1c57dee30aa0`、計画blob `11dec1af2004ec3d71357d9eae029e324c6fdf3c` も保持した。ルール版は `gekichin-combat-v1`、固定60Hz、標準seed `0x474b0001`。固定Kaisen/Faitofuraito参照は変更せず、他作品を編集していない。後続コードの出典・差分・素材境界は [COMBAT_PROVENANCE.md](./COMBAT_PROVENANCE.md) に追記する。
+元要件commitは `e9212a73a7b36c33dff7e88d3a7308be6cdcea35`、元本文blobは `1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c`。利用者承認の速度レバー追記を含む現在の `docs/REQUIREMENTS.md` working-tree blobは `c072b57dbdef3a48ac7e5717890e2bb4ed2baeb3`。これはR30/R61–R64の操作・保存部分だけを追加する採用appendで、元本文の履歴は保持する。README blob `9d0cfacf52833d90d39f02a9ab1c1c57dee30aa0` と計画blob `11dec1af2004ec3d71357d9eae029e324c6fdf3c` は変更なし。ルール版は `gekichin-combat-v1`、固定60Hz、標準seed `0x474b0001`。固定Kaisen/Faitofuraito参照は変更せず、他作品を編集していない。後続コードの出典・差分・素材境界は [COMBAT_PROVENANCE.md](./COMBAT_PROVENANCE.md) に追記する。
 
 ## 段階別の状態
 
 | 段階 | 実施状況 | 確認と境界 |
 | --- | --- | --- |
 | P0 基準・実施条件 | 記録済み | 固定blob・出典・依存・測定条件を保持。実機欄は未検証 |
-| P1 操縦と最小画面 | 既存実装を保持・戦闘へ接続 | 共有機体・操縦・画角・相対入力・両設定を維持。旧CIはP1履歴として保管 |
-| P2 母艦と砲台配置 | 実装・幾何検査成功 | 六面100個の一意ID、20主砲/80機銃、24,000HP。全100基の進入区間・射線・初期回廊を検査。描画と衝突が共通形状を参照 |
-| P3 有限残機・味方銃撃・得点 | 実装・境界検査成功 | 50トークン保存則、同時8、3秒復帰/引継ぎ、弾倉・装填・距離減衰・連続接触・過剰損傷切詰め・採点・結果凍結 |
-| P4 敵砲台・僚機AI | 実装・統合検査成功 | 有限追尾・固定予告・4/12枠・1/3予約・遮蔽・再試行。僚機は外周の通常飛行と実弾で六面を攻撃。Easy/Normal全撃破の自動入力記録あり |
-| P5 戦闘画面と記録 | 実装・ブラウザ検査成功 | 戦況・六面残数・HP/弾薬・復帰・境界案内・貢献/得点全成分・勝利のみのモード別best。両モード勝利と10再出撃、最終70画面を確認。中断結果は次の描画を待たず即時表示 |
-| P6 表現 | 実装・画像/信号検査成功 | 同じ100基の可動砲座・損傷・低い残骸・予告・実弾・粒子・5秒撃沈。実戦Normalの5,000ms撃沈とEasyスキップで同じ凍結結果。合成音は初期OFF、1context/16voice。人の実出力評価は未実施 |
-| P7 最終検証 | 自動検査を実施。実機項目は阻害 | 全撃破、境界、上・下・側面の六組回避、固定FPS再現、最大合法射撃負荷、資源/再出撃、UI・通信・出典を原票ごとに記録。PC/iPhone性能・人間試遊・聴感は機材未提供 |
-| P8 最終候補 | Draftでレビュー提出。全面受入は未完了 | 実装候補・独立レビュー・CIを提出。実機受入未完了のまま公開/配備/マージしない |
+| P1 操縦と最小画面 | PR4の速度レバーv2をcombatへ統合。combined local checksを確認 | combatはR30/R61–R64に関わるレバー/UI/storageを保持する。tagged-peer geometry、Save/preview一致、c0 baselineとのpublic-flowを検査。旧P1 CIは基準履歴として保管し、提出headのWebKit/CIはPR Checksで確認 |
+| P2 母艦と砲台配置 | combat candidateで実装・幾何検査成功 | 六面100個の一意ID、20主砲/80機銃、24,000HP。全100基の進入区間・射線・初期回廊を検査。描画と衝突が共通形状を参照。各原票のsourceはそれぞれのmanifestで確認し、統合sourceの最終CIへは別途結び付ける |
+| P3 有限残機・味方銃撃・得点 | 5db候補で実装・境界検査成功 | 50トークン保存則、同時8、3秒復帰/引継ぎ、弾倉・装填・距離減衰・連続接触・過剰損傷切詰め・採点・結果凍結 |
+| P4 敵砲台・僚機AI | 5db候補で実装・統合検査成功 | 有限追尾・固定予告・4/12枠・1/3予約・遮蔽・再試行。僚機は外周の通常飛行と実弾で六面を攻撃。Easy/Normal全撃破の記録はhistorical source proof |
+| P5 戦闘画面と記録 | 5db候補で実装・ブラウザ検査成功 | 戦況・六面残数・HP/弾薬・復帰・境界案内・得点/記録。両mode勝利と10再出撃、70画面を確認。PR4 UI統合後の同じ記録は再取得していない |
+| P6 表現 | 5db候補で実装・画像/信号検査成功 | 可動砲座・損傷・残骸・予告・実弾・粒子・5秒撃沈。人の実出力評価は未実施。PR4合流後の画像は旧source snapshot |
+| P7 最終検証 | 5db候補の検査成功。merged integration検査中 | 全撃破、回避、30/60/120Hz再生、合成負荷、UI/通信/出典はraw recordsを保存済み。これらを新しいmerged sourceの検査結果と呼ばず、再生も撮影も再実施していない。PC/iPhone性能・人間試遊・聴感は未検証 |
+| P8 最終候補 | PR #5はready for review。全面受入未完了 | merged sourceのunit 102/102・build pass、Chromium＋headed native browser 39件pass。WebKit 18件はローカルhost dependencyでtest body開始前にblock（skipではない）。c0 baseline比較は4 capture / 2 viewport / tick 12で全観測状態一致。提出HEADと完全なCI結果はPR #5本文／Checksに紐づける。実機受入が残るため公開/配備の完了とは扱わない |
+
+## PR5 integration status
+
+PR4 merge-base `595feb719c9b65697ab319fa40a939d6ee1b356b` からのconflict resolutionでは、実際の衝突ファイル `src/main.ts` と `src/style.css` だけを統合し、combat画面とNormal lever v2操作・設定を両方残す。統合treeにはPR4の追加モジュールも含む。現在のper-file hash一覧はsource freeze後のtableに記録し、commit hashとは別に扱う。今回のPR4 user-approved addendumは戦闘ルール・敵AI・砲台数・採点を変更しない。
+
+root担当のexplicit `throttle: 0` core guardとreview起因のshared placement correctionは反映済み。unit 102/102・production build pass、Chromium＋headed native browser 39件pass。local WebKit 18件はhost dependency不足でtest body開始前に起動できず、skipは0。各原票は [pr5-integration/unit.log](./evidence/pr5-integration/unit.log)、[build.log](./evidence/pr5-integration/build.log)、[browser.log](./evidence/pr5-integration/browser.log)、[browser-results.json](./evidence/pr5-integration/browser-results.json)。c0 combat baselineとcurrent integrated sourceのmatched public-flow comparisonは4 capture、2 viewport、tick 12で完了し、比較対象のDOM表示・速度・高度・phase/mode等のstate fieldsはすべて一致した。手順・capture条件は [comparison/conditions.json](./evidence/pr5-integration/comparison/conditions.json) と [pr5-integration/manifest.json](./evidence/pr5-integration/manifest.json) にある。overlap修正前の同tick試行は最終比較に含めない。提出HEADと最終CI結果はPR #5本文／Checksに紐づける。検査境界、conflict file、source/evidence binding、未完了ownerは [PR5_CONFLICT_RESOLUTION.md](./PR5_CONFLICT_RESOLUTION.md) に記録する。
 
 ## 実装の責務
 

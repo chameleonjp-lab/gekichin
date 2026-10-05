@@ -21,7 +21,7 @@ export interface FlightInput {
   climb: number;
   fire: boolean;
   loop: boolean;
-  accelerate?: boolean;
+  throttle?: number; accelerate?: boolean;
   brake?: boolean;
   viewAspect?: number;
   steeringRevision?: number;
