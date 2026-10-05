@@ -11,7 +11,7 @@ test('Normal keyboard flight, loop interruption, pause, settings, report and ref
   await start(page, 'normal'); await expect(page.locator('[data-flight-control]:visible')).toHaveCount(4);
   await page.keyboard.down('w'); await expect.poll(async () => Number((await page.locator('#speed').textContent())!.split(' ')[0])).toBeGreaterThan(115); await page.keyboard.up('w');
   await page.keyboard.down('Space'); await expect(page.locator('#fire-status')).toContainText('ON');
-  await page.keyboard.up('Space'); await expect(page.locator('#fire-status')).toContainText('OFF');
+  await page.keyboard.up('Space'); await expect(page.locator('#fire-status')).toContainText('待機');
   await page.keyboard.press('l'); await expect(page.locator('#loop-status')).toHaveText('実行中');
   await page.keyboard.down('ArrowRight'); await expect(page.locator('#loop-status')).not.toHaveText('実行中'); await page.keyboard.up('ArrowRight');
   await page.screenshot({ path: info.outputPath('normal-flight.png') });
@@ -21,7 +21,8 @@ test('Normal keyboard flight, loop interruption, pause, settings, report and ref
   await page.keyboard.press('Escape'); await expect(page.locator('#pause-controls')).toBeFocused(); expect(await page.locator('#elapsed').textContent()).toBe(elapsed);
   await page.locator('#resume').click(); await expect.poll(() => page.locator('#elapsed').textContent()).not.toBe(elapsed);
   await page.locator('#pause').click(); await page.locator('#finish').click(); await expect(page.locator('#result')).toBeVisible();
-  await expect(page.locator('#result')).toContainText('中断'); await expect(page.locator('#result')).toContainText('戦闘結果ではありません'); await expect(page.locator('#result-mode')).toContainText('Normal');
+  await expect(page.locator('#result-outcome')).toContainText('中断');
+  await expect(page.locator('#result-details')).toContainText('破壊 0/100'); await expect(page.locator('#result-mode')).toContainText('Normal');
   await page.screenshot({ path: info.outputPath('flight-report.png') });
   await page.locator('#result-controls').click(); await page.locator('#control-editor-touch').click(); await expect(page.locator('#control-mode')).toBeEnabled(); await page.locator('#control-close').click();
   await page.locator('#restart').click(); await expect(page.locator('#app')).toHaveAttribute('data-mode', 'normal'); await expect(page.locator('#speed')).toHaveText('110 m/s');
@@ -34,17 +35,17 @@ test('multi-touch cancel, lost capture, resize and compatibility click release h
   await surface.dispatchEvent('pointerdown', { pointerId: 501, pointerType: 'touch', isPrimary: true, buttons: 1, clientX: 170, clientY: 320 });
   await surface.dispatchEvent('pointermove', { pointerId: 501, pointerType: 'touch', buttons: 1, clientX: 205, clientY: 305, bubbles: true }); await expect(page.locator('#joystick')).toBeVisible();
   await fire.dispatchEvent('pointerdown', { pointerId: 502, pointerType: 'touch', isPrimary: false, buttons: 1 }); await expect(fire).toHaveAttribute('aria-pressed', 'true'); await expect(page.locator('#fire-status')).toContainText('ON');
-  await fire.dispatchEvent('pointercancel', { pointerId: 502, pointerType: 'touch', bubbles: true }); await expect(page.locator('#fire-status')).toContainText('OFF'); await expect(page.locator('#joystick')).toBeVisible();
+  await fire.dispatchEvent('pointercancel', { pointerId: 502, pointerType: 'touch', bubbles: true }); await expect(page.locator('#fire-status')).toContainText('待機'); await expect(page.locator('#joystick')).toBeVisible();
   await surface.dispatchEvent('pointercancel', { pointerId: 501, pointerType: 'touch', bubbles: true }); await expect(page.locator('#joystick')).not.toBeVisible();
   await fire.dispatchEvent('pointerdown', { pointerId: 503, pointerType: 'touch', isPrimary: true, buttons: 1 }); await fire.dispatchEvent('lostpointercapture', { pointerId: 503, pointerType: 'touch', bubbles: true });
-  await expect(fire).toHaveAttribute('aria-pressed', 'false'); await expect(page.locator('#fire-status')).toContainText('OFF');
-  const layout = await fire.getAttribute('style'); await fire.dispatchEvent('click', { detail: 1, bubbles: true }); await expect(fire).toHaveAttribute('style', layout!); await expect(page.locator('#fire-status')).toContainText('OFF');
+  await expect(fire).toHaveAttribute('aria-pressed', 'false'); await expect(page.locator('#fire-status')).toContainText('待機');
+  const layout = await fire.getAttribute('style'); await fire.dispatchEvent('click', { detail: 1, bubbles: true }); await expect(fire).toHaveAttribute('style', layout!); await expect(page.locator('#fire-status')).toContainText('待機');
   await page.keyboard.down('w'); await page.setViewportSize({ width: 852, height: 393 }); await page.keyboard.up('w'); await expect(fire).toHaveAttribute('aria-pressed', 'false');
   // The layout and visual viewport each dispatch a resize; begin the next
   // deliberate key press only after both rendering turns have completed.
   await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
   await page.keyboard.down('Space'); await expect(page.locator('#fire-status')).toContainText('ON'); await page.evaluate(() => window.dispatchEvent(new Event('blur')));
-  await expect(page.locator('#paused')).toBeVisible(); await page.keyboard.up('Space'); await page.locator('#resume').click(); await expect(page.locator('#fire-status')).toContainText('OFF');
+  await expect(page.locator('#paused')).toBeVisible(); await page.keyboard.up('Space'); await page.locator('#resume').click(); await expect(page.locator('#fire-status')).toContainText('待機');
 });
 
 test('Easy one button fits specified viewports and ten repeated starts never duplicate app resources', async ({ page }, info) => {
@@ -70,17 +71,22 @@ test('WebGL loss while paused or editing gives guidance and restoration needs ex
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'paused'); await page.locator('#resume').click(); await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing'); await extension.dispose();
 });
 
-test('the flight prototype makes no game API requests or result storage writes', async ({ page }) => {
-  const requests: string[] = [], writes: string[] = []; page.on('request', request => requests.push(request.url()));
-  await page.exposeFunction('observeSettingWrite', (key: string) => writes.push(key));
+test('an aborted combat report does not write a best record or make game API requests', async ({ page }) => {
+  const requests: string[] = [], bestWrites: string[] = []; page.on('request', request => requests.push(request.url()));
+  await page.exposeFunction('observeBestWrite', (key: string) => bestWrites.push(key));
   await page.addInitScript(() => {
     const original = Storage.prototype.setItem;
     Storage.prototype.setItem = function (key, value) {
-      void (window as unknown as { observeSettingWrite: (key: string) => Promise<void> }).observeSettingWrite(key); return original.call(this, key, value);
+      if (key.startsWith('gekichin-best-')) {
+        void (window as unknown as { observeBestWrite: (key: string) => Promise<void> }).observeBestWrite(key);
+      }
+      return original.call(this, key, value);
     };
   });
   await start(page); await page.locator('#pause').click(); await page.locator('#finish').click(); await expect(page.locator('#result')).toBeVisible();
-  expect(writes).toEqual([]); expect(requests.every(url => new URL(url).origin === 'http://127.0.0.1:4177')).toBe(true);
+  await expect(page.locator('#result-outcome')).toContainText('中断');
+  await expect(page.locator('#result-best')).toContainText('勝利した作戦');
+  expect(bestWrites).toEqual([]); expect(requests.every(url => new URL(url).origin === 'http://127.0.0.1:4177')).toBe(true);
   expect(requests.some(url => /supabase|ranking|ordnance|bomb-guide/.test(url))).toBe(false);
 });
 

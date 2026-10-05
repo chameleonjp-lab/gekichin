@@ -1,7 +1,33 @@
-/** P1 identifies its provisional data separately from the future combat rules. */
-export const RULES_VERSION = 'gekichin-flight-p1-v1';
+/** Fixed rules adopted from REQUIREMENTS.md@e9212a73. */
+export const RULES_VERSION = 'gekichin-combat-v1';
 export const FIXED_HZ = 60;
 export const FIXED_DT = 1 / FIXED_HZ;
 export const INITIAL_SEED = 0x474b0001;
 export const PLAYER_MAX_PITCH = 0.95;
 export const MOTHERSHIP_PREVIEW = Object.freeze({ length: 1200, width: 600, thickness: 240, altitude: 1000 });
+export const ALLY_TOTAL = 50;
+export const ALLY_ACTIVE_LIMIT = 8;
+export const AIRCRAFT_HP_MILLI = 80_000;
+export const AIRCRAFT_RADIUS = 5;
+export const RESPAWN_TICKS = 180;
+export const BLOCKED_RESPAWN_TICKS = 300;
+export const BOUNDARY_RADIUS = 4_000;
+export const BOUNDARY_LOW = 50;
+export const BOUNDARY_HIGH = 2_500;
+export const BOUNDARY_WARNING = 100;
+export const BOUNDARY_GRACE_TICKS = 600;
+export const MG_MAGAZINE = 288;
+export const CANNON_MAGAZINE = 96;
+export const RELOAD_TICKS = 360;
+export const FRIENDLY_BULLET_CAPACITY = 256;
+export const PLAYER_BULLET_RESERVE = 64;
+export const FRIENDLY_BULLET_LIFETIME = 90;
+export const FRIENDLY_MG_SPEED = 820;
+export const FRIENDLY_CANNON_SPEED = 700;
+export const PLAYER_MG_INTERVAL = 5;
+export const PLAYER_CANNON_INTERVAL = 15;
+export const WINGMAN_MG_INTERVAL = 17;
+export const WINGMAN_CANNON_INTERVAL = 57;
+export const MAIN_BULLET_CAPACITY = 16;
+export const ENEMY_MG_BULLET_CAPACITY = 256;
+export const SINKING_SECONDS = 5;
