@@ -3,9 +3,70 @@ import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+const clockEpoch = '2026-10-05T00:00:00Z';
+const targetTick = 12;
+const clockStepMs = 16;
+const maxClockSteps = 120;
+const browserArgs = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
+
+async function readState(page) {
+ return page.evaluate(() => {
+  const app = document.getElementById('app');
+  return {
+   phase: app.dataset.phase, mode: app.dataset.mode,
+   elapsed: document.getElementById('elapsed').textContent,
+   speed: document.getElementById('speed').textContent,
+   altitude: document.getElementById('altitude').textContent,
+   loop: document.getElementById('loop-status').textContent,
+   fire: document.getElementById('fire-status').textContent,
+  };
+ });
+}
+function logicalTick(state) {
+ assert.match(state.elapsed, /^\d+\.\d{2} s$/, 'Elapsed HUD must contain seconds to two decimal places');
+ // At 60 Hz, two decimal places identify each tick without overlap.
+ return Math.round(Number.parseFloat(state.elapsed) * 60);
+}
+
+async function captureAtTargetTick(page, label) {
+ let state = await readState(page);
+ let tick = logicalTick(state);
+ let clockSteps = 0;
+ const clockStart = await page.evaluate(() => Date.now());
+ const observations = [];
+ for (;;) {
+  const context = `${label}: tick=${tick}, phase=${state.phase}, clockSteps=${clockSteps}`;
+  assert.ok(Number.isSafeInteger(tick) && tick >= 0, `Invalid logical tick; ${context}`);
+  assert.equal(state.mode, 'normal', `Normal mode is required; ${context}`);
+  assert.ok(state.phase === 'playing' || (state.phase === 'preparing' && tick === 0), `Flight failed to start or stopped; ${context}`);
+  observations.push({ clockSteps, tick, phase: state.phase });
+  assert.ok(tick <= targetTick, `Target tick was skipped; ${context}`);
+  if (tick === targetTick) break;
+  assert.ok(clockSteps < maxClockSteps, `Target tick was not reached within the bounded clock steps; ${context}`);
+  // Less than one 60 Hz tick per clock step: keep every logic tick observable.
+  await page.clock.runFor(clockStepMs);
+  clockSteps += 1;
+  const previousTick = tick;
+  state = await readState(page);
+  tick = logicalTick(state);
+  assert.ok(tick >= previousTick && tick <= previousTick + 1,
+   `${label}: logical tick must advance by at most one per ${clockStepMs}ms step (${previousTick} -> ${tick})`);
+ }
+ assert.equal(tick, targetTick, `${label} must be captured at the exact target tick`);
+ assert.equal(state.phase, 'playing', `${label} must be an advancing Normal flight`);
+ const clockEnd = await page.evaluate(() => Date.now());
+ assert.equal(clockEnd - clockStart, clockSteps * clockStepMs, `${label}: clock advanced outside the controlled steps`);
+ return { state, clock: {
+  epoch: clockEpoch, targetTick, actualTick: tick, clockStepMs, maxClockSteps, clockSteps,
+  advancedMs: clockSteps * clockStepMs, clockStart, clockEnd, observations,
+  observation: "Math.round(parseFloat(document.getElementById('elapsed').textContent) * 60)",
+  procedure: 'Pause the installed clock before the UI Start click; leave flight controls neutral; run 16ms steps and read existing state after each step until exact tick 12; keep the clock paused for capture',
+ } };
+}
+
 const base=process.argv[2];if(!base)throw Error('Usage: node scripts/capture-throttle-comparison.mjs <baseline checkout>');
 const output=resolve('test-results/throttle-comparison');await mkdir(output,{recursive:true});
-const browser=await chromium.launch({args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const browser=await chromium.launch({args:browserArgs});
 const facts=[];
 try {
  for(const [label,cwd,port]of [['before',resolve(base),4181],['after',process.cwd(),4182]]){
@@ -15,15 +76,19 @@ try {
    for(const [width,height]of [[393,852],[852,393]]){
     const page=await browser.newPage({viewport:{width,height},hasTouch:true,deviceScaleFactor:1});
     await page.route('**/*',route=>new URL(route.request().url()).hostname==='127.0.0.1'?route.continue():route.fulfill({status:200,contentType:'application/json',body:'[]'}));
-    await page.clock.install({time:new Date('2026-10-05T00:00:00Z')});
+    await page.clock.install({time:new Date(clockEpoch)});
     await page.goto(`http://127.0.0.1:${port}`);await page.locator('#start').waitFor({state:'visible'});await page.waitForFunction(()=>!document.querySelector('#start').disabled);
     await page.locator('input[value="normal"]').check();
-    await page.clock.pauseAt(await page.evaluate(()=>Date.now()+1000));
-    await page.locator('#start').click();await page.clock.runFor(200);
-    const state=await page.evaluate(()=>{const app=document.getElementById('app');return {phase:app.dataset.phase,mode:app.dataset.mode,elapsed:document.getElementById('elapsed').textContent,speed:document.getElementById('speed').textContent,altitude:document.getElementById('altitude').textContent,loop:document.getElementById('loop-status').textContent,fire:document.getElementById('fire-status').textContent};});
-    assert.ok(state.phase==='playing'&&state.mode==='normal'&&parseFloat(state.elapsed)>0,`${label} must be an advancing Normal flight`);
+    const pauseAt = await page.evaluate(() => Date.now() + 1000);
+    await page.clock.pauseAt(pauseAt);
+    await page.locator('#start').click();
+    const { state, clock } = await captureAtTargetTick(page, `${label} ${width}x${height}`);
     await page.screenshot({path:`${output}/${label}-${width}x${height}.png`});
-    facts.push({label,width,height,mode:'normal',input:'start then neutral, controlled clock +200ms',readout:await page.locator('#speed').innerText(),state,browser:browser.version()});
+    assert.deepEqual(await readState(page), state, `${label}: state changed during the paused screenshot capture`);
+    facts.push({label,width,height,mode:'normal',input:'UI Start then neutral until exact logical tick 12',
+     readout:await page.locator('#speed').innerText(),state,clock:{...clock,pauseAt},browser:browser.version(),
+     environment:{engine:'chromium',headless:true,args:browserArgs,node:process.version,platform:process.platform,arch:process.arch,
+      hasTouch:true,deviceScaleFactor:1,userAgent:await page.evaluate(()=>navigator.userAgent)}});
     await page.close();
    }
   }finally{try{process.kill(-server.pid,'SIGTERM');}catch{server.kill();}}
