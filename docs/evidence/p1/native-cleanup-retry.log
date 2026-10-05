@@ -1,0 +1,25 @@
+
+Running 5 tests using 1 worker
+
+(node:12897) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:8:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume (7.2s)
+(node:13097) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:8:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume (6.1s)
+(node:13300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:8:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume (6.7s)
+(node:13500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:8:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume (6.4s)
+(node:13709) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  5 [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:8:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume (6.7s)
+
+  5 passed (35.2s)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

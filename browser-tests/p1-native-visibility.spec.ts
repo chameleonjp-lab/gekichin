@@ -2,7 +2,7 @@ import { spawn, type ChildProcess } from 'node:child_process';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { chromium, expect, test } from '@playwright/test';
+import { chromium, expect, test, type CDPSession } from '@playwright/test';
 
 /** Native tab visibility requires a headed browser and a display (CI uses Xvfb). */
 test('a native headed tab hides the flight, freezes its clock and requires explicit resume', async ({}, testInfo) => {
@@ -11,6 +11,7 @@ test('a native headed tab hides the flight, freezes its clock and requires expli
   let childClosed: Promise<void> | undefined;
   let spawnError: Error | undefined;
   let browser: Awaited<ReturnType<typeof chromium.connectOverCDP>> | undefined;
+  let browserCdp: CDPSession | undefined;
 
   try {
     child = spawn(chromium.executablePath(), [
@@ -57,7 +58,7 @@ test('a native headed tab hides the flight, freezes its clock and requires expli
 
     const other = await context.newPage();
     await other.goto('about:blank');
-    const browserCdp = await browser.newBrowserCDPSession();
+    browserCdp = await browser.newBrowserCDPSession();
     const targetInfo = async (target: typeof page) => {
       const session = await context.newCDPSession(target);
       try { return await session.send('Target.getTargetInfo'); }
@@ -83,11 +84,18 @@ test('a native headed tab hides the flight, freezes its clock and requires expli
     await page.locator('#resume').click();
     await expect.poll(() => page.locator('#elapsed').textContent()).not.toBe(stopped);
 
-    await browserCdp.detach();
   } finally {
-    await browser?.close().catch(() => undefined);
+    // Browser.close asks Chromium to shut down its renderer processes cleanly
+    // before the temporary profile is removed.
+    await browserCdp?.send('Browser.close').catch(() => undefined);
+    await browserCdp?.detach().catch(() => undefined);
+    const browserExited = await Promise.race([
+      childClosed?.then(() => true) ?? Promise.resolve(true),
+      new Promise<boolean>((resolve) => setTimeout(() => resolve(false), 3000)),
+    ]);
+    if (!browserExited) await browser?.close().catch(() => undefined);
     if (child && child.exitCode === null && child.signalCode === null) {
-      child.kill('SIGTERM');
+      if (!browserExited) child.kill('SIGTERM');
       const didExit = await Promise.race([
         childClosed?.then(() => true) ?? Promise.resolve(true),
         new Promise<boolean>((resolve) => setTimeout(() => resolve(false), 3000)),
@@ -97,6 +105,6 @@ test('a native headed tab hides the flight, freezes its clock and requires expli
         await childClosed;
       }
     }
-    await rm(profile, { recursive: true, force: true });
+    await rm(profile, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
   }
 });

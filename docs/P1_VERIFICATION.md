@@ -18,7 +18,7 @@ P1実装候補: `e432dd6` (`feat: start Gekichin flight and controls prototype`)
 
 PR初回CI（head `3efa0d6`、[run 37248357323](https://github.com/chameleonjp-lab/gekichin/actions/runs/37248357323)）はunit/build成功、Chromium 16/16、WebKit UI 6/6成功、native visibility 1件失敗で合計22/23だった。原票は [ci-first-failed.log](evidence/p1/ci-first-failed.log)。Playwright標準接続のfocus emulationが非アクティブタブも可視扱いにしていたため、検査用の新しいChromium・一時profileへ公開API `connectOverCDP({noDefaults:true,isLocal:true})` で接続するfixtureへ修正した。製品コードの変更やhidden値の注入はない。
 
-当初ローカルはXvfb不在だったが、Debian配布物を一時ディレクトリへ展開した仮想displayでheaded検査を実行した。Chromium `149.0.7827.55`、実viewport 1365×624 CSS px、DPR1。同一windowの別タブでnative `document.hidden=true`、停止と時計凍結、戻っても停止を保持、明示再開後の進行を確認した。原票は [native.log](evidence/p1/native.log) と [native-results.json](evidence/p1/native-results.json)。修正後の全23件CIは結果待ち。
+当初ローカルはXvfb不在だったが、Debian配布物を一時ディレクトリへ展開した仮想displayでheaded検査を実行した。Chromium `149.0.7827.55`、実viewport 1365×624 CSS px、DPR1。同一windowの別タブでnative `document.hidden=true`、停止と時計凍結、戻っても停止を保持、明示再開後の進行を確認した。原票は [native.log](evidence/p1/native.log) と [native-results.json](evidence/p1/native-results.json)。head `323c5b1` のPR CI run 37249688408は全23件成功。ただし同headのpush CI run 37249686323はassertion成功後のprofile削除でENOTEMPTYとなった。原票は [ci-cleanup-failed.log](evidence/p1/ci-cleanup-failed.log)。公開CDP Browser.closeによる正常終了と子プロセス終了待機、必要時の終了fallback、一時profile削除の最大10回・100ms線形backoff再試行（最大5.5秒）を追加した。最終fixtureはローカル5/5反復成功、型検査成功。原票は [native-cleanup-retry.log](evidence/p1/native-cleanup-retry.log) と [native-cleanup-retry-results.json](evidence/p1/native-cleanup-retry-results.json)。修正後CIは結果待ち。
 
 ## P1対象の結果
 

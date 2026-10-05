@@ -72,7 +72,7 @@ Kaisen固定版の [`docs/PLAN.md`](https://github.com/chameleonjp-lab/kaisen/bl
 | `browser-tests/p1-independent.spec.ts` | `fcdf7e43d9b41503f8dad6627e17fe6dea7cd832` | Enter停止、gap、WebGL失敗 |
 | `browser-tests/p1-independent-ui.spec.ts` | `149a8e424676bfa4178a3df8dc8b0cc90073488a` | 393×852のtouch settings配置 |
 | `browser-tests/p1-flow.spec.ts` | `bd65fec3a5180502f3d189b35b2205cd113b4886` | 製品画面の飛行経路、WebGL loss、audio lifecycle |
-| `browser-tests/p1-native-visibility.spec.ts` | `15388da41021450ffc0efeb04da143ef86f7361a` | headed Chromiumで実際の `document.hidden` 遷移を確認 |
+| `browser-tests/p1-native-visibility.spec.ts` | `3726f8f479c11af64aba0b72e25fbfc3d3e55b2a` | headed Chromiumで実際の `document.hidden` 遷移を確認 |
 | `browser-tests/p1-settings.spec.ts` | `61d59dd3f142e62cb7e32635a03fc88f4d359993` | 設定画面・入力経路 |
 | `playwright.config.ts` | `75fa2ba8995c0e2f9504dee5de9a50e626ad7a55` | 16 headless Chromium、6 WebKit DOM、1 headed Chromium用project |
 | `package.json` | `a5b925fa4fb87268492a8b9429cb37dfd3d44d10` | pinned scripts/runtime/dev dependencies |

@@ -1,0 +1,347 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/gekichin/node_modules/.bin/playwright",
+      "test",
+      "browser-tests/p1-native-visibility.spec.ts",
+      "--project=chromium-headed",
+      "--repeat-each=5"
+    ],
+    "configFile": "/workspace/gekichin/playwright.config.ts",
+    "rootDir": "/workspace/gekichin/browser-tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/gekichin/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/workspace/gekichin/browser-tests",
+        "testIgnore": [
+          "/p1-native-visibility\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/workspace/gekichin/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-ui",
+        "name": "webkit-ui",
+        "testDir": "/workspace/gekichin/browser-tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/p1-(settings|independent-ui)\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/workspace/gekichin/test-results",
+        "repeatEach": 5,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headed",
+        "name": "chromium-headed",
+        "testDir": "/workspace/gekichin/browser-tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/p1-native-visibility\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://127.0.0.1:4177",
+      "reuseExistingServer": true,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "p1-native-visibility.spec.ts",
+      "file": "p1-native-visibility.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "a native headed tab hides the flight, freezes its clock and requires explicit resume",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "native-browser",
+                  "description": "149.0.7827.55; viewport=1365x624; DPR=1"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headed",
+              "projectName": "chromium-headed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7196,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T01:08:32.750Z",
+                  "annotations": [
+                    {
+                      "type": "native-browser",
+                      "description": "149.0.7827.55; viewport=1365x624; DPR=1"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "777c39454ebe97d51dd7-825cc901590ee13bb33e",
+          "file": "p1-native-visibility.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "a native headed tab hides the flight, freezes its clock and requires explicit resume",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "native-browser",
+                  "description": "149.0.7827.55; viewport=1365x624; DPR=1"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headed",
+              "projectName": "chromium-headed",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6147,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T01:08:40.303Z",
+                  "annotations": [
+                    {
+                      "type": "native-browser",
+                      "description": "149.0.7827.55; viewport=1365x624; DPR=1"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "777c39454ebe97d51dd7-17b951177579dfdd9c79",
+          "file": "p1-native-visibility.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "a native headed tab hides the flight, freezes its clock and requires explicit resume",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "native-browser",
+                  "description": "149.0.7827.55; viewport=1365x624; DPR=1"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headed",
+              "projectName": "chromium-headed",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6683,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T01:08:46.815Z",
+                  "annotations": [
+                    {
+                      "type": "native-browser",
+                      "description": "149.0.7827.55; viewport=1365x624; DPR=1"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "777c39454ebe97d51dd7-1902ed0645ffba217cf7",
+          "file": "p1-native-visibility.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "a native headed tab hides the flight, freezes its clock and requires explicit resume",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "native-browser",
+                  "description": "149.0.7827.55; viewport=1365x624; DPR=1"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headed",
+              "projectName": "chromium-headed",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6442,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T01:08:53.891Z",
+                  "annotations": [
+                    {
+                      "type": "native-browser",
+                      "description": "149.0.7827.55; viewport=1365x624; DPR=1"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "777c39454ebe97d51dd7-c041ea27e6133dcf5e5e",
+          "file": "p1-native-visibility.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "a native headed tab hides the flight, freezes its clock and requires explicit resume",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "native-browser",
+                  "description": "149.0.7827.55; viewport=1365x624; DPR=1"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headed",
+              "projectName": "chromium-headed",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6729,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T01:09:00.683Z",
+                  "annotations": [
+                    {
+                      "type": "native-browser",
+                      "description": "149.0.7827.55; viewport=1365x624; DPR=1"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "777c39454ebe97d51dd7-8f6b7c393529404689df",
+          "file": "p1-native-visibility.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T01:08:32.284Z",
+    "duration": 35166.285,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
