@@ -128,3 +128,33 @@ test('ten product restart cycles retain one bounded scene and stable WebGL resou
     expect(await readCounter('renderWrecks')).toBeLessThanOrEqual(100);
   }
 });
+
+test('abort replaces the previous result display before the next rendered frame', async ({ page }) => {
+  await startCombat(page, 'normal');
+  await page.clock.runFor(500);
+  await page.locator('#pause').click();
+  const bestBefore = await page.evaluate(() => Object.fromEntries(Object.entries(localStorage).filter(([key]) => key.startsWith('gekichin-best-'))));
+  // A display-only previous-report fixture. Combat state and the frozen report
+  // are never injected; the actual Finish button must replace all stale fields.
+  await page.evaluate(() => {
+    document.querySelector('#result-outcome')!.textContent = '勝利 · 全100基撃沈';
+    document.querySelector('#result-score')!.textContent = '160,000';
+    document.querySelector('#result-details')!.textContent = '破壊 100/100';
+  });
+  await page.locator('#finish').click();
+  // The public clock stays paused: an extra RAF cannot repair a stale result.
+  const result = await page.evaluate(() => ({
+    phase: document.querySelector<HTMLElement>('#app')!.dataset.phase,
+    outcome: document.querySelector('#result-outcome')!.textContent,
+    score: document.querySelector('#result-score')!.textContent,
+    details: document.querySelector('#result-details')!.textContent,
+    componentCount: document.querySelector('#result-components')!.children.length,
+    best: Object.fromEntries(Object.entries(localStorage).filter(([key]) => key.startsWith('gekichin-best-'))),
+  }));
+  expect(result.phase).toBe('result');
+  expect(result.outcome).toBe('中断');
+  expect(result.score).toBe('0');
+  expect(result.details).toContain('破壊 0/100');
+  expect(result.componentCount).toBe(12);
+  expect(result.best).toEqual(bestBefore);
+});

@@ -333,7 +333,7 @@ element('#resume').addEventListener('click', () => {
   if (session.resume()) renderUi(true);
 }, opts);
 element('#finish').addEventListener('click', () => {
-  controls.clear(); stepper.reset(); if (session.finish('aborted')) renderUi(true);
+  if (session.finish('aborted') && session.report) showReport(session.report);
 }, opts);
 element('#skip-sinking').addEventListener('click', () => {
   sinking = false; sinkingElapsed = 5; renderUi(true);
