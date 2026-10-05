@@ -87,6 +87,10 @@ PR5統合hash表はsource freeze時点の `src/` 30ファイルの内容hashで�
 
 The preserved notice file `public/third-party-notices.txt` has SHA-256 `97de7ac302052bcea7f20e5ae89635c10e049614f56409288d554d63fceb614f` and retains the Three.js notice.
 
+## PR5統合sourceの検査binding
+
+上表の `src/` 30ファイル内容hashはPR5の初回・後続CI runを通じて不変だった。push CI [37275240792](https://github.com/chameleonjp-lab/gekichin/actions/runs/37275240792) はunit 102/102とbuild成功、browser 55 pass・1 skip・1 fail。失敗したEasy viewport/restart fixtureは5番目の1366×768 fresh load/start時の約3.9秒renderer stallにより、製品stall guardがtick 1で正しくpauseしたもの。PR CI [37275243877](https://github.com/chameleonjp-lab/gekichin/actions/runs/37275243877) はunit/build成功、browser 56 pass・1 skip・0 fail、baseline comparison成功と報告された。Easy viewport/resource専用clock fixtureは単独1/1（32.6秒）で通過し、変更を含むexact-head全CIはこのtest-fix commit準備時点でpending。最終CI bindingはPR本文／Checksを正本とする。ローカルWebKit retryは実際にtest bodyを起動して17 pass・1 skip・0 fail（software WebGLが使えないlive-flight testをskip）。結果・trace・retry条件は [PR5_CONFLICT_RESOLUTION.md](./PR5_CONFLICT_RESOLUTION.md) と [`pr5-integration/`](./evidence/pr5-integration/) に記録する。単独layout fixture runは [run.log](./evidence/pr5-integration/layout-followup/run.log) と [manifest binding](./evidence/pr5-integration/manifest.json) にある。この追記はhash inventoryを変更せず、過去の異なるsource snapshotに結び付いたcombat artifactを統合sourceへ付け替えない。最終提出HEADとCI checkのbindingはPR本文／Checksを参照する。
+
 ## 武器式の限定的な由来
 
 Gekichinの `src/aircraft-weapons.ts` に記す参照は、Kaisen固定版 `src/simulation.ts`（commit `3d751051dc6212482a129e8da596ddd349b2f9f5`、Git blob `537bf1e1fe0c5f73a1222d26e369ed6b6b312a3a`）の `fireAircraft` 内にある銃口オフセット、機体速度へ加えるMG/機関砲速度、および有限な僚機散布式である。Gekichin側は左右2発を原子的に確保し、固定ルールの弾倉・発射周期・ダメージ・寿命・弾プールと接続した。散布は元式の時刻・機体ID・左右側に基づく `sin`／`cos` の決定論的な式を僚機弾にのみ適用する。Easyの有限補正と通常の弾道計算は本作の型・砲台照準点へ接続する。

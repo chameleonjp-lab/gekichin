@@ -6,6 +6,24 @@ async function start(page: Page, mode = 'easy') {
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
 }
 
+async function startWithControlledFrames(page: Page, mode = 'easy') {
+  await page.clock.install({ time: new Date('2026-01-01T12:00:00.000Z') });
+  await page.goto('/'); await expect(page.locator('#start')).toBeEnabled();
+  let rendererReady = false;
+  for (let frame = 0; frame < 100 && !rendererReady; frame += 1) {
+    await page.clock.runFor(100);
+    rendererReady = (await page.locator('#app').getAttribute('data-renderer-ready')) === 'true';
+  }
+  expect(rendererReady, 'the renderer must finish prewarming before the measured operation starts').toBe(true);
+  // The layout/resource fixture measures a live start and repeated restart,
+  // not how much wall time SwiftShader spends compiling its first frame.
+  const pauseTime = await page.evaluate(() => Date.now() + 60_000);
+  await page.clock.pauseAt(new Date(pauseTime));
+  await page.getByRole('radio', { name: mode === 'easy' ? /Easy/ : /Normal/ }).check(); await page.locator('#start').click();
+  await page.clock.runFor(100);
+  await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
+}
+
 test('Normal keyboard flight, loop interruption, pause, settings, report and reflight use one operation', async ({ page }, info) => {
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
   await start(page, 'normal'); await expect(page.locator('[data-flight-control]:visible')).toHaveCount(3);
@@ -50,14 +68,15 @@ test('multi-touch cancel, lost capture, resize and compatibility click release h
 
 test('Easy one button fits specified viewports and ten repeated starts never duplicate app resources', async ({ page }, info) => {
   for (const viewport of [{ width: 320, height: 568 }, { width: 393, height: 852 }, { width: 568, height: 320 }, { width: 852, height: 393 }, { width: 1366, height: 768 }]) {
-    await page.setViewportSize(viewport); await start(page); await expect(page.locator('[data-flight-control]:visible')).toHaveCount(1);
+    await page.setViewportSize(viewport); await startWithControlledFrames(page); await expect(page.locator('[data-flight-control]:visible')).toHaveCount(1);
     const rect = (await page.locator('#loop').boundingBox())!;
     expect(rect.width).toBeGreaterThanOrEqual(44); expect(rect.height).toBeGreaterThanOrEqual(44); expect(rect.x).toBeGreaterThanOrEqual(7); expect(rect.y).toBeGreaterThanOrEqual(7);
     expect(rect.x + rect.width).toBeLessThanOrEqual(viewport.width - 7); expect(rect.y + rect.height).toBeLessThanOrEqual(viewport.height - 7);
   }
-  await page.setViewportSize({ width: 393, height: 852 }); await start(page); await page.screenshot({ path: info.outputPath('easy-flight.png') });
+  await page.setViewportSize({ width: 393, height: 852 }); await startWithControlledFrames(page); await page.screenshot({ path: info.outputPath('easy-flight.png') });
   for (let repeat = 0; repeat < 10; repeat += 1) {
     await page.locator('#pause').click(); await page.locator('#finish').click(); await page.locator('#restart').evaluate(button => { (button as HTMLButtonElement).click(); (button as HTMLButtonElement).click(); });
+    await page.clock.runFor(100);
     await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing'); await expect(page.locator('#flight-canvas')).toHaveCount(1); await expect(page.locator('#control-settings')).toHaveCount(1);
   }
 });

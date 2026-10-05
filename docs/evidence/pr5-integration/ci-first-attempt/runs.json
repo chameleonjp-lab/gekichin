@@ -1,0 +1,39 @@
+{
+  "head": "0a43f30d59f74bfebf90ac46ea6a6fd2bbdb073e",
+  "push": {
+    "id": 37275240792,
+    "conclusion": "failure",
+    "unitPassed": 102,
+    "build": "success",
+    "browser": {
+      "passed": 55,
+      "skipped": 1,
+      "failed": 1,
+      "test": "browser-tests/p1-flow.spec.ts:51",
+      "observation": "Initial real-clock rendering gap triggered the existing 2-second stall pause at tick 1; product guard correctly fired."
+    },
+    "artifact": {
+      "id": 11330372144,
+      "zipSHA256": "241bc11877b8416747045e4470e94b8a84859aae949dd1645844369a71453cd7",
+      "errorContextPath": "test-results/p1-flow-Easy-one-button-fi-67c64-ver-duplicate-app-resources-chromium/error-context.md",
+      "pauseReason": "処理が2秒以上停止したため戦闘を止めました。明示的に再開してください。"
+    }
+  },
+  "pullRequest": {
+    "id": 37275243877,
+    "browserStep": "success",
+    "conclusion": "success",
+    "unitPassed": 102,
+    "build": "success",
+    "browser": {
+      "passed": 56,
+      "skipped": 1,
+      "failed": 0,
+      "chromium": 38,
+      "webkit": 17,
+      "headedChromium": 1
+    },
+    "comparison": "success",
+    "artifactId": 11330093072
+  }
+}

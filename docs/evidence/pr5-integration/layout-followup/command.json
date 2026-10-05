@@ -1,0 +1,11 @@
+{
+  "command": "PLAYWRIGHT_BROWSERS_PATH=/workspace/.playwright-browsers PLAYWRIGHT_JSON_OUTPUT_NAME=/tmp/gekichin-pr5-p1-flow-easy-controlled.json npx playwright test browser-tests/p1-flow.spec.ts --project=chromium --grep 'Easy one button fits specified viewports' --reporter=list,json 2>&1 | tee /tmp/gekichin-pr5-p1-flow-easy-controlled.log",
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "durationSeconds": 32.641,
+  "caseDurationSeconds": 31.8,
+  "testSHA256": "a9c486bb382aa71eb1d16485979ddefaad48304befdff77c3e26290f40f7bfda",
+  "productionSourceUnchangedFrom": "0a43f30d59f74bfebf90ac46ea6a6fd2bbdb073e",
+  "clockScope": "HOME renderer prewarm and this layout/restart fixture only; no production state injection."
+}

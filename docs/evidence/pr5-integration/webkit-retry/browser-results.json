@@ -1,0 +1,777 @@
+{
+  "config": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/gekichin/node_modules/.bin/playwright",
+      "test",
+      "--project=webkit-ui"
+    ],
+    "configFile": "/workspace/gekichin/playwright.config.ts",
+    "rootDir": "/workspace/gekichin/browser-tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/workspace/gekichin/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/workspace/gekichin/browser-tests",
+        "testIgnore": [
+          "/p1-native-visibility\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/workspace/gekichin/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-ui",
+        "name": "webkit-ui",
+        "testDir": "/workspace/gekichin/browser-tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/(p1-(settings|independent-ui)|throttle-lever)\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/workspace/gekichin/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headed",
+        "name": "chromium-headed",
+        "testDir": "/workspace/gekichin/browser-tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/p1-native-visibility\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://127.0.0.1:4177",
+      "reuseExistingServer": true,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "p1-independent-ui.spec.ts",
+      "file": "p1-independent-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "touch preview controls fit their scroller and Gekichin settings leave other games storage untouched",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10465,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:58:40.055Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2073270c17d5c7e9547d-362165ad6d74c6d41e50",
+          "file": "p1-independent-ui.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "p1-settings.spec.ts",
+      "file": "p1-settings.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13769,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:58:54.144Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "427df6794e589ebc9c10-cc3a0b13371d64de344b",
+          "file": "p1-settings.spec.ts",
+          "line": 20,
+          "column": 1
+        },
+        {
+          "title": "home editors offer both modes and persist touch size, opacity and placement only after save",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12928,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:59:07.932Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "427df6794e589ebc9c10-981848695f4ce0849ec7",
+          "file": "p1-settings.spec.ts",
+          "line": 48,
+          "column": 1
+        },
+        {
+          "title": "a multi-key save failure rolls back and only explicit session use changes active settings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10456,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:59:20.869Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "427df6794e589ebc9c10-7856e5a85184fd91fd9f",
+          "file": "p1-settings.spec.ts",
+          "line": 68,
+          "column": 1
+        },
+        {
+          "title": "future-version values are never downgraded and failed drafts can be cancelled",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10810,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:59:31.337Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "427df6794e589ebc9c10-f9d929ea8ca43a644d54",
+          "file": "p1-settings.spec.ts",
+          "line": 90,
+          "column": 1
+        },
+        {
+          "title": "home, settings and guide stay reachable at all required viewports and 200 percent text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 29738,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:59:42.165Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "427df6794e589ebc9c10-73b00e8838936c31120e",
+          "file": "p1-settings.spec.ts",
+          "line": 104,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "throttle-lever.spec.ts",
+      "file": "throttle-lever.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "v1 read migration, repeated v2 save, rectangular preview and 200% settings 320x568",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16992,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:00:11.937Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-adc611d18ed8378ae1d1",
+          "file": "throttle-lever.spec.ts",
+          "line": 11,
+          "column": 2
+        },
+        {
+          "title": "v1 read migration, repeated v2 save, rectangular preview and 200% settings 393x852",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15663,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:00:28.941Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-d223558f739fdb505f72",
+          "file": "throttle-lever.spec.ts",
+          "line": 11,
+          "column": 2
+        },
+        {
+          "title": "v1 read migration, repeated v2 save, rectangular preview and 200% settings 568x320",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15218,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:00:44.612Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-1d8a67db849ed199664c",
+          "file": "throttle-lever.spec.ts",
+          "line": 11,
+          "column": 2
+        },
+        {
+          "title": "v1 read migration, repeated v2 save, rectangular preview and 200% settings 852x393",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15972,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:00:59.847Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-75ac6fcdaa98cd3cd94d",
+          "file": "throttle-lever.spec.ts",
+          "line": 11,
+          "column": 2
+        },
+        {
+          "title": "future v2, legacy raw and failed save remain protected through cancel and session-only use",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10765,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:01:15.830Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-1d0a6f0d5a19d0bd185a",
+          "file": "throttle-lever.spec.ts",
+          "line": 34,
+          "column": 1
+        },
+        {
+          "title": "real browser pointer and focused slider input spring home and release independently",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3693,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:01:26.609Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-cb790f1b3fba0d18ce72",
+          "file": "throttle-lever.spec.ts",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "Normal live flight accepts the lever, stops through settings and Easy has none",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Linux WebKit project verifies production input DOM and settings; software WebGL is unavailable",
+                  "location": {
+                    "file": "/workspace/gekichin/browser-tests/throttle-lever.spec.ts",
+                    "line": 65,
+                    "column": 7
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 492,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:01:30.317Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Linux WebKit project verifies production input DOM and settings; software WebGL is unavailable",
+                      "location": {
+                        "file": "/workspace/gekichin/browser-tests/throttle-lever.spec.ts",
+                        "line": 65,
+                        "column": 7
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-aab967200dc212383ea1",
+          "file": "throttle-lever.spec.ts",
+          "line": 64,
+          "column": 1
+        },
+        {
+          "title": "hidden HUD obstacle measurement preserves controls 320x568 text 100%",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11118,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:01:30.823Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-09881e0cdb32d880e3f5",
+          "file": "throttle-lever.spec.ts",
+          "line": 78,
+          "column": 2
+        },
+        {
+          "title": "hidden HUD obstacle measurement preserves controls 320x568 text 200%",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17087,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:01:41.950Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-17426c9e63b5669aa32b",
+          "file": "throttle-lever.spec.ts",
+          "line": 78,
+          "column": 2
+        },
+        {
+          "title": "hidden HUD obstacle measurement preserves controls 568x320 text 100%",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17240,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:01:59.055Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-2a68b88349fac0c31e50",
+          "file": "throttle-lever.spec.ts",
+          "line": 78,
+          "column": 2
+        },
+        {
+          "title": "hidden HUD obstacle measurement preserves controls 568x320 text 200%",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17703,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:02:16.307Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-0b5f9adb550a5dcae067",
+          "file": "throttle-lever.spec.ts",
+          "line": 78,
+          "column": 2
+        },
+        {
+          "title": "settings footer and close remain reachable at 200 percent CSS zoom",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-ui",
+              "projectName": "webkit-ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10807,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:02:34.024Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3bd552de10b96a801d54-2a8f0aeee1022e80ce6f",
+          "file": "throttle-lever.spec.ts",
+          "line": 104,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T06:58:39.607Z",
+    "duration": 245337.00799999997,
+    "expected": 17,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

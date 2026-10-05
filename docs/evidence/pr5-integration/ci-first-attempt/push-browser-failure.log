@@ -1,0 +1,115 @@
+verify	Run xvfb-run -a npm run test:browser	﻿2026-10-05T07:00:45.4770955Z ##[group]Run xvfb-run -a npm run test:browser
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:00:45.4771299Z [36;1mxvfb-run -a npm run test:browser[0m
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:00:45.4806215Z shell: /usr/bin/bash -e {0}
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:00:45.4806482Z ##[endgroup]
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:00:48.1506669Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:00:48.1507353Z > gekichin@0.1.0 test:browser
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:00:48.1507670Z > playwright test
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:00:48.1507786Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:00:49.2950376Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:00:49.2951038Z Running 57 tests using 1 worker
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:00:49.2960934Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:00:58.3154537Z   ✓   1 [chromium] › browser-tests/combat-throttle.spec.ts:36:1 › Normal lever retains its target, clears on controls pause, and Easy keeps cruise (8.5s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:01:12.3411443Z   ✓   2 [chromium] › browser-tests/combat-throttle.spec.ts:102:1 › Normal sea-loss clears a held lever and steering key; a fresh focused throttle command works after respawn (14.0s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:01:17.2041571Z   ✓   3 [chromium] › browser-tests/combat-throttle.spec.ts:161:1 › large-text landscape throttle placement stays clear of real controls and matches the saved preview (4.9s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:01:28.6778731Z   ✓   4 [chromium] › browser-tests/combat.spec.ts:31:1 › Easy combat clock, six-face HUD, pause and explicit resume follow product controls (11.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:01:41.2366843Z   ✓   5 [chromium] › browser-tests/combat.spec.ts:59:1 › Normal keyboard firing consumes real ammunition and updates flight HUD, then pauses cleanly (12.5s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:01:58.6321778Z   ✓   6 [chromium] › browser-tests/combat.spec.ts:91:1 › ten product restart cycles retain one bounded scene and stable WebGL resources (17.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:02:06.1040027Z   ✓   7 [chromium] › browser-tests/combat.spec.ts:133:1 › abort replaces the previous result display before the next rendered frame (7.5s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:02:17.5536573Z   ✓   8 [chromium] › browser-tests/combat.spec.ts:163:1 › Normal sea contact clears held controls and respawns the player under new ownership (11.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:03:08.6910060Z   ✓   9 [chromium] › browser-tests/evasion-recording.spec.ts:21:1 › A12/R45 records six paired real-projectile evasion cases through the normal FlightScene camera (51.1s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:03:20.8980952Z   ✓  10 [chromium] › browser-tests/evasion-visual.spec.ts:3:1 › normal product camera shows a main-gun warning and an ordinary turn (12.2s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:03:34.9515745Z   ✓  11 [chromium] › browser-tests/p1-flow.spec.ts:9:1 › Normal keyboard flight, loop interruption, pause, settings, report and reflight use one operation (14.0s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:03:41.7542623Z   ✓  12 [chromium] › browser-tests/p1-flow.spec.ts:33:1 › multi-touch cancel, lost capture, resize and compatibility click release held input (6.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:04:19.5300563Z   ✘  13 [chromium] › browser-tests/p1-flow.spec.ts:51:1 › Easy one button fits specified viewports and ten repeated starts never duplicate app resources (36.2s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:04:27.3770934Z   ✓  14 [chromium] › browser-tests/p1-flow.spec.ts:65:1 › WebGL loss while paused or editing gives guidance and restoration needs explicit resume (7.3s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:04:33.6663647Z   ✓  15 [chromium] › browser-tests/p1-flow.spec.ts:74:1 › an aborted combat report does not write a best record or make game API requests (6.3s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:04:39.9424731Z   ✓  16 [chromium] › browser-tests/p1-flow.spec.ts:93:1 › an explicit visibilitychange fixture stops flight and visible recovery never resumes it (6.2s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:04:47.0890754Z   ✓  17 [chromium] › browser-tests/p1-flow.spec.ts:114:1 › sound starts OFF, pauses with flight and reuses one audio context after replay (7.1s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:04:53.3839153Z   ✓  18 [chromium] › browser-tests/p1-independent-ui.spec.ts:10:1 › touch preview controls fit their scroller and Gekichin settings leave other games storage untouched (6.3s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:04:59.0106064Z   ✓  19 [chromium] › browser-tests/p1-independent.spec.ts:10:1 › a pause binding on Enter leaves home and result button activation with native Enter (5.6s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:05:07.1136050Z   ✓  20 [chromium] › browser-tests/p1-independent.spec.ts:36:1 › an event-loop stall of at least two seconds freezes the flight until explicit resume (8.1s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:05:11.0813808Z   ✓  21 [chromium] › browser-tests/p1-independent.spec.ts:57:1 › when WebGL creation fails, settings and help remain available while flight stays disabled (4.0s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:05:21.4972099Z   ✓  22 [chromium] › browser-tests/p1-settings.spec.ts:20:1 › nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional (10.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:05:32.5281031Z   ✓  23 [chromium] › browser-tests/p1-settings.spec.ts:48:1 › home editors offer both modes and persist touch size, opacity and placement only after save (11.0s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:05:39.1053613Z   ✓  24 [chromium] › browser-tests/p1-settings.spec.ts:68:1 › a multi-key save failure rolls back and only explicit session use changes active settings (6.6s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:05:46.8321377Z   ✓  25 [chromium] › browser-tests/p1-settings.spec.ts:90:1 › future-version values are never downgraded and failed drafts can be cancelled (7.7s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:06:21.7502850Z   ✓  26 [chromium] › browser-tests/p1-settings.spec.ts:104:1 › home, settings and guide stay reachable at all required viewports and 200 percent text (34.9s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:06:36.5500881Z   ✓  27 [chromium] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 320x568 (14.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:06:52.2950924Z   ✓  28 [chromium] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 393x852 (15.7s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:07:05.7888225Z   ✓  29 [chromium] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 568x320 (13.5s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:07:22.5899116Z   ✓  30 [chromium] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 852x393 (16.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:07:30.3944155Z   ✓  31 [chromium] › browser-tests/throttle-lever.spec.ts:34:1 › future v2, legacy raw and failed save remain protected through cancel and session-only use (7.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:07:32.0936639Z   ✓  32 [chromium] › browser-tests/throttle-lever.spec.ts:42:1 › real browser pointer and focused slider input spring home and release independently (1.7s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:07:41.4488064Z   ✓  33 [chromium] › browser-tests/throttle-lever.spec.ts:64:1 › Normal live flight accepts the lever, stops through settings and Easy has none (9.3s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:07:56.2921755Z   ✓  34 [chromium] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 100% (14.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:08:17.5000805Z   ✓  35 [chromium] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 200% (21.2s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:08:37.5380928Z   ✓  36 [chromium] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 100% (20.0s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:08:58.3795614Z   ✓  37 [chromium] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 200% (20.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:09:07.6776247Z   ✓  38 [chromium] › browser-tests/throttle-lever.spec.ts:104:1 › settings footer and close remain reachable at 200 percent CSS zoom (9.3s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:09:16.0589666Z   ✓  39 [webkit-ui] › browser-tests/p1-independent-ui.spec.ts:10:1 › touch preview controls fit their scroller and Gekichin settings leave other games storage untouched (5.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:09:20.6128731Z   ✓  40 [webkit-ui] › browser-tests/p1-settings.spec.ts:20:1 › nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional (4.5s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:09:24.7945101Z   ✓  41 [webkit-ui] › browser-tests/p1-settings.spec.ts:48:1 › home editors offer both modes and persist touch size, opacity and placement only after save (4.2s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:09:27.2130794Z   ✓  42 [webkit-ui] › browser-tests/p1-settings.spec.ts:68:1 › a multi-key save failure rolls back and only explicit session use changes active settings (2.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:09:30.5875471Z   ✓  43 [webkit-ui] › browser-tests/p1-settings.spec.ts:90:1 › future-version values are never downgraded and failed drafts can be cancelled (3.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:09:44.2895381Z   ✓  44 [webkit-ui] › browser-tests/p1-settings.spec.ts:104:1 › home, settings and guide stay reachable at all required viewports and 200 percent text (13.7s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:09:49.4244689Z   ✓  45 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 320x568 (5.1s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:09:55.1268051Z   ✓  46 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 393x852 (5.7s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:00.1281153Z   ✓  47 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 568x320 (5.0s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:06.4715528Z   ✓  48 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 852x393 (6.3s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:09.7134411Z   ✓  49 [webkit-ui] › browser-tests/throttle-lever.spec.ts:34:1 › future v2, legacy raw and failed save remain protected through cancel and session-only use (3.2s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:10.1724879Z   ✓  50 [webkit-ui] › browser-tests/throttle-lever.spec.ts:42:1 › real browser pointer and focused slider input spring home and release independently (448ms)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:10.3766365Z   -  51 [webkit-ui] › browser-tests/throttle-lever.spec.ts:64:1 › Normal live flight accepts the lever, stops through settings and Easy has none
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:14.6226455Z   ✓  52 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 100% (4.2s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:20.6074457Z   ✓  53 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 200% (6.0s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:26.2283778Z   ✓  54 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 100% (5.6s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:32.1558417Z   ✓  55 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 200% (5.9s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:35.1210039Z   ✓  56 [webkit-ui] › browser-tests/throttle-lever.spec.ts:104:1 › settings footer and close remain reachable at 200 percent CSS zoom (3.0s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4435375Z   ✓  57 [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:8:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume (8.9s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4793011Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4835115Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4837991Z   1) [chromium] › browser-tests/p1-flow.spec.ts:51:1 › Easy one button fits specified viewports and ten repeated starts never duplicate app resources 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4839330Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4839643Z     Error: expect(locator).toHaveAttribute(expected) failed
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4839974Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4840120Z     Locator:  locator('#app')
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4840465Z     Expected: "playing"
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4840767Z     Received: "paused"
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4841073Z     Timeout:  15000ms
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4841246Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4841366Z     Call log:
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4841729Z       - Expect "toHaveAttribute" with timeout 15000ms
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4842180Z       - waiting for locator('#app')
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4845411Z         34 × locator resolved to <div id="app" data-tick="1" data-mode="easy" data-ownership="0" data-phase="paused" data-operation-id="1" data-audio-voices="0" data-seed="1196097537" data-large-text="false" data-audio-contexts="0" data-compact-hud="false" data-destroyed-count="0" data-friendly-bullets="4" data-enemy-mg-bullets="0" data-audio-active="false" data-presentation="paused" data-audio-max-voices="16" data-audio-enabled="false" data-renderer-ready="true" data-enemy-main-bullets="0" data-destroyed-turret-ids="" data-enemy-…>…</div>
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4848410Z            - unexpected value "paused"
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4848653Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4848662Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4849082Z       4 |   await page.goto('/'); await expect(page.locator('#start')).toBeEnabled();
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4849987Z       5 |   await page.getByRole('radio', { name: mode === 'easy' ? /Easy/ : /Normal/ }).check(); await page.locator('#start').click();
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4850863Z     > 6 |   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4851429Z         |                                      ^
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4851770Z       7 | }
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4852013Z       8 |
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4852766Z       9 | test('Normal keyboard flight, loop interruption, pause, settings, report and reflight use one operation', async ({ page }, info) => {
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4853763Z         at start (/home/runner/work/gekichin/gekichin/browser-tests/p1-flow.spec.ts:6:38)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4854518Z         at /home/runner/work/gekichin/gekichin/browser-tests/p1-flow.spec.ts:53:43
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4854916Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4855448Z     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4856400Z     test-results/p1-flow-Easy-one-button-fi-67c64-ver-duplicate-app-resources-chromium/test-failed-1.png
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4857437Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4857795Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4858389Z     Error Context: test-results/p1-flow-Easy-one-button-fi-67c64-ver-duplicate-app-resources-chromium/error-context.md
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4859657Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4860295Z     attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4861299Z     test-results/p1-flow-Easy-one-button-fi-67c64-ver-duplicate-app-resources-chromium/trace.zip
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4862057Z     Usage:
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4862279Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4862976Z         npx playwright show-trace test-results/p1-flow-Easy-one-button-fi-67c64-ver-duplicate-app-resources-chromium/trace.zip
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4863632Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4864118Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4864486Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4864592Z   1 failed
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4865522Z     [chromium] › browser-tests/p1-flow.spec.ts:51:1 › Easy one button fits specified viewports and ten repeated starts never duplicate app resources 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4866281Z   1 skipped
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.4866540Z   55 passed (9.9m)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T07:10:44.5043788Z ##[error]Process completed with exit code 1.
