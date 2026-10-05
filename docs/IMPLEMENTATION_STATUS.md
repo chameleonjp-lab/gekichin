@@ -15,7 +15,7 @@
 | 段階 | 状態 | 現在確認できる範囲 |
 | --- | --- | --- |
 | P0 基準・実施条件 | 記録済み。実装treeの最終blob表はP1安定後に確定 | 要件/README/計画のblob、固定参照、移行分類、依存と実行環境、性能manifestを記録。実PCとiPhone 17 Proは利用できず、性能は未測定 |
-| P1 操縦と最小画面 | 実装済み。最終受入は保留 | 固定60Hzの飛行、画面遷移、Easy/Normal、共通入力と設定、カメラ、停止と飛行プロトタイプ結果を実装。単体検査とbuildは成功。関連するブラウザ検査と最終CIの確認が済むまでP1受入は未完了 |
+| P1 操縦と最小画面 | 実装済み。最終受入は保留 | 固定60Hzの飛行、画面遷移、Easy/Normal、共通入力と設定、カメラ、停止と飛行プロトタイプ結果を実装。unit 12/12、build、headless Chromium 16/16は成功。WebKit DOM検査6件、headed Chromium native visibility 1件、最終CIは結果待ち |
 | P2 母艦と砲台配置 | 未着手 | 製品用形状、100基、当たり判定、六面への攻撃経路は未実装 |
 | P3 有限残機・味方銃撃・得点 | 未着手 | 50トークン、弾倉、損傷、採点、撃沈判定は未実装 |
 | P4 敵砲台・僚機AI | 未着手 | 主砲/機銃の脅威、遮蔽、僚機攻撃経路は未実装 |
@@ -39,7 +39,7 @@ P0の実機不在は未検証として固定した。模擬ブラウザ、スク
 
 P1画面のChromium画像は `docs/evidence/p1/` に記録している。ホームと飛行画面は1366×768、キーボード／タッチ設定画面は393×852。いずれもCSS px相当、DPR1のsoftware-renderingを含むキャプチャで、ブラウザ内のWebGL画面も確認できる。画像はフレーム時間の測定、実GPU、タッチ実機、iPhone Safari、遊びやすさの評価ではない。
 
-ローカル環境はNode `v24.19.0`、npm `11.9.0`。最終P1候補では `npm ci` 成功、`npm test` は12/12成功（skipなし）、`npm run build` 成功を `docs/evidence/p1/` に保存した。buildは641.76 kBのJavaScript chunkが500 kB警告を出したため、P7で実負荷を計測し原因を検討する。Playwrightの最終予定はheadless Chromium 16、WebKit DOM検査6、headed Chromiumのnative visibility検査1。16件のChromium実行は進行中。WebKitはローカル必要ライブラリ不足、headed ChromiumはローカルXvfb/display不足で起動できず、CI結果待ち。GitHub Actions workflowはNode 24上でunit/buildとこのブラウザ行列を実行する。最終候補headのbrowser run/CI完了までは未検証とする。実PC/iPhoneの性能測定、Safari実機試遊、聴感、通常入力による勝利は未実施。
+ローカル環境はNode `v24.19.0`、npm `11.9.0`。最終P1候補では `npm ci` 成功、`npm test` は12/12成功（skipなし）、`npm run build` 成功、headless Chromiumは16/16成功（失敗0、skip0、約2.6分）を `docs/evidence/p1/` に保存した。buildは641.76 kBのJavaScript chunkが500 kB警告を出したため、P7で実負荷を計測し原因を検討する。Playwright行列はheadless Chromium 16、WebKit DOM検査6、headed Chromiumのnative visibility検査1。WebKitはローカル必要ライブラリ不足、headed ChromiumはローカルXvfb/display不足で起動できず、残る7件とCI結果待ち。GitHub Actions workflowはNode 24上でunit/buildとこのブラウザ行列を実行する。P1の最終受入はWebKit/ headed native/CI結果を確認するまで未完了。実PC/iPhoneの性能測定、Safari実機試遊、聴感、通常入力による勝利は未実施。
 
 ## ローカルで起動・確認する方法
 
@@ -55,10 +55,17 @@ npm run dev -- --port 4177
 ```sh
 npm test
 npm run build
-npm run test:browser
+npm run test:browser -- --project=chromium
 ```
 
-上記3コマンドは最終P1候補で実行済み。`npm run test:browser` は最終ブラウザ行列の結果待ち。実行結果、commit head、ブラウザ版、失敗・阻害を記録し、CIの結果はCI URLとheadを追記する。
+上記コマンドは最終P1候補で実行済み。Chromium16/16は成功。Linuxで全ブラウザ行列を実行する場合はPlaywright browser/OS dependencyを導入した後、Xvfb下で実行する。
+
+```sh
+npx playwright install --with-deps chromium webkit
+xvfb-run -a npm run test:browser
+```
+
+WebKit UI検査とnative visibility検査は、CI URL・tested head・各projectの結果とともに最終記録へ追記する。
 
 ## 次の段階
 
