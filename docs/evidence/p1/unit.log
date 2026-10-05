@@ -1,0 +1,29 @@
+
+> gekichin@0.1.0 test
+> node --import tsx --test tests/*.test.ts
+
+✔ fixed source flight and camera tuning remain unchanged (1.703216ms)
+✔ right turn, climb and throttle preserve physical signs and bounded speed (1.338055ms)
+✔ five second loop ends once and new steering interrupts without teleportation (2.108648ms)
+✔ no P1 placeholder target pulls steering; hidden/dead targets are rejected and shot correction is finite (0.630435ms)
+✔ preparation, pause, report and stale callbacks keep one authoritative operation (1.338856ms)
+✔ accepted fixed-tick inputs produce the same final flight at 30/60/120Hz rendering (8.05682ms)
+✔ keyboard schema exposes nine actions and rejects invalid or duplicate settings (0.696753ms)
+✔ pointercancel releases its own steering and button owners while preserving another active pointer (2.928083ms)
+✔ resize and blur clear held pointer and keyboard state so stale input cannot resume flight (1.197206ms)
+✔ settings writes roll back earlier keys after a later write fails (0.331762ms)
+✔ future settings versions block the whole save without touching any stored value (0.206035ms)
+✔ a wall-clock gap of two seconds discards accumulated time and needs a later fresh frame (0.989888ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 257.005041
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

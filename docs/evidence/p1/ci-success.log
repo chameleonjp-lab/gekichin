@@ -1,0 +1,90 @@
+Tested head: 15fe3bba99d5a5964bdf9007048de315cc9f105a
+Run: https://github.com/chameleonjp-lab/gekichin/actions/runs/37250362241
+Selected unmodified unit/build/browser step output follows. CI browser metadata and artifacts are retained at the run URL.
+verify	Run npm test	﻿2026-10-05T01:10:31.0565066Z ##[group]Run npm test
+verify	Run npm test	2026-10-05T01:10:31.0565399Z [36;1mnpm test[0m
+verify	Run npm test	2026-10-05T01:10:31.0637235Z shell: /usr/bin/bash -e {0}
+verify	Run npm test	2026-10-05T01:10:31.0637803Z ##[endgroup]
+verify	Run npm test	2026-10-05T01:10:31.1815268Z 
+verify	Run npm test	2026-10-05T01:10:31.1816055Z > gekichin@0.1.0 test
+verify	Run npm test	2026-10-05T01:10:31.1816616Z > node --import tsx --test tests/*.test.ts
+verify	Run npm test	2026-10-05T01:10:31.1816867Z 
+verify	Run npm test	2026-10-05T01:10:31.6661157Z ✔ fixed source flight and camera tuning remain unchanged (2.445034ms)
+verify	Run npm test	2026-10-05T01:10:31.6663904Z ✔ right turn, climb and throttle preserve physical signs and bounded speed (2.230233ms)
+verify	Run npm test	2026-10-05T01:10:31.6716977Z ✔ five second loop ends once and new steering interrupts without teleportation (3.956174ms)
+verify	Run npm test	2026-10-05T01:10:31.6718963Z ✔ no P1 placeholder target pulls steering; hidden/dead targets are rejected and shot correction is finite (0.694635ms)
+verify	Run npm test	2026-10-05T01:10:31.6720765Z ✔ preparation, pause, report and stale callbacks keep one authoritative operation (2.095873ms)
+verify	Run npm test	2026-10-05T01:10:31.6722555Z ✔ accepted fixed-tick inputs produce the same final flight at 30/60/120Hz rendering (13.035854ms)
+verify	Run npm test	2026-10-05T01:10:31.6724642Z ✔ keyboard schema exposes nine actions and rejects invalid or duplicate settings (1.038648ms)
+verify	Run npm test	2026-10-05T01:10:31.6927512Z ✔ pointercancel releases its own steering and button owners while preserving another active pointer (5.045242ms)
+verify	Run npm test	2026-10-05T01:10:31.6929881Z ✔ resize and blur clear held pointer and keyboard state so stale input cannot resume flight (1.615347ms)
+verify	Run npm test	2026-10-05T01:10:31.6932975Z ✔ settings writes roll back earlier keys after a later write fails (0.444542ms)
+verify	Run npm test	2026-10-05T01:10:31.6937979Z ✔ future settings versions block the whole save without touching any stored value (0.320287ms)
+verify	Run npm test	2026-10-05T01:10:31.6943114Z ✔ a wall-clock gap of two seconds discards accumulated time and needs a later fresh frame (1.371864ms)
+verify	Run npm test	2026-10-05T01:10:31.6944348Z ℹ tests 12
+verify	Run npm test	2026-10-05T01:10:31.6944980Z ℹ suites 0
+verify	Run npm test	2026-10-05T01:10:31.6945606Z ℹ pass 12
+verify	Run npm test	2026-10-05T01:10:31.6963176Z ℹ fail 0
+verify	Run npm test	2026-10-05T01:10:31.6963659Z ℹ cancelled 0
+verify	Run npm test	2026-10-05T01:10:31.6964013Z ℹ skipped 0
+verify	Run npm test	2026-10-05T01:10:31.6964622Z ℹ todo 0
+verify	Run npm test	2026-10-05T01:10:31.6964999Z ℹ duration_ms 462.342513
+verify	Run npm run build	﻿2026-10-05T01:10:31.7127466Z ##[group]Run npm run build
+verify	Run npm run build	2026-10-05T01:10:31.7127793Z [36;1mnpm run build[0m
+verify	Run npm run build	2026-10-05T01:10:31.7197666Z shell: /usr/bin/bash -e {0}
+verify	Run npm run build	2026-10-05T01:10:31.7197975Z ##[endgroup]
+verify	Run npm run build	2026-10-05T01:10:31.8191567Z 
+verify	Run npm run build	2026-10-05T01:10:31.8192353Z > gekichin@0.1.0 build
+verify	Run npm run build	2026-10-05T01:10:31.8192943Z > tsc --noEmit && vite build
+verify	Run npm run build	2026-10-05T01:10:31.8193258Z 
+verify	Run npm run build	2026-10-05T01:10:33.5354013Z [36mvite v8.3.1 [32mbuilding client environment for production...[36m[39m
+verify	Run npm run build	2026-10-05T01:10:33.5445885Z transforming...
+verify	Run npm run build	2026-10-05T01:10:33.6639938Z ✓ 20 modules transformed.
+verify	Run npm run build	2026-10-05T01:10:33.6946617Z rendering chunks...
+verify	Run npm run build	2026-10-05T01:10:33.7522953Z computing gzip size...
+verify	Run npm run build	2026-10-05T01:10:33.7620197Z dist/index.html                   0.61 kB │ gzip:   0.40 kB
+verify	Run npm run build	2026-10-05T01:10:33.7621178Z dist/assets/index-7AXiZ4zu.css   14.43 kB │ gzip:   3.94 kB
+verify	Run npm run build	2026-10-05T01:10:33.7622142Z dist/assets/index-IhypfHWc.js   641.76 kB │ gzip: 166.89 kB
+verify	Run npm run build	2026-10-05T01:10:33.7622552Z 
+verify	Run npm run build	2026-10-05T01:10:33.7624582Z [32m✓ built in 226ms[39m
+verify	Run npm run build	2026-10-05T01:10:33.7631044Z [33m[plugin builtin:vite-reporter] 
+verify	Run npm run build	2026-10-05T01:10:33.7631591Z (!) Some chunks are larger than 500 kB after minification. Consider:
+verify	Run npm run build	2026-10-05T01:10:33.7632128Z - Using dynamic import() to code-split the application
+verify	Run npm run build	2026-10-05T01:10:33.7632998Z - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+verify	Run npm run build	2026-10-05T01:10:33.7633953Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+verify	Run xvfb-run -a npm run test:browser	﻿2026-10-05T01:11:24.7318369Z ##[group]Run xvfb-run -a npm run test:browser
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:24.7318808Z [36;1mxvfb-run -a npm run test:browser[0m
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:24.7388369Z shell: /usr/bin/bash -e {0}
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:24.7388674Z ##[endgroup]
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:27.9006239Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:27.9006907Z > gekichin@0.1.0 test:browser
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:27.9007384Z > playwright test
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:27.9007548Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:29.3935915Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:29.3936702Z Running 23 tests using 1 worker
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:29.3954362Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:45.7728882Z   ✓   1 [chromium] › browser-tests/p1-flow.spec.ts:9:1 › Normal keyboard flight, loop interruption, pause, settings, report and reflight use one operation (13.5s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:11:51.6521398Z   ✓   2 [chromium] › browser-tests/p1-flow.spec.ts:32:1 › multi-touch cancel, lost capture, resize and compatibility click release held input (5.9s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:12:19.4896784Z   ✓   3 [chromium] › browser-tests/p1-flow.spec.ts:50:1 › Easy one button fits specified viewports and ten repeated starts never duplicate app resources (27.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:12:25.5668544Z   ✓   4 [chromium] › browser-tests/p1-flow.spec.ts:64:1 › WebGL loss while paused or editing gives guidance and restoration needs explicit resume (6.1s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:12:30.7815886Z   ✓   5 [chromium] › browser-tests/p1-flow.spec.ts:73:1 › the flight prototype makes no game API requests or result storage writes (5.2s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:12:36.2996232Z   ✓   6 [chromium] › browser-tests/p1-flow.spec.ts:87:1 › an explicit visibilitychange fixture stops flight and visible recovery never resumes it (5.5s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:12:42.6332348Z   ✓   7 [chromium] › browser-tests/p1-flow.spec.ts:108:1 › sound starts OFF, pauses with flight and reuses one audio context after replay (6.3s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:12:48.2580698Z   ✓   8 [chromium] › browser-tests/p1-independent-ui.spec.ts:10:1 › touch preview controls fit their scroller and Gekichin settings leave other games storage untouched (5.6s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:12:53.3952232Z   ✓   9 [chromium] › browser-tests/p1-independent.spec.ts:10:1 › a pause binding on Enter leaves home and result button activation with native Enter (5.1s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:13:00.8471792Z   ✓  10 [chromium] › browser-tests/p1-independent.spec.ts:36:1 › an event-loop stall of at least two seconds freezes the flight until explicit resume (7.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:13:02.8453042Z   ✓  11 [chromium] › browser-tests/p1-independent.spec.ts:57:1 › when WebGL creation fails, settings and help remain available while flight stays disabled (2.0s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:13:12.2776734Z   ✓  12 [chromium] › browser-tests/p1-settings.spec.ts:20:1 › nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional (9.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:13:22.3543043Z   ✓  13 [chromium] › browser-tests/p1-settings.spec.ts:48:1 › home editors offer both modes and persist touch size, opacity and placement only after save (10.1s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:13:28.1588432Z   ✓  14 [chromium] › browser-tests/p1-settings.spec.ts:68:1 › a multi-key save failure rolls back and only explicit session use changes active settings (5.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:13:35.3548519Z   ✓  15 [chromium] › browser-tests/p1-settings.spec.ts:90:1 › future-version values are never downgraded and failed drafts can be cancelled (7.2s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:14:06.2297224Z   ✓  16 [chromium] › browser-tests/p1-settings.spec.ts:104:1 › home, settings and guide stay reachable at all required viewports and 200 percent text (30.9s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:14:16.3016949Z   ✓  17 [webkit-ui] › browser-tests/p1-independent-ui.spec.ts:10:1 › touch preview controls fit their scroller and Gekichin settings leave other games storage untouched (7.1s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:14:21.5821759Z   ✓  18 [webkit-ui] › browser-tests/p1-settings.spec.ts:20:1 › nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional (5.2s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:14:26.1746613Z   ✓  19 [webkit-ui] › browser-tests/p1-settings.spec.ts:48:1 › home editors offer both modes and persist touch size, opacity and placement only after save (4.6s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:14:28.8691231Z   ✓  20 [webkit-ui] › browser-tests/p1-settings.spec.ts:68:1 › a multi-key save failure rolls back and only explicit session use changes active settings (2.7s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:14:32.8206498Z   ✓  21 [webkit-ui] › browser-tests/p1-settings.spec.ts:90:1 › future-version values are never downgraded and failed drafts can be cancelled (3.9s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:14:48.7202635Z   ✓  22 [webkit-ui] › browser-tests/p1-settings.spec.ts:104:1 › home, settings and guide stay reachable at all required viewports and 200 percent text (15.9s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:14:56.7117813Z   ✓  23 [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:8:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume (7.5s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:14:56.7491437Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T01:14:56.7550953Z   23 passed (3.5m)

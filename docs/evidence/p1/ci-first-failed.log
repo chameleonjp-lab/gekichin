@@ -1,0 +1,77 @@
+verify	Run xvfb-run -a npm run test:browser	﻿2026-10-05T00:40:56.5952311Z ##[group]Run xvfb-run -a npm run test:browser
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:40:56.5952715Z [36;1mxvfb-run -a npm run test:browser[0m
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:40:56.6014429Z shell: /usr/bin/bash -e {0}
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:40:56.6014713Z ##[endgroup]
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:40:59.6945200Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:40:59.6945895Z > gekichin@0.1.0 test:browser
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:40:59.6946423Z > playwright test
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:40:59.6946579Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:41:01.1816377Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:41:01.1817144Z Running 23 tests using 1 worker
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:41:01.1840080Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:41:16.2871997Z   ✓   1 [chromium] › browser-tests/p1-flow.spec.ts:9:1 › Normal keyboard flight, loop interruption, pause, settings, report and reflight use one operation (14.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:41:22.6124264Z   ✓   2 [chromium] › browser-tests/p1-flow.spec.ts:32:1 › multi-touch cancel, lost capture, resize and compatibility click release held input (6.3s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:41:51.9275338Z   ✓   3 [chromium] › browser-tests/p1-flow.spec.ts:50:1 › Easy one button fits specified viewports and ten repeated starts never duplicate app resources (29.3s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:41:58.3411416Z   ✓   4 [chromium] › browser-tests/p1-flow.spec.ts:64:1 › WebGL loss while paused or editing gives guidance and restoration needs explicit resume (6.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:42:03.6151332Z   ✓   5 [chromium] › browser-tests/p1-flow.spec.ts:73:1 › the flight prototype makes no game API requests or result storage writes (5.3s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:42:09.1759558Z   ✓   6 [chromium] › browser-tests/p1-flow.spec.ts:87:1 › an explicit visibilitychange fixture stops flight and visible recovery never resumes it (5.5s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:42:15.6427658Z   ✓   7 [chromium] › browser-tests/p1-flow.spec.ts:108:1 › sound starts OFF, pauses with flight and reuses one audio context after replay (6.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:42:21.4451644Z   ✓   8 [chromium] › browser-tests/p1-independent-ui.spec.ts:10:1 › touch preview controls fit their scroller and Gekichin settings leave other games storage untouched (5.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:42:27.1621583Z   ✓   9 [chromium] › browser-tests/p1-independent.spec.ts:10:1 › a pause binding on Enter leaves home and result button activation with native Enter (5.7s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:42:34.7978616Z   ✓  10 [chromium] › browser-tests/p1-independent.spec.ts:36:1 › an event-loop stall of at least two seconds freezes the flight until explicit resume (7.6s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:42:36.9223575Z   ✓  11 [chromium] › browser-tests/p1-independent.spec.ts:57:1 › when WebGL creation fails, settings and help remain available while flight stays disabled (2.1s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:42:46.7648238Z   ✓  12 [chromium] › browser-tests/p1-settings.spec.ts:20:1 › nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional (9.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:42:57.0303268Z   ✓  13 [chromium] › browser-tests/p1-settings.spec.ts:48:1 › home editors offer both modes and persist touch size, opacity and placement only after save (10.2s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:43:03.1505960Z   ✓  14 [chromium] › browser-tests/p1-settings.spec.ts:68:1 › a multi-key save failure rolls back and only explicit session use changes active settings (6.1s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:43:10.6857266Z   ✓  15 [chromium] › browser-tests/p1-settings.spec.ts:90:1 › future-version values are never downgraded and failed drafts can be cancelled (7.5s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:43:42.2852346Z   ✓  16 [chromium] › browser-tests/p1-settings.spec.ts:104:1 › home, settings and guide stay reachable at all required viewports and 200 percent text (31.6s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:43:52.0771529Z   ✓  17 [webkit-ui] › browser-tests/p1-independent-ui.spec.ts:10:1 › touch preview controls fit their scroller and Gekichin settings leave other games storage untouched (7.0s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:43:57.5127686Z   ✓  18 [webkit-ui] › browser-tests/p1-settings.spec.ts:20:1 › nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional (5.4s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:02.3071346Z   ✓  19 [webkit-ui] › browser-tests/p1-settings.spec.ts:48:1 › home editors offer both modes and persist touch size, opacity and placement only after save (4.8s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:05.0361120Z   ✓  20 [webkit-ui] › browser-tests/p1-settings.spec.ts:68:1 › a multi-key save failure rolls back and only explicit session use changes active settings (2.7s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:08.9341308Z   ✓  21 [webkit-ui] › browser-tests/p1-settings.spec.ts:90:1 › future-version values are never downgraded and failed drafts can be cancelled (3.9s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:24.9458620Z   ✓  22 [webkit-ui] › browser-tests/p1-settings.spec.ts:104:1 › home, settings and guide stay reachable at all required viewports and 200 percent text (16.0s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8140284Z   ✘  23 [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:4:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume (19.3s)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8558311Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8625023Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8626973Z   1) [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:4:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8627769Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8628079Z     Error: expect(received).toBe(expected) // Object.is equality
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8628391Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8628490Z     Expected: true
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8628742Z     Received: false
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8628882Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8628974Z     Call Log:
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8629588Z     - Timeout 15000ms exceeded while waiting on the predicate
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8629893Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8630061Z        7 |   const other = await context.newPage();
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8630549Z        8 |   await other.goto('about:blank'); await other.bringToFront();
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8631169Z     >  9 |   await expect.poll(() => page.evaluate(() => document.hidden)).toBe(true);
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8631709Z          |                                                                 ^
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8632272Z       10 |   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'paused');
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8632886Z       11 |   const stopped = await page.locator('#elapsed').textContent();
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8633397Z       12 |   await other.close(); await page.bringToFront();
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8634018Z         at /home/runner/work/gekichin/gekichin/browser-tests/p1-native-visibility.spec.ts:9:65
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8634408Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8634891Z     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8635746Z     test-results/p1-native-visibility-a-nat-455b6-nd-requires-explicit-resume-chromium-headed/test-failed-2.png
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8636639Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8637347Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8637775Z     attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8638796Z     test-results/p1-native-visibility-a-nat-455b6-nd-requires-explicit-resume-chromium-headed/test-failed-1.png
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8640157Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8640490Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8641045Z     Error Context: test-results/p1-native-visibility-a-nat-455b6-nd-requires-explicit-resume-chromium-headed/error-context.md
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8641631Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8642060Z     attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8642877Z     test-results/p1-native-visibility-a-nat-455b6-nd-requires-explicit-resume-chromium-headed/trace.zip
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8643458Z     Usage:
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8643597Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8644259Z         npx playwright show-trace test-results/p1-native-visibility-a-nat-455b6-nd-requires-explicit-resume-chromium-headed/trace.zip
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8644918Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8645288Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8645572Z 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8645656Z   1 failed
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8647064Z     [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:4:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume 
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8647777Z   22 passed (3.8m)
+verify	Run xvfb-run -a npm run test:browser	2026-10-05T00:44:45.8891602Z ##[error]Process completed with exit code 1.

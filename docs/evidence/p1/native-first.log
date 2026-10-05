@@ -1,0 +1,56 @@
+
+> gekichin@0.1.0 test:browser
+> playwright test --project=chromium-headed
+
+
+Running 1 test using 1 worker
+
+(node:9170) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:4:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume (19.8s)
+
+
+  1) [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:4:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+       7 |   const other = await context.newPage();
+       8 |   await other.goto('about:blank'); await other.bringToFront();
+    >  9 |   await expect.poll(() => page.evaluate(() => document.hidden)).toBe(true);
+         |                                                                 ^
+      10 |   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'paused');
+      11 |   const stopped = await page.locator('#elapsed').textContent();
+      12 |   await other.close(); await page.bringToFront();
+        at /workspace/gekichin/browser-tests/p1-native-visibility.spec.ts:9:65
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/p1-native-visibility-a-nat-455b6-nd-requires-explicit-resume-chromium-headed/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/p1-native-visibility-a-nat-455b6-nd-requires-explicit-resume-chromium-headed/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/p1-native-visibility-a-nat-455b6-nd-requires-explicit-resume-chromium-headed/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/p1-native-visibility-a-nat-455b6-nd-requires-explicit-resume-chromium-headed/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/p1-native-visibility-a-nat-455b6-nd-requires-explicit-resume-chromium-headed/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:4:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume 
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
