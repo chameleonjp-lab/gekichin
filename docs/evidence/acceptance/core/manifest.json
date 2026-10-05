@@ -1,0 +1,79 @@
+{
+  "recordedAtUTC": "2026-10-05T04:20:57.998511+00:00",
+  "classification": "isolated state boundary fixtures and synthetic source/pool endurance",
+  "requirementsCommit": "e9212a73a7b36c33dff7e88d3a7308be6cdcea35",
+  "requirementsBlob": "1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c",
+  "baseHead": "98119b5ae6604ad5975024b0e523b78eef369662",
+  "branch": "feat/gekichin-combat-completion",
+  "workingTreeChanges": true,
+  "sourceSHA256": {
+    "src/combat-types.ts": "24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0",
+    "src/fleet.ts": "de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90",
+    "src/aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
+    "src/scoring.ts": "95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494",
+    "src/game-state.ts": "ab238ce83f8ab5eda287d47745e72162f99b984707f09cca60f151742ac2be79",
+    "src/rules.ts": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414",
+    "src/turret-combat.ts": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71",
+    "src/wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f",
+    "src/mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+    "src/mothership.ts": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466",
+    "src/collision-world.ts": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519",
+    "src/flight.ts": "288f6d8b52aca7d6c4f68fce8f71262373e6a4ee6c7fadfe8cb91df187f529ce",
+    "src/flight-assist.ts": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413",
+    "src/flight-view.ts": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
+    "src/types.ts": "69497c3fe6b9025b7399dbc9ab1db5f7b056507171cbd3aa8a7985ebaaef0f29",
+    "tests/combat-core.test.ts": "62a4c274ef7fdea987d979f1f1ae15cf335821eac8a86895b696e82fc6299bc3",
+    "tests/enemy-ai.test.ts": "10dc559f29ab66095d3088d11bb98367937b1debc1797ebd43081ee856c5315e",
+    "scripts/core-load-runner.ts": "06590271a3020c69dc5e5bd06db4ac68b9f4627072c620a7bc3abff346287f1d",
+    "docs/REQUIREMENTS.md": "f80f1609ef95dadc3f1daaa598618b23755c7e48ac3207c9489da22f6ee0b43f",
+    "docs/IMPLEMENTATION_PLAN.md": "fe247dc61f7f8e767f0ea7385fb11e3706268943f9d4a4bf42fa9bbbaa541f48"
+  },
+  "commands": {
+    "unit": "node --import tsx --test tests/combat-core.test.ts tests/enemy-ai.test.ts",
+    "build": "npm run build",
+    "load": "node --import tsx scripts/core-load-runner.ts"
+  },
+  "results": {
+    "unit": {
+      "tests": 45,
+      "pass": 45,
+      "fail": 0,
+      "skip": 0,
+      "raw": "core-unit.log"
+    },
+    "build": {
+      "exitCode": 0,
+      "raw": "build.log",
+      "chunkSizeWarning": true
+    },
+    "syntheticLoad": {
+      "raw": "combined-load-15min.jsonl",
+      "kind": "synthetic-load-complete",
+      "ticks": 54000,
+      "activeSeconds": 900,
+      "wallSeconds": 32.53754575800001,
+      "observed": {
+        "friendly": 160,
+        "enemyMain": 6,
+        "enemyMG": 134,
+        "mainActive": 4,
+        "mgActive": 12,
+        "mainShots": 900,
+        "mgShots": 56244,
+        "friendlyShots": 67536
+      },
+      "playerN": 19334,
+      "friendlyAllocationFailures": 0,
+      "enemyAllocationFailures": 0,
+      "remainingTurrets": 100,
+      "totalHpMilli": 24000000,
+      "retainedHitIds": 0,
+      "retainedTurretAttackIds": 0
+    }
+  },
+  "limitations": [
+    "State injection exists only in Node tests. The product exposes no arbitrary state setter.",
+    "Load pilots retain frozen poses and their projectile contacts are omitted. All 100 turrets retain full HP.",
+    "These fixtures do not establish a normal-input victory or device GPU, human handling, or audible output acceptance."
+  ]
+}

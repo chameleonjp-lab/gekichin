@@ -1,0 +1,43 @@
+{
+  "type": "final-combat-browser-gates",
+  "status": "passed",
+  "command": "PLAYWRIGHT_BROWSERS_PATH=/workspace/.playwright-browsers npx playwright test --project=chromium browser-tests/combat.spec.ts --reporter=list",
+  "resultLog": "docs/evidence/acceptance/browser/combat-abort-final.log",
+  "logMtimeUtc": "2026-10-05T04:54:49.007Z",
+  "reportedDuration": "4 passed (1.1m)",
+  "capturedHeadAfterRun": "5db76f68b53c846ae4e4aec4754f78e108107a37",
+  "headTimingNote": "The manifest head was read after the browser run. The source and production-preview asset SHA-256 values below are the post-build content verified unchanged since the final build and run; the manifest does not claim this commit hash was recorded at test start.",
+  "sourceAndPreviewSha256": {
+    "browser-tests/combat.spec.ts": "7c44b5faa6c6af949d5b2ad1ed7219f7fd00db36edfd7a9f06beb181cac291cf",
+    "src/main.ts": "e18a2b41b3dbc0273928967450632da55fd72a4e39419d0b144d2cf56ecf9dd3",
+    "src/game-state.ts": "ab238ce83f8ab5eda287d47745e72162f99b984707f09cca60f151742ac2be79",
+    "src/scene.ts": "6dc42220163e8abfe10935994ddb316622dfa2b341ced773b3d7acd787552635",
+    "src/audio.ts": "99057cd1e53413459802ada6d442a31de7feb8ee91008df540901b085d2731ab",
+    "src/style.css": "c13420fc69d84f4881b24084503b796fff93ee944cfeda38149650aad0be536f",
+    "dist/index.html": "db55c617bdc9d4d60c996f53db4ab1e1e5fbbdb5bd700c0e110e64ce83ac5a90",
+    "dist/assets/index-BTLHVFty.js": "24960449fc99f3429d6b29a0444ccedadcd7c61a1014b0dd5ac8384f62f8b04a",
+    "dist/assets/index-B79rSzXU.css": "7de427a0db39322ad2a9aacced6b3c500702744cea2d45932005141cc279f7fd"
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "browser": "Playwright Chromium 149",
+    "project": "chromium",
+    "viewport": "393x852 CSS px, DPR 1, hasTouch enabled",
+    "graphics": "ANGLE SwiftShader software WebGL",
+    "physicalDevice": false
+  },
+  "clock": {
+    "publicPlaywrightClock": "install + pauseAt + explicit runFor",
+    "restartCadence": "250ms test-only RAF after shader warmup; 15 sequential FixedStepper 60Hz ticks per frame, below the 2s pause guard"
+  },
+  "scenarios": [
+    "Easy six-face HUD, pause/frozen tick and explicit resume",
+    "Normal Space firing/ammunition, movement HUD and pause/resume",
+    "Ten restart→pause→abort cycles with stable renderer/audio/DOM/listener counts",
+    "Abort replaces prior victory report before the next rendered frame"
+  ],
+  "limits": [
+    "Software Chromium verification only; no physical-device performance claim.",
+    "No human play or listening test."
+  ]
+}

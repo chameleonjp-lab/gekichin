@@ -13,7 +13,7 @@ export interface EvasionScenario {
   kind: EnemyWeaponKind;
   input: FlightInput;
   action: 'turn' | 'climb' | 'loop';
-  /** A small legal heading offset makes the side main gun exercise tracking before warning. */
+/** Small side-face offsets retain finite tracking while keeping the paired main-gun baseline inside the hit radius. */
   yawOffsetDegrees: number;
 }
 
@@ -22,7 +22,7 @@ export const EVASION_SCENARIOS: readonly EvasionScenario[] = [
   { face: 'top', kind: 'mg', input: { ...NEUTRAL, climb: 1 }, action: 'climb', yawOffsetDegrees: 0 },
   { face: 'bottom', kind: 'main', input: { ...NEUTRAL, turn: 1 }, action: 'turn', yawOffsetDegrees: 0 },
   { face: 'bottom', kind: 'mg', input: { ...NEUTRAL, turn: -1 }, action: 'turn', yawOffsetDegrees: 0 },
-  { face: 'left', kind: 'main', input: { ...NEUTRAL, climb: 1 }, action: 'climb', yawOffsetDegrees: 5 },
+  { face: 'left', kind: 'main', input: { ...NEUTRAL, climb: 1 }, action: 'climb', yawOffsetDegrees: 5.5 },
   { face: 'left', kind: 'mg', input: { ...NEUTRAL, loop: true }, action: 'loop', yawOffsetDegrees: 5 },
 ];
 
@@ -56,12 +56,14 @@ export interface EvasionFixture {
 /**
  * Inspection-only initial state. Start and validate the seeded 100-mount
  * normal operation; before its first tick, damage-resolve the other 99 mounts
- * as fixture setup and move the player onto the selected mount's barrel ray.
+ * as fixture setup and place the player 90m down the selected barrel ray plus
+ * 500m along its horizontal outward direction. Aim the normal flight camera
+ * back toward the emitter so the production warning and tracers can be seen.
  * The caller must only advance this session with ordinary FlightInput after
  * tick zero. This fixture is excluded from normal 100-mount clear evidence.
  */
-export function createEvasionInitialFixture(scenario: EvasionScenario): EvasionFixture {
-  const session = new FlightSession();
+export function createEvasionInitialFixture(scenario: EvasionScenario, session = new FlightSession()): EvasionFixture {
+  requireFixture(session.phase === 'home' || session.phase === 'result', 'fixture starts from a normal operation boundary');
   const operationId = session.prepare('normal', INITIAL_SEED);
   requireFixture(operationId !== null, 'standard normal operation preparation succeeded');
   requireFixture(session.begin(operationId), 'the unchanged production geometry validates');
@@ -74,7 +76,9 @@ export function createEvasionInitialFixture(scenario: EvasionScenario): EvasionF
   const defaultAim = turretDirection(turret.layout, turret.yaw, turret.pitch);
   const fixturePosition = turret.muzzle.clone().addScaledVector(defaultAim, 90);
   const horizontalDirection = new Vector3(defaultAim.x, 0, defaultAim.z).normalize();
-  const fixtureYaw = Math.atan2(-horizontalDirection.x, -horizontalDirection.z)
+  fixturePosition.addScaledVector(horizontalDirection, 500);
+  const towardEmitter = turret.muzzle.clone().sub(fixturePosition);
+  const fixtureYaw = Math.atan2(-towardEmitter.x, -towardEmitter.z)
     + scenario.yawOffsetDegrees * Math.PI / 180;
 
   // These are the only fixture state writes: they all occur at logical tick 0.

@@ -1,0 +1,39 @@
+{
+  "type": "combat-browser-short-gates",
+  "status": "passed",
+  "command": "PLAYWRIGHT_BROWSERS_PATH=/workspace/.playwright-browsers npx playwright test --project=chromium browser-tests/combat.spec.ts --reporter=list",
+  "resultLog": "docs/evidence/acceptance/browser/combat-final-retry.log",
+  "resultLogMtimeUtc": "2026-10-05T04:42:21.704Z",
+  "reportedDuration": "3 passed (41.8s)",
+  "headRecordedImmediatelyAfterRun": "98119b5ae6604ad5975024b0e523b78eef369662",
+  "testHarnessSha256": {
+    "browser-tests/combat.spec.ts": "23657bfec988ad94ac7d69cd82508b0dde883f1037b464cabb04edd4645e3e05"
+  },
+  "appBundleAtRun": {
+    "buildTiming": "This short run used the production preview bundle from before the final R15 target-stage label rebuild, which completed after the test ended.",
+    "exactSha256": "unavailable: dist assets were overwritten by the final post-run build before their hashes were captured",
+    "knownDifference": "The intervening app change was the R15 target-stage label update; root reports combat, scene and audio behavior were otherwise final."
+  },
+  "laterFinalBuildCommit": "01804b95078317bb0129d0750b6a7f73184cee6f; final-label coverage is also exercised by the subsequent CI run",
+  "environment": {
+    "node": "v24.19.0",
+    "browser": "Playwright Chromium 149",
+    "viewport": "Playwright chromium project configuration",
+    "physicalDevice": false,
+    "graphics": "software Chromium preview; not a hardware performance measurement"
+  },
+  "clock": {
+    "mechanism": "Playwright public page.clock.install + pauseAt + explicit runFor",
+    "rendererCadenceTest": "The ten-restart case switches RAF to a 250ms timer-backed test cadence after shader prewarm; the FixedStepper continues to process every sequential 60Hz logic tick, with gap below the 2s pause threshold."
+  },
+  "scenarios": [
+    "Easy combat mode, six-face HUD, pause/frozen state and explicit resume",
+    "Normal mode Space firing/ammunition, flight movement HUD and pause/resume",
+    "Ten product result→restart→pause→abort cycles with bounded renderer/audio/DOM/listener resources"
+  ],
+  "claims": {
+    "sourceChangedByRun": false,
+    "physicalDeviceTested": false,
+    "humanPlayTested": false
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "recordedAtUTC": "2026-10-05T05:28:14.374Z",
+  "result": "pass",
+  "classification": "standard Normal start; controller-generated FlightInput; no pose/HP/state fixture; not DOM or human-play evidence",
+  "requirementsCommit": "e9212a73a7b36c33dff7e88d3a7308be6cdcea35",
+  "requirementsBlob": "1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c",
+  "rulesVersion": "gekichin-combat-v1",
+  "sourceSHA256": {
+    "src/aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
+    "src/combat-types.ts": "24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0",
+    "src/collision-world.ts": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519",
+    "src/fleet.ts": "de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90",
+    "src/flight.ts": "288f6d8b52aca7d6c4f68fce8f71262373e6a4ee6c7fadfe8cb91df187f529ce",
+    "src/flight-assist.ts": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413",
+    "src/flight-view.ts": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
+    "src/game-state.ts": "ab238ce83f8ab5eda287d47745e72162f99b984707f09cca60f151742ac2be79",
+    "src/mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+    "src/mothership.ts": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466",
+    "src/rules.ts": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414",
+    "src/scoring.ts": "95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494",
+    "src/turret-combat.ts": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71",
+    "src/types.ts": "69497c3fe6b9025b7399dbc9ab1db5f7b056507171cbd3aa8a7985ebaaef0f29",
+    "src/wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f",
+    "docs/evidence/acceptance/ordinary-enemy-recovery/probe.mjs": "bf3da3a2db4a9b0ea9fe63b463f96f7aefaa72caa89053253ff8f97e60b1063e"
+  },
+  "frozenMissionSourcesMatched": 15,
+  "artifactsSHA256": {
+    "probe.mjs": "bf3da3a2db4a9b0ea9fe63b463f96f7aefaa72caa89053253ff8f97e60b1063e",
+    "probe.log": "26c33aaa8ace8489415ceee1bc26b152d50ce4cc0ebcc56b7e798795619a5bfa",
+    "probe.json": "aca8232e36692cb291ac1cb8b998e5e257a07a96062d121a6e102f853769966c",
+    "inputs.json.gz": "b022313095f5367ecee29eaed5b6ea8d7fedccf7519488dbbd15efd4601470ad",
+    "README.md": "68f19ad6e2d655a76452167c441e0f185b9d93d32ee91118ca1d142530c886fc",
+    "audit.mjs": "fdd7c857b5a56bbe8b3e31219a19d619e8608773b207cda134489680df8c24e9"
+  },
+  "command": "node docs/evidence/acceptance/ordinary-enemy-recovery/audit.mjs",
+  "seed": 1196097537,
+  "tick": 4713,
+  "inputCount": 4713,
+  "hitCount": 48,
+  "enemyDamageMilli": 80000,
+  "lossTick": 4533,
+  "respawnTick": 4713,
+  "respawnDelay": 180,
+  "finalPlayer": {
+    "tokenId": 8,
+    "hpMilli": 80000,
+    "position": [
+      0,
+      1000,
+      2000
+    ],
+    "ammunition": {
+      "mg": 288,
+      "cannon": 96,
+      "mgReadyTick": 4714,
+      "cannonReadyTick": 4714,
+      "reloadUntilTick": null
+    }
+  },
+  "finalFleet": {
+    "active": 8,
+    "reserved": 0,
+    "reserve": 41,
+    "lost": 1,
+    "remaining": 49,
+    "playerLosses": 1,
+    "wingmanLosses": 0
+  },
+  "enemyPoolFailures": 0
+}

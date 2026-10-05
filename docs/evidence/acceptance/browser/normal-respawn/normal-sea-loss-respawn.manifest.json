@@ -1,0 +1,86 @@
+{
+  "name": "Normal sea-contact loss, 3-second respawn, and held-input reset",
+  "status": "PASS",
+  "verificationDateUtc": "2026-10-05",
+  "result": {
+    "passed": 1,
+    "failed": 0,
+    "wallDurationSeconds": 19.5,
+    "browserProject": "chromium",
+    "playwrightVersion": "1.61.1",
+    "command": "PLAYWRIGHT_BROWSERS_PATH=/workspace/.playwright-browsers npx playwright test --project=chromium browser-tests/combat.spec.ts --grep='sea contact clears held controls' --reporter=list --output=/tmp/gekichin-respawn-final-output"
+  },
+  "sourceSnapshot": {
+    "gitHead": "5db76f68b53c846ae4e4aec4754f78e108107a37",
+    "src/main.ts": "e18a2b41b3dbc0273928967450632da55fd72a4e39419d0b144d2cf56ecf9dd3",
+    "dist/assets/index-BTLHVFty.js": "24960449fc99f3429d6b29a0444ccedadcd7c61a1014b0dd5ac8384f62f8b04a",
+    "dist/assets/index-B79rSzXU.css": "7de427a0db39322ad2a9aacced6b3c500702744cea2d45932005141cc279f7fd"
+  },
+  "testSnapshot": {
+    "file": "browser-tests/combat.spec.ts",
+    "sha256": "e9a3d27a7475d83d461c80949f0dbd45b21073d4a15824eabc46e6bba391245b",
+    "entry": "Normal sea contact clears held controls and respawns the player under new ownership"
+  },
+  "fixture": {
+    "server": "http://127.0.0.1:4177/ served the built static bundle index-BTLHVFty.js",
+    "clock": "Playwright public page.clock.install + pauseAt + runFor",
+    "virtualRenderedFrameMs": 250,
+    "logicalSimulationRateHz": 60,
+    "maximumVirtualTimeMs": 60000,
+    "inputs": [
+      "Start Normal through the product mode and Start controls",
+      "Hold the product-bound ArrowDown key and Space key through loss and respawn",
+      "Release both keys only after checking the replacement aircraft"
+    ],
+    "stateWrites": "None; reads are limited to visible HUD text and read-only HUD datasets."
+  },
+  "observations": {
+    "startingTick": 26,
+    "initialOwnershipRevision": 0,
+    "loss": {
+      "tick": 702,
+      "ownershipRevision": 1,
+      "altitude": "5 m",
+      "playerHp": "復帰待ち",
+      "status": "自機復帰 · 2.8秒"
+    },
+    "oneSecondIntoWait": {
+      "tick": 762,
+      "ownershipRevision": 1,
+      "playerHp": "復帰待ち",
+      "status": "自機復帰 · 1.8秒"
+    },
+    "respawn": {
+      "sampledWaitMs": 3000,
+      "sampledWaitTicks": 180,
+      "tick": 882,
+      "ownershipRevision": 2,
+      "playerHp": "80.0 / 80",
+      "ammunition": "288 / 96",
+      "position": [0, 1000, 1978],
+      "pitch": 0
+    },
+    "afterAdditional500msWithBothPhysicalKeysStillDown": {
+      "tick": 912,
+      "ownershipRevision": 2,
+      "playerHp": "80.0 / 80",
+      "ammunition": "288 / 96",
+      "fireStatus": "射撃：待機",
+      "position": [0, 1000, 1923],
+      "pitch": 0
+    },
+    "browserErrors": []
+  },
+  "artifacts": {
+    "observations": {
+      "file": "normal-sea-loss-respawn-observations.json",
+      "sha256": "bdca4c8475ad482342a48a2dc495ebd2fbf8ceab409c1f56ccb712405e731aa4"
+    },
+    "screenshot": {
+      "file": "normal-sea-loss-respawn.png",
+      "sha256": "44a5cee8e6e657547df3fe9541eb5f8ed87306fd56b6f655f82e1435014e739b"
+    }
+  },
+  "scope": "This is a software Chromium product-input regression for sea-contact loss, the 3-second respawn, new player ownership, and stale held-key clearing. It does not claim physical-device validation or enemy-caused player-loss coverage.",
+  "relationshipToEarlierRun": "The earlier combat-abort-final 4/4 run and manifest remain unchanged historical evidence for the test file before this regression was appended."
+}

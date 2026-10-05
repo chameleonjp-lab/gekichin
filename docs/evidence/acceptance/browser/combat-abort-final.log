@@ -1,0 +1,16 @@
+
+Running 4 tests using 1 worker
+
+(node:33950) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › browser-tests/combat.spec.ts:30:1 › Easy combat clock, six-face HUD, pause and explicit resume follow product controls (9.8s)
+  ✓  2 [chromium] › browser-tests/combat.spec.ts:58:1 › Normal keyboard firing consumes real ammunition and updates flight HUD, then pauses cleanly (16.3s)
+  ✓  3 [chromium] › browser-tests/combat.spec.ts:90:1 › ten product restart cycles retain one bounded scene and stable WebGL resources (27.3s)
+  ✓  4 [chromium] › browser-tests/combat.spec.ts:132:1 › abort replaces the previous result display before the next rendered frame (12.1s)
+
+  4 passed (1.1m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

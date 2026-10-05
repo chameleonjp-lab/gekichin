@@ -1,0 +1,93 @@
+
+> gekichin@0.1.0 test
+> node --import tsx --test tests/*.test.ts
+
+✔ return arrows guide inward/outward and left/right using the inherited flight yaw (1.059692ms)
+✔ initial eight plus forty-two and simultaneous deaths conserve fifty distinct tokens (4.60381ms)
+✔ the only reserve goes to the player even if the player loss is recorded last (3.783092ms)
+✔ handoff at exactly180ticks keeps HP, position, magazines and reload clocks (5.224721ms)
+✔ Q-only survivors recheck handoff after their first deployment rather than losing the mission (1.84725ms)
+✔ a blocked reservation consumes no extra token and reports exactlyfive seconds of continuous failure (4.946487ms)
+✔ player and wingman barrels use exact5/15 and17/57tick intervals (2.031383ms)
+✔ both empty initiates common360tick reload and no empty shot changes ammunition or N (0.321006ms)
+✔ atomic volleys preserve64 player slots and saturation does not consume ammunition or IDs (2.094557ms)
+✔ all source distances use far-side200/500/800 boundaries with integer mHP (1.015045ms)
+✔ shot affiliation survives death/handoff and the90tick half-open lifetime is exact (0.560762ms)
+✔ normal launch is the tick-start physical nose despite simultaneous turning and acceleration (191.916407ms)
+✔ moving-sphere sweep resolves crossing trajectories within one tick (0.163382ms)
+✔ 160000-point example floors only once, preserves negatives and distinguishes N0 (0.332584ms)
+✔ overkill, duplicate events and wingman final blows retain actual damage and one hit (0.22225ms)
+✔ best records are victory-only, mode/version-separated, tied records retain the earlier record (0.728861ms)
+✔ corrupt or future best formats and failed writes never damage an existing record (4.638381ms)
+✔ same-tick final turret and final ally losses produce mutual defeat before any respawn (49.009819ms)
+✔ victory freezes flying bullets, unhit shots stay in N, and every result component is immutable (41.487421ms)
+✔ an integrated timezero turret destruction cancels its genuine due warning shot before allocation (28.852539ms)
+✔ a destruction during the warning releases its reservation and visual warning immediately without erasing older shots (53.080498ms)
+✔ the last lifetime endpoint is excluded while the immediately earlier contact is valid (319.454156ms)
+✔ boundary grace uses600 active ticks, resets on return, and never teleports an aircraft (253.054221ms)
+✔ a timezero hull/sea collision cancels the player shot and gives no turret damage (212.006286ms)
+✔ Normal player bullets damage friendly aircraft; Easy and wingman shots stop at protected contact (416.35235ms)
+✔ main direct24HP never also deals splash to that plane, while colocated exposed allies receive12HP once (141.876729ms)
+✔ main splash excludes the20m boundary and cannot cross a canonical turret shield (400.69653ms)
+✔ synthetic15minute all-eight-guns fixture has no allocation failures and bounded live damage IDs (285.299852ms)
+✔ intercept includes the fixed warning delay, chooses a positive root, and rejects an unreachable target (1.608136ms)
+✔ the integrated tick-start warning uses actual moving-aircraft velocity after previous is reset (1326.85894ms)
+✔ main warning lasts sixty ticks, keeps its physical aim fixed, and fires one 400m/s shot (2.31219ms)
+✔ MG fires F, F+6, … F+54, then releases its reservation for 120ticks after the last shot (2.125873ms)
+✔ MG cancellation after two real shots reloads from the last shot; target generation changes cancel pending shots (1.245637ms)
+✔ a turret destroyed by an earlier contact cannot commit its same-tick pending shot (0.961216ms)
+✔ main finite tracking does not exceed its turn speed and times out after 120ticks (3.965873ms)
+✔ mg finite tracking does not exceed its turn speed and times out after 120ticks (0.980935ms)
+✔ local yaw/pitch limits reject internal and off-axis targets on every exterior face (3.21544ms)
+✔ active and per-aircraft caps are enforced, and unused IDs precede recently released reservations (3.824924ms)
+✔ a full enemy pool defers every remaining burst slot by one tick and pauses after sixty consecutive failures (5.599656ms)
+✔ wingmen assign at most two pilots to the final turret, release dead assignments, and keep flight updates external (20.173335ms)
+✔ a real finite-flight wingman reaches and destroys a last top turret with ordinary scattered bullets (107.17529ms)
+✔ a real finite-flight wingman reaches and destroys a last bottom turret with ordinary scattered bullets (102.360076ms)
+✔ a real finite-flight wingman reaches and destroys a last left turret with ordinary scattered bullets (90.459624ms)
+✔ a real finite-flight wingman reaches and destroys a last right turret with ordinary scattered bullets (77.948587ms)
+✔ a real finite-flight wingman reaches and destroys a last front turret with ordinary scattered bullets (99.602307ms)
+✔ a real finite-flight wingman reaches and destroys a last rear turret with ordinary scattered bullets (105.88642ms)
+✔ A12/R45 inspection fixture compares ordinary evasion with no evasion through the real projectile sweep (4603.77568ms)
+✔ fixed source flight and camera tuning remain unchanged (1.59107ms)
+✔ right turn, climb and throttle preserve physical signs and bounded speed (1.420988ms)
+✔ five second loop ends once and new steering interrupts without teleportation (2.595149ms)
+✔ no P1 placeholder target pulls steering; hidden/dead targets are rejected and shot correction is finite (0.469396ms)
+✔ preparation, pause, report and stale callbacks keep one authoritative operation (546.959952ms)
+✔ accepted fixed-tick inputs produce the same final flight at 30/60/120Hz rendering (8195.259675ms)
+✔ keyboard schema exposes nine actions and rejects invalid or duplicate settings (0.751826ms)
+✔ layout data fixes 100 unique turrets, six face counts, unit axes, HP and approach intervals (8.288865ms)
+✔ synthetic finite-fleet fixture preserves all 50 identities through simultaneous losses and respawns (14.761335ms)
+✔ scoring preserves the fixed 160,000 example, time monotonicity, negative totals and N=0 semantics (2.602971ms)
+✔ score events are idempotent and retain shooter ownership across the finishing hit (1.048155ms)
+✔ mode-specific best records accept only valid victories and preserve future envelopes (1.176115ms)
+✔ ordinary combat inputs preserve the same logical snapshot at 30, 60 and 120 Hz (24610.513366ms)
+✔ canonical layout has fixed100 unique IDs, six-face20/80 distribution and24,000HP (5.191611ms)
+✔ every turret has a350m ordinary-flight approach with aircraft radius+10m clearance and first-contact firing access (27.654328ms)
+✔ spawn and return corridor candidates satisfy all real muzzle range margins and30m separation (10.849302ms)
+✔ the exterior network connects above/below/front/rear and sides without hull shortcuts (42.131051ms)
+✔ shared first-contact geometry blocks opposite faces but keeps visible armor gaps open (8.002651ms)
+✔ rounded-box sweeps catch tunnelling, reject inflated-box corner false positives and handle rotated boxes (0.524718ms)
+✔ spatial grid returns the same nearest collision as all canonical parts, including changing barrels (100.563701ms)
+✔ camera casts use the same first contact, and moving aircraft / sea sweeps find real crossings (2.619935ms)
+✔ integer damage clamps overkill, damage stages have exact thresholds, attack IDs resolve once (1.391545ms)
+✔ destroyed turrets retain a low canonical wreck and final destruction time / freeze are stable (1.340478ms)
+✔ retired numeric attack IDs remain rejected while retained de-dup state stays bounded by live IDs (4.91473ms)
+✔ pointercancel releases its own steering and button owners while preserving another active pointer (3.001061ms)
+✔ resize and blur clear held pointer and keyboard state so stale input cannot resume flight (0.969488ms)
+✔ settings writes roll back earlier keys after a later write fails (0.255309ms)
+✔ future settings versions block the whole save without touching any stored value (0.240456ms)
+✔ a wall-clock gap of two seconds discards accumulated time and needs a later fresh frame (178.895898ms)
+ℹ tests 76
+ℹ suites 0
+ℹ pass 76
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27906.144213
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

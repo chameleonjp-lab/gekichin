@@ -1,0 +1,178 @@
+{
+  "classification": "render-only synthetic fixture after initial hidden render; not a combat-clear or performance check",
+  "hpMilli": 120000,
+  "stage": "critical",
+  "meshes": [
+    {
+      "name": "visible damaged turret armor",
+      "frustumCulled": false,
+      "boundingSphere": {
+        "center": [
+          0,
+          -100000,
+          0
+        ],
+        "radius": 0
+      },
+      "criticalInstancePosition": [
+        -150,
+        142.02000427246094,
+        -240
+      ]
+    },
+    {
+      "name": "exposed hot turret core",
+      "frustumCulled": false,
+      "boundingSphere": {
+        "center": [
+          0,
+          -100000,
+          0
+        ],
+        "radius": 0
+      },
+      "criticalInstancePosition": [
+        -150,
+        141.14999389648438,
+        -240
+      ]
+    },
+    {
+      "name": "damage smoke silhouettes",
+      "frustumCulled": false,
+      "boundingSphere": {
+        "center": [
+          0,
+          -100000,
+          0
+        ],
+        "radius": 0
+      },
+      "criticalInstancePosition": [
+        -150,
+        151,
+        -240
+      ]
+    },
+    {
+      "name": "large main-gun warning rings",
+      "frustumCulled": false,
+      "boundingSphere": {
+        "center": [
+          0,
+          -100000,
+          0
+        ],
+        "radius": 0
+      },
+      "criticalInstancePosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "machine-gun warning rings",
+      "frustumCulled": false,
+      "boundingSphere": {
+        "center": [
+          0,
+          -100000,
+          0
+        ],
+        "radius": 0
+      },
+      "criticalInstancePosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "main-gun warning pointers",
+      "frustumCulled": false,
+      "boundingSphere": {
+        "center": [
+          0,
+          -100000,
+          0
+        ],
+        "radius": 0
+      },
+      "criticalInstancePosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "machine-gun warning pointers",
+      "frustumCulled": false,
+      "boundingSphere": {
+        "center": [
+          0,
+          -100000,
+          0
+        ],
+        "radius": 0
+      },
+      "criticalInstancePosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "bounded turret debris pool",
+      "frustumCulled": false,
+      "boundingSphere": {
+        "center": [
+          0,
+          0,
+          0
+        ],
+        "radius": -1
+      },
+      "criticalInstancePosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "canonical main-wreck box instances",
+      "frustumCulled": false,
+      "boundingSphere": {
+        "center": [
+          0,
+          -100000,
+          0
+        ],
+        "radius": 0
+      },
+      "criticalInstancePosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "canonical mg-wreck box instances",
+      "frustumCulled": false,
+      "boundingSphere": {
+        "center": [
+          0,
+          -100000,
+          0
+        ],
+        "radius": 0
+      },
+      "criticalInstancePosition": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "errors": []
+}

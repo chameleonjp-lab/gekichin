@@ -1,3 +1,4 @@
+import { writeFile } from 'node:fs/promises';
 import { expect, test, type Page } from '@playwright/test';
 
 async function startCombat(page: Page, mode: 'easy' | 'normal'): Promise<void> {
@@ -157,4 +158,132 @@ test('abort replaces the previous result display before the next rendered frame'
   expect(result.details).toContain('破壊 0/100');
   expect(result.componentCount).toBe(12);
   expect(result.best).toEqual(bestBefore);
+});
+
+test('Normal sea contact clears held controls and respawns the player under new ownership', async ({ page }, info) => {
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await startCombat(page, 'normal');
+  await reduceRendererCadence(page);
+
+  const readFlightHud = () => page.evaluate(() => {
+    const app = document.querySelector<HTMLElement>('#app')!;
+    const hud = document.querySelector<HTMLElement>('#hud')!;
+    return {
+      phase: app.dataset.phase ?? '',
+      tick: Number(app.dataset.tick ?? 0),
+      ownership: Number(app.dataset.ownership ?? -1),
+      position: (hud.dataset.position ?? '').split(',').map(Number),
+      pitch: Number(hud.dataset.pitch ?? Number.NaN),
+      altitudeText: document.querySelector('#altitude')?.textContent?.trim() ?? '',
+      playerHp: document.querySelector('#player-hp')?.textContent?.trim() ?? '',
+      ammunition: document.querySelector('#ammunition')?.textContent?.trim() ?? '',
+      respawn: document.querySelector<HTMLElement>('#respawn-status')?.textContent?.trim() ?? '',
+      respawnVisible: !document.querySelector<HTMLElement>('#respawn-status')!.hidden,
+      fire: document.querySelector('#fire-status')?.textContent?.trim() ?? '',
+    };
+  });
+
+  const initial = await readFlightHud();
+  expect(initial.playerHp).toBe('80.0 / 80');
+  expect(initial.ammunition).toBe('288 / 96');
+
+  // Keep both real product-bound keys physically down across loss and
+  // respawn. The aircraft descends into the sea; no mission state is written.
+  await page.keyboard.down('ArrowDown');
+  await page.keyboard.down('Space');
+  let virtualMs = 0;
+  let loss: Awaited<ReturnType<typeof readFlightHud>> | null = null;
+  while (virtualMs < 60_000) {
+    await page.clock.runFor(250);
+    virtualMs += 250;
+    const observed = await readFlightHud();
+    if (observed.playerHp === '復帰待ち') { loss = observed; break; }
+  }
+  expect(loss, 'held descent should reach the sea within the virtual-time cap').not.toBeNull();
+  const lost = loss!;
+  const lossAltitude = Number.parseInt(lost.altitudeText.replaceAll(',', ''), 10);
+  expect(lossAltitude, `loss should be sea contact; HUD altitude was ${lost.altitudeText}`).toBeLessThanOrEqual(10);
+  expect(lost.phase).toBe('playing');
+  expect(lost.ownership).toBeGreaterThan(initial.ownership);
+  expect(lost.respawnVisible).toBe(true);
+  expect(lost.respawn).toContain('自機復帰');
+  const countdown = Number(lost.respawn.match(/·\s([\d.]+)秒/)?.[1] ?? Number.NaN);
+  expect(countdown).toBeGreaterThanOrEqual(2.5);
+  expect(countdown).toBeLessThanOrEqual(3);
+
+  const atLoss = virtualMs;
+  await page.clock.runFor(1000);
+  virtualMs += 1000;
+  const duringWait = await readFlightHud();
+  expect(duringWait.playerHp).toBe('復帰待ち');
+  expect(duringWait.tick).toBeGreaterThan(lost.tick + 50);
+  expect(duringWait.ownership).toBe(lost.ownership);
+  expect(duringWait.respawnVisible).toBe(true);
+
+  let respawned = duringWait;
+  while (virtualMs < 60_000 && respawned.playerHp === '復帰待ち') {
+    await page.clock.runFor(250);
+    virtualMs += 250;
+    respawned = await readFlightHud();
+  }
+  const observedWaitMs = virtualMs - atLoss;
+  const observedWaitTicks = respawned.tick - lost.tick;
+  expect(observedWaitMs).toBeGreaterThanOrEqual(2500);
+  expect(observedWaitMs).toBeLessThanOrEqual(4000);
+  expect(observedWaitTicks).toBeGreaterThanOrEqual(150);
+  expect(observedWaitTicks).toBeLessThanOrEqual(210);
+  expect(respawned.playerHp, 'the same player slot should return within the virtual-time cap').toBe('80.0 / 80');
+  expect(respawned.ownership).toBeGreaterThan(lost.ownership);
+  expect(respawned.ammunition).toBe('288 / 96');
+  expect(respawned.respawnVisible).toBe(false);
+
+  // Continue with the physical keys still down. The cleared input state must
+  // not leak either the dive or firing into the new aircraft generation.
+  await page.clock.runFor(500);
+  virtualMs += 500;
+  const afterRespawn = await readFlightHud();
+  expect(afterRespawn.phase).toBe('playing');
+  expect(afterRespawn.ownership).toBe(respawned.ownership);
+  expect(afterRespawn.playerHp).toBe('80.0 / 80');
+  expect(afterRespawn.ammunition).toBe('288 / 96');
+  expect(afterRespawn.fire).toContain('待機');
+  expect(Math.abs(afterRespawn.pitch)).toBeLessThan(0.05);
+  expect(afterRespawn.position).toHaveLength(3);
+  expect(afterRespawn.position.every(Number.isFinite)).toBe(true);
+  expect(afterRespawn.position[1]).toBeGreaterThan(900);
+  expect(Math.hypot(
+    afterRespawn.position[0] - lost.position[0],
+    afterRespawn.position[1] - lost.position[1],
+    afterRespawn.position[2] - lost.position[2],
+  )).toBeGreaterThan(500);
+  expect(afterRespawn.tick).toBeGreaterThan(respawned.tick);
+
+  await page.keyboard.up('ArrowDown');
+  await page.keyboard.up('Space');
+  await page.clock.runFor(250);
+  virtualMs += 250;
+  const screenshotPath = info.outputPath('normal-sea-loss-respawn.png');
+  await page.screenshot({ path: screenshotPath });
+  expect(errors).toEqual([]);
+  const observationsPath = info.outputPath('normal-sea-loss-respawn-observations.json');
+  await writeFile(observationsPath, JSON.stringify({
+      input: ['trusted ArrowDown held', 'trusted Space held', 'released after fresh aircraft checks'],
+      virtualFrameMs: 250,
+      virtualElapsedMs: virtualMs,
+      lossAfterVirtualMs: atLoss,
+      respawnWaitMs: observedWaitMs,
+      respawnWaitTicks: observedWaitTicks,
+      startingTick: initial.tick,
+      initialOwnership: initial.ownership,
+      loss: lost,
+      oneSecondIntoRespawnWait: duringWait,
+      respawn: respawned,
+      afterHeldKeyClearCheck: afterRespawn,
+      browserErrors: errors,
+    }, null, 2));
+  await info.attach('normal-sea-loss-respawn-observations.json', {
+    path: observationsPath,
+    contentType: 'application/json',
+  });
 });

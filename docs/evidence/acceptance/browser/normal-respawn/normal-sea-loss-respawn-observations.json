@@ -1,0 +1,83 @@
+{
+  "input": [
+    "trusted ArrowDown held",
+    "trusted Space held",
+    "released after fresh aircraft checks"
+  ],
+  "virtualFrameMs": 250,
+  "virtualElapsedMs": 15250,
+  "lossAfterVirtualMs": 11500,
+  "respawnWaitMs": 3000,
+  "respawnWaitTicks": 180,
+  "startingTick": 26,
+  "initialOwnership": 0,
+  "loss": {
+    "phase": "playing",
+    "tick": 702,
+    "ownership": 1,
+    "position": [
+      0,
+      5,
+      1212.544344
+    ],
+    "pitch": -0.9499999999999992,
+    "altitudeText": "5 m",
+    "playerHp": "復帰待ち",
+    "ammunition": "— / —",
+    "respawn": "自機復帰 · 2.8秒",
+    "respawnVisible": true,
+    "fire": "射撃：待機"
+  },
+  "oneSecondIntoRespawnWait": {
+    "phase": "playing",
+    "tick": 762,
+    "ownership": 1,
+    "position": [
+      0,
+      5,
+      1212.544344
+    ],
+    "pitch": -0.9499999999999992,
+    "altitudeText": "5 m",
+    "playerHp": "復帰待ち",
+    "ammunition": "— / —",
+    "respawn": "自機復帰 · 1.8秒",
+    "respawnVisible": true,
+    "fire": "射撃：待機"
+  },
+  "respawn": {
+    "phase": "playing",
+    "tick": 882,
+    "ownership": 2,
+    "position": [
+      0,
+      1000,
+      1978
+    ],
+    "pitch": 0,
+    "altitudeText": "1,000 m",
+    "playerHp": "80.0 / 80",
+    "ammunition": "288 / 96",
+    "respawn": "自機復帰 · まもなく",
+    "respawnVisible": false,
+    "fire": "射撃：待機"
+  },
+  "afterHeldKeyClearCheck": {
+    "phase": "playing",
+    "tick": 912,
+    "ownership": 2,
+    "position": [
+      0,
+      1000,
+      1923
+    ],
+    "pitch": 0,
+    "altitudeText": "1,000 m",
+    "playerHp": "80.0 / 80",
+    "ammunition": "288 / 96",
+    "respawn": "自機復帰 · まもなく",
+    "respawnVisible": false,
+    "fire": "射撃：待機"
+  },
+  "browserErrors": []
+}

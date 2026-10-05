@@ -1,0 +1,52 @@
+{
+  "type": "browser-product-run-progress",
+  "startedAt": "2026-10-05T04:57:45.335Z",
+  "provenance": {
+    "capturedAt": "2026-10-05T04:57:45.335Z",
+    "invocation": "node --import tsx scripts/browser-product-run.ts",
+    "gitHead": "5db76f68b53c846ae4e4aec4754f78e108107a37",
+    "workingTreeStatus": "M docs/IMPLEMENTATION_STATUS.md\n M tests/evasion-fixture.ts\n?? browser-tests/evasion-recorder.html\n?? browser-tests/evasion-recorder.ts\n?? browser-tests/evasion-recording.spec.ts\n?? docs/COMBAT_PROVENANCE.md\n?? docs/COMPLETION_ACCEPTANCE.md\n?? docs/COMPLETION_VERIFICATION.md\n?? docs/evidence/acceptance/\n?? scripts/browser-product-run.ts\n?? scripts/ui-capture.cjs\n?? scripts/visual-capture.cjs",
+    "sourceSha256": {
+      "aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
+      "aircraft.ts": "1a9c18f93e5a48869882b2aa2946cdeb352dc4a8acd76b4fd9beade8ded621d5",
+      "audio.ts": "99057cd1e53413459802ada6d442a31de7feb8ee91008df540901b085d2731ab",
+      "boundary-guidance.ts": "7deac567a22cf2cf64693bb6777adf3e0491cc0d213ac6ecc53d9c5cfc7ebb21",
+      "collision-world.ts": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519",
+      "combat-types.ts": "24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0",
+      "control-settings.css": "fd060ea182464b36629372e995e8a551a32602a9a529e3bf10fd148f687ccf20",
+      "control-settings.ts": "e16bfd064914aa76f1327862ad5f8900958c23a706b5eded65c84fae737328c4",
+      "dialog-focus.ts": "86d631a4d618558e1ca671004c12ccc1fbdfe75516e6c5d04f962acd2c5e1996",
+      "fleet.ts": "de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90",
+      "flight-assist.ts": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413",
+      "flight-view.ts": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
+      "flight.ts": "288f6d8b52aca7d6c4f68fce8f71262373e6a4ee6c7fadfe8cb91df187f529ce",
+      "game-state.ts": "ab238ce83f8ab5eda287d47745e72162f99b984707f09cca60f151742ac2be79",
+      "input.ts": "f7a3860926fd76bc0684405ff43177c327e21163f9f7dd375e879d197eae579a",
+      "keyboard-settings.ts": "f38ee882c88f6b169377e98c788de2cdf413905840f791ce6ef9109cef0088cc",
+      "main.ts": "e18a2b41b3dbc0273928967450632da55fd72a4e39419d0b144d2cf56ecf9dd3",
+      "mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+      "mothership.ts": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466",
+      "rules.ts": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414",
+      "scene.ts": "6dc42220163e8abfe10935994ddb316622dfa2b341ced773b3d7acd787552635",
+      "scoring.ts": "95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494",
+      "style.css": "c13420fc69d84f4881b24084503b796fff93ee944cfeda38149650aad0be536f",
+      "turret-combat.ts": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71",
+      "types.ts": "69497c3fe6b9025b7399dbc9ab1db5f7b056507171cbd3aa8a7985ebaaef0f29",
+      "wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f"
+    },
+    "runnerSha256": "87689024499d8b3b63c0cb43bba570f846fb9601b32fb5cfba3c334dcf9efd7a",
+    "productionPreviewAssetSha256": {
+      "index-B79rSzXU.css": "7de427a0db39322ad2a9aacced6b3c500702744cea2d45932005141cc279f7fd",
+      "index-BTLHVFty.js": "24960449fc99f3429d6b29a0444ccedadcd7c61a1014b0dd5ac8384f62f8b04a"
+    }
+  },
+  "status": "mission-in-progress",
+  "mode": "easy",
+  "completedMissions": [],
+  "activeMission": {
+    "seed": 1196097537,
+    "operationId": 1,
+    "tick": 0,
+    "activeSeconds": 0
+  }
+}

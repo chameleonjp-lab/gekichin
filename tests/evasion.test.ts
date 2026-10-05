@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import test from 'node:test';
@@ -12,6 +14,17 @@ import { createEvasionInitialFixture, EVASION_SCENARIOS, type EvasionScenario, t
 
 const NEUTRAL: FlightInput = { turn: 0, climb: 0, fire: false, loop: false };
 const MAX_TRIAL_TICKS = 720;
+const SOURCE_SNAPSHOT_FILES = [
+  'docs/REQUIREMENTS.md', 'docs/IMPLEMENTATION_PLAN.md',
+  'src/rules.ts', 'src/flight.ts', 'src/flight-view.ts', 'src/game-state.ts',
+  'src/turret-combat.ts', 'src/collision-world.ts', 'src/mothership.ts', 'src/mothership-layout.ts', 'src/scene.ts',
+  'tests/evasion-fixture.ts', 'tests/evasion.test.ts',
+] as const;
+
+function sourceSnapshot(): Record<string, string> {
+  return Object.fromEntries(SOURCE_SNAPSHOT_FILES.map(file => [file,
+    createHash('sha256').update(readFileSync(resolve(file))).digest('hex')]));
+}
 
 interface TraceTick {
   tick: number;
@@ -155,8 +168,8 @@ function runTrial(scenario: EvasionScenario, evasive: boolean): TrialEvidence {
   if (evasive) assert.equal(firstEvasiveInputTick, warningStartedTick! + 1, 'the evasion starts on the first input tick after warning entry');
   else assert.equal(firstEvasiveInputTick, null);
   assert.ok(maxAircraftStepMeters <= 141 / 60 + 1e-7);
-  if (evasive) assert.deepEqual(distinctHitAttackIds, [], 'ordinary evasion input avoids every projectile from this warning');
-  else assert.ok(distinctHitAttackIds.length > 0, 'the paired no-evasion path is physically hit by the same fixed attack');
+  if (evasive) assert.deepEqual(distinctHitAttackIds, [], `${scenario.face}/${scenario.kind} ordinary evasion input avoids every projectile from this warning`);
+  else assert.ok(distinctHitAttackIds.length > 0, `${scenario.face}/${scenario.kind} paired no-evasion path is physically hit by the same fixed attack`);
 
   return {
     scenario: { face: scenario.face, kind: scenario.kind, action: scenario.action,
@@ -175,6 +188,7 @@ function runTrial(scenario: EvasionScenario, evasive: boolean): TrialEvidence {
 }
 
 test('A12/R45 inspection fixture compares ordinary evasion with no evasion through the real projectile sweep', async () => {
+  const sourceAtStart = sourceSnapshot();
   const captures: Array<{ baseline: TrialEvidence; evasion: TrialEvidence }> = [];
   const trackingByFace = new Map<EvasionScenario['face'], number>();
 
@@ -197,6 +211,7 @@ test('A12/R45 inspection fixture compares ordinary evasion with no evasion throu
   for (const face of ['top', 'bottom', 'left'] as const) {
     assert.ok((trackingByFace.get(face) ?? 0) > 0, `${face} includes finite enemy barrel tracking before its warning`);
   }
+  assert.deepEqual(sourceSnapshot(), sourceAtStart, 'the exact test/source snapshot stayed unchanged while evidence was produced');
 
   // Opt-in capture preserves the raw fixed-rule, per-tick fixture trace. It is
   // excluded from the regular product-clear gate and never alters the session.
@@ -206,10 +221,11 @@ test('A12/R45 inspection fixture compares ordinary evasion with no evasion throu
     await writeFile(outputPath, gzipSync(`${JSON.stringify({
       title: 'A12/R45 controlled evasion fixture; not a normal 100-turret clear',
       source: { requirements: 'R40–R45 / A10–A12', implementationPlan: 'P4 / P7',
+        sha256ByFile: sourceAtStart,
         performanceConstants: ENEMY_PERFORMANCE },
       fixtureRules: {
         mode: 'normal', seed: INITIAL_SEED, startingTick: 0,
-        initialStateSetup: 'Start and validate the standard 100-mount operation; before its first tick, use fixture damage IDs to leave only the named mount alive and place player at its default barrel ray +90m with 110m/s level attitude.',
+        initialStateSetup: 'Start and validate the standard 100-mount operation; before its first tick, use fixture damage IDs to leave only the named mount alive and place player at default barrel ray +90m plus horizontal outward extension +500m, with normal camera yaw toward the emitter, level pitch and stock 110m/s.',
         postTickZeroWrites: 'none by the test; all subsequent state changes come from ordinary FlightInput passed to FlightSession.step.',
         solver: 'FlightSession warning/tracking/fire/event queue + production CollisionWorld sweep + production damage resolution.',
         comparison: 'Each baseline/evasion pair uses identical seed and complete tick-zero fixture. Evasion input starts on the tick after warning entry. Fixed enemy speed, warning duration, burst cadence and projectile life are read from ENEMY_PERFORMANCE.',

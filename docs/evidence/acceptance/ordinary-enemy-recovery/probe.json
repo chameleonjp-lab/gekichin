@@ -1,0 +1,2473 @@
+{
+  "type": "ordinary-enemy-recovery-probe",
+  "timestamp": "2026-10-05T05:24:16.307Z",
+  "status": "positive",
+  "classification": "standard Normal start; controller-generated FlightInput; no pose/HP/state fixture; not DOM or human-play evidence",
+  "rulesVersion": "gekichin-combat-v1",
+  "seed": 1196097537,
+  "tickCap": 7200,
+  "initial": {
+    "position": [
+      0,
+      1000,
+      2000
+    ],
+    "hpMilli": 80000,
+    "ammunition": {
+      "mg": 288,
+      "cannon": 96,
+      "mgReadyTick": 1,
+      "cannonReadyTick": 1,
+      "reloadUntilTick": null
+    },
+    "fleet": {
+      "active": 8,
+      "reserved": 0,
+      "reserve": 42,
+      "lost": 0,
+      "remaining": 50,
+      "playerLosses": 0,
+      "wingmanLosses": 0
+    }
+  },
+  "controller": {
+    "radius": 900,
+    "altitude": 1000,
+    "nextAngleRadians": 0.24,
+    "turnDivisor": 0.82,
+    "updateEveryTicks": 60,
+    "firstInputTick": 1,
+    "fire": "held while player active",
+    "climb": 0,
+    "loop": false,
+    "accelerate": false,
+    "brake": false,
+    "targetThrustSpeed": 110,
+    "viewAspect": 0.4612676056338028
+  },
+  "command": "node --import tsx docs/evidence/acceptance/ordinary-enemy-recovery/probe.mjs",
+  "sourceHashes": {
+    "src/aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
+    "src/combat-types.ts": "24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0",
+    "src/collision-world.ts": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519",
+    "src/fleet.ts": "de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90",
+    "src/flight.ts": "288f6d8b52aca7d6c4f68fce8f71262373e6a4ee6c7fadfe8cb91df187f529ce",
+    "src/flight-assist.ts": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413",
+    "src/flight-view.ts": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
+    "src/game-state.ts": "ab238ce83f8ab5eda287d47745e72162f99b984707f09cca60f151742ac2be79",
+    "src/mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+    "src/mothership.ts": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466",
+    "src/rules.ts": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414",
+    "src/scoring.ts": "95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494",
+    "src/turret-combat.ts": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71",
+    "src/types.ts": "69497c3fe6b9025b7399dbc9ab1db5f7b056507171cbd3aa8a7985ebaaef0f29",
+    "src/wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f",
+    "docs/evidence/acceptance/ordinary-enemy-recovery/probe.mjs": "bf3da3a2db4a9b0ea9fe63b463f96f7aefaa72caa89053253ff8f97e60b1063e"
+  },
+  "sourceStable": true,
+  "phase": "playing",
+  "tick": 4713,
+  "activeSeconds": 78.55,
+  "cpuSeconds": 18.518113,
+  "wallSeconds": 17.325134957,
+  "hits": [
+    {
+      "tick": 717,
+      "kind": "hit",
+      "point": [
+        451.0118944138739,
+        1000.1070090409064,
+        796.0734496237372
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 725,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.6826129673316322,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 78,
+      "shooterGeneration": 0,
+      "sequence": 1131,
+      "operationId": 1
+    },
+    {
+      "tick": 717,
+      "kind": "hit",
+      "point": [
+        450.6141862032045,
+        999.9976770949299,
+        796.3962548867141
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 724,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.6987370708436282,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 77,
+      "shooterGeneration": 0,
+      "sequence": 1132,
+      "operationId": 1
+    },
+    {
+      "tick": 719,
+      "kind": "hit",
+      "point": [
+        458.6812894035907,
+        997.5817103038212,
+        795.021889162247
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 731,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.09398897866435878,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 76,
+      "shooterGeneration": 0,
+      "sequence": 1141,
+      "operationId": 1
+    },
+    {
+      "tick": 796,
+      "kind": "hit",
+      "point": [
+        558.9241028615719,
+        1001.5559881003671,
+        700.1702271237684
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 908,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.1903669372515468,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 79,
+      "shooterGeneration": 0,
+      "sequence": 1434,
+      "operationId": 1
+    },
+    {
+      "tick": 817,
+      "kind": "hit",
+      "point": [
+        585.4760278744936,
+        1001.7008746064911,
+        674.6242020560774
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 928,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.5304454778135504,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 74,
+      "shooterGeneration": 0,
+      "sequence": 1511,
+      "operationId": 1
+    },
+    {
+      "tick": 817,
+      "kind": "hit",
+      "point": [
+        585.03407275697,
+        998.7147385770761,
+        675.1072798298695
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 927,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.5497566659051757,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 73,
+      "shooterGeneration": 0,
+      "sequence": 1512,
+      "operationId": 1
+    },
+    {
+      "tick": 832,
+      "kind": "hit",
+      "point": [
+        610.220823028977,
+        996.1536934411089,
+        654.5704715359224
+      ],
+      "weapon": "main",
+      "owner": "enemy",
+      "attackId": 897,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 24000,
+      "time": 0.8428148137375517,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 24000,
+      "shooterId": 72,
+      "shooterGeneration": 0,
+      "sequence": 1533,
+      "operationId": 1
+    },
+    {
+      "tick": 936,
+      "kind": "hit",
+      "point": [
+        725.9908391485799,
+        998.3207272029796,
+        509.34412696928575
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1058,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.5861712544655212,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 69,
+      "shooterGeneration": 0,
+      "sequence": 1579,
+      "operationId": 1
+    },
+    {
+      "tick": 936,
+      "kind": "hit",
+      "point": [
+        727.1604613856643,
+        1002.5695434090097,
+        508.5148595531383
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1059,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.5932431002995825,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 70,
+      "shooterGeneration": 0,
+      "sequence": 1580,
+      "operationId": 1
+    },
+    {
+      "tick": 1005,
+      "kind": "hit",
+      "point": [
+        791.7873686281993,
+        1004.195978131136,
+        402.16577782947826
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1085,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.990318584904531,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 71,
+      "shooterGeneration": 0,
+      "sequence": 1603,
+      "operationId": 1
+    },
+    {
+      "tick": 1028,
+      "kind": "hit",
+      "point": [
+        807.5817118993695,
+        999.5472806081572,
+        363.1237072459194
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1091,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.25680534999276194,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 73,
+      "shooterGeneration": 0,
+      "sequence": 1610,
+      "operationId": 1
+    },
+    {
+      "tick": 1028,
+      "kind": "hit",
+      "point": [
+        807.5813887679398,
+        1000.5509207775426,
+        363.14428780429853
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1092,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.2570306959795778,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 74,
+      "shooterGeneration": 0,
+      "sequence": 1611,
+      "operationId": 1
+    },
+    {
+      "tick": 1137,
+      "kind": "hit",
+      "point": [
+        869.3677440752517,
+        1000.0385355583097,
+        180.2961563548915
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1122,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.1686174179057314,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 70,
+      "shooterGeneration": 0,
+      "sequence": 1690,
+      "operationId": 1
+    },
+    {
+      "tick": 1137,
+      "kind": "hit",
+      "point": [
+        869.6316592205106,
+        999.9815471242705,
+        180.4315885495602
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1121,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.19568464637378652,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 69,
+      "shooterGeneration": 0,
+      "sequence": 1691,
+      "operationId": 1
+    },
+    {
+      "tick": 1455,
+      "kind": "hit",
+      "point": [
+        795.2856322090656,
+        1000.3940453616062,
+        -391.37288445232116
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1465,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.07239488578526491,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 66,
+      "shooterGeneration": 0,
+      "sequence": 2063,
+      "operationId": 1
+    },
+    {
+      "tick": 1460,
+      "kind": "hit",
+      "point": [
+        793.7999766896011,
+        999.5347581965009,
+        -393.4958226089262
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1474,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.016899665836378423,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 65,
+      "shooterGeneration": 0,
+      "sequence": 2067,
+      "operationId": 1
+    },
+    {
+      "tick": 1551,
+      "kind": "hit",
+      "point": [
+        702.728088298937,
+        1001.2035598775742,
+        -541.0729967099612
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1566,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.724245576557185,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 63,
+      "shooterGeneration": 0,
+      "sequence": 2148,
+      "operationId": 1
+    },
+    {
+      "tick": 1558,
+      "kind": "hit",
+      "point": [
+        699.4626225140285,
+        998.7482340509644,
+        -545.0011206173061
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1573,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.5660720937874668,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 60,
+      "shooterGeneration": 0,
+      "sequence": 2158,
+      "operationId": 1
+    },
+    {
+      "tick": 1563,
+      "kind": "hit",
+      "point": [
+        689.4614252514225,
+        999.3651926228401,
+        -555.0219129905526
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1582,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.7645839654013196,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 61,
+      "shooterGeneration": 0,
+      "sequence": 2166,
+      "operationId": 1
+    },
+    {
+      "tick": 1625,
+      "kind": "hit",
+      "point": [
+        612.9357443450511,
+        1001.2603083544197,
+        -642.2149108213843
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1663,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.7161361348773888,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 62,
+      "shooterGeneration": 0,
+      "sequence": 2270,
+      "operationId": 1
+    },
+    {
+      "tick": 1677,
+      "kind": "hit",
+      "point": [
+        543.8084144159737,
+        1000.4601505297297,
+        -698.3803184494676
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1723,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.6862209283622692,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 66,
+      "shooterGeneration": 0,
+      "sequence": 2344,
+      "operationId": 1
+    },
+    {
+      "tick": 1781,
+      "kind": "hit",
+      "point": [
+        383.6853538876082,
+        1001.4136976092492,
+        -797.8214334620224
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1830,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.48904954582655313,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 63,
+      "shooterGeneration": 0,
+      "sequence": 2428,
+      "operationId": 1
+    },
+    {
+      "tick": 1787,
+      "kind": "hit",
+      "point": [
+        375.4993675618185,
+        999.4904789731174,
+        -802.2482524100116
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1838,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.4771123029790739,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 61,
+      "shooterGeneration": 0,
+      "sequence": 2434,
+      "operationId": 1
+    },
+    {
+      "tick": 2265,
+      "kind": "hit",
+      "point": [
+        -462.7803129613718,
+        1000.4919189418432,
+        -755.0871251049841
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1969,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.5639380258547949,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 42,
+      "shooterGeneration": 0,
+      "sequence": 2577,
+      "operationId": 1
+    },
+    {
+      "tick": 2265,
+      "kind": "hit",
+      "point": [
+        -462.8028455084212,
+        999.5943772288351,
+        -755.0781638850697
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 1968,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.5644075009254746,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 41,
+      "shooterGeneration": 0,
+      "sequence": 2578,
+      "operationId": 1
+    },
+    {
+      "tick": 2365,
+      "kind": "hit",
+      "point": [
+        -603.557777728057,
+        1001.8073162074664,
+        -648.3464195176499
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 2089,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.3466016295593794,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 46,
+      "shooterGeneration": 0,
+      "sequence": 2792,
+      "operationId": 1
+    },
+    {
+      "tick": 2365,
+      "kind": "hit",
+      "point": [
+        -603.214168774376,
+        998.7123672080272,
+        -649.3521042145669
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 2088,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.40844545588719394,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 45,
+      "shooterGeneration": 0,
+      "sequence": 2793,
+      "operationId": 1
+    },
+    {
+      "tick": 2614,
+      "kind": "hit",
+      "point": [
+        -843.3666628016215,
+        999.6618570859836,
+        -269.0834669199626
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 2412,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.5694148046099156,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 45,
+      "shooterGeneration": 0,
+      "sequence": 3157,
+      "operationId": 1
+    },
+    {
+      "tick": 2867,
+      "kind": "hit",
+      "point": [
+        -865.1999891967471,
+        1001.1576680409793,
+        187.2942477839195
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 2742,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.20147091220372096,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 51,
+      "shooterGeneration": 0,
+      "sequence": 3636,
+      "operationId": 1
+    },
+    {
+      "tick": 2883,
+      "kind": "hit",
+      "point": [
+        -858.6602175905928,
+        999.5329894480233,
+        217.60776124891936
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 2777,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.3988124118934876,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 49,
+      "shooterGeneration": 0,
+      "sequence": 3664,
+      "operationId": 1
+    },
+    {
+      "tick": 2883,
+      "kind": "hit",
+      "point": [
+        -858.5600762781069,
+        998.7290123127292,
+        217.33271066732814
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 2776,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.576087055378465,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 48,
+      "shooterGeneration": 0,
+      "sequence": 3665,
+      "operationId": 1
+    },
+    {
+      "tick": 2955,
+      "kind": "hit",
+      "point": [
+        -820.5645145630587,
+        1001.2261366859182,
+        336.09878181745665
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 2896,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.3273723487202488,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 50,
+      "shooterGeneration": 0,
+      "sequence": 3764,
+      "operationId": 1
+    },
+    {
+      "tick": 2985,
+      "kind": "hit",
+      "point": [
+        -794.9968968707911,
+        1000.4071036529123,
+        391.25764043823773
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 2921,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.043672948692311295,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 54,
+      "shooterGeneration": 0,
+      "sequence": 3819,
+      "operationId": 1
+    },
+    {
+      "tick": 2990,
+      "kind": "hit",
+      "point": [
+        -794.2475546008656,
+        999.5501660338008,
+        393.67121598941657
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 2925,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.061295144360917354,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 53,
+      "shooterGeneration": 0,
+      "sequence": 3831,
+      "operationId": 1
+    },
+    {
+      "tick": 3156,
+      "kind": "hit",
+      "point": [
+        -611.2331582196415,
+        1000.7300409151327,
+        641.5847453306687
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 3131,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.5595999850985363,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 58,
+      "shooterGeneration": 0,
+      "sequence": 4066,
+      "operationId": 1
+    },
+    {
+      "tick": 3285,
+      "kind": "hit",
+      "point": [
+        -427.40277797029273,
+        1000.4538361247187,
+        775.7027221046279
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 3229,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.08374326004397582,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 54,
+      "shooterGeneration": 0,
+      "sequence": 4225,
+      "operationId": 1
+    },
+    {
+      "tick": 3779,
+      "kind": "hit",
+      "point": [
+        437.73477659152826,
+        1000.4981160378359,
+        770.1830247222105
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4088,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.022323912282447362,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 78,
+      "shooterGeneration": 0,
+      "sequence": 5403,
+      "operationId": 1
+    },
+    {
+      "tick": 3779,
+      "kind": "hit",
+      "point": [
+        437.75173195818047,
+        999.5900404609318,
+        770.1762791329053
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4087,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.022655334483304864,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 77,
+      "shooterGeneration": 0,
+      "sequence": 5404,
+      "operationId": 1
+    },
+    {
+      "tick": 3851,
+      "kind": "hit",
+      "point": [
+        544.7853160039231,
+        1001.4204781033844,
+        697.7699701370625
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4178,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.20676122676944222,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 79,
+      "shooterGeneration": 0,
+      "sequence": 5503,
+      "operationId": 1
+    },
+    {
+      "tick": 3890,
+      "kind": "hit",
+      "point": [
+        601.5675460768564,
+        999.5797298501338,
+        650.7747169793712
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4211,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.43828282823908865,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 73,
+      "shooterGeneration": 0,
+      "sequence": 5577,
+      "operationId": 1
+    },
+    {
+      "tick": 3901,
+      "kind": "hit",
+      "point": [
+        611.8873108074406,
+        999.9934775447999,
+        639.4181373345542
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4226,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.09829552286977129,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 74,
+      "shooterGeneration": 0,
+      "sequence": 5591,
+      "operationId": 1
+    },
+    {
+      "tick": 4004,
+      "kind": "hit",
+      "point": [
+        737.8991121174951,
+        1000.4968338753226,
+        493.7397478777388
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4331,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.1970126968923408,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 70,
+      "shooterGeneration": 0,
+      "sequence": 5695,
+      "operationId": 1
+    },
+    {
+      "tick": 4004,
+      "kind": "hit",
+      "point": [
+        737.9163911589573,
+        999.5954198617403,
+        493.73266501696367
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4330,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.19781931329064215,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 69,
+      "shooterGeneration": 0,
+      "sequence": 5696,
+      "operationId": 1
+    },
+    {
+      "tick": 4083,
+      "kind": "hit",
+      "point": [
+        807.4176490466559,
+        998.9017282292303,
+        368.1701441764217
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4416,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.21440545171858216,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 68,
+      "shooterGeneration": 0,
+      "sequence": 5772,
+      "operationId": 1
+    },
+    {
+      "tick": 4109,
+      "kind": "hit",
+      "point": [
+        822.4406861869488,
+        999.5291302369493,
+        326.7683968406713
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4435,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.6506533542632664,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 73,
+      "shooterGeneration": 0,
+      "sequence": 5791,
+      "operationId": 1
+    },
+    {
+      "tick": 4211,
+      "kind": "hit",
+      "point": [
+        872.4332923509894,
+        999.7119114458803,
+        148.43422264198392
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4491,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.614225043608853,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 69,
+      "shooterGeneration": 0,
+      "sequence": 5860,
+      "operationId": 1
+    },
+    {
+      "tick": 4525,
+      "kind": "hit",
+      "point": [
+        785.8485627606207,
+        999.4464899282551,
+        -407.9171880411241
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4863,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 1200,
+      "time": 0.8521853771496903,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 65,
+      "shooterGeneration": 0,
+      "sequence": 6455,
+      "operationId": 1
+    },
+    {
+      "tick": 4533,
+      "kind": "hit",
+      "point": [
+        784.8338558827652,
+        1000.045041869489,
+        -414.82935049506614
+      ],
+      "weapon": "mg",
+      "owner": "enemy",
+      "attackId": 4882,
+      "targetId": 0,
+      "tokenId": 0,
+      "damageMilli": 800,
+      "time": 0.02701128612366041,
+      "targetGeneration": 0,
+      "calculatedDamageMilli": 1200,
+      "shooterId": 66,
+      "shooterGeneration": 0,
+      "sequence": 6485,
+      "operationId": 1
+    }
+  ],
+  "drops": [
+    {
+      "tick": 717,
+      "tokenId": 0,
+      "from": 80000,
+      "to": 77600
+    },
+    {
+      "tick": 719,
+      "tokenId": 0,
+      "from": 77600,
+      "to": 76400
+    },
+    {
+      "tick": 796,
+      "tokenId": 0,
+      "from": 76400,
+      "to": 75200
+    },
+    {
+      "tick": 817,
+      "tokenId": 0,
+      "from": 75200,
+      "to": 72800
+    },
+    {
+      "tick": 832,
+      "tokenId": 0,
+      "from": 72800,
+      "to": 48800
+    },
+    {
+      "tick": 936,
+      "tokenId": 0,
+      "from": 48800,
+      "to": 46400
+    },
+    {
+      "tick": 1005,
+      "tokenId": 0,
+      "from": 46400,
+      "to": 45200
+    },
+    {
+      "tick": 1028,
+      "tokenId": 0,
+      "from": 45200,
+      "to": 42800
+    },
+    {
+      "tick": 1137,
+      "tokenId": 0,
+      "from": 42800,
+      "to": 40400
+    },
+    {
+      "tick": 1455,
+      "tokenId": 0,
+      "from": 40400,
+      "to": 39200
+    },
+    {
+      "tick": 1460,
+      "tokenId": 0,
+      "from": 39200,
+      "to": 38000
+    },
+    {
+      "tick": 1551,
+      "tokenId": 0,
+      "from": 38000,
+      "to": 36800
+    },
+    {
+      "tick": 1558,
+      "tokenId": 0,
+      "from": 36800,
+      "to": 35600
+    },
+    {
+      "tick": 1563,
+      "tokenId": 0,
+      "from": 35600,
+      "to": 34400
+    },
+    {
+      "tick": 1625,
+      "tokenId": 0,
+      "from": 34400,
+      "to": 33200
+    },
+    {
+      "tick": 1677,
+      "tokenId": 0,
+      "from": 33200,
+      "to": 32000
+    },
+    {
+      "tick": 1781,
+      "tokenId": 0,
+      "from": 32000,
+      "to": 30800
+    },
+    {
+      "tick": 1787,
+      "tokenId": 0,
+      "from": 30800,
+      "to": 29600
+    },
+    {
+      "tick": 2265,
+      "tokenId": 0,
+      "from": 29600,
+      "to": 27200
+    },
+    {
+      "tick": 2365,
+      "tokenId": 0,
+      "from": 27200,
+      "to": 24800
+    },
+    {
+      "tick": 2614,
+      "tokenId": 0,
+      "from": 24800,
+      "to": 23600
+    },
+    {
+      "tick": 2867,
+      "tokenId": 0,
+      "from": 23600,
+      "to": 22400
+    },
+    {
+      "tick": 2883,
+      "tokenId": 0,
+      "from": 22400,
+      "to": 20000
+    },
+    {
+      "tick": 2955,
+      "tokenId": 0,
+      "from": 20000,
+      "to": 18800
+    },
+    {
+      "tick": 2985,
+      "tokenId": 0,
+      "from": 18800,
+      "to": 17600
+    },
+    {
+      "tick": 2990,
+      "tokenId": 0,
+      "from": 17600,
+      "to": 16400
+    },
+    {
+      "tick": 3156,
+      "tokenId": 0,
+      "from": 16400,
+      "to": 15200
+    },
+    {
+      "tick": 3285,
+      "tokenId": 0,
+      "from": 15200,
+      "to": 14000
+    },
+    {
+      "tick": 3779,
+      "tokenId": 0,
+      "from": 14000,
+      "to": 11600
+    },
+    {
+      "tick": 3851,
+      "tokenId": 0,
+      "from": 11600,
+      "to": 10400
+    },
+    {
+      "tick": 3890,
+      "tokenId": 0,
+      "from": 10400,
+      "to": 9200
+    },
+    {
+      "tick": 3901,
+      "tokenId": 0,
+      "from": 9200,
+      "to": 8000
+    },
+    {
+      "tick": 4004,
+      "tokenId": 0,
+      "from": 8000,
+      "to": 5600
+    },
+    {
+      "tick": 4083,
+      "tokenId": 0,
+      "from": 5600,
+      "to": 4400
+    },
+    {
+      "tick": 4109,
+      "tokenId": 0,
+      "from": 4400,
+      "to": 3200
+    },
+    {
+      "tick": 4211,
+      "tokenId": 0,
+      "from": 3200,
+      "to": 2000
+    },
+    {
+      "tick": 4525,
+      "tokenId": 0,
+      "from": 2000,
+      "to": 800
+    }
+  ],
+  "totalEnemyDamage": 80000,
+  "loss": {
+    "tick": 4533,
+    "kind": "aircraft-lost",
+    "point": [
+      784.7082014256995,
+      1000,
+      -419.8275683962197
+    ],
+    "owner": "player",
+    "tokenId": 0,
+    "generation": 0,
+    "message": "被弾",
+    "sequence": 6484,
+    "operationId": 1,
+    "ownershipRevision": 1,
+    "fleet": {
+      "active": 7,
+      "reserved": 1,
+      "reserve": 41,
+      "lost": 1,
+      "remaining": 49,
+      "playerLosses": 1,
+      "wingmanLosses": 0
+    },
+    "pending": [
+      {
+        "operationId": 1,
+        "tokenId": 8,
+        "slotId": 0,
+        "generation": 1,
+        "owner": "player",
+        "dueTick": 4713,
+        "blockedSinceTick": null
+      }
+    ]
+  },
+  "respawn": {
+    "tick": 4713,
+    "kind": "respawn",
+    "point": [
+      0,
+      1000,
+      2000
+    ],
+    "tokenId": 8,
+    "generation": 1,
+    "owner": "player",
+    "sequence": 6624,
+    "operationId": 1,
+    "hpMilli": 80000,
+    "ammunition": {
+      "mg": 288,
+      "cannon": 96,
+      "mgReadyTick": 4714,
+      "cannonReadyTick": 4714,
+      "reloadUntilTick": null
+    },
+    "ownershipRevision": 2
+  },
+  "respawnDelay": 180,
+  "player": {
+    "tokenId": 8,
+    "hpMilli": 80000,
+    "position": [
+      0,
+      1000,
+      2000
+    ],
+    "ammunition": {
+      "mg": 288,
+      "cannon": 96,
+      "mgReadyTick": 4714,
+      "cannonReadyTick": 4714,
+      "reloadUntilTick": null
+    }
+  },
+  "ownershipRevision": 2,
+  "fleet": {
+    "active": 8,
+    "reserved": 0,
+    "reserve": 41,
+    "lost": 1,
+    "remaining": 49,
+    "playerLosses": 1,
+    "wingmanLosses": 0
+  },
+  "enemyPoolFailures": 0,
+  "abnormal": null,
+  "controlRows": [
+    {
+      "firstTick": 1,
+      "input": {
+        "turn": 0.22901055859777505,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 61,
+      "input": {
+        "turn": 0.016824293807082023,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 121,
+      "input": {
+        "turn": 0.013875169903137679,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 181,
+      "input": {
+        "turn": 0.01806049765429849,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 241,
+      "input": {
+        "turn": 0.024380494712286312,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 301,
+      "input": {
+        "turn": 0.033821102352779915,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 361,
+      "input": {
+        "turn": 0.04830067528483135,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 421,
+      "input": {
+        "turn": 0.05574037474016362,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 481,
+      "input": {
+        "turn": 0.07509750559512768,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 541,
+      "input": {
+        "turn": 0.114687097372994,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 601,
+      "input": {
+        "turn": 0.09210367924276666,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 661,
+      "input": {
+        "turn": 0.0675295922708828,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 721,
+      "input": {
+        "turn": -0.011813703362115248,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 781,
+      "input": {
+        "turn": -0.05053592030013481,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 841,
+      "input": {
+        "turn": -0.07498325543152203,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 901,
+      "input": {
+        "turn": -0.0828828648536988,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 961,
+      "input": {
+        "turn": -0.08790700610024126,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1021,
+      "input": {
+        "turn": -0.0892828135823538,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1081,
+      "input": {
+        "turn": -0.09032783762487685,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1141,
+      "input": {
+        "turn": -0.09055541166884457,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1201,
+      "input": {
+        "turn": -0.09078102997074318,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1261,
+      "input": {
+        "turn": -0.09081507548250635,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1321,
+      "input": {
+        "turn": -0.09086571914790208,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1381,
+      "input": {
+        "turn": -0.0908695893639294,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1441,
+      "input": {
+        "turn": -0.09088140324813798,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1501,
+      "input": {
+        "turn": -0.09088139123996954,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1561,
+      "input": {
+        "turn": -0.09088424863900345,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1621,
+      "input": {
+        "turn": -0.09088402992264948,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1681,
+      "input": {
+        "turn": -0.09088474358697657,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1741,
+      "input": {
+        "turn": -0.09088463922807077,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1801,
+      "input": {
+        "turn": -0.09088482235854578,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1861,
+      "input": {
+        "turn": -0.09088478431580067,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1921,
+      "input": {
+        "turn": -0.09088483234468236,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 1981,
+      "input": {
+        "turn": -0.09088481984265964,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2041,
+      "input": {
+        "turn": -0.09088483265572894,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2101,
+      "input": {
+        "turn": -0.09088482875662893,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2161,
+      "input": {
+        "turn": -0.09088483221984672,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2221,
+      "input": {
+        "turn": -0.09088483103979446,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2281,
+      "input": {
+        "turn": -0.09088483198518782,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2341,
+      "input": {
+        "turn": -0.09088483163465358,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2401,
+      "input": {
+        "turn": -0.09088483189466565,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2461,
+      "input": {
+        "turn": -0.09088483179181459,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2521,
+      "input": {
+        "turn": -0.09088483186373592,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2581,
+      "input": {
+        "turn": -0.09088483183379455,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2641,
+      "input": {
+        "turn": -0.09088483185378399,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2701,
+      "input": {
+        "turn": -0.09088483184511016,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2761,
+      "input": {
+        "turn": -0.09088483185071218,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2821,
+      "input": {
+        "turn": -0.09088483184818304,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2881,
+      "input": {
+        "turn": -0.09088483184975739,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 2941,
+      "input": {
+        "turn": -0.09088483184903494,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3001,
+      "input": {
+        "turn": -0.09088483184947416,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3061,
+      "input": {
+        "turn": -0.09088483184928568,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3121,
+      "input": {
+        "turn": -0.09088483184937558,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3181,
+      "input": {
+        "turn": -0.09088483184932035,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3241,
+      "input": {
+        "turn": -0.09088483184936368,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3301,
+      "input": {
+        "turn": -0.09088483184935392,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3361,
+      "input": {
+        "turn": -0.09088483184936313,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3421,
+      "input": {
+        "turn": -0.09088483184934905,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3481,
+      "input": {
+        "turn": -0.09088483184936963,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3541,
+      "input": {
+        "turn": -0.09088483184935825,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3601,
+      "input": {
+        "turn": -0.09088483184936368,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3661,
+      "input": {
+        "turn": -0.09088483184934742,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3721,
+      "input": {
+        "turn": -0.09088483184936746,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3781,
+      "input": {
+        "turn": -0.090884831849355,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3841,
+      "input": {
+        "turn": -0.09088483184937775,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3901,
+      "input": {
+        "turn": -0.09088483184932847,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 3961,
+      "input": {
+        "turn": -0.0908848318493772,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4021,
+      "input": {
+        "turn": -0.09088483184933009,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4081,
+      "input": {
+        "turn": -0.09088483184938317,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4141,
+      "input": {
+        "turn": -0.09088483184934255,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4201,
+      "input": {
+        "turn": -0.09088483184935933,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4261,
+      "input": {
+        "turn": -0.09088483184934255,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4321,
+      "input": {
+        "turn": -0.09088483184936205,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4381,
+      "input": {
+        "turn": -0.09088483184935013,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4441,
+      "input": {
+        "turn": -0.09088483184937342,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4501,
+      "input": {
+        "turn": -0.0908848318493626,
+        "climb": 0,
+        "fire": true,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4561,
+      "input": {
+        "turn": 0,
+        "climb": 0,
+        "fire": false,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4621,
+      "input": {
+        "turn": 0,
+        "climb": 0,
+        "fire": false,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    },
+    {
+      "firstTick": 4681,
+      "input": {
+        "turn": 0,
+        "climb": 0,
+        "fire": false,
+        "loop": false,
+        "accelerate": false,
+        "brake": false,
+        "steeringRevision": 0,
+        "viewAspect": 0.4612676056338028
+      }
+    }
+  ]
+}

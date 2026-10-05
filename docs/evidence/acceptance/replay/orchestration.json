@@ -1,0 +1,49 @@
+{
+  "classification": "ordinary-recorded-input-fixed-stepper-replay",
+  "maximumConcurrentHeavyReplayJobs": 2,
+  "events": [
+    {
+      "recordedAt": "2026-10-05T04:35:37.017052+00:00",
+      "action": "SIGSTOP-confirmed",
+      "pids": {
+        "easy": 29085,
+        "normal": 29089
+      },
+      "reason": "Root requested CPU isolation for concurrent real-wallclock browser verification.",
+      "lastProgressTick": {
+        "easy": 7200,
+        "normal": 7200
+      },
+      "effectOnEvidence": "WallSeconds includes host suspension. FixedStepper receives only synthetic render timestamps; logical ticks and controls are unchanged."
+    },
+    {
+      "recordedAt": "2026-10-05T04:43:10.966555+00:00",
+      "action": "SIGCONT",
+      "pids": {
+        "easy": 29085,
+        "normal": 29089
+      },
+      "reason": "Verification confirmed real-time browser gates complete and virtual-clock long DOM product pilot starting.",
+      "effectOnEvidence": "Synthetic render timestamps, logical ticks and accepted inputs continue unchanged."
+    },
+    {
+      "recordedAt": "2026-10-05T04:43:43.904995+00:00",
+      "action": "nice-priority-10",
+      "pids": {
+        "easy": 29085,
+        "normal": 29089
+      },
+      "reason": "Favor concurrent virtual-clock browser pilot CPU scheduling; combat state/input/clock are unchanged."
+    },
+    {
+      "recordedAt": "2026-10-05T04:52:52.305220+00:00",
+      "action": "replay-processes-complete",
+      "exitCodes": {
+        "easy": 0,
+        "normal": 0
+      },
+      "successfulFullReplays": 6,
+      "remainingHeavyReplayJobs": 0
+    }
+  ]
+}

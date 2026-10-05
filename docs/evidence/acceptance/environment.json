@@ -1,0 +1,43 @@
+{
+  "recordedAt": "2026-10-05T04:21:29.768644+00:00",
+  "environmentType": "managed Linux cloud workspace; virtual/software browser verification",
+  "physicalHardware": false,
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "os": "Linux 6.18.44",
+  "requirementsCommit": "e9212a73a7b36c33dff7e88d3a7308be6cdcea35",
+  "requirementsBlob": "1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c",
+  "ruleVersion": "gekichin-combat-v1",
+  "seed": 1196097537,
+  "logicHz": 60,
+  "browser": "Playwright Chromium149 / WebKit26.5; exact builds retained in browser results",
+  "graphics": "Chromium ANGLE SwiftShader; not a physical GPU measurement",
+  "physicalAcceptance": {
+    "pc": {
+      "status": "blocked: physical PC/CPU/GPU/RAM/OS/browser not provided",
+      "cssViewport": [
+        1366,
+        768
+      ],
+      "DPR": 1,
+      "warmupSeconds": 30,
+      "measurementSeconds": 180,
+      "p95LimitMilliseconds": 20,
+      "measured": false
+    },
+    "iphone17Pro": {
+      "status": "blocked: device/Safari not provided",
+      "referenceCssViewport": [
+        393,
+        852
+      ],
+      "actualViewportAndDPR": "unmeasured",
+      "warmupSeconds": 30,
+      "measurementSeconds": 180,
+      "p95LimitMilliseconds": 33.3,
+      "measured": false
+    },
+    "humanPlay": "not performed",
+    "listening": "not performed"
+  }
+}

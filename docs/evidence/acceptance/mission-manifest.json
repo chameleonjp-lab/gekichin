@@ -1,0 +1,173 @@
+{
+  "recordedAtUTC": "2026-10-05T04:32:01.888746+00:00",
+  "classification": "ordinary accepted FlightInput engine integration; full enemy combat enabled; not product DOM or human play",
+  "requirementsCommit": "e9212a73a7b36c33dff7e88d3a7308be6cdcea35",
+  "requirementsBlob": "1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c",
+  "ruleVersion": "gekichin-combat-v1",
+  "baseHead": "98119b5ae6604ad5975024b0e523b78eef369662",
+  "sourceSHA256": {
+    "src/game-state.ts": "ab238ce83f8ab5eda287d47745e72162f99b984707f09cca60f151742ac2be79",
+    "src/rules.ts": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414",
+    "src/types.ts": "69497c3fe6b9025b7399dbc9ab1db5f7b056507171cbd3aa8a7985ebaaef0f29",
+    "src/combat-types.ts": "24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0",
+    "src/fleet.ts": "de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90",
+    "src/aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
+    "src/scoring.ts": "95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494",
+    "src/turret-combat.ts": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71",
+    "src/wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f",
+    "src/mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+    "src/mothership.ts": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466",
+    "src/collision-world.ts": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519",
+    "src/flight.ts": "288f6d8b52aca7d6c4f68fce8f71262373e6a4ee6c7fadfe8cb91df187f529ce",
+    "src/flight-assist.ts": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413",
+    "src/flight-view.ts": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
+    "scripts/mission-runner.ts": "b141d39ce1d27b698bb78c81154edbc37763c017c17fd4715f26c9490589b5cb"
+  },
+  "runs": [
+    {
+      "mode": "easy",
+      "command": "node --import tsx scripts/mission-runner.ts --mode easy --record docs/evidence/acceptance/easy-inputs.json.gz",
+      "log": "easy-run.log",
+      "logSHA256": "8b3e15f7f5746375793a7763c6f0e93c8f775dfd5260c90325fd5e27f422e9b0",
+      "inputRecord": "easy-inputs.json.gz",
+      "inputsSHA256": "3dd05068cf4647b9f3b1cf43848ed514db64dbff67cece813f221b89dbd48878",
+      "outcome": "victory",
+      "seed": 1196097537,
+      "endTick": 54329,
+      "activeSeconds": 905.4833333333333,
+      "uniqueDestroyedTurrets": 100,
+      "faceCounts": {
+        "top": 20,
+        "bottom": 20,
+        "left": 20,
+        "right": 20,
+        "front": 10,
+        "rear": 10
+      },
+      "finalKill": {
+        "id": 92,
+        "tick": 54329,
+        "face": "rear",
+        "owner": "wingman"
+      },
+      "lastBottomKill": {
+        "id": 22,
+        "tick": 48255,
+        "face": "bottom",
+        "owner": "wingman"
+      },
+      "enemyShotCount": 20530,
+      "friendlyPoolFailures": 0,
+      "enemyPoolFailures": 0,
+      "report": {
+        "kind": "mission-result",
+        "operationId": 1,
+        "rulesVersion": "gekichin-combat-v1",
+        "mode": "easy",
+        "seed": 1196097537,
+        "endTick": 54329,
+        "reason": "completed",
+        "outcome": "victory",
+        "K": 100,
+        "damageMilli": 24000000,
+        "P": 0,
+        "W": 40,
+        "N": 4,
+        "Hmain": 0,
+        "Hmg": 0,
+        "playerKills": 0,
+        "wingmanKills": 100,
+        "playerDamageMilli": 0,
+        "wingmanDamageMilli": 24000000,
+        "mainKills": 20,
+        "mgKills": 80,
+        "components": {
+          "destruction": 100000,
+          "damage": 48000,
+          "time": 12443.141755036017,
+          "playerLoss": 0,
+          "wingmanLoss": 20000,
+          "accuracyLoss": 20000,
+          "total": 120443,
+          "accuracy": 0
+        }
+      }
+    },
+    {
+      "mode": "normal",
+      "command": "node --import tsx scripts/mission-runner.ts --mode normal --record docs/evidence/acceptance/normal-inputs.json.gz",
+      "log": "normal-run.log",
+      "logSHA256": "5f3521996b84c658abd43c3fd8dcde9bb71f6bb40ba3dcf0842f0c6d1f2c4ed4",
+      "inputRecord": "normal-inputs.json.gz",
+      "inputsSHA256": "d57fc6d394b5da6502dab82786fb5e6fa839974c31847a35e77f8bf065359ddd",
+      "outcome": "victory",
+      "seed": 1196097537,
+      "endTick": 54329,
+      "activeSeconds": 905.4833333333333,
+      "uniqueDestroyedTurrets": 100,
+      "faceCounts": {
+        "top": 20,
+        "bottom": 20,
+        "left": 20,
+        "right": 20,
+        "front": 10,
+        "rear": 10
+      },
+      "finalKill": {
+        "id": 92,
+        "tick": 54329,
+        "face": "rear",
+        "owner": "wingman"
+      },
+      "lastBottomKill": {
+        "id": 22,
+        "tick": 48255,
+        "face": "bottom",
+        "owner": "wingman"
+      },
+      "enemyShotCount": 20530,
+      "friendlyPoolFailures": 0,
+      "enemyPoolFailures": 0,
+      "report": {
+        "kind": "mission-result",
+        "operationId": 1,
+        "rulesVersion": "gekichin-combat-v1",
+        "mode": "normal",
+        "seed": 1196097537,
+        "endTick": 54329,
+        "reason": "completed",
+        "outcome": "victory",
+        "K": 100,
+        "damageMilli": 24000000,
+        "P": 0,
+        "W": 40,
+        "N": 19510,
+        "Hmain": 0,
+        "Hmg": 0,
+        "playerKills": 0,
+        "wingmanKills": 100,
+        "playerDamageMilli": 0,
+        "wingmanDamageMilli": 24000000,
+        "mainKills": 20,
+        "mgKills": 80,
+        "components": {
+          "destruction": 100000,
+          "damage": 48000,
+          "time": 12443.141755036017,
+          "playerLoss": 0,
+          "wingmanLoss": 20000,
+          "accuracyLoss": 20000,
+          "total": 120443,
+          "accuracy": 0
+        }
+      }
+    }
+  ],
+  "excludedStateChanges": [
+    "no post-initialization position/HP/life writes",
+    "no enemy suspension",
+    "no invulnerability",
+    "no direct damage injection"
+  ],
+  "playerContributionLimit": "Both full clears have 100 wingman kills and zero player hits/kills; normal manual shots are recorded but are not proof of player accuracy."
+}
