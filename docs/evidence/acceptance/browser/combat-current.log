@@ -1,0 +1,51 @@
+
+Running 3 tests using 1 worker
+
+(node:26188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › browser-tests/combat.spec.ts:17:1 › Easy combat clock, six-face HUD, pause and explicit resume follow product controls (5.8s)
+  ✓  2 [chromium] › browser-tests/combat.spec.ts:43:1 › Normal keyboard firing consumes real ammunition and updates flight HUD, then pauses cleanly (8.3s)
+  ✘  3 [chromium] › browser-tests/combat.spec.ts:72:1 › ten product restart cycles retain one bounded scene and stable WebGL resources (31.3s)
+
+
+  1) [chromium] › browser-tests/combat.spec.ts:72:1 › ten product restart cycles retain one bounded scene and stable WebGL resources 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 120
+    Received:   0
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      92 |     await page.locator('#restart').click();
+      93 |     await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
+    > 94 |     await expect.poll(async () => Number(await page.locator('#app').getAttribute('data-tick'))).toBeGreaterThan(120);
+         |                                                                                                 ^
+      95 |     await expect(page.locator('#flight-canvas')).toHaveCount(1);
+      96 |     await expect(page.locator('#control-settings')).toHaveCount(1);
+      97 |     for (const key of keys) expect(await readCounter(key), `${key} after restart ${repeat + 1}`).toBe(stable[key]);
+        at /workspace/gekichin/browser-tests/combat.spec.ts:94:97
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/combat-ten-product-restart-5102c--and-stable-WebGL-resources-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/combat-ten-product-restart-5102c--and-stable-WebGL-resources-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/combat-ten-product-restart-5102c--and-stable-WebGL-resources-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/combat-ten-product-restart-5102c--and-stable-WebGL-resources-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › browser-tests/combat.spec.ts:72:1 › ten product restart cycles retain one bounded scene and stable WebGL resources 
+  2 passed (48.0s)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

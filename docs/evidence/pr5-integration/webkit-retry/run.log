@@ -1,0 +1,32 @@
+
+Running 18 tests using 1 worker
+
+(node:65897) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+  ✓   1 [webkit-ui] › browser-tests/p1-independent-ui.spec.ts:10:1 › touch preview controls fit their scroller and Gekichin settings leave other games storage untouched (10.5s)
+  ✓   2 [webkit-ui] › browser-tests/p1-settings.spec.ts:20:1 › nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional (13.8s)
+  ✓   3 [webkit-ui] › browser-tests/p1-settings.spec.ts:48:1 › home editors offer both modes and persist touch size, opacity and placement only after save (12.9s)
+  ✓   4 [webkit-ui] › browser-tests/p1-settings.spec.ts:68:1 › a multi-key save failure rolls back and only explicit session use changes active settings (10.5s)
+  ✓   5 [webkit-ui] › browser-tests/p1-settings.spec.ts:90:1 › future-version values are never downgraded and failed drafts can be cancelled (10.8s)
+  ✓   6 [webkit-ui] › browser-tests/p1-settings.spec.ts:104:1 › home, settings and guide stay reachable at all required viewports and 200 percent text (29.7s)
+  ✓   7 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 320x568 (17.0s)
+  ✓   8 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 393x852 (15.7s)
+  ✓   9 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 568x320 (15.2s)
+  ✓  10 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 852x393 (16.0s)
+  ✓  11 [webkit-ui] › browser-tests/throttle-lever.spec.ts:34:1 › future v2, legacy raw and failed save remain protected through cancel and session-only use (10.8s)
+  ✓  12 [webkit-ui] › browser-tests/throttle-lever.spec.ts:42:1 › real browser pointer and focused slider input spring home and release independently (3.7s)
+  -  13 [webkit-ui] › browser-tests/throttle-lever.spec.ts:64:1 › Normal live flight accepts the lever, stops through settings and Easy has none
+  ✓  14 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 100% (11.1s)
+  ✓  15 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 200% (17.1s)
+  ✓  16 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 100% (17.2s)
+  ✓  17 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 200% (17.7s)
+  ✓  18 [webkit-ui] › browser-tests/throttle-lever.spec.ts:104:1 › settings footer and close remain reachable at 200 percent CSS zoom (10.8s)
+
+  1 skipped
+  17 passed (4.1m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

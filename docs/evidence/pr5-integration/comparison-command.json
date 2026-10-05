@@ -1,0 +1,18 @@
+{
+  "command": "PLAYWRIGHT_BROWSERS_PATH=/workspace/.playwright-browsers node scripts/capture-throttle-comparison.mjs /tmp/gekichin-throttle-baseline-c0cf",
+  "exitCode": 0,
+  "stdoutStderrBytes": 0,
+  "stdoutStderrNote": "The comparison script does not print successful assertions. comparison.log is the unmodified stdout/stderr capture; conditions.json records the four captures and script assertions completed with exit 0.",
+  "rawConditions": "comparison/conditions.json",
+  "captures": 4,
+  "comparedStateFields": [
+    "phase",
+    "mode",
+    "elapsed",
+    "speed",
+    "altitude",
+    "loop",
+    "fire"
+  ],
+  "fixedTick": 12
+}

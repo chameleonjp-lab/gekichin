@@ -1,0 +1,212 @@
+{
+  "scope": "Static frozen source/asset inventory only; not a network HAR or a license grant. Runtime HAR reviewed separately.",
+  "reviewedAtUTC": "2026-10-05T04:57:39.461199+00:00",
+  "status": "Frozen production source independently re-scanned after synchronous abort result fix; exact source bytes match candidate commit.",
+  "base_head": "98119b5ae6604ad5975024b0e523b78eef369662",
+  "branch": "feat/gekichin-combat-completion",
+  "patterns": {
+    "forbidden-feature": "bomb|torpedo|payload|ordnance|ranking|supabase|analytics|telemetry|爆弾|魚雷|ランキング",
+    "outbound-network": "fetch\\s*\\(|XMLHttpRequest|WebSocket|sendBeacon|https?://|@import",
+    "storage-reference": "localStorage|sessionStorage|STORAGE_KEYS|KEYBOARD_STORAGE_KEY|bestKey"
+  },
+  "files": [
+    {
+      "path": "index.html",
+      "sha256": "33670490d1bde8c0024358c6e619919abf0f0ffbabb8769bed3c8f8e70b66609"
+    },
+    {
+      "path": "package.json",
+      "sha256": "4d9f6a16baca06e6987ae7a8ce48f760d9f23ea75c7e598869ff01b670d40dce"
+    },
+    {
+      "path": "public/third-party-notices.txt",
+      "sha256": "97de7ac302052bcea7f20e5ae89635c10e049614f56409288d554d63fceb614f"
+    },
+    {
+      "path": "src/aircraft-weapons.ts",
+      "sha256": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a"
+    },
+    {
+      "path": "src/aircraft.ts",
+      "sha256": "1a9c18f93e5a48869882b2aa2946cdeb352dc4a8acd76b4fd9beade8ded621d5"
+    },
+    {
+      "path": "src/audio.ts",
+      "sha256": "99057cd1e53413459802ada6d442a31de7feb8ee91008df540901b085d2731ab"
+    },
+    {
+      "path": "src/boundary-guidance.ts",
+      "sha256": "7deac567a22cf2cf64693bb6777adf3e0491cc0d213ac6ecc53d9c5cfc7ebb21"
+    },
+    {
+      "path": "src/collision-world.ts",
+      "sha256": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519"
+    },
+    {
+      "path": "src/combat-types.ts",
+      "sha256": "24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0"
+    },
+    {
+      "path": "src/control-settings.css",
+      "sha256": "fd060ea182464b36629372e995e8a551a32602a9a529e3bf10fd148f687ccf20"
+    },
+    {
+      "path": "src/control-settings.ts",
+      "sha256": "e16bfd064914aa76f1327862ad5f8900958c23a706b5eded65c84fae737328c4"
+    },
+    {
+      "path": "src/dialog-focus.ts",
+      "sha256": "86d631a4d618558e1ca671004c12ccc1fbdfe75516e6c5d04f962acd2c5e1996"
+    },
+    {
+      "path": "src/fleet.ts",
+      "sha256": "de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90"
+    },
+    {
+      "path": "src/flight-assist.ts",
+      "sha256": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413"
+    },
+    {
+      "path": "src/flight-view.ts",
+      "sha256": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32"
+    },
+    {
+      "path": "src/flight.ts",
+      "sha256": "288f6d8b52aca7d6c4f68fce8f71262373e6a4ee6c7fadfe8cb91df187f529ce"
+    },
+    {
+      "path": "src/game-state.ts",
+      "sha256": "ab238ce83f8ab5eda287d47745e72162f99b984707f09cca60f151742ac2be79"
+    },
+    {
+      "path": "src/input.ts",
+      "sha256": "f7a3860926fd76bc0684405ff43177c327e21163f9f7dd375e879d197eae579a"
+    },
+    {
+      "path": "src/keyboard-settings.ts",
+      "sha256": "f38ee882c88f6b169377e98c788de2cdf413905840f791ce6ef9109cef0088cc"
+    },
+    {
+      "path": "src/main.ts",
+      "sha256": "e18a2b41b3dbc0273928967450632da55fd72a4e39419d0b144d2cf56ecf9dd3"
+    },
+    {
+      "path": "src/mothership-layout.ts",
+      "sha256": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937"
+    },
+    {
+      "path": "src/mothership.ts",
+      "sha256": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466"
+    },
+    {
+      "path": "src/rules.ts",
+      "sha256": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414"
+    },
+    {
+      "path": "src/scene.ts",
+      "sha256": "6dc42220163e8abfe10935994ddb316622dfa2b341ced773b3d7acd787552635"
+    },
+    {
+      "path": "src/scoring.ts",
+      "sha256": "95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494"
+    },
+    {
+      "path": "src/style.css",
+      "sha256": "c13420fc69d84f4881b24084503b796fff93ee944cfeda38149650aad0be536f"
+    },
+    {
+      "path": "src/turret-combat.ts",
+      "sha256": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71"
+    },
+    {
+      "path": "src/types.ts",
+      "sha256": "69497c3fe6b9025b7399dbc9ab1db5f7b056507171cbd3aa8a7985ebaaef0f29"
+    },
+    {
+      "path": "src/wingman-ai.ts",
+      "sha256": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f"
+    },
+    {
+      "path": "vite.config.ts",
+      "sha256": "3e14f1f8f27b09413a00c518ad158592912c95dc6a2cf4cc64298ea1512b9f7e"
+    }
+  ],
+  "matches": {
+    "forbidden-feature": [],
+    "outbound-network": [],
+    "storage-reference": [
+      {
+        "path": "src/control-settings.ts",
+        "line": 5,
+        "text": "  KeyboardSettings, ControlInputPresentation, DEFAULT_KEY_BINDINGS, KEY_ACTIONS, KEY_LABELS, KEYBOARD_STORAGE_KEY,"
+      },
+      {
+        "path": "src/control-settings.ts",
+        "line": 16,
+        "text": "const STORAGE_KEYS: Record<GameMode, string> = {"
+      },
+      {
+        "path": "src/control-settings.ts",
+        "line": 100,
+        "text": "    const raw = localStorage.getItem(STORAGE_KEYS[mode]);"
+      },
+      {
+        "path": "src/control-settings.ts",
+        "line": 367,
+        "text": "    const entries = changedModes.map(mode => ({ key: STORAGE_KEYS[mode], value: JSON.stringify({ version: 1, controls: next[mode] }) }));"
+      },
+      {
+        "path": "src/control-settings.ts",
+        "line": 368,
+        "text": "    if (keysChanged) entries.push({ key: KEYBOARD_STORAGE_KEY, value: JSON.stringify({ version: 1, bindings: this.keyDraft }) });"
+      },
+      {
+        "path": "src/control-settings.ts",
+        "line": 371,
+        "text": "      persisted = persistControlSettings(entries, localStorage);"
+      },
+      {
+        "path": "src/control-settings.ts",
+        "line": 372,
+        "text": "    } catch { /* Accessing localStorage itself may throw. */ }"
+      },
+      {
+        "path": "src/keyboard-settings.ts",
+        "line": 1,
+        "text": "export const KEYBOARD_STORAGE_KEY = 'gekichin-keyboard-v1';"
+      },
+      {
+        "path": "src/keyboard-settings.ts",
+        "line": 139,
+        "text": "    try { raw = localStorage.getItem(KEYBOARD_STORAGE_KEY); } catch { /* Storage is optional. */ }"
+      },
+      {
+        "path": "src/scoring.ts",
+        "line": 74,
+        "text": "export const bestKey = (mode: GameMode) => `gekichin-best-${RULES_VERSION}-${mode}`;"
+      },
+      {
+        "path": "src/scoring.ts",
+        "line": 92,
+        "text": "function browserStorage(): BestStorage | null { try { return typeof localStorage !== 'undefined' ? localStorage : null; } catch { return null; } }"
+      },
+      {
+        "path": "src/scoring.ts",
+        "line": 101,
+        "text": "  try { return storage ? parseBest(storage.getItem(bestKey(mode)), mode).best : null; } catch { return null; }"
+      },
+      {
+        "path": "src/scoring.ts",
+        "line": 114,
+        "text": "  const key = bestKey(report.mode);"
+      },
+      {
+        "path": "src/scoring.ts",
+        "line": 121,
+        "text": "    // localStorage writes are atomic; wrappers may still fail after a write."
+      }
+    ]
+  },
+  "reviewed_source_commit": "5db76f68b53c846ae4e4aec4754f78e108107a37",
+  "reviewed_source_tree": "63d4bc7cb8ee52e3389b6cd720f6288fcacc5db1"
+}

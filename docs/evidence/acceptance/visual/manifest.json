@@ -1,0 +1,729 @@
+{
+  "captureType": "procedural-scene visual fixture; not a normal clear or gameplay performance result",
+  "capturedAt": "2026-10-05T04:29:05.564Z",
+  "baseUrl": "http://127.0.0.1:4177",
+  "browser": "Playwright Chromium with SwiftShader WebGL",
+  "viewport": {
+    "width": 1366,
+    "height": 768,
+    "deviceScaleFactor": 1
+  },
+  "method": {
+    "sixFaces": "Each face uses a flight-boundary-valid, collision-clear pre-tick player pose and FlightScene normal-mode camera. No simulation ticks are advanced in those frames.",
+    "damage": "Healthy, damaged, critical, and wreck images use Mothership.applyDamage only to create bounded visual states. These are not score, victory, or ordinary-clear evidence.",
+    "sinking": "All 100 turret states are synthetically destroyed for a render-only 0/2.5/5-second sink sweep at frozen tick 0. This is presentation evidence only.",
+    "ordinaryFlight": "The extra flight frame uses the unmodified legal initial sortie and 60 calls to FlightSession.step with ordinary input; it does not modify player position after the first simulation tick and is not a clear claim.",
+    "audio": "Start-off, one-context/fixed-voice-pool, synthesized cue activity, pause suspension, and disposal are measured from the read-only FlightAudio diagnostics getter. Synthetic signal checks do not establish human audibility."
+  },
+  "audio": {
+    "initial": {
+      "contexts": 0,
+      "voices": 0,
+      "maxVoices": 16,
+      "activeVoices": 0,
+      "effectVoices": 0,
+      "propellerActive": false,
+      "enabled": false,
+      "active": false,
+      "contextState": "absent"
+    },
+    "active": {
+      "contexts": 1,
+      "voices": 16,
+      "maxVoices": 16,
+      "activeVoices": 16,
+      "effectVoices": 15,
+      "propellerActive": true,
+      "enabled": true,
+      "active": true,
+      "contextState": "running"
+    },
+    "paused": {
+      "contexts": 1,
+      "voices": 16,
+      "maxVoices": 16,
+      "activeVoices": 0,
+      "effectVoices": 0,
+      "propellerActive": false,
+      "enabled": true,
+      "active": false,
+      "contextState": "suspended"
+    },
+    "disposed": {
+      "contexts": 0,
+      "voices": 0,
+      "maxVoices": 16,
+      "activeVoices": 0,
+      "effectVoices": 0,
+      "propellerActive": false,
+      "enabled": false,
+      "active": false,
+      "contextState": "absent"
+    },
+    "cuesExercised": [
+      "machinegun",
+      "cannon",
+      "enemy-machinegun",
+      "main-warning",
+      "metal-impact",
+      "turret-destroy",
+      "mothership-sink"
+    ],
+    "syntheticSignalAcceptance": {
+      "oneContext": true,
+      "fixedVoicePool": true,
+      "noMoreThanSixteenActive": true,
+      "effectsRemainWithinFifteen": true,
+      "synthesizedCueWasActive": true,
+      "pauseSilenced": true,
+      "disposedResources": true,
+      "humanAudibilityTested": false
+    }
+  },
+  "frames": [
+    {
+      "name": "face-top",
+      "file": "face-top.png",
+      "category": "six-face normal-camera view",
+      "face": "top",
+      "tickPolicy": "pre-tick pose fixture; tick remains 0",
+      "pose": {
+        "position": [
+          0,
+          2180,
+          0
+        ],
+        "target": [
+          0,
+          1000,
+          0
+        ],
+        "distanceFromMothershipCenter": 1180
+      },
+      "fixtureType": "face",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 100,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 167,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 0
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "167",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "0"
+      },
+      "sinkElapsedSeconds": 0
+    },
+    {
+      "name": "face-bottom",
+      "file": "face-bottom.png",
+      "category": "six-face normal-camera view",
+      "face": "bottom",
+      "tickPolicy": "pre-tick pose fixture; tick remains 0",
+      "pose": {
+        "position": [
+          0,
+          80,
+          0
+        ],
+        "target": [
+          0,
+          1000,
+          0
+        ],
+        "distanceFromMothershipCenter": 920
+      },
+      "fixtureType": "face",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 100,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 167,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 0
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "167",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "0"
+      },
+      "sinkElapsedSeconds": 0
+    },
+    {
+      "name": "face-left",
+      "file": "face-left.png",
+      "category": "six-face normal-camera view",
+      "face": "left",
+      "tickPolicy": "pre-tick pose fixture; tick remains 0",
+      "pose": {
+        "position": [
+          -1700,
+          1000,
+          0
+        ],
+        "target": [
+          0,
+          1000,
+          0
+        ],
+        "distanceFromMothershipCenter": 1700
+      },
+      "fixtureType": "face",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 100,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 380,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 0
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "380",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "0"
+      },
+      "sinkElapsedSeconds": 0
+    },
+    {
+      "name": "face-right",
+      "file": "face-right.png",
+      "category": "six-face normal-camera view",
+      "face": "right",
+      "tickPolicy": "pre-tick pose fixture; tick remains 0",
+      "pose": {
+        "position": [
+          1700,
+          1000,
+          0
+        ],
+        "target": [
+          0,
+          1000,
+          0
+        ],
+        "distanceFromMothershipCenter": 1700
+      },
+      "fixtureType": "face",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 100,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 309,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 0
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "309",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "0"
+      },
+      "sinkElapsedSeconds": 0
+    },
+    {
+      "name": "face-front",
+      "file": "face-front.png",
+      "category": "six-face normal-camera view",
+      "face": "front",
+      "tickPolicy": "pre-tick pose fixture; tick remains 0",
+      "pose": {
+        "position": [
+          0,
+          1000,
+          2050
+        ],
+        "target": [
+          0,
+          1000,
+          0
+        ],
+        "distanceFromMothershipCenter": 2050
+      },
+      "fixtureType": "face",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 100,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 451,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 0
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "451",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "0"
+      },
+      "sinkElapsedSeconds": 0
+    },
+    {
+      "name": "face-rear",
+      "file": "face-rear.png",
+      "category": "six-face normal-camera view",
+      "face": "rear",
+      "tickPolicy": "pre-tick pose fixture; tick remains 0",
+      "pose": {
+        "position": [
+          0,
+          1000,
+          -2050
+        ],
+        "target": [
+          0,
+          1000,
+          0
+        ],
+        "distanceFromMothershipCenter": 2050
+      },
+      "fixtureType": "face",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 100,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 664,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 0
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "664",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "0"
+      },
+      "sinkElapsedSeconds": 0
+    },
+    {
+      "name": "damage-healthy",
+      "file": "damage-healthy.png",
+      "category": "representative top main-turret damage stage",
+      "stage": "healthy",
+      "turretId": 4,
+      "tickPolicy": "pre-tick pose fixture; direct fixture damage only; no combat-clear claim",
+      "pose": {
+        "position": [
+          -30,
+          1314,
+          -140
+        ],
+        "target": [
+          -95,
+          1134,
+          -240
+        ],
+        "distanceFromMothershipCenter": 345.1028832102102
+      },
+      "fixtureType": "damage",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 100,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 133,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 0
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "133",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "0"
+      },
+      "sinkElapsedSeconds": 0
+    },
+    {
+      "name": "damage-damaged",
+      "file": "damage-damaged.png",
+      "category": "representative top main-turret damage stage",
+      "stage": "damaged",
+      "turretId": 4,
+      "tickPolicy": "pre-tick pose fixture; direct fixture damage only; no combat-clear claim",
+      "pose": {
+        "position": [
+          -30,
+          1314,
+          -140
+        ],
+        "target": [
+          -95,
+          1134,
+          -240
+        ],
+        "distanceFromMothershipCenter": 345.1028832102102
+      },
+      "fixtureType": "damage",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 100,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 133,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 0
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "133",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "0"
+      },
+      "sinkElapsedSeconds": 0
+    },
+    {
+      "name": "damage-critical",
+      "file": "damage-critical.png",
+      "category": "representative top main-turret damage stage",
+      "stage": "critical",
+      "turretId": 4,
+      "tickPolicy": "pre-tick pose fixture; direct fixture damage only; no combat-clear claim",
+      "pose": {
+        "position": [
+          -30,
+          1314,
+          -140
+        ],
+        "target": [
+          -95,
+          1134,
+          -240
+        ],
+        "distanceFromMothershipCenter": 345.1028832102102
+      },
+      "fixtureType": "damage",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 100,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 133,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 0
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "133",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "0"
+      },
+      "sinkElapsedSeconds": 0
+    },
+    {
+      "name": "damage-wreck",
+      "file": "damage-wreck.png",
+      "category": "representative top main-turret damage stage",
+      "stage": "destroyed / low wreck",
+      "turretId": 4,
+      "tickPolicy": "pre-tick pose fixture; direct fixture damage only; no combat-clear claim",
+      "pose": {
+        "position": [
+          -30,
+          1314,
+          -140
+        ],
+        "target": [
+          -95,
+          1134,
+          -240
+        ],
+        "distanceFromMothershipCenter": 345.1028832102102
+      },
+      "fixtureType": "damage",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 99,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 133,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 1
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "133",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "1"
+      },
+      "sinkElapsedSeconds": 0
+    },
+    {
+      "name": "sink-0s",
+      "file": "sink-0s.png",
+      "category": "synthetic render-only sinking sweep",
+      "stage": "all turret meshes destroyed",
+      "elapsedSeconds": 0,
+      "tickPolicy": "simulation frozen at tick 0; direct fixture damage only",
+      "pose": {
+        "position": [
+          0,
+          1600,
+          1350
+        ],
+        "target": [
+          0,
+          1000,
+          0
+        ],
+        "distanceFromMothershipCenter": 1477.3286702694156
+      },
+      "fixtureType": "sink",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 0,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 167,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 100
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "167",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "100"
+      },
+      "sinkElapsedSeconds": 0
+    },
+    {
+      "name": "sink-2_5s",
+      "file": "sink-2_5s.png",
+      "category": "synthetic render-only sinking sweep",
+      "stage": "all turret meshes destroyed",
+      "elapsedSeconds": 2.5,
+      "tickPolicy": "simulation frozen at tick 0; direct fixture damage only",
+      "pose": {
+        "position": [
+          0,
+          1600,
+          1350
+        ],
+        "target": [
+          0,
+          1000,
+          0
+        ],
+        "distanceFromMothershipCenter": 1477.3286702694156
+      },
+      "fixtureType": "sink",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 0,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 167,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 100
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "167",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "100"
+      },
+      "sinkElapsedSeconds": 2.5
+    },
+    {
+      "name": "sink-5s",
+      "file": "sink-5s.png",
+      "category": "synthetic render-only sinking sweep",
+      "stage": "all turret meshes destroyed",
+      "elapsedSeconds": 5,
+      "tickPolicy": "simulation frozen at tick 0; direct fixture damage only",
+      "pose": {
+        "position": [
+          0,
+          1600,
+          1350
+        ],
+        "target": [
+          0,
+          1000,
+          0
+        ],
+        "distanceFromMothershipCenter": 1477.3286702694156
+      },
+      "fixtureType": "sink",
+      "tick": 0,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 0,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 167,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 100
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "167",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "100"
+      },
+      "sinkElapsedSeconds": 5
+    },
+    {
+      "name": "ordinary-flight-60ticks",
+      "file": "ordinary-flight-60ticks.png",
+      "category": "ordinary fixed-step flight frame",
+      "mode": "normal",
+      "steps": 60,
+      "input": {
+        "turn": 0.12,
+        "climb": 0.04,
+        "fire": false,
+        "loop": false,
+        "accelerate": false,
+        "brake": false
+      },
+      "tickPolicy": "ordinary FlightSession.step only after valid initial sortie; not a combat-clear claim",
+      "pose": null,
+      "fixtureType": "ordinary-flight",
+      "tick": 60,
+      "phase": "playing",
+      "operationId": 1,
+      "remainingTurrets": 100,
+      "warnings": 0,
+      "scene": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 15,
+        "drawCalls": 167,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 0
+      },
+      "canvas": {
+        "renderGeometries": "71",
+        "renderTextures": "4",
+        "renderPrograms": "15",
+        "renderDrawCalls": "167",
+        "renderParticles": "0",
+        "renderDebris": "0",
+        "renderWrecks": "0"
+      },
+      "sinkElapsedSeconds": 0
+    }
+  ],
+  "pageErrors": [],
+  "finalSceneDiagnostics": {
+    "geometries": 71,
+    "textures": 4,
+    "programs": 15,
+    "drawCalls": 167,
+    "particles": 0,
+    "debris": 0,
+    "wrecks": 0
+  }
+}

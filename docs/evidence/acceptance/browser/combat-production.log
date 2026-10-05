@@ -1,0 +1,94 @@
+
+Running 3 tests using 1 worker
+
+(node:28366) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › browser-tests/combat.spec.ts:17:1 › Easy combat clock, six-face HUD, pause and explicit resume follow product controls (18.0s)
+(node:28543) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [chromium] › browser-tests/combat.spec.ts:43:1 › Normal keyboard firing consumes real ammunition and updates flight HUD, then pauses cleanly (11.5s)
+  ✘  3 [chromium] › browser-tests/combat.spec.ts:72:1 › ten product restart cycles retain one bounded scene and stable WebGL resources (21.5s)
+
+
+  1) [chromium] › browser-tests/combat.spec.ts:17:1 › Easy combat clock, six-face HUD, pause and explicit resume follow product controls 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 30
+    Received:   17
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      17 | test('Easy combat clock, six-face HUD, pause and explicit resume follow product controls', async ({ page }) => {
+      18 |   await startCombat(page, 'easy');
+    > 19 |   await expect.poll(async () => Number(await page.locator('#app').getAttribute('data-tick'))).toBeGreaterThan(30);
+         |                                                                                               ^
+      20 |
+      21 |   const remaining = faceCounts(await page.locator('#main-left').textContent()) + faceCounts(await page.locator('#mg-left').textContent());
+      22 |   expect(remaining).toBe(100);
+        at /workspace/gekichin/browser-tests/combat.spec.ts:19:95
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/combat-Easy-combat-clock-s-8da9b-ume-follow-product-controls-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/combat-Easy-combat-clock-s-8da9b-ume-follow-product-controls-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/combat-Easy-combat-clock-s-8da9b-ume-follow-product-controls-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/combat-Easy-combat-clock-s-8da9b-ume-follow-product-controls-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › browser-tests/combat.spec.ts:72:1 › ten product restart cycles retain one bounded scene and stable WebGL resources 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#hud')
+    Expected: visible
+    Received: hidden
+    Timeout:  15000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 15000ms
+      - waiting for locator('#hud')
+        34 × locator resolved to <section id="hud" hidden="" class="hud" data-yaw="0" data-pitch="0" aria-label="戦闘情報" data-position="0.000000,1000.000000,1998.166667">…</section>
+           - unexpected value "hidden"
+
+
+       8 |   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
+       9 |   await expect(page.locator('#app')).toHaveAttribute('data-mode', mode);
+    > 10 |   await expect(page.locator('#hud')).toBeVisible();
+         |                                      ^
+      11 | }
+      12 |
+      13 | function faceCounts(text: string | null): number {
+        at startCombat (/workspace/gekichin/browser-tests/combat.spec.ts:10:38)
+        at /workspace/gekichin/browser-tests/combat.spec.ts:73:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/combat-ten-product-restart-5102c--and-stable-WebGL-resources-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/combat-ten-product-restart-5102c--and-stable-WebGL-resources-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/combat-ten-product-restart-5102c--and-stable-WebGL-resources-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/combat-ten-product-restart-5102c--and-stable-WebGL-resources-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › browser-tests/combat.spec.ts:17:1 › Easy combat clock, six-face HUD, pause and explicit resume follow product controls 
+    [chromium] › browser-tests/combat.spec.ts:72:1 › ten product restart cycles retain one bounded scene and stable WebGL resources 
+  1 passed (55.2s)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

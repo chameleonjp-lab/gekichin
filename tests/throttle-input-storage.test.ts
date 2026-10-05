@@ -111,6 +111,26 @@ test('three independent sources add before the single final clamp',()=>{
  }finally{f.cleanup();}
 });
 
+test('measured peers replace nominal rectangles without blocking a clear nondefault lever position',()=>{
+ const width=568,height=320,layout=structuredClone(DEFAULT_LAYOUT);
+ layout.throttle.x=.83;layout.throttle.y=.45;
+ const before=JSON.stringify(layout),insets={top:0,right:0,bottom:0,left:0};
+ const nominal=safeThrottlePlacement(layout,width,height,insets);
+ assert.notEqual(nominal.y,layout.throttle.y,'nominal loop geometry overlaps the desired lever');
+ const actualPeers=[{control:'loop' as const,x:355,y:258,width:110,height:96},
+  {control:'fire' as const,x:497,y:258,width:110,height:96}];
+ const utility={x:44,y:44,width:44,height:44};
+ const effective=safeThrottlePlacement(layout,width,height,insets,[...actualPeers,utility]);
+ assert.equal(effective.blocked,false);
+ assert.equal(effective.x,layout.throttle.x);
+ assert.equal(effective.y,layout.throttle.y,'clear desired position must not move around a phantom nominal loop');
+ const dimensions=controlDimensions('throttle',effective.size,width,height);
+ for(const obstacle of [...actualPeers,utility])assert.ok(
+  Math.abs(effective.x*width-obstacle.x)>=(dimensions.width+obstacle.width)/2+2
+  ||Math.abs(effective.y*height-obstacle.y)>=(dimensions.height+obstacle.height)/2+2);
+ assert.equal(JSON.stringify(layout),before);
+});
+
 test('utility rectangles displace only the lever and focused keyboard transfer preserves live pointers',()=>{
  for(const [width,height]of [[320,568],[568,320]]){
   const layout=structuredClone(DEFAULT_LAYOUT);layout.throttle.x=.85;layout.throttle.y=.12;

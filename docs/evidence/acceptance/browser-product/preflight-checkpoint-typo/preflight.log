@@ -1,0 +1,2 @@
+ReferenceError: destroyedIdFrames is not defined
+    at main (/workspace/gekichin/scripts/browser-product-run.ts:323:87)

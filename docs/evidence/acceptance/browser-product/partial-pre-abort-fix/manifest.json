@@ -1,0 +1,33 @@
+{
+  "type": "partial-browser-product-run",
+  "status": "interrupted-before-full-acceptance",
+  "startedAtApproxUtc": "2026-10-05T04:43:58Z",
+  "interruption": "Operator stopped the browser after the Easy product victory and the Normal start, when a delayed abort-report rendering issue was identified. The later restart/resource stage did not run.",
+  "browser": "Playwright Chromium 149, software ANGLE SwiftShader, 393x852 CSS viewport, DPR 1",
+  "virtualSchedule": "Playwright public page clock with 250ms timer-backed test RAF; FlightSession ran fixed 60Hz steps. This is a deterministic virtual-time run, not real-time performance evidence.",
+  "sourceAtRun": {
+    "commit": "01804b95078317bb0129d0750b6a7f73184cee6f",
+    "mainTsSha256": "7cad1e139a321c9c175699a384da164191b9cdf7fb38e638aa9a229d12cf2760",
+    "loadedJsAsset": "index-BwP1C-i_.js",
+    "jsAssetSha256": "ac675fa8266f45022879a8d91b1c9c475413b8e0b72be3976503fbec43af5005",
+    "hashNote": "The loaded URL is present in Chromium diagnostics. The source and dist hashes were captured while this run was active, before the later abort-report source fix and rebuild."
+  },
+  "easy": {
+    "status": "product victory reached; the runner completed its in-memory checks before saving easy-result.png",
+    "checksReached": ["100 unique destroyed turret IDs", "remaining turret HP zero", "all six faces empty", "result reports 100/100, 20/20 main, 80/80 MG", "enemy main and MG projectiles observed", "pool failures zero", "fleet remaining above zero", "frozen report and product skip transition"],
+    "limitation": "The detailed result object and input rows were not flushed before interruption, so only the screenshot/video and runner control flow remain as evidence; do not treat this as the final saved mission manifest."
+  },
+  "normal": { "status": "started; no completion claim" },
+  "artifacts": [
+    "easy-start.png",
+    "easy-last-two-turrets.png",
+    "easy-sinking.png",
+    "easy-result.png",
+    "normal-start.png",
+    "easy-normal-partial.webm",
+    "interrupted-run.log",
+    "preflight-startup-error.webm"
+  ],
+  "physicalDeviceTested": false,
+  "humanPlayTested": false
+}

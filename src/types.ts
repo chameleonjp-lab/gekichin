@@ -3,7 +3,7 @@ import type { Quaternion, Vector3 } from 'three';
 export type GameMode = 'normal' | 'easy';
 export type GamePhase = 'home' | 'preparing' | 'playing' | 'paused' | 'result';
 
-/** Only flight state is implemented in P1. Combat owns separate later modules. */
+/** Shared physical flight state; combat identity and health live in combat-types. */
 export interface Aircraft {
   position: Vector3;
   previous: Vector3;
@@ -27,7 +27,7 @@ export interface FlightInput {
   steeringRevision?: number;
 }
 
-export type PauseReason = 'manual' | 'settings' | 'guide' | 'hidden' | 'focus' | 'gap' | 'webgl';
+export type PauseReason = 'manual' | 'settings' | 'guide' | 'hidden' | 'focus' | 'gap' | 'webgl' | 'abnormal';
 
 /** A P1 flight report is never a combat result or a best record. */
 export interface FlightReport {

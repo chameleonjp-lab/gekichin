@@ -1,0 +1,14 @@
+Local WebKit-only retry on candidate source
+Commit: 0a43f30d59f74bfebf90ac46ea6a6fd2bbdb073e
+Tree:   d09ecf0f96b3bd51fcb10654aa6272c0bee71dd2
+Command: PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1 LD_LIBRARY_PATH=/tmp/gekichin-wpe-deps/stage/lib DISPLAY=:98 PLAYWRIGHT_BROWSERS_PATH=/workspace/.playwright-browsers npx playwright test --project=webkit-ui
+Project: webkit-ui
+Expected: 18
+Passed: 17
+Skipped: 1
+Failed/unexpected: 0
+Duration: 245337 ms (4.1m)
+Skipped test: browser-tests/throttle-lever.spec.ts:64:1, Normal live flight accepts the lever, stops through settings and Easy has none
+Skip reason: Linux WebKit project verifies production input DOM and settings; software WebGL is unavailable
+Host note: Playwright's preliminary dependency check falsely reports libGLESv2.so.2 absent because it checks ldconfig -p, which ignores staged /tmp/workspace libs. The library and dependencies are staged in both GTK/WPE sys/lib paths and ldd resolves against the browser bundle paths. The retry used Playwright's supported PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1; all actual WebKit tests launched and ran.
+Original preflight-failure log/result JSON are preserved separately in /tmp/gekichin-pr5-webkit-retry-first/.

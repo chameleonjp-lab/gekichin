@@ -1,0 +1,44 @@
+
+Running 3 tests using 1 worker
+
+(node:29802) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › browser-tests/combat.spec.ts:23:1 › Easy combat clock, six-face HUD, pause and explicit resume follow product controls (10.7s)
+  ✓  2 [chromium] › browser-tests/combat.spec.ts:51:1 › Normal keyboard firing consumes real ammunition and updates flight HUD, then pauses cleanly (15.2s)
+  ✘  3 [chromium] › browser-tests/combat.spec.ts:83:1 › ten product restart cycles retain one bounded scene and stable WebGL resources (1.1m)
+
+
+  1) [chromium] › browser-tests/combat.spec.ts:83:1 › ten product restart cycles retain one bounded scene and stable WebGL resources 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.getAttribute: Target page, context or browser has been closed
+
+      107 |     await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
+      108 |     await page.clock.runFor(2000);
+    > 109 |     await expect.poll(async () => Number(await page.locator('#app').getAttribute('data-tick'))).toBeGreaterThan(120);
+          |                                                                     ^
+      110 |     await expect(page.locator('#flight-canvas')).toHaveCount(1);
+      111 |     await expect(page.locator('#control-settings')).toHaveCount(1);
+      112 |     for (const key of keys) expect(await readCounter(key), `${key} after restart ${repeat + 1}`).toBe(stable[key]);
+        at /workspace/gekichin/browser-tests/combat.spec.ts:109:69
+        at /workspace/gekichin/browser-tests/combat.spec.ts:109:5
+
+    Error Context: test-results/combat-ten-product-restart-5102c--and-stable-WebGL-resources-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/combat-ten-product-restart-5102c--and-stable-WebGL-resources-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/combat-ten-product-restart-5102c--and-stable-WebGL-resources-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › browser-tests/combat.spec.ts:83:1 › ten product restart cycles retain one bounded scene and stable WebGL resources 
+  2 passed (1.7m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

@@ -1,0 +1,13 @@
+{
+  "type": "partial-browser-product-preflight",
+  "status": "harness-error-before-mission-acceptance",
+  "startedAt": "2026-10-05T04:57:45.335Z",
+  "error": "The first progress checkpoint referenced `destroyedIdFrames` instead of its local `destroyedByFrame`; the Node harness exited around tick 1800.",
+  "productResult": "No mission pass or failure is claimed. The browser had only entered Easy flight and captured easy-start.png.",
+  "rootCause": "Verification harness variable-name typo; not a production assertion or product crash.",
+  "artifacts": ["preflight.log", "progress.json", "preflight-clip.webm", "easy-start.png"],
+  "sourceCommit": "5db76f68b53c846ae4e4aec4754f78e108107a37",
+  "browser": "Playwright Chromium 149 / SwiftShader; final 4177 production preview",
+  "physicalDeviceTested": false,
+  "humanPlayTested": false
+}

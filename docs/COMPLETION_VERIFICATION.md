@@ -1,0 +1,79 @@
+# 戦闘実装の最終検査記録
+
+更新日: 2026-10-05 UTC  
+対象: `chameleonjp-lab/gekichin`  
+作業ブランチ: `feat/gekichin-combat-completion`  
+提出: [PR #5](https://github.com/chameleonjp-lab/gekichin/pull/5)（ready for review。提出HEADと最終CI結果はPR本文／Checksに紐づける）
+
+本書の結果表は、主にPR4 speed-lever mergeより前のPR5 combat candidateを対象にした履歴記録である。個々のraw artifactは自身のmanifest/logに記録されたsource snapshotに結び付け、evidence commit `c0cf927fcf7dd75edae6fee539072e4b3498c86e` はその収録commitを示す。全artifactが同一source hashではない。多くの最終combat proofはsource `5db76f68b53c846ae4e4aec4754f78e108107a37` を使うが、一部の記録は以前の候補である。いずれも最新main `595feb719c9b65697ab319fa40a939d6ee1b356b` へ統合した作業treeの検査結果ではない。現在のconflict integrationと未完了gateは [PR5_CONFLICT_RESOLUTION.md](./PR5_CONFLICT_RESOLUTION.md) に分けて記録する。実PC・iPhone 17 Pro/Safariの性能、実機タッチ、人間の試遊と聴感は未実施であり、P7/P8の全面受入は未完了。詳細な受入番号別の判定は [COMPLETION_ACCEPTANCE.md](./COMPLETION_ACCEPTANCE.md)、出典と素材の境界は [COMBAT_PROVENANCE.md](./COMBAT_PROVENANCE.md) を参照する。
+
+## 固定基準と検査対象
+
+combat candidateの起点はPR #3採用後のmain `98119b5ae6604ad5975024b0e523b78eef369662`。戦闘実装は `01804b95078317bb0129d0750b6a7f73184cee6f`、中断結果の即時表示修正を含むcombat sourceは `5db76f68b53c846ae4e4aec4754f78e108107a37`、treeは `63d4bc7cb8ee52e3389b6cd720f6288fcacc5db1`。evidence追加commit `c0cf927fcf7dd75edae6fee539072e4b3498c86e` は証拠collectionをarchiveするcommitで、個別のsource bindingは各manifest/logを参照する。最新mainはPR4 merge `595feb719c9b65697ab319fa40a939d6ee1b356b`。そのユーザー承認lever addendumを含む `docs/REQUIREMENTS.md` working-tree blobは `c072b57dbdef3a48ac7e5717890e2bb4ed2baeb3`。元要件blob `1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c`、README blob `9d0cfacf52833d90d39f02a9ab1c1c57dee30aa0`、plan blob `11dec1af2004ec3d71357d9eae029e324c6fdf3c` をそれぞれ履歴と現行appendに分けて記録する。
+
+固定要件commitは `e9212a73a7b36c33dff7e88d3a7308be6cdcea35`、要件blobは `1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c`。README blob `9d0cfacf52833d90d39f02a9ab1c1c57dee30aa0`、計画blob `11dec1af2004ec3d71357d9eae029e324c6fdf3c` は不変。ルール版 `gekichin-combat-v1`、60Hz、標準seed `1196097537` を用いた。他作品のファイルは変更していない。
+
+## 履歴source 5dbの実行結果
+
+以下の原票・CI・画像・録画は履歴証拠であり、それぞれのmanifest/logが示す候補に結び付く。多くの最終戦闘記録はsource5dbで取得したが、全項目が同じsnapshotではない。PR4を含む現行integration sourceに対する再実行結果として読まない。
+
+| 検査 | 結果 | 原票と条件 |
+| --- | --- | --- |
+| 単体・統合境界 | 成功、76/76、27.906秒 | [unit.log](./evidence/acceptance/unit.log)。有限残機・生成順・射線・実損傷・採点・保存・敵AI・六面経路・帰還矢印・停止・固定FPSなど |
+| 型・製品build | 成功 | [build.log](./evidence/acceptance/build.log)。Viteの単一chunk容量警告は残る |
+| 通常入力のEasy全撃破 | 成功、54,329tick | [easy-run.log](./evidence/acceptance/easy-run.log)、[入力列](./evidence/acceptance/easy-inputs.json.gz) |
+| 通常入力のNormal全撃破 | 成功、54,329tick | [normal-run.log](./evidence/acceptance/normal-run.log)、[入力列](./evidence/acceptance/normal-inputs.json.gz) |
+| 製品DOMの短い操作・10再出撃・中断表示 | 成功、Chromium 4/4、1.1分 | [combat-abort-final.log](./evidence/acceptance/browser/combat-abort-final.log)。最後のcaseはclockを止めたまま中断し、次の描画を待たず今回の凍結成績が表示されることを検査。公的なブラウザclockと250ms描画fixtureを使用し、論理は60Hzのまま |
+| 海面損失・3秒復帰・保持入力解除 | 成功、Chromium専用case 1/1 | [normal-sea-loss-respawn.manifest.json](./evidence/acceptance/browser/normal-respawn/normal-sea-loss-respawn.manifest.json)。NormalのArrowDown/Spaceを保持し、実際の海面接触から180tick後にownershipが更新された80HP・288/96弾の機体へ復帰。保持キーを離さずさらに500ms進めてもpitch 0・射撃待機。敵弾損失と区別する |
+| 通常Session入力の敵弾損失・復帰 | 成功、被弾4533tick→復帰4713tick | [ordinary-enemy-recovery/probe.json](./evidence/acceptance/ordinary-enemy-recovery/probe.json) と [入力列](./evidence/acceptance/ordinary-enemy-recovery/inputs.json.gz)。標準Normal開始から通常FlightInputだけの900m周回。敵実弾による実損傷80HP、3秒復帰、ownership 0→1→2、80HP・288/96弾、P1/W0。内部状態注入なし。DOM経路と区別する |
+| 製品DOMの敵弾損失・復帰・旧操作解除 | 成功、20.807秒の専用driver実行 | [normal-enemy-respawn.manifest.json](./evidence/acceptance/ordinary-enemy-recovery/dom/normal-enemy-respawn.manifest.json)。NormalのStart・普通のpointer/Space入力で被弾後の喪失と復帰を確認。1秒間隔のHUD観測は喪失4560tick→復帰4740tick（観測差180tick）、4800tickでも保持中の旧入力は適用されずyaw/pitch 0・射撃待機・80HP・288/96弾。これは観測tickであり、engineの正確な発生tick4533/4713とは区別する |
+| 100基・8機の15分合成負荷 | 成功、54,000tick | [core/manifest.json](./evidence/acceptance/core/manifest.json)。静止姿勢・接触なしの合成fixtureで、通常クリア/実機性能の証拠には用いない |
+| 六面・損傷・撃沈の描画 | 成功、14画像 | [visual/manifest.json](./evidence/acceptance/visual/manifest.json)。初期姿勢/損傷を与える描画専用fixture |
+| 上・下・側面×主砲/機銃の六組回避 | 成功、Node1/1・browser1/1 | [evasion/README.md](./evidence/acceptance/evasion/README.md)、[72.160秒の録画](./evidence/acceptance/evasion/evasion-six-cases-normal-camera.webm)。通常カメラの実砲口/予告線と全18画像を独立確認。baselineは実弾被弾、予告の翌tickから通常入力で回避した側は全件無損傷。初期状態fixtureと通常全撃破を分ける |
+| 全入力の30/60/120Hz再生 | 成功、両mode×3周期の6件 | [replay/README.md](./evidence/acceptance/replay/README.md)。各54,329入力、最終snapshot・全event列・原report・HP・全ID・残機・発射数・終端freezeを照合し、各modeで3周期完全一致 |
+| 製品DOMの全撃破・撃沈・結果・10再出撃 | 成功、両modeとも54,329tick | [browser-product/acceptance-manifest.json](./evidence/acceptance/browser-product/acceptance-manifest.json)、[product-run.json](./evidence/acceptance/browser-product/product-run.json)、[録画](./evidence/acceptance/browser-product/full-product-run.webm)。Start・通常pointer/keyboard入力のみ、全100ID・HP0・敵実弾・生成失敗0を確認 |
+| 全画面の5viewport×文字倍率2条件 | 成功、10戦闘＋60画面 | [ui/manifest.json](./evidence/acceptance/ui/manifest.json)。home/guide/両設定/戦闘/停止/結果。44px以上・scroll到達・Tab/Esc/focus/名前、外国作品の実保存key6個不変、HAR3件の同一origin静的GETを確認 |
+| source5db候補のCI（historical） | 成功、単体76/76、browser28/28、build成功 | [5db76f6のPR CI](https://github.com/chameleonjp-lab/gekichin/actions/runs/37265544385)、[push CI](https://github.com/chameleonjp-lab/gekichin/actions/runs/37265539764)。Chromium21・WebKit UI6・native visibility1。この結果はPR4 merge後のcurrent integration sourceには結び付かない |
+
+全撃破の両engine実行は各905.483秒の能動時間、全100個の一意ID・六面・20主砲/80機銃・24,000HPを確認した。僚機が全100基を破壊し、自機破壊0、僚機損失40、自機損失0、味方10機残、敵発射20,530、弾生成失敗0。内部HP・位置・残機の書換え、敵停止、無敵化を使っていない。自機の照準成功や人間による試遊の証拠としては扱わない。
+
+ローカルの `unit.log` は中断結果表示の修正前に取得したengine検査で、この修正はengineソースを変更していない。修正後の `5db76f6` ではCIが76件を再実行して成功した。captureのsource範囲は上表の各manifestを参照し、後続のPR4 integrationには適用しない。
+
+合成15分負荷では100基のHPと8機の固定姿勢を保つ介入を明記した。主砲4/機銃12の合法な攻撃枠と自機＋僚機射撃を毎tick検査し、味方弾最大160、敵主砲弾最大6、敵機銃弾最大134、弾生成失敗0。描画ありの資源推移は別の製品DOM検査で記録する。
+
+初期のブラウザ失敗ログは削除せず残した。ソフトウェアWebGLの同時実行による2秒gap停止と、テストdriverが止めたclockを十分進めなかった問題を区別し、製品の停止規則を弱めず最終4/4を再検査した。中断結果の古い表示と、検査runnerのチェックポイント変数名も修正し、先行する未完走映像/ログを合格記録から区別した。
+
+製品DOMの全作戦は、read-only HUDから普通のドラッグ入力を作り、NormalだけSpaceを保持した。能動時間は両mode905.483秒、画面表示905.48秒、得点120,443、全100撃破は僚機、自機損失0/僚機損失40、全100砲台のHPは0。Easyは自機発射6/命中0、Normalは19,510/命中0で、自機の照準成功の検査には用いない。最終2基は後面の主砲で、98/100時の六面残数画像と破壊ID履歴を照合した。広い周回中に自機の標的lockはなく、下面への直接自機接近をこの映像から主張しない。
+
+ブラウザclockを1,000msずつ進め、描画1回につき60個の論理tickを逐次実行した。2秒gap規則を変更しておらず、実機FPSの検査ではない。Easyは凍結後1,000msでSkip、Normalは5,000msで自動結果となり、時刻・得点・best内容を維持した。初期化後のgeometry71/texture4/program17、canvas1、listener登録138、AudioContext1/voice16を全10再出撃で保持。DOMは結果の12成分node生成で295→307となり、その後は307で一定。heapはGCに伴って上下し、Easy13.50–62.79MB、Normal10.15–42.59MB、末尾12.79MBで単調増加は見られなかった。観測pool最大は味方弾100、敵主砲6、敵機銃87、粒子616、破片16、残骸100、active voice16。毎tick上限の別検査は合成負荷原票にある。
+
+## 環境と追試
+
+Node.js 24.19.0/npm 11.9.0、lockfile固定のTypeScript/Three.js/Vite、Chromium 149.0.7827.55のクラウド仮想環境で実行した。[environment.json](./evidence/acceptance/environment.json) に物理機材の未提供と測定条件を記録した。SwiftShader、操作自動化、公的なPlaywright clockは実PC/iPhoneの速度・タッチ・聴感の代用にはならない。WebKit UIとnative visibilityはCIで確認する。
+
+```sh
+npm ci
+npm test
+npm run build
+npx playwright install --with-deps chromium webkit
+xvfb-run -a npm run test:browser
+node --import tsx scripts/mission-runner.ts --mode easy --record /tmp/easy-inputs.json.gz
+node --import tsx scripts/mission-runner.ts --mode normal --record /tmp/normal-inputs.json.gz
+node --import tsx scripts/core-load-runner.ts
+```
+
+入力再生・画像・UI・回避映像・製品DOM長時間runnerの条件とコマンドは各manifest/READMEに記録する。ローカルブラウザ配置を変えた場合は `PLAYWRIGHT_BROWSERS_PATH` を指定する。製品ソースを書き換えたら関係する検査と証拠を再取得する。
+
+## PR4 merge後のPR5 integration status
+
+PR5はready for review状態で、現行main `595feb7` からのintegration gateを確認している。実際のsource conflictは `src/main.ts` と `src/style.css`。combat画面/HUDとlever v2入力/settingsを併存させた。main/style以外のlever settings geometry correctionと `throttle=0` core guard correctionは別の修正であり、conflict解決と混同しない。凍結worktreeのper-file source hash inventoryは [COMBAT_PROVENANCE.md](./COMBAT_PROVENANCE.md) に記録する。提出HEADと最終CI結果はPR本文／Checksに紐づける。
+
+`throttle=0` core guardとfinal tagged-peer placement correctionを含む統合treeでunit 102/102とbuild passを確認した。ローカルChromium＋headed nativeは39 pass。WebKit retryは [webkit-retry/manifest.txt](./evidence/pr5-integration/webkit-retry/manifest.txt) にある環境設定で実起動し、17 pass・1 skip・0 fail。省略したのはLinux WebKitでsoftware WebGLを使うlive-flight testのみ。初回のPlaywright dependency preflightはstaged libraryを`ldconfig -p`から見つけられなかったが、retryでは実際にWebKitのtest bodyを実行した。
+
+PR5 push CI [37275240792](https://github.com/chameleonjp-lab/gekichin/actions/runs/37275240792) はunit 102/102・build成功、browser 55 pass・1 skip・1 fail。失敗は `p1-flow.spec.ts` のEasy viewport/restart test。先行4 viewportは通過し、5つ目の1366×768でfresh load後startまで約3.9秒かかり、tick 1で実時間2秒超gapを検出したpause guardが停止させた。error contextには「処理が2秒以上停止したため戦闘を止めました。明示的に再開してください。」とあり、製品のpause guardは仕様どおり作動した。fixture担当がviewport/resource testだけに入れた決定的clockは単独1/1（32.6秒）で成功。compileAsyncの準備中はRAFを進め、実時計のstall・native visibility検査は変更しない。PR CI [37275243877](https://github.com/chameleonjp-lab/gekichin/actions/runs/37275243877) はunit/build成功、browser 56 pass・1 skip・0 fail、comparison成功と報告されたが、このtest更新を含むexact-head全CIはこのtest-fix commit準備時点でpending。最終結果はPR本文／Checksを参照。初回CIの原票は [`ci-first-attempt/`](./evidence/pr5-integration/ci-first-attempt/) に保存し、trace ZIPはCI artifact（artifact ID／ZIP SHA-256は`runs.json`）にある。単独fixture retryの [run.log](./evidence/pr5-integration/layout-followup/run.log) と [browser-results.json](./evidence/pr5-integration/layout-followup/browser-results.json) は同階層に保存した。hash・scopeは [integration manifest](./evidence/pr5-integration/manifest.json) の`localChecks.layoutFollowup`を参照。PR5統合source 30ファイルの内容hashはこれらの実行を通じて不変。提出HEADと最終CI結果はPR本文／Checksに紐づける。
+
+六組の主砲／機銃回避fixture browser recorderも統合sourceで1/1実行した。fresh output一式は [`evasion-recorder-manifest.json`](./evidence/pr5-integration/evasion-recorder-manifest.json) でhash-boundされ、PR5 CI evidence artifactの収集対象に設定した。このartifact hashはlocal captureを示し、CIで別途再生成する動画・gzipのhashとは同一としない。追跡済みの元72秒動画と18 PNGはsource5dbのhistorical captureのままで、current sourceへ付け替えない。別途、archived c0 combat baselineとcurrent integrated candidateのmatched public-flow comparisonを実施した。command receiptはexit 0、異なるportrait／landscape viewportで各before/afterの4 captureを取得し、tick 12のphase/mode/time/speed/altitude/loop/fire fieldsは全て一致した。原票は [`comparison-command.json`](./evidence/pr5-integration/comparison-command.json)、[`comparison/conditions.json`](./evidence/pr5-integration/comparison/conditions.json)、同manifestに記録した。比較は`98119b5`との比較ではない。overlap修正前の初期4 captureは最終比較に含めない。Easy/Normal full mission、30/60/120Hz replay、70-screen UI、既存DOM mission runは再記録していない。これらは履歴証拠のままとし、現行PR5 sourceの合格と読まない。
+
+## 残る受入
+
+実PCとiPhone 17 Pro/Safariで、固定manifestに従う30秒ウォームアップ＋180秒性能測定、実機タッチ/safe-area/アドレスバー変化、音出力、人間による全周戦の試遊を行う必要がある。機材または実測結果がないため、この部分は阻害として残す。ソフトウェア統合の最終成否は提出HEADのPR本文／Checksを正本とし、実機・人間の受入は未完了。mainへのマージ/配備/公開は本作業では実行していない。

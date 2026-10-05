@@ -1,0 +1,2 @@
+{"outputPath":"/workspace/gekichin/docs/evidence/acceptance/browser-product/product-run.json","status":"passed","wallElapsedMilliseconds":219377.428668,"modes":["easy","normal"],"missions":[{"mode":"easy","tick":54329,"seconds":905.48,"outcome":"勝利 · 全100基撃沈"},{"mode":"normal","tick":54329,"seconds":905.48,"outcome":"勝利 · 全100基撃沈"}],"restartCycles":10,"finalHeapUsedBytes":12788964,"errors":[]}
+{"video":"/workspace/gekichin/docs/evidence/acceptance/browser-product/full-product-run.webm"}

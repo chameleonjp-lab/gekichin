@@ -1,0 +1,3059 @@
+{
+  "type": "normal-enemy-damage-loss-respawn-product-dom-run",
+  "status": "passed",
+  "startedAt": "2026-10-05T05:33:48.137Z",
+  "completedAt": "2026-10-05T05:34:09.185Z",
+  "wallElapsedMilliseconds": 20807.175335,
+  "source": {
+    "gitHead": "5db76f68b53c846ae4e4aec4754f78e108107a37",
+    "sourceSha256Before": {
+      "aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
+      "aircraft.ts": "1a9c18f93e5a48869882b2aa2946cdeb352dc4a8acd76b4fd9beade8ded621d5",
+      "audio.ts": "99057cd1e53413459802ada6d442a31de7feb8ee91008df540901b085d2731ab",
+      "boundary-guidance.ts": "7deac567a22cf2cf64693bb6777adf3e0491cc0d213ac6ecc53d9c5cfc7ebb21",
+      "collision-world.ts": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519",
+      "combat-types.ts": "24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0",
+      "control-settings.css": "fd060ea182464b36629372e995e8a551a32602a9a529e3bf10fd148f687ccf20",
+      "control-settings.ts": "e16bfd064914aa76f1327862ad5f8900958c23a706b5eded65c84fae737328c4",
+      "dialog-focus.ts": "86d631a4d618558e1ca671004c12ccc1fbdfe75516e6c5d04f962acd2c5e1996",
+      "fleet.ts": "de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90",
+      "flight-assist.ts": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413",
+      "flight-view.ts": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
+      "flight.ts": "288f6d8b52aca7d6c4f68fce8f71262373e6a4ee6c7fadfe8cb91df187f529ce",
+      "game-state.ts": "ab238ce83f8ab5eda287d47745e72162f99b984707f09cca60f151742ac2be79",
+      "input.ts": "f7a3860926fd76bc0684405ff43177c327e21163f9f7dd375e879d197eae579a",
+      "keyboard-settings.ts": "f38ee882c88f6b169377e98c788de2cdf413905840f791ce6ef9109cef0088cc",
+      "main.ts": "e18a2b41b3dbc0273928967450632da55fd72a4e39419d0b144d2cf56ecf9dd3",
+      "mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+      "mothership.ts": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466",
+      "rules.ts": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414",
+      "scene.ts": "6dc42220163e8abfe10935994ddb316622dfa2b341ced773b3d7acd787552635",
+      "scoring.ts": "95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494",
+      "style.css": "c13420fc69d84f4881b24084503b796fff93ee944cfeda38149650aad0be536f",
+      "turret-combat.ts": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71",
+      "types.ts": "69497c3fe6b9025b7399dbc9ab1db5f7b056507171cbd3aa8a7985ebaaef0f29",
+      "wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f"
+    },
+    "builtAssetSha256Before": {
+      "index-B79rSzXU.css": "7de427a0db39322ad2a9aacced6b3c500702744cea2d45932005141cc279f7fd",
+      "index-BTLHVFty.js": "24960449fc99f3429d6b29a0444ccedadcd7c61a1014b0dd5ac8384f62f8b04a"
+    },
+    "runnerSha256Before": "92bd4d9419d8dbb3ac8ac528220fc94572e4c52ee3e198285205eaa87194bcc5",
+    "gitHeadAfter": "5db76f68b53c846ae4e4aec4754f78e108107a37",
+    "sourceSha256After": {
+      "aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
+      "aircraft.ts": "1a9c18f93e5a48869882b2aa2946cdeb352dc4a8acd76b4fd9beade8ded621d5",
+      "audio.ts": "99057cd1e53413459802ada6d442a31de7feb8ee91008df540901b085d2731ab",
+      "boundary-guidance.ts": "7deac567a22cf2cf64693bb6777adf3e0491cc0d213ac6ecc53d9c5cfc7ebb21",
+      "collision-world.ts": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519",
+      "combat-types.ts": "24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0",
+      "control-settings.css": "fd060ea182464b36629372e995e8a551a32602a9a529e3bf10fd148f687ccf20",
+      "control-settings.ts": "e16bfd064914aa76f1327862ad5f8900958c23a706b5eded65c84fae737328c4",
+      "dialog-focus.ts": "86d631a4d618558e1ca671004c12ccc1fbdfe75516e6c5d04f962acd2c5e1996",
+      "fleet.ts": "de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90",
+      "flight-assist.ts": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413",
+      "flight-view.ts": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
+      "flight.ts": "288f6d8b52aca7d6c4f68fce8f71262373e6a4ee6c7fadfe8cb91df187f529ce",
+      "game-state.ts": "ab238ce83f8ab5eda287d47745e72162f99b984707f09cca60f151742ac2be79",
+      "input.ts": "f7a3860926fd76bc0684405ff43177c327e21163f9f7dd375e879d197eae579a",
+      "keyboard-settings.ts": "f38ee882c88f6b169377e98c788de2cdf413905840f791ce6ef9109cef0088cc",
+      "main.ts": "e18a2b41b3dbc0273928967450632da55fd72a4e39419d0b144d2cf56ecf9dd3",
+      "mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+      "mothership.ts": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466",
+      "rules.ts": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414",
+      "scene.ts": "6dc42220163e8abfe10935994ddb316622dfa2b341ced773b3d7acd787552635",
+      "scoring.ts": "95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494",
+      "style.css": "c13420fc69d84f4881b24084503b796fff93ee944cfeda38149650aad0be536f",
+      "turret-combat.ts": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71",
+      "types.ts": "69497c3fe6b9025b7399dbc9ab1db5f7b056507171cbd3aa8a7985ebaaef0f29",
+      "wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f"
+    },
+    "builtAssetSha256After": {
+      "index-B79rSzXU.css": "7de427a0db39322ad2a9aacced6b3c500702744cea2d45932005141cc279f7fd",
+      "index-BTLHVFty.js": "24960449fc99f3429d6b29a0444ccedadcd7c61a1014b0dd5ac8384f62f8b04a"
+    },
+    "runnerSha256After": "92bd4d9419d8dbb3ac8ac528220fc94572e4c52ee3e198285205eaa87194bcc5",
+    "hashesUnchanged": true
+  },
+  "fixture": {
+    "url": "http://127.0.0.1:4177",
+    "browser": "Chromium",
+    "viewport": {
+      "width": 393,
+      "height": 852,
+      "deviceScaleFactor": 1
+    },
+    "clock": "Playwright public page.clock.install + pauseAt + runFor",
+    "frameMs": 1000,
+    "fixedLogicHz": 60,
+    "activeTickCap": 7200,
+    "activeSecondsCap": 120,
+    "steering": {
+      "source": "read-only #hud data-position and data-yaw",
+      "radius": 900,
+      "altitude": 1000,
+      "nextAngleRadians": 0.24,
+      "yawGainSeconds": 0.82,
+      "updatesEveryTicks": 60
+    },
+    "productInputs": [
+      "Normal radio + Start button",
+      "trusted pointer drag on #flight-surface",
+      "trusted Space key held"
+    ],
+    "stateWrites": "None; mission readings use HUD text and read-only #app/#hud datasets."
+  },
+  "result": {
+    "status": "passed",
+    "initial": {
+      "phase": "playing",
+      "mode": "normal",
+      "seed": 1196097537,
+      "tick": 0,
+      "ownership": 0,
+      "position": [
+        0,
+        1000,
+        2000
+      ],
+      "yaw": 0,
+      "pitch": 0,
+      "playerHpText": "80.0 / 80",
+      "playerHp": 80,
+      "ammunition": "288 / 96",
+      "fire": "射撃：待機",
+      "respawn": "",
+      "respawnVisible": false,
+      "altitude": "1,000 m",
+      "speed": "110 m/s",
+      "enemyMainBullets": 0,
+      "enemyMgBullets": 0,
+      "friendlyPoolFailures": 0,
+      "enemyPoolFailures": 0
+    },
+    "final": {
+      "phase": "playing",
+      "mode": "normal",
+      "seed": 1196097537,
+      "tick": 4800,
+      "ownership": 2,
+      "position": [
+        0,
+        1000,
+        1840.5
+      ],
+      "yaw": 0,
+      "pitch": 0,
+      "playerHpText": "80.0 / 80",
+      "playerHp": 80,
+      "ammunition": "288 / 96",
+      "fire": "射撃：待機",
+      "respawn": "自機復帰 · 0.6秒",
+      "respawnVisible": false,
+      "altitude": "1,000 m",
+      "speed": "110 m/s",
+      "enemyMainBullets": 5,
+      "enemyMgBullets": 54,
+      "friendlyPoolFailures": 0,
+      "enemyPoolFailures": 0
+    },
+    "playerLoss": {
+      "frame": 77,
+      "tick": 4560,
+      "activeSeconds": 76,
+      "hp": null,
+      "playerHp": null,
+      "playerHpText": "復帰待ち",
+      "ownership": 1,
+      "position": [
+        784.708227,
+        1000,
+        -419.827561
+      ],
+      "radius": 889.96,
+      "yaw": 0.4922339766153172,
+      "pitch": 0,
+      "altitude": "1,000 m",
+      "enemyMainBullets": 2,
+      "enemyMgBullets": 79,
+      "ammo": "— / —",
+      "ammunition": "— / —",
+      "fire": "射撃：待機",
+      "respawn": "自機復帰 · 2.5秒",
+      "respawnVisible": true
+    },
+    "respawn": {
+      "frame": 80,
+      "tick": 4740,
+      "activeSeconds": 79,
+      "hp": 80,
+      "playerHp": 80,
+      "playerHpText": "80.0 / 80",
+      "ownership": 2,
+      "position": [
+        0,
+        1000,
+        1950.5
+      ],
+      "radius": 1950.5,
+      "yaw": 0,
+      "pitch": 0,
+      "altitude": "1,000 m",
+      "enemyMainBullets": 3,
+      "enemyMgBullets": 18,
+      "ammo": "288 / 96",
+      "ammunition": "288 / 96",
+      "fire": "射撃：待機",
+      "respawn": "自機復帰 · 0.6秒",
+      "respawnVisible": false
+    },
+    "afterRespawn": {
+      "frame": 81,
+      "tick": 4800,
+      "activeSeconds": 80,
+      "hp": 80,
+      "playerHp": 80,
+      "playerHpText": "80.0 / 80",
+      "ownership": 2,
+      "position": [
+        0,
+        1000,
+        1840.5
+      ],
+      "radius": 1840.5,
+      "yaw": 0,
+      "pitch": 0,
+      "altitude": "1,000 m",
+      "enemyMainBullets": 5,
+      "enemyMgBullets": 54,
+      "ammo": "288 / 96",
+      "ammunition": "288 / 96",
+      "fire": "射撃：待機",
+      "respawn": "自機復帰 · 0.6秒",
+      "respawnVisible": false
+    },
+    "damageRows": [
+      {
+        "frame": 13,
+        "tick": 720,
+        "activeSeconds": 12,
+        "hp": 76.4,
+        "playerHp": 76.4,
+        "playerHpText": "76.4 / 80",
+        "ownership": 0,
+        "position": [
+          458.525614,
+          1000,
+          796.108306
+        ],
+        "radius": 918.71,
+        "yaw": -0.8528031380397048,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 6,
+        "enemyMgBullets": 95,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 80,
+        "damageMilli": 3600
+      },
+      {
+        "frame": 15,
+        "tick": 840,
+        "activeSeconds": 14,
+        "hp": 48.8,
+        "playerHp": 48.8,
+        "playerHpText": "48.8 / 80",
+        "ownership": 0,
+        "position": [
+          619.534241,
+          1000,
+          646.873954
+        ],
+        "radius": 895.69,
+        "yaw": -0.7683514762671484,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 63,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 76.4,
+        "damageMilli": 27600
+      },
+      {
+        "frame": 17,
+        "tick": 960,
+        "activeSeconds": 16,
+        "hp": 46.4,
+        "playerHp": 46.4,
+        "playerHpText": "46.4 / 80",
+        "ownership": 0,
+        "position": [
+          754.435789,
+          1000,
+          474.205608
+        ],
+        "radius": 891.09,
+        "yaw": -0.5544616050773321,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 1,
+        "enemyMgBullets": 28,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 48.8,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 18,
+        "tick": 1020,
+        "activeSeconds": 17,
+        "hp": 45.2,
+        "playerHp": 45.2,
+        "playerHpText": "45.2 / 80",
+        "ownership": 0,
+        "position": [
+          806.415074,
+          1000,
+          377.663292
+        ],
+        "radius": 890.47,
+        "yaw": -0.43531715207331967,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 1,
+        "enemyMgBullets": 23,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 46.4,
+        "damageMilli": 1200
+      },
+      {
+        "frame": 19,
+        "tick": 1080,
+        "activeSeconds": 18,
+        "hp": 42.8,
+        "playerHp": 42.8,
+        "playerHpText": "42.8 / 80",
+        "ownership": 0,
+        "position": [
+          846.443899,
+          1000,
+          275.611397
+        ],
+        "radius": 890.18,
+        "yaw": -0.31429238348926125,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 0,
+        "enemyMgBullets": 18,
+        "ammo": "286 / 94",
+        "ammunition": "286 / 94",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 45.2,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 20,
+        "tick": 1140,
+        "activeSeconds": 19,
+        "hp": 40.4,
+        "playerHp": 40.4,
+        "playerHpText": "40.4 / 80",
+        "ownership": 0,
+        "position": [
+          873.778484,
+          1000,
+          169.467704
+        ],
+        "radius": 890.06,
+        "yaw": -0.19184086851934623,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 0,
+        "enemyMgBullets": 31,
+        "ammo": "262 / 86",
+        "ammunition": "262 / 86",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 42.8,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 26,
+        "tick": 1500,
+        "activeSeconds": 25,
+        "hp": 38,
+        "playerHp": 38,
+        "playerHpText": "38.0 / 80",
+        "ownership": 0,
+        "position": [
+          759.757946,
+          1000,
+          -463.456458
+        ],
+        "radius": 889.96,
+        "yaw": 0.5467245123681024,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 5,
+        "enemyMgBullets": 39,
+        "ammo": "118 / 38",
+        "ammunition": "118 / 38",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 40.4,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 27,
+        "tick": 1560,
+        "activeSeconds": 26,
+        "hp": 35.6,
+        "playerHp": 35.6,
+        "playerHpText": "35.6 / 80",
+        "ownership": 0,
+        "position": [
+          697.035043,
+          1000,
+          -553.321956
+        ],
+        "radius": 889.96,
+        "yaw": 0.6699386762190902,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 4,
+        "enemyMgBullets": 23,
+        "ammo": "94 / 30",
+        "ammunition": "94 / 30",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 38,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 28,
+        "tick": 1620,
+        "activeSeconds": 27,
+        "hp": 34.4,
+        "playerHp": 34.4,
+        "playerHpText": "34.4 / 80",
+        "ownership": 0,
+        "position": [
+          623.742877,
+          1000,
+          -634.797168
+        ],
+        "radius": 889.96,
+        "yaw": 0.7931560229175352,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 2,
+        "enemyMgBullets": 81,
+        "ammo": "70 / 22",
+        "ammunition": "70 / 22",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 35.6,
+        "damageMilli": 1200
+      },
+      {
+        "frame": 29,
+        "tick": 1680,
+        "activeSeconds": 28,
+        "hp": 32,
+        "playerHp": 32,
+        "playerHpText": "32.0 / 80",
+        "ownership": 0,
+        "position": [
+          540.99262,
+          1000,
+          -706.646576
+        ],
+        "radius": 889.96,
+        "yaw": 0.9163740250309766,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 2,
+        "enemyMgBullets": 82,
+        "ammo": "46 / 14",
+        "ammunition": "46 / 14",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 34.4,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 31,
+        "tick": 1800,
+        "activeSeconds": 30,
+        "hp": 29.6,
+        "playerHp": 29.6,
+        "playerHpText": "29.6 / 80",
+        "ownership": 0,
+        "position": [
+          352.261211,
+          1000,
+          -817.272477
+        ],
+        "radius": 889.96,
+        "yaw": 1.162810692054598,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 0,
+        "enemyMgBullets": 27,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 32,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 39,
+        "tick": 2280,
+        "activeSeconds": 38,
+        "hp": 27.2,
+        "playerHp": 27.2,
+        "playerHpText": "27.2 / 80",
+        "ownership": 0,
+        "position": [
+          -486.816312,
+          1000,
+          -745.004784
+        ],
+        "radius": 889.96,
+        "yaw": 2.148559319733762,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 0,
+        "enemyMgBullets": 36,
+        "ammo": "236 / 78",
+        "ammunition": "236 / 78",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 29.6,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 41,
+        "tick": 2400,
+        "activeSeconds": 40,
+        "hp": 24.8,
+        "playerHp": 24.8,
+        "playerHpText": "24.8 / 80",
+        "ownership": 0,
+        "position": [
+          -653.852691,
+          1000,
+          -603.737421
+        ],
+        "radius": 889.96,
+        "yaw": 2.3949966347916636,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 5,
+        "enemyMgBullets": 72,
+        "ammo": "188 / 62",
+        "ammunition": "188 / 62",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 27.2,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 45,
+        "tick": 2640,
+        "activeSeconds": 44,
+        "hp": 23.6,
+        "playerHp": 23.6,
+        "playerHpText": "23.6 / 80",
+        "ownership": 0,
+        "position": [
+          -861.693322,
+          1000,
+          -222.50131
+        ],
+        "radius": 889.96,
+        "yaw": 2.887871264589143,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 55,
+        "ammo": "92 / 30",
+        "ammunition": "92 / 30",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 24.8,
+        "damageMilli": 1200
+      },
+      {
+        "frame": 49,
+        "tick": 2880,
+        "activeSeconds": 48,
+        "hp": 22.4,
+        "playerHp": 22.4,
+        "playerHpText": "22.4 / 80",
+        "ownership": 0,
+        "position": [
+          -864.410268,
+          1000,
+          211.700622
+        ],
+        "radius": 889.96,
+        "yaw": -2.9024394126820114,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 2,
+        "enemyMgBullets": 100,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 23.6,
+        "damageMilli": 1200
+      },
+      {
+        "frame": 50,
+        "tick": 2940,
+        "activeSeconds": 49,
+        "hp": 20,
+        "playerHp": 20,
+        "playerHpText": "20.0 / 80",
+        "ownership": 0,
+        "position": [
+          -831.836967,
+          1000,
+          316.337678
+        ],
+        "radius": 889.96,
+        "yaw": -2.7792207551504418,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 55,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 22.4,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 51,
+        "tick": 3000,
+        "activeSeconds": 50,
+        "hp": 16.4,
+        "playerHp": 16.4,
+        "playerHpText": "16.4 / 80",
+        "ownership": 0,
+        "position": [
+          -786.649994,
+          1000,
+          416.177905
+        ],
+        "radius": 889.96,
+        "yaw": -2.6560020976150316,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 5,
+        "enemyMgBullets": 60,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 20,
+        "damageMilli": 3600
+      },
+      {
+        "frame": 54,
+        "tick": 3180,
+        "activeSeconds": 53,
+        "hp": 15.2,
+        "playerHp": 15.2,
+        "playerHpText": "15.2 / 80",
+        "ownership": 0,
+        "position": [
+          -583.150297,
+          1000,
+          672.278179
+        ],
+        "radius": 889.96,
+        "yaw": -2.2863461250009696,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 4,
+        "enemyMgBullets": 63,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 16.4,
+        "damageMilli": 1200
+      },
+      {
+        "frame": 56,
+        "tick": 3300,
+        "activeSeconds": 55,
+        "hp": 14,
+        "playerHp": 14,
+        "playerHpText": "14.0 / 80",
+        "ownership": 0,
+        "position": [
+          -401.529442,
+          1000,
+          794.226881
+        ],
+        "radius": 889.96,
+        "yaw": -2.039909434903833,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 1,
+        "enemyMgBullets": 69,
+        "ammo": "258 / 86",
+        "ammunition": "258 / 86",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 15.2,
+        "damageMilli": 1200
+      },
+      {
+        "frame": 64,
+        "tick": 3780,
+        "activeSeconds": 63,
+        "hp": 11.6,
+        "playerHp": 11.6,
+        "playerHpText": "11.6 / 80",
+        "ownership": 0,
+        "position": [
+          440.395696,
+          1000,
+          773.352379
+        ],
+        "radius": 889.96,
+        "yaw": -1.054159550220664,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 4,
+        "enemyMgBullets": 55,
+        "ammo": "66 / 22",
+        "ammunition": "66 / 22",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 14,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 66,
+        "tick": 3900,
+        "activeSeconds": 65,
+        "hp": 9.2,
+        "playerHp": 9.2,
+        "playerHpText": "9.2 / 80",
+        "ownership": 0,
+        "position": [
+          615.749958,
+          1000,
+          642.552905
+        ],
+        "radius": 889.96,
+        "yaw": -0.8077222351464508,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 5,
+        "enemyMgBullets": 77,
+        "ammo": "18 / 6",
+        "ammunition": "18 / 6",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 11.6,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 67,
+        "tick": 3960,
+        "activeSeconds": 66,
+        "hp": 8,
+        "playerHp": 8,
+        "playerHpText": "8.0 / 80",
+        "ownership": 0,
+        "position": [
+          690.055742,
+          1000,
+          562.001158
+        ],
+        "radius": 889.96,
+        "yaw": -0.6845042022719312,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 4,
+        "enemyMgBullets": 43,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 9.2,
+        "damageMilli": 1200
+      },
+      {
+        "frame": 68,
+        "tick": 4020,
+        "activeSeconds": 67,
+        "hp": 5.6,
+        "playerHp": 5.6,
+        "playerHpText": "5.6 / 80",
+        "ownership": 0,
+        "position": [
+          753.897799,
+          1000,
+          472.927451
+        ],
+        "radius": 889.96,
+        "yaw": -0.5612855450499201,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 79,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 8,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 70,
+        "tick": 4140,
+        "activeSeconds": 69,
+        "hp": 3.2,
+        "playerHp": 3.2,
+        "playerHpText": "3.2 / 80",
+        "ownership": 0,
+        "position": [
+          846.491634,
+          1000,
+          274.72553
+        ],
+        "radius": 889.96,
+        "yaw": -0.3148482297297508,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 52,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 5.6,
+        "damageMilli": 2400
+      },
+      {
+        "frame": 72,
+        "tick": 4260,
+        "activeSeconds": 71,
+        "hp": 2,
+        "playerHp": 2,
+        "playerHpText": "2.0 / 80",
+        "ownership": 0,
+        "position": [
+          887.936611,
+          1000,
+          59.92345
+        ],
+        "radius": 889.96,
+        "yaw": -0.0684109150650527,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 4,
+        "enemyMgBullets": 54,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": "",
+        "previousHp": 3.2,
+        "damageMilli": 1200
+      }
+    ],
+    "samples": [
+      {
+        "frame": 5,
+        "tick": 240,
+        "activeSeconds": 4,
+        "hp": 80,
+        "playerHp": 80,
+        "playerHpText": "80.0 / 80",
+        "ownership": 0,
+        "position": [
+          78.415935,
+          1000,
+          1568.667551
+        ],
+        "radius": 1570.63,
+        "yaw": -0.22809859668645682,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 0,
+        "enemyMgBullets": 0,
+        "ammo": "192 / 64",
+        "ammunition": "192 / 64",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 10,
+        "tick": 540,
+        "activeSeconds": 9,
+        "hp": 80,
+        "playerHp": 80,
+        "playerHpText": "80.0 / 80",
+        "ownership": 0,
+        "position": [
+          250.473373,
+          1000,
+          1048.575439
+        ],
+        "radius": 1078.08,
+        "yaw": -0.4809539419375226,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 2,
+        "enemyMgBullets": 0,
+        "ammo": "72 / 24",
+        "ammunition": "72 / 24",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 13,
+        "tick": 720,
+        "activeSeconds": 12,
+        "hp": 76.4,
+        "playerHp": 76.4,
+        "playerHpText": "76.4 / 80",
+        "ownership": 0,
+        "position": [
+          458.525614,
+          1000,
+          796.108306
+        ],
+        "radius": 918.71,
+        "yaw": -0.8528031380397048,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 6,
+        "enemyMgBullets": 95,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 15,
+        "tick": 840,
+        "activeSeconds": 14,
+        "hp": 48.8,
+        "playerHp": 48.8,
+        "playerHpText": "48.8 / 80",
+        "ownership": 0,
+        "position": [
+          619.534241,
+          1000,
+          646.873954
+        ],
+        "radius": 895.69,
+        "yaw": -0.7683514762671484,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 63,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 17,
+        "tick": 960,
+        "activeSeconds": 16,
+        "hp": 46.4,
+        "playerHp": 46.4,
+        "playerHpText": "46.4 / 80",
+        "ownership": 0,
+        "position": [
+          754.435789,
+          1000,
+          474.205608
+        ],
+        "radius": 891.09,
+        "yaw": -0.5544616050773321,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 1,
+        "enemyMgBullets": 28,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 18,
+        "tick": 1020,
+        "activeSeconds": 17,
+        "hp": 45.2,
+        "playerHp": 45.2,
+        "playerHpText": "45.2 / 80",
+        "ownership": 0,
+        "position": [
+          806.415074,
+          1000,
+          377.663292
+        ],
+        "radius": 890.47,
+        "yaw": -0.43531715207331967,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 1,
+        "enemyMgBullets": 23,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 19,
+        "tick": 1080,
+        "activeSeconds": 18,
+        "hp": 42.8,
+        "playerHp": 42.8,
+        "playerHpText": "42.8 / 80",
+        "ownership": 0,
+        "position": [
+          846.443899,
+          1000,
+          275.611397
+        ],
+        "radius": 890.18,
+        "yaw": -0.31429238348926125,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 0,
+        "enemyMgBullets": 18,
+        "ammo": "286 / 94",
+        "ammunition": "286 / 94",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 20,
+        "tick": 1140,
+        "activeSeconds": 19,
+        "hp": 40.4,
+        "playerHp": 40.4,
+        "playerHpText": "40.4 / 80",
+        "ownership": 0,
+        "position": [
+          873.778484,
+          1000,
+          169.467704
+        ],
+        "radius": 890.06,
+        "yaw": -0.19184086851934623,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 0,
+        "enemyMgBullets": 31,
+        "ammo": "262 / 86",
+        "ammunition": "262 / 86",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 25,
+        "tick": 1440,
+        "activeSeconds": 24,
+        "hp": 40.4,
+        "playerHp": 40.4,
+        "playerHpText": "40.4 / 80",
+        "ownership": 0,
+        "position": [
+          810.960701,
+          1000,
+          -366.563305
+        ],
+        "radius": 889.96,
+        "yaw": 0.42351046808287407,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 4,
+        "enemyMgBullets": 86,
+        "ammo": "142 / 46",
+        "ammunition": "142 / 46",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 26,
+        "tick": 1500,
+        "activeSeconds": 25,
+        "hp": 38,
+        "playerHp": 38,
+        "playerHpText": "38.0 / 80",
+        "ownership": 0,
+        "position": [
+          759.757946,
+          1000,
+          -463.456458
+        ],
+        "radius": 889.96,
+        "yaw": 0.5467245123681024,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 5,
+        "enemyMgBullets": 39,
+        "ammo": "118 / 38",
+        "ammunition": "118 / 38",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 27,
+        "tick": 1560,
+        "activeSeconds": 26,
+        "hp": 35.6,
+        "playerHp": 35.6,
+        "playerHpText": "35.6 / 80",
+        "ownership": 0,
+        "position": [
+          697.035043,
+          1000,
+          -553.321956
+        ],
+        "radius": 889.96,
+        "yaw": 0.6699386762190902,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 4,
+        "enemyMgBullets": 23,
+        "ammo": "94 / 30",
+        "ammunition": "94 / 30",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 28,
+        "tick": 1620,
+        "activeSeconds": 27,
+        "hp": 34.4,
+        "playerHp": 34.4,
+        "playerHpText": "34.4 / 80",
+        "ownership": 0,
+        "position": [
+          623.742877,
+          1000,
+          -634.797168
+        ],
+        "radius": 889.96,
+        "yaw": 0.7931560229175352,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 2,
+        "enemyMgBullets": 81,
+        "ammo": "70 / 22",
+        "ammunition": "70 / 22",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 29,
+        "tick": 1680,
+        "activeSeconds": 28,
+        "hp": 32,
+        "playerHp": 32,
+        "playerHpText": "32.0 / 80",
+        "ownership": 0,
+        "position": [
+          540.99262,
+          1000,
+          -706.646576
+        ],
+        "radius": 889.96,
+        "yaw": 0.9163740250309766,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 2,
+        "enemyMgBullets": 82,
+        "ammo": "46 / 14",
+        "ammunition": "46 / 14",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 30,
+        "tick": 1740,
+        "activeSeconds": 29,
+        "hp": 32,
+        "playerHp": 32,
+        "playerHpText": "32.0 / 80",
+        "ownership": 0,
+        "position": [
+          450.039014,
+          1000,
+          -767.780689
+        ],
+        "radius": 889.96,
+        "yaw": 1.0395920423644158,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 1,
+        "enemyMgBullets": 20,
+        "ammo": "22 / 6",
+        "ammunition": "22 / 6",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 31,
+        "tick": 1800,
+        "activeSeconds": 30,
+        "hp": 29.6,
+        "playerHp": 29.6,
+        "playerHpText": "29.6 / 80",
+        "ownership": 0,
+        "position": [
+          352.261211,
+          1000,
+          -817.272477
+        ],
+        "radius": 889.96,
+        "yaw": 1.162810692054598,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 0,
+        "enemyMgBullets": 27,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 35,
+        "tick": 2040,
+        "activeSeconds": 34,
+        "hp": 29.6,
+        "playerHp": 29.6,
+        "playerHpText": "29.6 / 80",
+        "ownership": 0,
+        "position": [
+          -76.367041,
+          1000,
+          -886.673749
+        ],
+        "radius": 889.96,
+        "yaw": 1.655684690028476,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 0,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 39,
+        "tick": 2280,
+        "activeSeconds": 38,
+        "hp": 27.2,
+        "playerHp": 27.2,
+        "playerHpText": "27.2 / 80",
+        "ownership": 0,
+        "position": [
+          -486.816312,
+          1000,
+          -745.004784
+        ],
+        "radius": 889.96,
+        "yaw": 2.148559319733762,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 0,
+        "enemyMgBullets": 36,
+        "ammo": "236 / 78",
+        "ammunition": "236 / 78",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 40,
+        "tick": 2340,
+        "activeSeconds": 39,
+        "hp": 27.2,
+        "playerHp": 27.2,
+        "playerHpText": "27.2 / 80",
+        "ownership": 0,
+        "position": [
+          -574.691709,
+          1000,
+          -679.523122
+        ],
+        "radius": 889.96,
+        "yaw": 2.2717786019231134,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 74,
+        "ammo": "212 / 70",
+        "ammunition": "212 / 70",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 41,
+        "tick": 2400,
+        "activeSeconds": 40,
+        "hp": 24.8,
+        "playerHp": 24.8,
+        "playerHpText": "24.8 / 80",
+        "ownership": 0,
+        "position": [
+          -653.852691,
+          1000,
+          -603.737421
+        ],
+        "radius": 889.96,
+        "yaw": 2.3949966347916636,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 5,
+        "enemyMgBullets": 72,
+        "ammo": "188 / 62",
+        "ammunition": "188 / 62",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 45,
+        "tick": 2640,
+        "activeSeconds": 44,
+        "hp": 23.6,
+        "playerHp": 23.6,
+        "playerHpText": "23.6 / 80",
+        "ownership": 0,
+        "position": [
+          -861.693322,
+          1000,
+          -222.50131
+        ],
+        "radius": 889.96,
+        "yaw": 2.887871264589143,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 55,
+        "ammo": "92 / 30",
+        "ammunition": "92 / 30",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 49,
+        "tick": 2880,
+        "activeSeconds": 48,
+        "hp": 22.4,
+        "playerHp": 22.4,
+        "playerHpText": "22.4 / 80",
+        "ownership": 0,
+        "position": [
+          -864.410268,
+          1000,
+          211.700622
+        ],
+        "radius": 889.96,
+        "yaw": -2.9024394126820114,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 2,
+        "enemyMgBullets": 100,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 50,
+        "tick": 2940,
+        "activeSeconds": 49,
+        "hp": 20,
+        "playerHp": 20,
+        "playerHpText": "20.0 / 80",
+        "ownership": 0,
+        "position": [
+          -831.836967,
+          1000,
+          316.337678
+        ],
+        "radius": 889.96,
+        "yaw": -2.7792207551504418,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 55,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 51,
+        "tick": 3000,
+        "activeSeconds": 50,
+        "hp": 16.4,
+        "playerHp": 16.4,
+        "playerHpText": "16.4 / 80",
+        "ownership": 0,
+        "position": [
+          -786.649994,
+          1000,
+          416.177905
+        ],
+        "radius": 889.96,
+        "yaw": -2.6560020976150316,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 5,
+        "enemyMgBullets": 60,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 54,
+        "tick": 3180,
+        "activeSeconds": 53,
+        "hp": 15.2,
+        "playerHp": 15.2,
+        "playerHpText": "15.2 / 80",
+        "ownership": 0,
+        "position": [
+          -583.150297,
+          1000,
+          672.278179
+        ],
+        "radius": 889.96,
+        "yaw": -2.2863461250009696,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 4,
+        "enemyMgBullets": 63,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 55,
+        "tick": 3240,
+        "activeSeconds": 54,
+        "hp": 15.2,
+        "playerHp": 15.2,
+        "playerHpText": "15.2 / 80",
+        "ownership": 0,
+        "position": [
+          -496.101209,
+          1000,
+          738.854374
+        ],
+        "radius": 889.96,
+        "yaw": -2.1631274674621452,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 2,
+        "enemyMgBullets": 63,
+        "ammo": "282 / 94",
+        "ammunition": "282 / 94",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 56,
+        "tick": 3300,
+        "activeSeconds": 55,
+        "hp": 14,
+        "playerHp": 14,
+        "playerHpText": "14.0 / 80",
+        "ownership": 0,
+        "position": [
+          -401.529442,
+          1000,
+          794.226881
+        ],
+        "radius": 889.96,
+        "yaw": -2.039909434903833,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 1,
+        "enemyMgBullets": 69,
+        "ammo": "258 / 86",
+        "ammunition": "258 / 86",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 60,
+        "tick": 3540,
+        "activeSeconds": 59,
+        "hp": 14,
+        "playerHp": 14,
+        "playerHpText": "14.0 / 80",
+        "ownership": 0,
+        "position": [
+          22.058622,
+          1000,
+          889.682908
+        ],
+        "radius": 889.96,
+        "yaw": -1.5470341802909453,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 2,
+        "enemyMgBullets": 44,
+        "ammo": "162 / 54",
+        "ammunition": "162 / 54",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 64,
+        "tick": 3780,
+        "activeSeconds": 63,
+        "hp": 11.6,
+        "playerHp": 11.6,
+        "playerHpText": "11.6 / 80",
+        "ownership": 0,
+        "position": [
+          440.395696,
+          1000,
+          773.352379
+        ],
+        "radius": 889.96,
+        "yaw": -1.054159550220664,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 4,
+        "enemyMgBullets": 55,
+        "ammo": "66 / 22",
+        "ammunition": "66 / 22",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 65,
+        "tick": 3840,
+        "activeSeconds": 64,
+        "hp": 11.6,
+        "playerHp": 11.6,
+        "playerHpText": "11.6 / 80",
+        "ownership": 0,
+        "position": [
+          532.107168,
+          1000,
+          713.361216
+        ],
+        "radius": 889.96,
+        "yaw": -0.9309415173481179,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 5,
+        "enemyMgBullets": 57,
+        "ammo": "42 / 14",
+        "ammunition": "42 / 14",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 66,
+        "tick": 3900,
+        "activeSeconds": 65,
+        "hp": 9.2,
+        "playerHp": 9.2,
+        "playerHpText": "9.2 / 80",
+        "ownership": 0,
+        "position": [
+          615.749958,
+          1000,
+          642.552905
+        ],
+        "radius": 889.96,
+        "yaw": -0.8077222351464508,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 5,
+        "enemyMgBullets": 77,
+        "ammo": "18 / 6",
+        "ammunition": "18 / 6",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 67,
+        "tick": 3960,
+        "activeSeconds": 66,
+        "hp": 8,
+        "playerHp": 8,
+        "playerHpText": "8.0 / 80",
+        "ownership": 0,
+        "position": [
+          690.055742,
+          1000,
+          562.001158
+        ],
+        "radius": 889.96,
+        "yaw": -0.6845042022719312,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 4,
+        "enemyMgBullets": 43,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 68,
+        "tick": 4020,
+        "activeSeconds": 67,
+        "hp": 5.6,
+        "playerHp": 5.6,
+        "playerHpText": "5.6 / 80",
+        "ownership": 0,
+        "position": [
+          753.897799,
+          1000,
+          472.927451
+        ],
+        "radius": 889.96,
+        "yaw": -0.5612855450499201,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 79,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 70,
+        "tick": 4140,
+        "activeSeconds": 69,
+        "hp": 3.2,
+        "playerHp": 3.2,
+        "playerHpText": "3.2 / 80",
+        "ownership": 0,
+        "position": [
+          846.491634,
+          1000,
+          274.72553
+        ],
+        "radius": 889.96,
+        "yaw": -0.3148482297297508,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 52,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 72,
+        "tick": 4260,
+        "activeSeconds": 71,
+        "hp": 2,
+        "playerHp": 2,
+        "playerHpText": "2.0 / 80",
+        "ownership": 0,
+        "position": [
+          887.936611,
+          1000,
+          59.92345
+        ],
+        "radius": 889.96,
+        "yaw": -0.0684109150650527,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 4,
+        "enemyMgBullets": 54,
+        "ammo": "0 / 0",
+        "ammunition": "0 / 0",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 75,
+        "tick": 4440,
+        "activeSeconds": 74,
+        "hp": 2,
+        "playerHp": 2,
+        "playerHpText": "2.0 / 80",
+        "ownership": 0,
+        "position": [
+          849.608058,
+          1000,
+          -264.930977
+        ],
+        "radius": 889.96,
+        "yaw": 0.301245057439572,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 33,
+        "ammo": "232 / 76",
+        "ammunition": "232 / 76",
+        "fire": "射撃：ON",
+        "respawn": ""
+      },
+      {
+        "frame": 77,
+        "tick": 4560,
+        "activeSeconds": 76,
+        "hp": null,
+        "playerHp": null,
+        "playerHpText": "復帰待ち",
+        "ownership": 1,
+        "position": [
+          784.708227,
+          1000,
+          -419.827561
+        ],
+        "radius": 889.96,
+        "yaw": 0.4922339766153172,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 2,
+        "enemyMgBullets": 79,
+        "ammo": "— / —",
+        "ammunition": "— / —",
+        "fire": "射撃：待機",
+        "respawn": "自機復帰 · 2.5秒"
+      },
+      {
+        "frame": 78,
+        "tick": 4620,
+        "activeSeconds": 77,
+        "hp": null,
+        "playerHp": null,
+        "playerHpText": "復帰待ち",
+        "ownership": 1,
+        "position": [
+          784.708227,
+          1000,
+          -419.827561
+        ],
+        "radius": 889.96,
+        "yaw": 0.4922339766153172,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 1,
+        "enemyMgBullets": 43,
+        "ammo": "— / —",
+        "ammunition": "— / —",
+        "fire": "射撃：待機",
+        "respawn": "自機復帰 · 1.6秒"
+      },
+      {
+        "frame": 79,
+        "tick": 4680,
+        "activeSeconds": 78,
+        "hp": null,
+        "playerHp": null,
+        "playerHpText": "復帰待ち",
+        "ownership": 1,
+        "position": [
+          784.708227,
+          1000,
+          -419.827561
+        ],
+        "radius": 889.96,
+        "yaw": 0.4922339766153172,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 27,
+        "ammo": "— / —",
+        "ammunition": "— / —",
+        "fire": "射撃：待機",
+        "respawn": "自機復帰 · 0.6秒"
+      },
+      {
+        "frame": 80,
+        "tick": 4740,
+        "activeSeconds": 79,
+        "hp": 80,
+        "playerHp": 80,
+        "playerHpText": "80.0 / 80",
+        "ownership": 2,
+        "position": [
+          0,
+          1000,
+          1950.5
+        ],
+        "radius": 1950.5,
+        "yaw": 0,
+        "pitch": 0,
+        "altitude": "1,000 m",
+        "enemyMainBullets": 3,
+        "enemyMgBullets": 18,
+        "ammo": "288 / 96",
+        "ammunition": "288 / 96",
+        "fire": "射撃：待機",
+        "respawn": "自機復帰 · 0.6秒"
+      }
+    ],
+    "controllerRows": [
+      {
+        "frame": 1,
+        "tick": 0,
+        "turn": 0.229010559,
+        "pointerDx": 10.465,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          0,
+          1000,
+          2000
+        ],
+        "yaw": 0,
+        "pitch": 0
+      },
+      {
+        "frame": 2,
+        "tick": 60,
+        "turn": 0.229010559,
+        "pointerDx": 10.465,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          10.44913,
+          1000,
+          1890.912409
+        ],
+        "yaw": -0.18806364486471416,
+        "pitch": 0
+      },
+      {
+        "frame": 3,
+        "tick": 120,
+        "turn": 0.016824332,
+        "pointerDx": 3.437,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          31.709175,
+          1000,
+          1783.325209
+        ],
+        "yaw": -0.2018873904682148,
+        "pitch": 0
+      },
+      {
+        "frame": 4,
+        "tick": 180,
+        "turn": 0.013875062,
+        "pointerDx": 3.34,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          54.350721,
+          1000,
+          1675.875294
+        ],
+        "yaw": -0.2132779342421025,
+        "pitch": 0
+      },
+      {
+        "frame": 5,
+        "tick": 240,
+        "turn": 0.018060603,
+        "pointerDx": 3.478,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          78.415935,
+          1000,
+          1568.667551
+        ],
+        "yaw": -0.22809859668645682,
+        "pitch": 0
+      },
+      {
+        "frame": 6,
+        "tick": 300,
+        "turn": 0.024380578,
+        "pointerDx": 3.687,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          104.353657,
+          1000,
+          1461.875818
+        ],
+        "yaw": -0.24810288146350068,
+        "pitch": 0
+      },
+      {
+        "frame": 7,
+        "tick": 360,
+        "turn": 0.033821106,
+        "pointerDx": 4,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          132.838697,
+          1000,
+          1355.742166
+        ],
+        "yaw": -0.27585385192178435,
+        "pitch": 0
+      },
+      {
+        "frame": 8,
+        "tick": 420,
+        "turn": 0.048300753,
+        "pointerDx": 4.48,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          165.188218,
+          1000,
+          1250.758587
+        ],
+        "yaw": -0.327516159059027,
+        "pitch": 0
+      },
+      {
+        "frame": 9,
+        "tick": 480,
+        "turn": 0.055740351,
+        "pointerDx": 4.726,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          204.34696,
+          1000,
+          1148.166004
+        ],
+        "yaw": -0.394581089375837,
+        "pitch": 0
+      },
+      {
+        "frame": 10,
+        "tick": 540,
+        "turn": 0.07509754,
+        "pointerDx": 5.367,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          250.473373,
+          1000,
+          1048.575439
+        ],
+        "yaw": -0.4809539419375226,
+        "pitch": 0
+      },
+      {
+        "frame": 11,
+        "tick": 600,
+        "turn": 0.114686957,
+        "pointerDx": 6.678,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          308.68644,
+          1000,
+          955.713755
+        ],
+        "yaw": -0.6363940735629408,
+        "pitch": 0
+      },
+      {
+        "frame": 12,
+        "tick": 660,
+        "turn": 0.092103511,
+        "pointerDx": 5.93,
+        "playerHp": 80,
+        "ownership": 0,
+        "position": [
+          379.276047,
+          1000,
+          871.884336
+        ],
+        "yaw": -0.7612622478357136,
+        "pitch": 0
+      },
+      {
+        "frame": 13,
+        "tick": 720,
+        "turn": 0.06752986,
+        "pointerDx": 5.117,
+        "playerHp": 76.4,
+        "ownership": 0,
+        "position": [
+          458.525614,
+          1000,
+          796.108306
+        ],
+        "yaw": -0.8528031380397048,
+        "pitch": 0
+      },
+      {
+        "frame": 14,
+        "tick": 780,
+        "turn": -0.01181407,
+        "pointerDx": -3.271,
+        "playerHp": 76.4,
+        "ownership": 0,
+        "position": [
+          540.611202,
+          1000,
+          723.218268
+        ],
+        "yaw": -0.8367970607024011,
+        "pitch": 0
+      },
+      {
+        "frame": 15,
+        "tick": 840,
+        "turn": -0.050535443,
+        "pointerDx": -4.554,
+        "playerHp": 48.8,
+        "ownership": 0,
+        "position": [
+          619.534241,
+          1000,
+          646.873954
+        ],
+        "yaw": -0.7683514762671484,
+        "pitch": 0
+      },
+      {
+        "frame": 16,
+        "tick": 900,
+        "turn": -0.074983056,
+        "pointerDx": -5.363,
+        "playerHp": 48.8,
+        "ownership": 0,
+        "position": [
+          691.627322,
+          1000,
+          564.130658
+        ],
+        "yaw": -0.6667733678996788,
+        "pitch": 0
+      },
+      {
+        "frame": 17,
+        "tick": 960,
+        "turn": -0.082883364,
+        "pointerDx": -5.625,
+        "playerHp": 46.4,
+        "ownership": 0,
+        "position": [
+          754.435789,
+          1000,
+          474.205608
+        ],
+        "yaw": -0.5544616050773321,
+        "pitch": 0
+      },
+      {
+        "frame": 18,
+        "tick": 1020,
+        "turn": -0.087907077,
+        "pointerDx": -5.791,
+        "playerHp": 45.2,
+        "ownership": 0,
+        "position": [
+          806.415074,
+          1000,
+          377.663292
+        ],
+        "yaw": -0.43531715207331967,
+        "pitch": 0
+      },
+      {
+        "frame": 19,
+        "tick": 1080,
+        "turn": -0.089282327,
+        "pointerDx": -5.837,
+        "playerHp": 42.8,
+        "ownership": 0,
+        "position": [
+          846.443899,
+          1000,
+          275.611397
+        ],
+        "yaw": -0.31429238348926125,
+        "pitch": 0
+      },
+      {
+        "frame": 20,
+        "tick": 1140,
+        "turn": -0.090327784,
+        "pointerDx": -5.872,
+        "playerHp": 40.4,
+        "ownership": 0,
+        "position": [
+          873.778484,
+          1000,
+          169.467704
+        ],
+        "yaw": -0.19184086851934623,
+        "pitch": 0
+      },
+      {
+        "frame": 21,
+        "tick": 1200,
+        "turn": -0.090555379,
+        "pointerDx": -5.879,
+        "playerHp": 40.4,
+        "ownership": 0,
+        "position": [
+          887.924945,
+          1000,
+          60.785508
+        ],
+        "yaw": -0.06907524620593941,
+        "pitch": 0
+      },
+      {
+        "frame": 22,
+        "tick": 1260,
+        "turn": -0.090780971,
+        "pointerDx": -5.887,
+        "playerHp": 40.4,
+        "ownership": 0,
+        "position": [
+          888.638701,
+          1000,
+          -48.806754
+        ],
+        "yaw": 0.05399945486175728,
+        "pitch": 0
+      },
+      {
+        "frame": 23,
+        "tick": 1320,
+        "turn": -0.090814693,
+        "pointerDx": -5.888,
+        "playerHp": 40.4,
+        "ownership": 0,
+        "position": [
+          875.890672,
+          1000,
+          -157.655124
+        ],
+        "yaw": 0.17712139236062852,
+        "pitch": 0
+      },
+      {
+        "frame": 24,
+        "tick": 1380,
+        "turn": -0.090865746,
+        "pointerDx": -5.889,
+        "playerHp": 40.4,
+        "ownership": 0,
+        "position": [
+          849.867838,
+          1000,
+          -264.111795
+        ],
+        "yaw": 0.30031351872583967,
+        "pitch": 0
+      },
+      {
+        "frame": 25,
+        "tick": 1440,
+        "turn": -0.090869212,
+        "pointerDx": -5.89,
+        "playerHp": 40.4,
+        "ownership": 0,
+        "position": [
+          810.960701,
+          1000,
+          -366.563305
+        ],
+        "yaw": 0.42351046808287407,
+        "pitch": 0
+      },
+      {
+        "frame": 26,
+        "tick": 1500,
+        "turn": -0.090881766,
+        "pointerDx": -5.89,
+        "playerHp": 38,
+        "ownership": 0,
+        "position": [
+          759.757946,
+          1000,
+          -463.456458
+        ],
+        "yaw": 0.5467245123681024,
+        "pitch": 0
+      },
+      {
+        "frame": 27,
+        "tick": 1560,
+        "turn": -0.090881533,
+        "pointerDx": -5.89,
+        "playerHp": 35.6,
+        "ownership": 0,
+        "position": [
+          697.035043,
+          1000,
+          -553.321956
+        ],
+        "yaw": 0.6699386762190902,
+        "pitch": 0
+      },
+      {
+        "frame": 28,
+        "tick": 1620,
+        "turn": -0.090883949,
+        "pointerDx": -5.89,
+        "playerHp": 34.4,
+        "ownership": 0,
+        "position": [
+          623.742877,
+          1000,
+          -634.797168
+        ],
+        "yaw": 0.7931560229175352,
+        "pitch": 0
+      },
+      {
+        "frame": 29,
+        "tick": 1680,
+        "turn": -0.090884249,
+        "pointerDx": -5.89,
+        "playerHp": 32,
+        "ownership": 0,
+        "position": [
+          540.99262,
+          1000,
+          -706.646576
+        ],
+        "yaw": 0.9163740250309766,
+        "pitch": 0
+      },
+      {
+        "frame": 30,
+        "tick": 1740,
+        "turn": -0.09088434,
+        "pointerDx": -5.89,
+        "playerHp": 32,
+        "ownership": 0,
+        "position": [
+          450.039014,
+          1000,
+          -767.780689
+        ],
+        "yaw": 1.0395920423644158,
+        "pitch": 0
+      },
+      {
+        "frame": 31,
+        "tick": 1800,
+        "turn": -0.0908848,
+        "pointerDx": -5.89,
+        "playerHp": 29.6,
+        "ownership": 0,
+        "position": [
+          352.261211,
+          1000,
+          -817.272477
+        ],
+        "yaw": 1.162810692054598,
+        "pitch": 0
+      },
+      {
+        "frame": 32,
+        "tick": 1860,
+        "turn": -0.09088467,
+        "pointerDx": -5.89,
+        "playerHp": 29.6,
+        "ownership": 0,
+        "position": [
+          249.141855,
+          1000,
+          -854.37144
+        ],
+        "yaw": 1.2860293457897845,
+        "pitch": 0
+      },
+      {
+        "frame": 33,
+        "tick": 1920,
+        "turn": -0.090884523,
+        "pointerDx": -5.89,
+        "playerHp": 29.6,
+        "ownership": 0,
+        "position": [
+          142.244615,
+          1000,
+          -878.515059
+        ],
+        "yaw": 1.4092473765047204,
+        "pitch": 0
+      },
+      {
+        "frame": 34,
+        "tick": 1980,
+        "turn": -0.090885321,
+        "pointerDx": -5.89,
+        "playerHp": 29.6,
+        "ownership": 0,
+        "position": [
+          33.190432,
+          1000,
+          -889.337196
+        ],
+        "yaw": 1.5324666576607218,
+        "pitch": 0
+      },
+      {
+        "frame": 35,
+        "tick": 2040,
+        "turn": -0.090884575,
+        "pointerDx": -5.89,
+        "playerHp": 29.6,
+        "ownership": 0,
+        "position": [
+          -76.367041,
+          1000,
+          -886.673749
+        ],
+        "yaw": 1.655684690028476,
+        "pitch": 0
+      },
+      {
+        "frame": 36,
+        "tick": 2100,
+        "turn": -0.090885338,
+        "pointerDx": -5.89,
+        "playerHp": 29.6,
+        "ownership": 0,
+        "position": [
+          -184.76651,
+          1000,
+          -870.565105
+        ],
+        "yaw": 1.7789039719855033,
+        "pitch": 0
+      },
+      {
+        "frame": 37,
+        "tick": 2160,
+        "turn": -0.090884555,
+        "pointerDx": -5.89,
+        "playerHp": 29.6,
+        "ownership": 0,
+        "position": [
+          -290.364249,
+          1000,
+          -841.255531
+        ],
+        "yaw": 1.9021220047414644,
+        "pitch": 0
+      },
+      {
+        "frame": 38,
+        "tick": 2220,
+        "turn": -0.090885287,
+        "pointerDx": -5.89,
+        "playerHp": 29.6,
+        "ownership": 0,
+        "position": [
+          -391.559009,
+          1000,
+          -799.189466
+        ],
+        "yaw": 2.0253412868866274,
+        "pitch": 0
+      },
+      {
+        "frame": 39,
+        "tick": 2280,
+        "turn": -0.090884476,
+        "pointerDx": -5.89,
+        "playerHp": 27.2,
+        "ownership": 0,
+        "position": [
+          -486.816312,
+          1000,
+          -745.004784
+        ],
+        "yaw": 2.148559319733762,
+        "pitch": 0
+      },
+      {
+        "frame": 40,
+        "tick": 2340,
+        "turn": -0.090885175,
+        "pointerDx": -5.89,
+        "playerHp": 27.2,
+        "ownership": 0,
+        "position": [
+          -574.691709,
+          1000,
+          -679.523122
+        ],
+        "yaw": 2.2717786019231134,
+        "pitch": 0
+      },
+      {
+        "frame": 41,
+        "tick": 2400,
+        "turn": -0.090884333,
+        "pointerDx": -5.89,
+        "playerHp": 24.8,
+        "ownership": 0,
+        "position": [
+          -653.852691,
+          1000,
+          -603.737421
+        ],
+        "yaw": 2.3949966347916636,
+        "pitch": 0
+      },
+      {
+        "frame": 42,
+        "tick": 2460,
+        "turn": -0.090885009,
+        "pointerDx": -5.89,
+        "playerHp": 24.8,
+        "ownership": 0,
+        "position": [
+          -723.098914,
+          1000,
+          -518.796889
+        ],
+        "yaw": 2.5182152920107743,
+        "pitch": 0
+      },
+      {
+        "frame": 43,
+        "tick": 2520,
+        "turn": -0.090885096,
+        "pointerDx": -5.89,
+        "playerHp": 24.8,
+        "ownership": 0,
+        "position": [
+          -781.380302,
+          1000,
+          -425.989491
+        ],
+        "yaw": 2.641434574375376,
+        "pitch": 0
+      },
+      {
+        "frame": 44,
+        "tick": 2580,
+        "turn": -0.090884214,
+        "pointerDx": -5.89,
+        "playerHp": 24.8,
+        "ownership": 0,
+        "position": [
+          -827.813124,
+          1000,
+          -326.722545
+        ],
+        "yaw": 2.7646526073288618,
+        "pitch": 0
+      },
+      {
+        "frame": 45,
+        "tick": 2640,
+        "turn": -0.090884845,
+        "pointerDx": -5.89,
+        "playerHp": 23.6,
+        "ownership": 0,
+        "position": [
+          -861.693322,
+          1000,
+          -222.50131
+        ],
+        "yaw": 2.887871264589143,
+        "pitch": 0
+      },
+      {
+        "frame": 46,
+        "tick": 2700,
+        "turn": -0.090884899,
+        "pointerDx": -5.89,
+        "playerHp": 23.6,
+        "ownership": 0,
+        "position": [
+          -882.507117,
+          1000,
+          -114.906146
+        ],
+        "yaw": 3.0110899219930776,
+        "pitch": 0
+      },
+      {
+        "frame": 47,
+        "tick": 2760,
+        "turn": -0.090884934,
+        "pointerDx": -5.89,
+        "playerHp": 23.6,
+        "ownership": 0,
+        "position": [
+          -889.938897,
+          1000,
+          -5.568585
+        ],
+        "yaw": 3.1343085794666337,
+        "pitch": 0
+      },
+      {
+        "frame": 48,
+        "tick": 2820,
+        "turn": -0.090884956,
+        "pointerDx": -5.89,
+        "playerHp": 23.6,
+        "ownership": 0,
+        "position": [
+          -883.875968,
+          1000,
+          103.853416
+        ],
+        "yaw": -3.0256580702056577,
+        "pitch": 0
+      },
+      {
+        "frame": 49,
+        "tick": 2880,
+        "turn": -0.090884955,
+        "pointerDx": -5.89,
+        "playerHp": 22.4,
+        "ownership": 0,
+        "position": [
+          -864.410268,
+          1000,
+          211.700622
+        ],
+        "yaw": -2.9024394126820114,
+        "pitch": 0
+      },
+      {
+        "frame": 50,
+        "tick": 2940,
+        "turn": -0.090884942,
+        "pointerDx": -5.89,
+        "playerHp": 20,
+        "ownership": 0,
+        "position": [
+          -831.836967,
+          1000,
+          316.337678
+        ],
+        "yaw": -2.7792207551504418,
+        "pitch": 0
+      },
+      {
+        "frame": 51,
+        "tick": 3000,
+        "turn": -0.090884915,
+        "pointerDx": -5.89,
+        "playerHp": 16.4,
+        "ownership": 0,
+        "position": [
+          -786.649994,
+          1000,
+          416.177905
+        ],
+        "yaw": -2.6560020976150316,
+        "pitch": 0
+      },
+      {
+        "frame": 52,
+        "tick": 3060,
+        "turn": -0.09088487,
+        "pointerDx": -5.89,
+        "playerHp": 16.4,
+        "ownership": 0,
+        "position": [
+          -729.534548,
+          1000,
+          509.707362
+        ],
+        "yaw": -2.5327834400777576,
+        "pitch": 0
+      },
+      {
+        "frame": 53,
+        "tick": 3120,
+        "turn": -0.090884807,
+        "pointerDx": -5.89,
+        "playerHp": 16.4,
+        "ownership": 0,
+        "position": [
+          -661.356708,
+          1000,
+          595.507802
+        ],
+        "yaw": -2.409564782539583,
+        "pitch": 0
+      },
+      {
+        "frame": 54,
+        "tick": 3180,
+        "turn": -0.090884732,
+        "pointerDx": -5.89,
+        "playerHp": 15.2,
+        "ownership": 0,
+        "position": [
+          -583.150297,
+          1000,
+          672.278179
+        ],
+        "yaw": -2.2863461250009696,
+        "pitch": 0
+      },
+      {
+        "frame": 55,
+        "tick": 3240,
+        "turn": -0.090884646,
+        "pointerDx": -5.89,
+        "playerHp": 15.2,
+        "ownership": 0,
+        "position": [
+          -496.101209,
+          1000,
+          738.854374
+        ],
+        "yaw": -2.1631274674621452,
+        "pitch": 0
+      },
+      {
+        "frame": 56,
+        "tick": 3300,
+        "turn": -0.090884546,
+        "pointerDx": -5.89,
+        "playerHp": 14,
+        "ownership": 0,
+        "position": [
+          -401.529442,
+          1000,
+          794.226881
+        ],
+        "yaw": -2.039909434903833,
+        "pitch": 0
+      },
+      {
+        "frame": 57,
+        "tick": 3360,
+        "turn": -0.090885397,
+        "pointerDx": -5.89,
+        "playerHp": 14,
+        "ownership": 0,
+        "position": [
+          -300.869028,
+          1000,
+          837.556021
+        ],
+        "yaw": -1.916690152854455,
+        "pitch": 0
+      },
+      {
+        "frame": 58,
+        "tick": 3420,
+        "turn": -0.090884697,
+        "pointerDx": -5.89,
+        "playerHp": 14,
+        "ownership": 0,
+        "position": [
+          -195.646335,
+          1000,
+          868.184736
+        ],
+        "yaw": -1.7934714950731236,
+        "pitch": 0
+      },
+      {
+        "frame": 59,
+        "tick": 3480,
+        "turn": -0.090884552,
+        "pointerDx": -5.89,
+        "playerHp": 14,
+        "ownership": 0,
+        "position": [
+          -87.456939,
+          1000,
+          885.648648
+        ],
+        "yaw": -1.6702534623972831,
+        "pitch": 0
+      },
+      {
+        "frame": 60,
+        "tick": 3540,
+        "turn": -0.090885349,
+        "pointerDx": -5.89,
+        "playerHp": 14,
+        "ownership": 0,
+        "position": [
+          22.058622,
+          1000,
+          889.682908
+        ],
+        "yaw": -1.5470341802909453,
+        "pitch": 0
+      },
+      {
+        "frame": 61,
+        "tick": 3600,
+        "turn": -0.090884607,
+        "pointerDx": -5.89,
+        "playerHp": 14,
+        "ownership": 0,
+        "position": [
+          131.239696,
+          1000,
+          880.226342
+        ],
+        "yaw": -1.423816147462625,
+        "pitch": 0
+      },
+      {
+        "frame": 62,
+        "tick": 3660,
+        "turn": -0.090885375,
+        "pointerDx": -5.89,
+        "playerHp": 14,
+        "ownership": 0,
+        "position": [
+          238.430699,
+          1000,
+          857.422345
+        ],
+        "yaw": -1.3005968652823896,
+        "pitch": 0
+      },
+      {
+        "frame": 63,
+        "tick": 3720,
+        "turn": -0.090884596,
+        "pointerDx": -5.89,
+        "playerHp": 14,
+        "ownership": 0,
+        "position": [
+          342.006227,
+          1000,
+          821.61671
+        ],
+        "yaw": -1.1773788324182553,
+        "pitch": 0
+      },
+      {
+        "frame": 64,
+        "tick": 3780,
+        "turn": -0.090885331,
+        "pointerDx": -5.89,
+        "playerHp": 11.6,
+        "ownership": 0,
+        "position": [
+          440.395696,
+          1000,
+          773.352379
+        ],
+        "yaw": -1.054159550220664,
+        "pitch": 0
+      },
+      {
+        "frame": 65,
+        "tick": 3840,
+        "turn": -0.090884516,
+        "pointerDx": -5.89,
+        "playerHp": 11.6,
+        "ownership": 0,
+        "position": [
+          532.107168,
+          1000,
+          713.361216
+        ],
+        "yaw": -0.9309415173481179,
+        "pitch": 0
+      },
+      {
+        "frame": 66,
+        "tick": 3900,
+        "turn": -0.090885221,
+        "pointerDx": -5.89,
+        "playerHp": 9.2,
+        "ownership": 0,
+        "position": [
+          615.749958,
+          1000,
+          642.552905
+        ],
+        "yaw": -0.8077222351464508,
+        "pitch": 0
+      },
+      {
+        "frame": 67,
+        "tick": 3960,
+        "turn": -0.090884376,
+        "pointerDx": -5.89,
+        "playerHp": 8,
+        "ownership": 0,
+        "position": [
+          690.055742,
+          1000,
+          562.001158
+        ],
+        "yaw": -0.6845042022719312,
+        "pitch": 0
+      },
+      {
+        "frame": 68,
+        "tick": 4020,
+        "turn": -0.090885052,
+        "pointerDx": -5.89,
+        "playerHp": 5.6,
+        "ownership": 0,
+        "position": [
+          753.897799,
+          1000,
+          472.927451
+        ],
+        "yaw": -0.5612855450499201,
+        "pitch": 0
+      },
+      {
+        "frame": 69,
+        "tick": 4080,
+        "turn": -0.09088514,
+        "pointerDx": -5.89,
+        "playerHp": 5.6,
+        "ownership": 0,
+        "position": [
+          806.307996,
+          1000,
+          376.682427
+        ],
+        "yaw": -0.4380662626839129,
+        "pitch": 0
+      },
+      {
+        "frame": 70,
+        "tick": 4140,
+        "turn": -0.090884252,
+        "pointerDx": -5.89,
+        "playerHp": 3.2,
+        "ownership": 0,
+        "position": [
+          846.491634,
+          1000,
+          274.72553
+        ],
+        "yaw": -0.3148482297297508,
+        "pitch": 0
+      },
+      {
+        "frame": 71,
+        "tick": 4200,
+        "turn": -0.090884886,
+        "pointerDx": -5.89,
+        "playerHp": 3.2,
+        "ownership": 0,
+        "position": [
+          873.839413,
+          1000,
+          168.602807
+        ],
+        "yaw": -0.19162957246914392,
+        "pitch": 0
+      },
+      {
+        "frame": 72,
+        "tick": 4260,
+        "turn": -0.090884933,
+        "pointerDx": -5.89,
+        "playerHp": 2,
+        "ownership": 0,
+        "position": [
+          887.936611,
+          1000,
+          59.92345
+        ],
+        "yaw": -0.0684109150650527,
+        "pitch": 0
+      },
+      {
+        "frame": 73,
+        "tick": 4320,
+        "turn": -0.090884965,
+        "pointerDx": -5.89,
+        "playerHp": 2,
+        "ownership": 0,
+        "position": [
+          888.569463,
+          1000,
+          -49.664564
+        ],
+        "yaw": 0.05480774240857578,
+        "pitch": 0
+      },
+      {
+        "frame": 74,
+        "tick": 4380,
+        "turn": -0.09088498,
+        "pointerDx": -5.89,
+        "playerHp": 2,
+        "ownership": 0,
+        "position": [
+          875.728373,
+          1000,
+          -158.499484
+        ],
+        "yaw": 0.1780263999159084,
+        "pitch": 0
+      },
+      {
+        "frame": 75,
+        "tick": 4440,
+        "turn": -0.090884981,
+        "pointerDx": -5.89,
+        "playerHp": 2,
+        "ownership": 0,
+        "position": [
+          849.608058,
+          1000,
+          -264.930977
+        ],
+        "yaw": 0.301245057439572,
+        "pitch": 0
+      },
+      {
+        "frame": 76,
+        "tick": 4500,
+        "turn": -0.090884966,
+        "pointerDx": -5.89,
+        "playerHp": 2,
+        "ownership": 0,
+        "position": [
+          810.604596,
+          1000,
+          -367.345153
+        ],
+        "yaw": 0.42446371497115365,
+        "pitch": 0
+      },
+      {
+        "frame": 77,
+        "tick": 4560,
+        "turn": -0.090884927,
+        "pointerDx": -5.89,
+        "playerHp": null,
+        "ownership": 1,
+        "position": [
+          784.708227,
+          1000,
+          -419.827561
+        ],
+        "yaw": 0.4922339766153172,
+        "pitch": 0
+      },
+      {
+        "frame": 78,
+        "tick": 4620,
+        "turn": -0.088447815,
+        "pointerDx": -5.809,
+        "playerHp": null,
+        "ownership": 1,
+        "position": [
+          784.708227,
+          1000,
+          -419.827561
+        ],
+        "yaw": 0.4922339766153172,
+        "pitch": 0
+      },
+      {
+        "frame": 79,
+        "tick": 4680,
+        "turn": -0.088447815,
+        "pointerDx": -5.809,
+        "playerHp": null,
+        "ownership": 1,
+        "position": [
+          784.708227,
+          1000,
+          -419.827561
+        ],
+        "yaw": 0.4922339766153172,
+        "pitch": 0
+      },
+      {
+        "frame": 80,
+        "tick": 4740,
+        "turn": -0.088447815,
+        "pointerDx": -5.809,
+        "playerHp": 80,
+        "ownership": 2,
+        "position": [
+          0,
+          1000,
+          1950.5
+        ],
+        "yaw": 0,
+        "pitch": 0
+      },
+      {
+        "frame": 81,
+        "tick": 4800,
+        "turn": 0.239280421,
+        "pointerDx": 10.805,
+        "playerHp": 80,
+        "ownership": 2,
+        "position": [
+          0,
+          1000,
+          1840.5
+        ],
+        "yaw": 0,
+        "pitch": 0
+      }
+    ],
+    "virtualDurationMs": 81000,
+    "activeTicks": 4800,
+    "lossAfterTicks": 4560,
+    "respawnWaitTicks": 180,
+    "respawnWaitFrames": 3,
+    "staleInputCheckWhilePointerAndSpaceWereHeld": true,
+    "pageErrors": [],
+    "validationFailures": [],
+    "error": null
+  },
+  "claims": {
+    "browserRendered": true,
+    "ordinaryProductInputPath": true,
+    "engineStateWritten": false,
+    "humanOrPhysicalDeviceTesting": false,
+    "native120FpsOrPerformance": false
+  }
+}

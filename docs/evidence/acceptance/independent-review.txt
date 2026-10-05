@@ -1,0 +1,275 @@
+Independent implementation review — frozen-source working-tree pass, 2026-10-05 UTC
+Reviewer role: separate implementation reviewer, Sol / xhigh.
+Base HEAD: 98119b5ae6604ad5975024b0e523b78eef369662.
+Reviewed source candidate: 5db76f68b53c846ae4e4aec4754f78e108107a37.
+Candidate tree: 63d4bc7cb8ee52e3389b6cd720f6288fcacc5db1.
+Branch: feat/gekichin-combat-completion.
+Source is frozen for the review snapshot. Recorded software evidence, including
+the literal plan5.2#5 bullet-damage/death/respawn product route, has been reviewed;
+submission-head review remains open. Physical-device/human acceptance and
+publication approval do not follow from this record.
+
+Fixed requirements, all acceptance rows and P0–P8 gates were read. The README,
+requirements and plan blobs remain respectively:
+9d0cfacf52833d90d39f02a9ab1c1c57dee30aa0
+1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c
+11dec1af2004ec3d71357d9eae029e324c6fdf3c
+
+Review scope
+- Read geometry/layout, canonical render/collision transforms, finite fleet,
+  chronological combat resolution, aircraft/enemy weapons, wingman navigation,
+  score/storage, main lifecycle, scene resource disposal and sound ownership.
+- Source scan is recorded in independent-source-scan.json with per-file SHA256.
+  No prohibited payload/ranking/API/analytics feature or outbound network call
+  matched this static source/asset scope. This is not a runtime HAR.
+- Existing flight, camera, aircraft model, input and both settings sources have
+  no diff against merged P1 base. Storage keys are Gekichin-scoped, future
+  envelopes refuse downgrade, and results plus components are frozen.
+- Third-party NOTICE remains present. New aircraft-weapons.ts explicitly cites
+  the fixed Kaisen simulation source. The final COMBAT_PROVENANCE inventory now
+  covers 27 files including every source file; all 27 SHA256 digests match actual
+  file bytes and limited weapon formula adoption is separately recorded.
+  No blanket license inference was made.
+
+Independent checks completed
+- Combat-core, enemy-ai, mothership, mission-acceptance and boundary-guidance:
+  63/63 pass,
+  fail/skip 0. Command: node --import tsx --test tests/combat-core.test.ts
+  tests/mothership.test.ts tests/enemy-ai.test.ts tests/mission-acceptance.test.ts
+  tests/boundary-guidance.test.ts.
+  Raw output: independent-unit.log (21.027 seconds); final source pass includes
+  warning reservation cancellation while preserving already-fired bullets.
+- Root's whole unit suite is separately recorded in unit.log:76/76 pass,
+  fail/skip0,27.906 seconds, before the synchronous abort UI handler change.
+  Source-candidate CI below repeats that suite after the change. Final build.log
+  records successful type/build with the current index-BTLHVFty.js asset.
+  Counts overlap the independent suite and must not be summed as unique tests.
+- Source-candidate CI for5db76f6 is recorded in ci/abort-fix-candidate.manifest.md
+  and complete PR log: unit76/76, build successful, browser28/28 (21Chromium,
+  6WebKit DOM, 1headed native visibility). PR run37265544385 and push37265539764
+  succeeded. The later recorder/evidence additions are not falsely attributed
+  to this source-only CI run; final evidence submission head still needs review.
+- Static sweep probe: all 100 declared approach intervals have aircraft radius
+  plus 10m clearance; their exterior shot ray first contacts the intended ID.
+  Initial eight aircraft remain at least 30m apart and outside required muzzle
+  ranges. This is geometric fixture evidence, not ordinary product flight.
+- Integrated ordinary FlightInput probe confirms a main warning leads a moving
+  target after previous is reset, rather than silently using zero velocity.
+- Synthetic final-lifetime probe excludes contact exactly at time=1 on the
+  final active step and preserves a contact immediately before it.
+- Chromium visual probes used software rendering, viewport 320x568/568x320,
+  root font 16px/32px. No physical touchscreen, GPU performance or human hearing
+  claim follows from these probes.
+
+Material findings addressed and rechecked
+- Enemy interception velocity was zero at tick start; actual forward*speed and
+  tick-start target snapshots now feed prediction and fire validation.
+- Final half-open projectile lifetime endpoint incorrectly dealt damage; it is
+  now excluded, with explicit immediately-before/at/after boundary fixtures.
+- A collisionless belly reactor enclosed bottom targets; protruding reactor,
+  antenna and solid trim were removed or flattened. The actual sinking camera
+  cast now transforms into canonical collision space and transforms back.
+- HUD Hmain/Hmg, boundary return arrow and player/wingman respawn wording were
+  corrected. Async shader prewarm rejection is handled and disposed callbacks
+  are ignored; current source guards late preparation and frame callbacks.
+
+Remaining gates after the software pass
+- No remaining material source defect was identified after the fixes below.
+- Final candidate source bytes, all 27 provenance digests and the independent
+  30-file source scan now include the synchronous abort-result UI correction.
+  No production diff remains against reviewed candidate 5db76f6.
+- Fixed plan section5.2 step7 now has both-mode full product browser keyboard/
+  pointer clear through sinking/skip/results and sustained software-browser
+  resources. Six-case visible warning/evasion recording has also been corrected
+  and independently inspected; its test-only setup and scope remain explicit.
+- Final submission head/CI binding remains pending;
+  no claim of final P7 acceptance follows from this record.
+- Fixed plan5.2#5 requires actual projectile HP loss -> player death -> respawn
+  through product input. Sea-contact loss verifies ownership/input reset, but
+  is not this literal route. The close-orbit engine probe now confirms genuine
+  enemy damage/death/respawn, but the corresponding product DOM mirror is still
+  pending. Keep these evidence types distinct in the final ledger.
+- Root detected that the short combat-final-retry browser run preceded the
+  R15-label rebuild, while its later manifest read current source/bundle hashes.
+  The manifest now explicitly labels that log pre-R15 and its exact bundle hash
+  unavailable. The subsequent final-preview combat-abort-final.log is 4/4 pass,
+  including the paused-clock immediate abort display check. This earlier binding
+  issue does not alter production source; final artifact hashes remain explicit.
+
+2026-10-05 UTC follow-up findings
+- The 320x568 / 200% drawer clipping is fixed and independently rechecked in
+  Chromium while phase=playing: top158px, height394px, bottom552px; final Hmain/
+  Hmg row ends541.22px after maximum scroll. Page errors0. Persisted image:
+  independent-visual/combat-320x568-200-scroll-end.png. Closed enlarged-text
+  portrait and landscape controls also remain within their viewports.
+- Completion ledger A13 now correctly requires time bonus0 with actual endTick
+  retained; A11 now distinguishes main240tick/MG90tick. IMPLEMENTATION_STATUS
+  now records the combat implementation and preserves engine/DOM/human scope.
+- Dynamic InstancedMesh bounds were cached at the initially hidden location.
+  This prevented damage stages, warning rings/tips, wrecks and debris from
+  becoming visible. Production fixed pools now bypass frustum culling. An
+  independent actual FlightScene hidden-first-render -> critical-stage fixture
+  verified all10 affected mesh groups, actual active transforms, visible damage
+  patch/hot core and page errors0. Raw data: independent-scene-bounds.json;
+  image: independent-visual/critical-after-hidden-render.png. This fixture is
+  explicitly render-only and does not establish a normal combat victory.
+- A new independent orientation probe found the boundary HUD subtracting yaw
+  although the retained flight nose is (-sin(yaw), 0, -cos(yaw)). At the east
+  boundary (3900,1000,0), yaw +pi/2 points inward but shows reverse; yaw -pi/2
+  points outward but shows front. The probe calls the unchanged updateQuaternion
+  and forwardOf equations; it is an orientation fixture, not a gameplay run.
+  Root extracted boundaryDirectionLabel with the correct +yaw orientation.
+  Independently read the helper and reran its inward/outward/left/right/wrapped
+  yaw/up/down regression: 1/1 pass, fail/skip0. Main now uses that helper.
+- R15 named damage-stage text was missing from the target HUD. Main now labels
+  the current target 健全/損傷/大破 beside kind and face, with unchanged HP/range
+  on its second line. The stage mapping and canonical TurretState.stage were
+  independently read; refreshed source inventory includes this final UI change.
+- Root found the abort handler exposing result before a later RAF populated
+  outcome/components/best from the new report. It now calls showReport with the
+  immutable new report synchronously after successful finish. Independently
+  read the handler and showReport guard: shownReport prevents duplicate work on
+  the next RAF; controls/stepper and result focus are reset within showReport.
+  Reviewed the final browser regression: it seeds only previous victory display
+  text, clicks actual Finish while the public clock remains paused, and checks
+  the new aborted outcome, 0 score, 0/100 details, 12 component nodes and unchanged
+  best before another RAF. combat-abort-final.log records 4/4 pass. This display
+  fixture does not pretend to be a full prior combat victory.
+- Reviewed the final product UI capture manifest for all five required viewports at
+  normal/200% root text: all10 are playing, all visible flight buttons meet44px
+  and stay within the viewport, all compact drawer final rows remain inside,
+  and page errors0. All four final source digests match actual candidate bytes.
+  Also inspected the 60-screen matrix (home, touch settings, keyboard settings,
+  guide, paused, result); error0 and all collected controls at least44px. The
+  capture script checks nine key actions, Tab containment and Esc focus return
+  for settings/guide, compact drawer Esc and scroll-to-final-row reachability.
+  Sampled final result 320x568/568x320 at 200%: 中断, 0 score and report fields
+  are populated. The actual production-preview HAR contains exactly three
+  same-origin GETs, all200:
+  /, /assets/index-BTLHVFty.js and /assets/index-B79rSzXU.css. It contains no API
+  or outbound request. Each of ten cases preserves all six actual Kaisen/
+  Faitofuraito key names seeded with fixture values, and aborted best remains
+  unchanged. Artifacts: ui/manifest.json and ui/product-static-network.har.
+  Manifest source digests were recorded after capture, with source frozen;
+  they are not represented as a before-run snapshot. This is software-browser
+  evidence; its five sizes do not establish physical touch or safe-area behavior.
+- Independently rehashed every source/input/replay artifact named by the full
+  replay manifest; mismatch 0. Six saved replays (Easy/Normal x30/60/120Hz) all
+  end at tick54329. Within each mode the exact final snapshot and entire event
+  stream digests agree, all original-report checks pass, gapCount0. The saved
+  snapshot audit confirms deep-equal content and exact frame/callback counts.
+  Known SIGSTOP/SIGCONT scheduling and nice10 are documented; wallSeconds are
+  not used as performance evidence. Artifacts: replay/manifest.json,
+  replay/snapshot-audit.log and replay/orchestration.json.
+- Independently audited browser-product/product-run.json, runner input path,
+  before-launch source/preview/runner digests and final result images. All bytes
+  match candidate5db76f6. Both modes reach tick54329, display905.48 seconds,
+  IDs0..99 exactly once, HP0 and all six remaining-face counts0. Raw destroyed-ID
+  frame histories reconstruct the same terminal ID list with monotonic count/
+  HP. Both live enemy projectile pools are observed; pool failures0, fleet10.
+  Inputs are trusted product mode/start clicks, mouse drag over flight-surface,
+  and Normal Space. Pointer rows cover tick0..54300 in60tick strides; read-only
+  HUD feedback supplies the steering. No combat-state or setter writes appear.
+  Timer-backed test RAF is1000ms/1Hz, processing all60 sequential fixed logic
+  ticks per frame; public Playwright clock advances1897 virtual seconds. The
+  run's219.377 wall seconds do not represent physical-device performance.
+  Easy retains its immutable report for1000ms then uses the actual Skip button;
+  Normal reaches result automatically after exactly5000 measured virtual ms.
+  Both stored version1 mode-specific victory best envelopes contain correct
+  seed/tick/K/HP/ownership. Score120443 is independently recomputed from raw
+  report components. Both have wingman100/player0 kills, P0/W40, H0; EasyN6,
+  NormalN19510. Rear IDs97/92 are the final two; HUD visible-target-none is not
+  represented as a player rear-target lock. Ten real restart->pause->abort
+  cycles preserve the prior best and render fresh 0/100 aborted results.
+  Stable observed resources: canvas1, geometry71, texture4, shader programs17,
+  listeners138, audio context1/voice16. DOM295 gains the12 report component
+  nodes on first result, then remains307. Rendering maxima616 particles,
+  16debris/100wrecks; active voices16. Sampled heap fluctuates with GC:
+  Easy13.50-62.79MB, Normal10.15-42.59MB, final12.79MB, without monotonic growth.
+  These are software resource observations across two905.48-active-second
+  missions, not15 real minutes of native render performance or a leak proof.
+- Initial evasion warning PNGs did not visibly show emitters/rays because the
+  fixture faced outward. The fixture now extends the initial position500m
+  outward horizontally and faces the emitter, retaining legal clearance/LOS/
+  range and identical baseline/evasion state. Independently inspected all18
+  revised PNGs: all six warning checkpoints visibly contain the actual emitter,
+  ring/pointer and aim; normal-camera maneuver checkpoints show the ordinary
+  turn/climb/loop. After evasion some first-shot checkpoints face away; they are
+  not described as all visibly showing projectiles. These are recorded fixtures,
+  not human visibility evaluation or a normal full-clear mission.
+  Browser trace audits cover every tick: all six baseline/evasion pairs have
+  identical starts, fixed aim, warning60/18tick, main1shot/MG10shots6tick cadence,
+  baseline actual24HP(main)/7.2HP(MG) damage versus evasion0, finite movement
+  <=1.833334m/tick, and last-shot+240/90tick lifetime endpoints with0incoming.
+  Final12 trial-content digests are identical to those independently audited.
+  All16 source/fixture/recorder digests match; spec records before-run source
+  and asserts identical afterward. One reused session has monotonic operation
+  IDs, so each scene event sequence resets through the ordinary lifecycle.
+  Actual video sampling exposed a false baseline input caption; its test-only
+  display now depends on actual trial mode/tick. Final18s baseline frame shows
+  0/0/-- as expected. The final VP8 WebM is960x540 and72.160seconds according to
+  ffprobe. Recording cadence is sampled and cannot establish nativeFPS, human
+  reaction timing, hearing or multi-warning readability.
+- Additional actual product sea-loss/respawn regression inspected: trusted
+  ArrowDown/Space remain held through sea contact and new ownership. At sampled
+  tick702 ownership1/altitude5m/player-wait, tick762 still active-wait, tick882
+  ownership2/HP80/ammo288/96/altitude1000m. Sampled wait180ticks/3000ms; an extra
+  500ms with the original keys still down keeps level pitch0, full ammunition
+  and no firing. Screenshot shows fresh aircraft/camera at normal altitude.
+  Source/dist/test/observation/PNG digests all match the separate manifest.
+  Source clears immediately on fleet ownership revision inside each sequential
+  logic callback; retained input ignores repeats for a cleared key. Evidence:
+  browser/normal-respawn/normal-sea-loss-respawn.manifest.json and observations.
+  This is software keyboard input/sea contact, not enemy-caused loss, physical
+  keyboard/touch or human behavior evaluation.
+- Ordinary engine close-orbit probe independently audited: standard Normal
+  prepare/begin atseed1196097537, radius900/altitude1000 controller, no state
+  writes. All4713 finite accepted inputs match the recorded60tick control rows.
+  All16 source/script digests and four artifact digests match the manifest;
+  source stability is checked before/after. There are48 real enemy main/MG hit
+  events to token0 with total actual80000mHP. Loss4533/75.55s is 被弾 atY1000,
+  reserve token8 is due4713 and respawns exactly180ticks later atHP80/288/96.
+  Ownership0->1->2; A7/Q1/R41/D1 atloss -> A8/Q0/R41/D1 atrespawn, P1/W0,
+  poolfail0/anomalyNone. This remains engine input evidence, not literal product
+  DOM evidence. Artifacts: ordinary-enemy-recovery/engine-record.manifest.json,
+  probe.mjs, probe.json, probe.log and inputs.json.gz.
+- Literal product bullet-damage/death/respawn route independently audited:
+  scripts/normal-enemy-respawn-run.mjs uses actual Normal/Start, trusted pointer
+  drag and Space hold; HUD reads are read-only and the only environment changes
+  are public Playwright clock and the explicitly recorded 1-second RAF cadence.
+  Standard start is tick0/HP80/Y1000, with no engine position/HP/state writes.
+  There are81 finite controller rows and25 observed HP decreases totalling78HP
+  before the fatal remaining2HP. HUD loss at sampled4560 has ownership1 and
+  visible wait; sampled4740 has ownership2, HP80/ammo288/96 and a fresh position
+  [0,1000,1950.5]. At4800, with the original pointer/Space still held through
+  trusted browser input, yaw/pitch0, full ammo/HP and firing-wait persist.
+  Damage/loss/return/final screenshots show the actual product HUD and fresh
+  aircraft/camera. All26 source, two bundle, runner, JSON and five PNG hashes
+  match their before/after manifest; source/HEAD stayed5db, pools0, errors0.
+  The dedicated driver passed in20.807s wall time with80 active virtual seconds.
+  Its4560->4740 difference is a180tick sample interval, not the exact event
+  timing of this browser run. The separate engine probe provides its own exact
+  4533->4713 events. Plan5.2#5 is closed in this software product-input scope;
+  physical inputs, human play and native performance remain unverified.
+  Artifacts: ordinary-enemy-recovery/dom/normal-enemy-respawn.json and manifest.
+  The prior schema-field validation failure is preserved separately and is not
+  counted as passed; current aliases bind the same measured HP/ammo values.
+
+Evidence boundaries
+- scripts/mission-runner.ts uses accepted FlightInput with live combat and no
+  position/HP/life writes. Its full clears are engine integration evidence.
+  They do not themselves test product keyboard/pointer input, final screen
+  transitions, ordinary-flight evasion videos or human play.
+- scripts/core-load-runner.ts correctly labels fixed pilot poses and omitted
+  contacts as synthetic. Its 15-minute pool result is neither a victory nor
+  product browser resource/performance evidence.
+- Physical PC/iPhone 17 Pro performance, Safari touch, human play and listening
+  remain unavailable. P7/P8 whole-product completion cannot be claimed from
+  simulated browser, CI or fixture success. Authorized software verification
+  and draft review submission can continue independently of those blockers.
+
+Frozen source, full product mission, UI/network/storage, six-case evasion, sea
+and bullet-caused respawn, and FPS evidence reviews are complete in their
+recorded software scopes. No remaining material production-source defect was
+identified. Submitted candidate/head/CI binding remains open. Physical PC/iPhone
+measurements, actual touch and human play/hearing remain unavailable.

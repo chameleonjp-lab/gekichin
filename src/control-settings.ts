@@ -108,6 +108,17 @@ export function rectangularBounds(control: { width: number; height: number }, wi
   const vertical = controlBounds(control.height, width, height, insets, margin);
   return { minX: horizontal.minX, maxX: horizontal.maxX, minY: vertical.minY, maxY: vertical.maxY };
 }
+function controlStyle(name: ControlName, control: ControlPlacement, width: number, height: number, insets: Insets): Record<string, string> {
+  const dimensions = controlDimensions(name, control.size, width, height, insets);
+  const bounds = rectangularBounds(dimensions, width, height, insets);
+  return {
+    '--control-x': `${clamp(control.x, bounds.minX, bounds.maxX) * 100}%`,
+    '--control-y': `${clamp(control.y, bounds.minY, bounds.maxY) * 100}%`,
+    '--control-size': `${dimensions.width}px`,
+    '--control-height': `${dimensions.height}px`,
+    '--control-opacity': String(control.opacity),
+  };
+}
 /** Only the lever moves to avoid other controls; saved peers remain untouched. */
 export function safeThrottlePlacement(layout: ControlLayout, width: number, height: number, insets: Insets, obstacles: ControlObstacle[] = []): ControlPlacement & { blocked: boolean } {
   const item = layout.throttle;
@@ -116,10 +127,12 @@ export function safeThrottlePlacement(layout: ControlLayout, width: number, heig
   const cannotFit = width - insets.left - insets.right < dimensions.width || height - insets.top - insets.bottom < dimensions.height;
   const desired = { x: clamp(item.x, bounds.minX, bounds.maxX), y: clamp(item.y, bounds.minY, bounds.maxY) };
   const peers = CONTROL_NAMES.filter(name => name !== 'throttle').map(name => {
+    const measured = obstacles.find(obstacle => obstacle.control === name);
+    if (measured) return measured;
     const p = layout[name], d = controlDimensions(name, p.size, width, height, insets), b = rectangularBounds(d, width, height, insets);
     return { x: clamp(p.x, b.minX, b.maxX) * width, y: clamp(p.y, b.minY, b.maxY) * height, ...d };
   });
-  peers.push(...obstacles);
+  peers.push(...obstacles.filter(obstacle => obstacle.control === undefined));
   const clear = (x: number, y: number) => peers.every(peer => Math.abs(x * width - peer.x) >= (dimensions.width + peer.width) / 2 + 2 || Math.abs(y * height - peer.y) >= (dimensions.height + peer.height) / 2 + 2);
   if (!cannotFit && clear(desired.x, desired.y)) return { ...item, ...desired, blocked: false };
   const xs = [desired.x, bounds.minX, bounds.maxX], ys = [desired.y, bounds.minY, bounds.maxY];
@@ -151,7 +164,6 @@ export class ControlSettings {
   private dragPointer: number | null = null;
   private dragControl: ControlName | null = null;
   private storageUnavailable = false;
-  private utilityObstacles: ControlObstacle[] = [];
   private recoveryPending = false;
   private saveFailedAwaitingUse = false;
   private keyDraft: KeyBindings;
@@ -189,7 +201,6 @@ export class ControlSettings {
     this.safeProbe.setAttribute('aria-hidden', 'true');
     this.app.append(this.safeProbe);
     this.bindEvents();
-    this.utilityObstacles = measureHudObstacles(this.app);
     this.apply(this.saved[this.activeMode], this.activeMode);
     this.observer = new ResizeObserver(() => this.refreshLayout());
     this.observer.observe(this.app);
@@ -200,6 +211,11 @@ export class ControlSettings {
   setActiveMode(mode: GameMode): void {
     this.activeMode = mode;
     this.apply(this.saved[mode], mode);
+  }
+
+  /** Re-measure candidate controls after responsive HUD attributes change. */
+  refresh(): void {
+    this.refreshLayout();
   }
 
   open(returnFocus?: HTMLElement, mode: GameMode = this.activeMode, allowBothModes = false): void {
@@ -359,8 +375,7 @@ export class ControlSettings {
   private save(): void {
     if (this.capturing) this.cancelKeyCapture();
     const rect = this.app ? controlLayoutSize(this.app) : null;
-    if (this.app) this.utilityObstacles = measureHudObstacles(this.app);
-    if (rect && this.allowedModes.includes('normal') && safeThrottlePlacement(this.draft.normal, rect.width, rect.height, this.readInsets(), this.utilityObstacles).blocked) {
+    if (rect && this.allowedModes.includes('normal') && safeThrottlePlacement(this.draft.normal, rect.width, rect.height, this.readInsets(), this.measureLayoutObstacles(this.draft.normal, 'normal')).blocked) {
       const note = this.dialog.querySelector<HTMLElement>('#control-storage-note')!;
       note.hidden = false; note.textContent = '速度レバーの配置が重なっています。大きさや位置を調整してから保存してください。';
       note.scrollIntoView({ block: 'nearest' }); return;
@@ -566,14 +581,15 @@ export class ControlSettings {
       option.hidden = option.disabled;
     }
     const storageNote = this.dialog.querySelector<HTMLElement>('#control-storage-note')!;
-    const conflict = this.layoutMode === 'normal' && safeThrottlePlacement(this.draft.normal, rect.width, rect.height, this.readInsets(), this.utilityObstacles).blocked;
+    const obstacles = this.measureLayoutObstacles(this.draft[this.layoutMode], this.layoutMode);
+    const conflict = this.layoutMode === 'normal' && safeThrottlePlacement(this.draft.normal, rect.width, rect.height, this.readInsets(), obstacles).blocked;
     storageNote.hidden = !this.storageUnavailable && !this.recoveryPending && !conflict;
     if (conflict) storageNote.textContent = '速度レバーを配置できません。大きさや位置を調整してください。';
     else if (this.recoveryPending) storageNote.textContent = '前回の設定保存を復元する必要があります。控えの設定で表示しています。保存するで復元を再試行できます。';
     if (this.storageUnavailable && !this.saveFailedAwaitingUse && !this.recoveryPending && !conflict) {
       storageNote.textContent = 'このブラウザでは保存できません。今回だけ使う設定は、ページを閉じるまで有効です。';
     }
-    this.stylePreviewButtons();
+    this.stylePreviewButtons(obstacles);
   }
 
   private buildPreviewButtons(): void {
@@ -592,13 +608,14 @@ export class ControlSettings {
     }
   }
 
-  private stylePreviewButtons(): void {
+  private stylePreviewButtons(obstacles: ControlObstacle[]): void {
     const appRect = controlLayoutSize(this.app);
     const previewRect = controlLayoutSize(this.preview);
     if (!appRect.width || !previewRect.width) return;
     const scale = previewRect.width / appRect.width;
     for (const name of CONTROL_NAMES) {
-      const control = name === 'throttle' ? safeThrottlePlacement(this.draft[this.layoutMode], appRect.width, appRect.height, this.readInsets(), this.utilityObstacles) : this.draft[this.layoutMode][name];
+      const control = name === 'throttle' ? safeThrottlePlacement(this.draft[this.layoutMode], appRect.width, appRect.height, this.readInsets(), obstacles) : this.draft[this.layoutMode][name];
+      const peer = obstacles.find(obstacle => obstacle.control === name);
       const element = this.preview.querySelector<HTMLElement>(`.preview-control[data-control="${name}"]`);
       if (!element) continue;
       element.hidden = !MODE_CONTROLS[this.layoutMode].includes(name);
@@ -609,10 +626,11 @@ export class ControlSettings {
         element.classList.toggle('layout-blocked', blocked);
 
       }
-      element.style.setProperty('--control-x', `${clamp(control.x, position.minX, position.maxX) * 100}%`);
-      element.style.setProperty('--control-y', `${clamp(control.y, position.minY, position.maxY) * 100}%`);
-      const dimensions = controlDimensions(name, control.size, appRect.width, appRect.height, this.readInsets());
+      element.style.setProperty('--control-x', `${(peer ? peer.x / appRect.width : clamp(control.x, position.minX, position.maxX)) * 100}%`);
+      element.style.setProperty('--control-y', `${(peer ? peer.y / appRect.height : clamp(control.y, position.minY, position.maxY)) * 100}%`);
+      const dimensions = peer ?? controlDimensions(name, control.size, appRect.width, appRect.height, this.readInsets());
       const diameter = dimensions.width * scale;
+      element.style.height = `${dimensions.height * scale}px`;
       element.style.setProperty('--control-height', `${dimensions.height * scale}px`);
       const labelStyle = previewLabelStyle(diameter, CONTROL_LABELS[name].length);
       element.style.setProperty('--control-size', `${diameter}px`);
@@ -628,9 +646,9 @@ export class ControlSettings {
   private apply(layout: ControlLayout, mode: GameMode): void {
     const rect = controlLayoutSize(this.app);
     if (!rect.width || !rect.height) return;
+    const obstacles = this.measureLayoutObstacles(layout, mode);
     for (const name of CONTROL_NAMES) {
-      const control = name === 'throttle' ? safeThrottlePlacement(layout, rect.width, rect.height, this.readInsets(), this.utilityObstacles) : layout[name];
-      const position = this.bounds(name, rect.width, rect.height, 1, 8, control.size);
+      const control = name === 'throttle' ? safeThrottlePlacement(layout, rect.width, rect.height, this.readInsets(), obstacles) : layout[name];
       const element = this.buttons[name]!;
       if (name === 'throttle') {
         const blocked = 'blocked' in control && control.blocked === true;
@@ -642,13 +660,16 @@ export class ControlSettings {
           if (notice) notice.hidden = !blocked || this.activeMode !== 'normal';
         }
       }
-      element.style.setProperty('--control-x', `${clamp(control.x, position.minX, position.maxX) * 100}%`);
-      element.style.setProperty('--control-y', `${clamp(control.y, position.minY, position.maxY) * 100}%`);
-      const dimensions = controlDimensions(name, control.size, rect.width, rect.height, this.readInsets());
-      element.style.setProperty('--control-size', `${dimensions.width}px`);
-      element.style.setProperty('--control-height', `${dimensions.height}px`);
-      element.style.setProperty('--control-opacity', String(control.opacity));
+      for (const [property, value] of Object.entries(controlStyle(name, control, rect.width, rect.height, this.readInsets()))) element.style.setProperty(property, value);
     }
+  }
+
+  private measureLayoutObstacles(layout: ControlLayout, mode: GameMode): ControlObstacle[] {
+    const rect = controlLayoutSize(this.app), insets = this.readInsets();
+    return measureHudObstacles(this.app, { mode, controls: {
+      fire: controlStyle('fire', layout.fire, rect.width, rect.height, insets),
+      loop: controlStyle('loop', layout.loop, rect.width, rect.height, insets),
+    } });
   }
 
   private bounds(name: ControlName, width: number, height: number, scale: number, margin: number, buttonSize = this.draft[this.layoutMode][name].size): { minX: number; maxX: number; minY: number; maxY: number } {
@@ -678,7 +699,6 @@ export class ControlSettings {
   }
 
   private refreshLayout = (): void => {
-    this.utilityObstacles = measureHudObstacles(this.app);
     this.apply(this.saved[this.activeMode], this.activeMode);
     const viewport = settingsViewportSize(this.app, window.visualViewport?.width ?? window.innerWidth, window.visualViewport?.height ?? window.innerHeight);
     this.dialog?.style.setProperty('--settings-viewport-width', `${viewport.width}px`);

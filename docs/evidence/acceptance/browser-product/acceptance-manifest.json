@@ -1,0 +1,396 @@
+{
+  "type": "P7-browser-product-mission-and-resource-evidence",
+  "status": "passed",
+  "startedAt": "2026-10-05T04:58:35.100Z",
+  "completedAt": "2026-10-05T05:02:14.487Z",
+  "wallElapsedMilliseconds": 219377.428668,
+  "command": "PLAYWRIGHT_BROWSERS_PATH=/workspace/.playwright-browsers GEKICHIN_URL=http://127.0.0.1:4177 GEKICHIN_PRODUCT_OUTPUT=docs/evidence/acceptance/browser-product/product-run.json GEKICHIN_PRODUCT_SHOTS=docs/evidence/acceptance/browser-product node --import tsx scripts/browser-product-run.ts",
+  "runProvenance": {
+    "gitHead": "5db76f68b53c846ae4e4aec4754f78e108107a37",
+    "sourceSha256": {
+      "aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
+      "aircraft.ts": "1a9c18f93e5a48869882b2aa2946cdeb352dc4a8acd76b4fd9beade8ded621d5",
+      "audio.ts": "99057cd1e53413459802ada6d442a31de7feb8ee91008df540901b085d2731ab",
+      "boundary-guidance.ts": "7deac567a22cf2cf64693bb6777adf3e0491cc0d213ac6ecc53d9c5cfc7ebb21",
+      "collision-world.ts": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519",
+      "combat-types.ts": "24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0",
+      "control-settings.css": "fd060ea182464b36629372e995e8a551a32602a9a529e3bf10fd148f687ccf20",
+      "control-settings.ts": "e16bfd064914aa76f1327862ad5f8900958c23a706b5eded65c84fae737328c4",
+      "dialog-focus.ts": "86d631a4d618558e1ca671004c12ccc1fbdfe75516e6c5d04f962acd2c5e1996",
+      "fleet.ts": "de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90",
+      "flight-assist.ts": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413",
+      "flight-view.ts": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
+      "flight.ts": "288f6d8b52aca7d6c4f68fce8f71262373e6a4ee6c7fadfe8cb91df187f529ce",
+      "game-state.ts": "ab238ce83f8ab5eda287d47745e72162f99b984707f09cca60f151742ac2be79",
+      "input.ts": "f7a3860926fd76bc0684405ff43177c327e21163f9f7dd375e879d197eae579a",
+      "keyboard-settings.ts": "f38ee882c88f6b169377e98c788de2cdf413905840f791ce6ef9109cef0088cc",
+      "main.ts": "e18a2b41b3dbc0273928967450632da55fd72a4e39419d0b144d2cf56ecf9dd3",
+      "mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+      "mothership.ts": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466",
+      "rules.ts": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414",
+      "scene.ts": "6dc42220163e8abfe10935994ddb316622dfa2b341ced773b3d7acd787552635",
+      "scoring.ts": "95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494",
+      "style.css": "c13420fc69d84f4881b24084503b796fff93ee944cfeda38149650aad0be536f",
+      "turret-combat.ts": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71",
+      "types.ts": "69497c3fe6b9025b7399dbc9ab1db5f7b056507171cbd3aa8a7985ebaaef0f29",
+      "wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f"
+    },
+    "runnerSha256": "d2956ed6cb23ca37f75581336134e945f4a9a99bd0064328544460c589f46065",
+    "productionPreviewAssetSha256": {
+      "index-B79rSzXU.css": "7de427a0db39322ad2a9aacced6b3c500702744cea2d45932005141cc279f7fd",
+      "index-BTLHVFty.js": "24960449fc99f3429d6b29a0444ccedadcd7c61a1014b0dd5ac8384f62f8b04a"
+    },
+    "capturedAt": "2026-10-05T04:58:35.100Z",
+    "postRunHeadIfDifferent": "5db76f68b53c846ae4e4aec4754f78e108107a37"
+  },
+  "environment": {
+    "browserVersion": "149.0.7827.55",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.7827.55 Safari/537.36",
+    "viewport": {
+      "width": 393,
+      "height": 852,
+      "deviceScaleFactor": 1
+    },
+    "graphics": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "physicalDevice": false,
+    "performanceClaim": false
+  },
+  "clockAndInput": {
+    "api": "Playwright public page.clock.install + pauseAt + runFor",
+    "virtualStartEpochMs": 1791176326066,
+    "virtualEndEpochMs": 1791178223066,
+    "virtualMillisecondsAdvanced": 1897000,
+    "virtualMinutesAdvanced": 31.616666666666667,
+    "frameSchedule": {
+      "kind": "test-only timer-backed RAF cadence",
+      "intervalMs": 1000,
+      "logicalTicksPerRenderedFrame": 60,
+      "guardGapMilliseconds": 1000
+    },
+    "logicHz": 60,
+    "pilot": "Read-only HUD data-position/data-yaw/data-tick feed a standard flight-surface drag controller at each virtual frame. No production state or setter writes. Normal mode held Space through the product key handler.",
+    "inputRowsPerMode": {
+      "easy": 906,
+      "normal": 906
+    },
+    "noProductionStateWrites": true
+  },
+  "missions": [
+    {
+      "mode": "easy",
+      "operationId": 1,
+      "seed": 1196097537,
+      "outcome": "勝利 · 全100基撃沈",
+      "tick": 54329,
+      "activeSeconds": 905.48,
+      "under1800SecondCap": true,
+      "destroyedCount": 100,
+      "uniqueIdCount": 100,
+      "remainingHpMilli": 0,
+      "faceCountsAtVictory": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "front": 0,
+        "rear": 0
+      },
+      "resultDetails": "破壊 100/100（主砲20/20・機銃80/80）\n自機：破壊0・実損傷0.000HP\n僚機：破壊100・実損傷24000.000HP\n損失：自機0・僚機40 / 味方残機10\n砲台命中 H/N：0/6（0.0%）\n主砲への有効命中0発・機銃への有効命中0発",
+      "score": "120,443",
+      "fleetRemaining": 10,
+      "maxLiveProjectilePools": {
+        "friendlyBullets": 56,
+        "enemyMainBullets": 6,
+        "enemyMgBullets": 87
+      },
+      "poolFailures": {
+        "friendly": 0,
+        "enemy": 0
+      },
+      "scoreOwnership": {
+        "playerKills": 0,
+        "wingmanKills": 100,
+        "playerLosses": 0,
+        "wingmanLosses": 40,
+        "playerShots": 6,
+        "playerHits": 0
+      },
+      "bestRecord": {
+        "key": "gekichin-best-gekichin-combat-v1-easy",
+        "version": 1,
+        "outcome": "victory",
+        "endTick": 54329,
+        "seed": 1196097537,
+        "total": 120443
+      },
+      "sinkPresentation": {
+        "shown": true,
+        "endTick": 54329,
+        "path": "early product skip after report freeze check",
+        "sinkStartedVirtualEpochMs": 1791177236066,
+        "resultVisibleVirtualEpochMs": 1791177237066,
+        "sinkVirtualDurationMs": 1000,
+        "sinkAdvanceFrames": 1
+      },
+      "resultFrozen": true,
+      "samples": 30
+    },
+    {
+      "mode": "normal",
+      "operationId": 3,
+      "seed": 1196097537,
+      "outcome": "勝利 · 全100基撃沈",
+      "tick": 54329,
+      "activeSeconds": 905.48,
+      "under1800SecondCap": true,
+      "destroyedCount": 100,
+      "uniqueIdCount": 100,
+      "remainingHpMilli": 0,
+      "faceCountsAtVictory": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "front": 0,
+        "rear": 0
+      },
+      "resultDetails": "破壊 100/100（主砲20/20・機銃80/80）\n自機：破壊0・実損傷0.000HP\n僚機：破壊100・実損傷24000.000HP\n損失：自機0・僚機40 / 味方残機10\n砲台命中 H/N：0/19510（0.0%）\n主砲への有効命中0発・機銃への有効命中0発",
+      "score": "120,443",
+      "fleetRemaining": 10,
+      "maxLiveProjectilePools": {
+        "friendlyBullets": 100,
+        "enemyMainBullets": 6,
+        "enemyMgBullets": 87
+      },
+      "poolFailures": {
+        "friendly": 0,
+        "enemy": 0
+      },
+      "scoreOwnership": {
+        "playerKills": 0,
+        "wingmanKills": 100,
+        "playerLosses": 0,
+        "wingmanLosses": 40,
+        "playerShots": 19510,
+        "playerHits": 0
+      },
+      "bestRecord": {
+        "key": "gekichin-best-gekichin-combat-v1-normal",
+        "version": 1,
+        "outcome": "victory",
+        "endTick": 54329,
+        "seed": 1196097537,
+        "total": 120443
+      },
+      "sinkPresentation": {
+        "shown": true,
+        "endTick": 54329,
+        "path": "automatic result after measured five virtual seconds",
+        "sinkStartedVirtualEpochMs": 1791178147066,
+        "resultVisibleVirtualEpochMs": 1791178152066,
+        "sinkVirtualDurationMs": 5000,
+        "sinkAdvanceFrames": 5
+      },
+      "resultFrozen": true,
+      "samples": 30
+    }
+  ],
+  "turretFaceAudit": [
+    {
+      "mode": "easy",
+      "staticLayoutFaceCounts": {
+        "top": 20,
+        "bottom": 20,
+        "left": 20,
+        "right": 20,
+        "front": 10,
+        "rear": 10
+      },
+      "screenshot": "docs/evidence/acceptance/browser-product/easy-last-two-turrets.png",
+      "screenshotState": {
+        "tick": 52320,
+        "destroyedCount": 98,
+        "remainingAtCapture": [
+          {
+            "id": 92,
+            "face": "rear",
+            "kind": "main"
+          },
+          {
+            "id": 97,
+            "face": "rear",
+            "kind": "main"
+          }
+        ]
+      },
+      "finalKill": {
+        "tick": 54329,
+        "id": 92,
+        "face": "rear",
+        "kind": "main"
+      },
+      "targetHudAtSamples": [
+        "標的：可視砲台なし"
+      ]
+    },
+    {
+      "mode": "normal",
+      "staticLayoutFaceCounts": {
+        "top": 20,
+        "bottom": 20,
+        "left": 20,
+        "right": 20,
+        "front": 10,
+        "rear": 10
+      },
+      "screenshot": "docs/evidence/acceptance/browser-product/normal-last-two-turrets.png",
+      "screenshotState": {
+        "tick": 52320,
+        "destroyedCount": 98,
+        "remainingAtCapture": [
+          {
+            "id": 92,
+            "face": "rear",
+            "kind": "main"
+          },
+          {
+            "id": 97,
+            "face": "rear",
+            "kind": "main"
+          }
+        ]
+      },
+      "finalKill": {
+        "tick": 54329,
+        "id": 92,
+        "face": "rear",
+        "kind": "main"
+      },
+      "targetHudAtSamples": [
+        "標的：可視砲台なし"
+      ]
+    }
+  ],
+  "resources": {
+    "sampleIntervalActiveSeconds": 30,
+    "samplesPerMode": {
+      "easy": 30,
+      "normal": 30
+    },
+    "maximaAcrossMissions": {
+      "friendlyBullets": 100,
+      "enemyMainBullets": 6,
+      "enemyMgBullets": 87,
+      "particles": 616,
+      "debris": 16,
+      "wrecks": 100,
+      "activeVoices": 16
+    },
+    "preRestart": {
+      "canvasCount": 1,
+      "domNodes": 307,
+      "listenerRegistrations": 138,
+      "renderer": {
+        "geometries": 71,
+        "textures": 4,
+        "programs": 17,
+        "drawCalls": 104,
+        "particles": 0,
+        "debris": 0,
+        "wrecks": 100
+      },
+      "audio": {
+        "contexts": 1,
+        "voices": 16,
+        "maxVoices": 16,
+        "activeVoices": 0,
+        "effectVoices": 0,
+        "contextState": "suspended",
+        "enabled": true,
+        "active": false
+      },
+      "graphics": {
+        "vendor": "Google Inc. (Google)",
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "virtualEpochMs": 1791178153066,
+      "heapUsedBytes": 13835016
+    },
+    "sampledHeapRangeBytes": {
+      "min": 10153832,
+      "max": 62793968
+    },
+    "finalHeapUsedBytes": 12788964,
+    "restartCycles": 10,
+    "everyRestartAbortedThroughProductButtons": true,
+    "rendererCoreCountersStable": true,
+    "audioAndSceneOwnersStable": true,
+    "variablePoolsWithinObservedCaps": true,
+    "directMaterialCount": "not exposed by the read-only scene diagnostics; geometry, texture, program, draw-call and bounded-pool counters were recorded"
+  },
+  "scopeNotes": [
+    "Virtual, software-WebGL Chromium mission run. It validates normal product UI input and finite combat progression, not physical-device FPS or native-runtime performance.",
+    "The flight controller reads only read-only HUD position/yaw/tick datasets, then emits trusted mouse drag events; Normal additionally holds product-bound Space. It does not set positions, HP, pools, lives, invulnerability or enemy state.",
+    "The 100 kills in each mode came from wingmen. Easy recorded 6 player shots and zero effective turret hits; Normal recorded 19,510 player shots and zero effective turret hits. This is not human aiming or player-solo combat evidence.",
+    "Target HUD stayed at “標的：可視砲台なし” on sampled frames. The final two surviving mounts in both modes are rear main guns and the last kill is rear; their live state is visible in the 98/100 screenshot. Bottom-face kills are present in the static-layout event audit, but a dedicated bottom-target lock screenshot was not captured.",
+    "Heap snapshots varied with garbage collection; the recorded time series has no sustained growth trend and the post-restart heap is lower than the pre-restart snapshot. This is a software-browser resource sample, not a performance certification."
+  ],
+  "evidenceSha256": {
+    "docs/evidence/acceptance/browser-product/product-run.json": {
+      "sha256": "f1dfc683e43a3f7722052c049d9c5da5db93ab87e2c6d087a14ea8b925c9d667",
+      "bytes": 866007
+    },
+    "docs/evidence/acceptance/browser-product/full-product-run.webm": {
+      "sha256": "8ae95e95e387d631eb9209295f664c23b89c9f052d848571db6d1d528db2a603",
+      "bytes": 8485012
+    },
+    "docs/evidence/acceptance/browser-product/easy-start.png": {
+      "sha256": "bf73b1d474c5a837ac6768d37e2f4e3b5b38964c1e56e500294ba90e299b6f36",
+      "bytes": 59830
+    },
+    "docs/evidence/acceptance/browser-product/easy-last-two-turrets.png": {
+      "sha256": "b6f8dc85dc0b55f8918bb27c699d3ada3eef1643aa994269aa0e429bd171595d",
+      "bytes": 58115
+    },
+    "docs/evidence/acceptance/browser-product/easy-sinking.png": {
+      "sha256": "9b0b7f8707e9d2671e8512b1a9c7ac1fdf107c61507ce7933baa20c2a752bdda",
+      "bytes": 56469
+    },
+    "docs/evidence/acceptance/browser-product/easy-result.png": {
+      "sha256": "6840623e87ff49f5e3e463eadebdb7a4d835db99d769ff37be8fbb44844da5c7",
+      "bytes": 164021
+    },
+    "docs/evidence/acceptance/browser-product/normal-start.png": {
+      "sha256": "0c30b13bf382ed50822a9808d59f79885338d85a6497d10aa8e973a8314cfe97",
+      "bytes": 69874
+    },
+    "docs/evidence/acceptance/browser-product/normal-last-two-turrets.png": {
+      "sha256": "27091f9bba4ec59280871d2bf39d0e568ef3f51304c92020fa58dc300f92194b",
+      "bytes": 69178
+    },
+    "docs/evidence/acceptance/browser-product/normal-sinking.png": {
+      "sha256": "f74b1370983d45dba71375e04050783e60e052a572b94d56b11fe57e43e68e1c",
+      "bytes": 65537
+    },
+    "docs/evidence/acceptance/browser-product/normal-result.png": {
+      "sha256": "b77bbfe7105709e78485eb9778f0b878e0edfe3c6e4fb2d38580e39e498995d2",
+      "bytes": 168127
+    },
+    "docs/evidence/acceptance/browser-product/ten-restarts-final-abort.png": {
+      "sha256": "ea793ee8b18c0c9f23292726f10b6226a7daeff6657e1b333a02f26fc08beb21",
+      "bytes": 158557
+    },
+    "docs/evidence/acceptance/browser-product-run.log": {
+      "sha256": "dde32735a8ca2b31417c5b9d69eadda468eb9a81a0f382c915fc9d542a98625f",
+      "bytes": 518
+    }
+  },
+  "humanPlayTested": false,
+  "physicalDeviceTested": false,
+  "realTimePerformanceTested": false
+}

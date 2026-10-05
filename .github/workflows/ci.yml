@@ -26,7 +26,8 @@ jobs:
       - name: Read unchanged flight baseline for visual comparison
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          ref: 98119b5ae6604ad5975024b0e523b78eef369662
+          # Keep accepted combat and start-state semantics fixed; the P1-era main baseline predates these changes.
+          ref: c0cf927fcf7dd75edae6fee539072e4b3498c86e
           path: .throttle-baseline
           persist-credentials: false
       - run: npm ci --prefix .throttle-baseline
@@ -39,4 +40,5 @@ jobs:
           path: |
             playwright-report/
             test-results/
+            docs/evidence/acceptance/evasion/evasion-browser-trials.json.gz
           if-no-files-found: ignore

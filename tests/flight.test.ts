@@ -83,7 +83,8 @@ test('preparation, pause, report and stale callbacks keep one authoritative oper
   assert.equal(session.tick, 60); assert.ok(session.player.position.equals(position));
   assert.equal(session.resume(), true); session.step(neutral()); assert.equal(session.tick, 61);
   assert.equal(session.finish('aborted'), true); assert.equal(session.finish('aborted'), false);
-  assert.equal(session.report?.kind, 'flight-prototype'); assert.equal(session.report?.endTick, 61); assert.ok(Object.isFrozen(session.report));
+  assert.equal(session.report?.kind, 'mission-result'); assert.equal(session.report?.outcome, 'aborted');
+  assert.equal(session.report?.reason, 'aborted'); assert.equal(session.report?.endTick, 61); assert.ok(Object.isFrozen(session.report));
   session.step(neutral()); assert.equal(session.tick, 61);
   const third = session.prepare(session.mode)!;
   assert.equal(session.mode, 'normal'); assert.equal(session.tick, 0); assert.equal(session.report, null); assert.ok(third > second);

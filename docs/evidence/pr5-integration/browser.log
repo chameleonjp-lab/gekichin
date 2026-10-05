@@ -1,0 +1,581 @@
+
+> gekichin@0.1.0 test:browser
+> playwright test
+
+
+Running 57 tests using 1 worker
+
+(node:49130) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › browser-tests/combat-throttle.spec.ts:36:1 › Normal lever retains its target, clears on controls pause, and Easy keeps cruise (7.7s)
+  ✓   2 [chromium] › browser-tests/combat-throttle.spec.ts:102:1 › Normal sea-loss clears a held lever and steering key; a fresh focused throttle command works after respawn (11.1s)
+  ✓   3 [chromium] › browser-tests/combat-throttle.spec.ts:161:1 › large-text landscape throttle placement stays clear of real controls and matches the saved preview (4.5s)
+  ✓   4 [chromium] › browser-tests/combat.spec.ts:31:1 › Easy combat clock, six-face HUD, pause and explicit resume follow product controls (11.9s)
+  ✓   5 [chromium] › browser-tests/combat.spec.ts:59:1 › Normal keyboard firing consumes real ammunition and updates flight HUD, then pauses cleanly (11.0s)
+  ✓   6 [chromium] › browser-tests/combat.spec.ts:91:1 › ten product restart cycles retain one bounded scene and stable WebGL resources (16.6s)
+  ✓   7 [chromium] › browser-tests/combat.spec.ts:133:1 › abort replaces the previous result display before the next rendered frame (6.1s)
+  ✓   8 [chromium] › browser-tests/combat.spec.ts:163:1 › Normal sea contact clears held controls and respawns the player under new ownership (9.5s)
+  ✓   9 [chromium] › browser-tests/evasion-recording.spec.ts:21:1 › A12/R45 records six paired real-projectile evasion cases through the normal FlightScene camera (51.0s)
+  ✓  10 [chromium] › browser-tests/evasion-visual.spec.ts:3:1 › normal product camera shows a main-gun warning and an ordinary turn (12.3s)
+  ✓  11 [chromium] › browser-tests/p1-flow.spec.ts:9:1 › Normal keyboard flight, loop interruption, pause, settings, report and reflight use one operation (12.7s)
+  ✓  12 [chromium] › browser-tests/p1-flow.spec.ts:33:1 › multi-touch cancel, lost capture, resize and compatibility click release held input (6.2s)
+  ✓  13 [chromium] › browser-tests/p1-flow.spec.ts:51:1 › Easy one button fits specified viewports and ten repeated starts never duplicate app resources (30.4s)
+  ✓  14 [chromium] › browser-tests/p1-flow.spec.ts:65:1 › WebGL loss while paused or editing gives guidance and restoration needs explicit resume (6.5s)
+  ✓  15 [chromium] › browser-tests/p1-flow.spec.ts:74:1 › an aborted combat report does not write a best record or make game API requests (6.2s)
+  ✓  16 [chromium] › browser-tests/p1-flow.spec.ts:93:1 › an explicit visibilitychange fixture stops flight and visible recovery never resumes it (5.9s)
+  ✓  17 [chromium] › browser-tests/p1-flow.spec.ts:114:1 › sound starts OFF, pauses with flight and reuses one audio context after replay (6.8s)
+  ✓  18 [chromium] › browser-tests/p1-independent-ui.spec.ts:10:1 › touch preview controls fit their scroller and Gekichin settings leave other games storage untouched (6.6s)
+  ✓  19 [chromium] › browser-tests/p1-independent.spec.ts:10:1 › a pause binding on Enter leaves home and result button activation with native Enter (5.4s)
+  ✓  20 [chromium] › browser-tests/p1-independent.spec.ts:36:1 › an event-loop stall of at least two seconds freezes the flight until explicit resume (7.4s)
+  ✓  21 [chromium] › browser-tests/p1-independent.spec.ts:57:1 › when WebGL creation fails, settings and help remain available while flight stays disabled (3.1s)
+  ✓  22 [chromium] › browser-tests/p1-settings.spec.ts:20:1 › nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional (8.1s)
+  ✓  23 [chromium] › browser-tests/p1-settings.spec.ts:48:1 › home editors offer both modes and persist touch size, opacity and placement only after save (9.3s)
+  ✓  24 [chromium] › browser-tests/p1-settings.spec.ts:68:1 › a multi-key save failure rolls back and only explicit session use changes active settings (6.6s)
+  ✓  25 [chromium] › browser-tests/p1-settings.spec.ts:90:1 › future-version values are never downgraded and failed drafts can be cancelled (7.9s)
+  ✓  26 [chromium] › browser-tests/p1-settings.spec.ts:104:1 › home, settings and guide stay reachable at all required viewports and 200 percent text (33.1s)
+  ✓  27 [chromium] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 320x568 (12.9s)
+  ✓  28 [chromium] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 393x852 (15.1s)
+  ✓  29 [chromium] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 568x320 (13.1s)
+  ✓  30 [chromium] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 852x393 (16.1s)
+  ✓  31 [chromium] › browser-tests/throttle-lever.spec.ts:34:1 › future v2, legacy raw and failed save remain protected through cancel and session-only use (7.1s)
+  ✓  32 [chromium] › browser-tests/throttle-lever.spec.ts:42:1 › real browser pointer and focused slider input spring home and release independently (1.5s)
+  ✓  33 [chromium] › browser-tests/throttle-lever.spec.ts:64:1 › Normal live flight accepts the lever, stops through settings and Easy has none (9.0s)
+  ✓  34 [chromium] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 100% (12.6s)
+  ✓  35 [chromium] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 200% (19.8s)
+  ✓  36 [chromium] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 100% (17.6s)
+  ✓  37 [chromium] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 200% (18.8s)
+  ✓  38 [chromium] › browser-tests/throttle-lever.spec.ts:104:1 › settings footer and close remain reachable at 200 percent CSS zoom (8.7s)
+(node:50467) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  39 [webkit-ui] › browser-tests/p1-independent-ui.spec.ts:10:1 › touch preview controls fit their scroller and Gekichin settings leave other games storage untouched (2ms)
+(node:50701) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  40 [webkit-ui] › browser-tests/p1-settings.spec.ts:20:1 › nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional (2ms)
+(node:50933) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  41 [webkit-ui] › browser-tests/p1-settings.spec.ts:48:1 › home editors offer both modes and persist touch size, opacity and placement only after save (2ms)
+(node:51165) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  42 [webkit-ui] › browser-tests/p1-settings.spec.ts:68:1 › a multi-key save failure rolls back and only explicit session use changes active settings (1ms)
+(node:51397) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  43 [webkit-ui] › browser-tests/p1-settings.spec.ts:90:1 › future-version values are never downgraded and failed drafts can be cancelled (1ms)
+(node:51629) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  44 [webkit-ui] › browser-tests/p1-settings.spec.ts:104:1 › home, settings and guide stay reachable at all required viewports and 200 percent text (1ms)
+(node:51861) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  45 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 320x568 (2ms)
+(node:52093) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  46 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 393x852 (2ms)
+(node:52325) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  47 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 568x320 (2ms)
+(node:52557) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  48 [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 852x393 (2ms)
+(node:52789) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  49 [webkit-ui] › browser-tests/throttle-lever.spec.ts:34:1 › future v2, legacy raw and failed save remain protected through cancel and session-only use (2ms)
+(node:53021) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  50 [webkit-ui] › browser-tests/throttle-lever.spec.ts:42:1 › real browser pointer and focused slider input spring home and release independently (2ms)
+(node:53253) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  51 [webkit-ui] › browser-tests/throttle-lever.spec.ts:64:1 › Normal live flight accepts the lever, stops through settings and Easy has none (1ms)
+(node:53485) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  52 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 100% (1ms)
+(node:53717) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  53 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 200% (2ms)
+(node:53949) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  54 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 100% (1ms)
+(node:54181) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  55 [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 200% (1ms)
+(node:54413) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  56 [webkit-ui] › browser-tests/throttle-lever.spec.ts:104:1 › settings footer and close remain reachable at 200 percent CSS zoom (1ms)
+(node:54645) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  57 [chromium-headed] › browser-tests/p1-native-visibility.spec.ts:8:1 › a native headed tab hides the flight, freezes its clock and requires explicit resume (6.4s)
+
+
+  1) [webkit-ui] › browser-tests/p1-independent-ui.spec.ts:10:1 › touch preview controls fit their scroller and Gekichin settings leave other games storage untouched 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/p1-independent-ui-touch-pr-e44a3-her-games-storage-untouched-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/p1-independent-ui-touch-pr-e44a3-her-games-storage-untouched-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/p1-independent-ui-touch-pr-e44a3-her-games-storage-untouched-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit-ui] › browser-tests/p1-settings.spec.ts:20:1 › nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/p1-settings-nine-keyboard--5ca38-and-focus-are-transactional-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/p1-settings-nine-keyboard--5ca38-and-focus-are-transactional-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/p1-settings-nine-keyboard--5ca38-and-focus-are-transactional-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit-ui] › browser-tests/p1-settings.spec.ts:48:1 › home editors offer both modes and persist touch size, opacity and placement only after save 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/p1-settings-home-editors-o-9c548-d-placement-only-after-save-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/p1-settings-home-editors-o-9c548-d-placement-only-after-save-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/p1-settings-home-editors-o-9c548-d-placement-only-after-save-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit-ui] › browser-tests/p1-settings.spec.ts:68:1 › a multi-key save failure rolls back and only explicit session use changes active settings 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/p1-settings-a-multi-key-sa-0a892-use-changes-active-settings-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/p1-settings-a-multi-key-sa-0a892-use-changes-active-settings-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/p1-settings-a-multi-key-sa-0a892-use-changes-active-settings-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [webkit-ui] › browser-tests/p1-settings.spec.ts:90:1 › future-version values are never downgraded and failed drafts can be cancelled 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/p1-settings-future-version-a0338-led-drafts-can-be-cancelled-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/p1-settings-future-version-a0338-led-drafts-can-be-cancelled-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/p1-settings-future-version-a0338-led-drafts-can-be-cancelled-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [webkit-ui] › browser-tests/p1-settings.spec.ts:104:1 › home, settings and guide stay reachable at all required viewports and 200 percent text 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/p1-settings-home-settings--b99e5-wports-and-200-percent-text-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/p1-settings-home-settings--b99e5-wports-and-200-percent-text-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/p1-settings-home-settings--b99e5-wports-and-200-percent-text-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 320x568 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-v1-read-mig-2f872-ew-and-200-settings-320x568-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-v1-read-mig-2f872-ew-and-200-settings-320x568-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-v1-read-mig-2f872-ew-and-200-settings-320x568-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 393x852 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-v1-read-mig-85dba-ew-and-200-settings-393x852-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-v1-read-mig-85dba-ew-and-200-settings-393x852-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-v1-read-mig-85dba-ew-and-200-settings-393x852-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 568x320 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-v1-read-mig-3ca60-ew-and-200-settings-568x320-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-v1-read-mig-3ca60-ew-and-200-settings-568x320-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-v1-read-mig-3ca60-ew-and-200-settings-568x320-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 852x393 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-v1-read-mig-7157f-ew-and-200-settings-852x393-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-v1-read-mig-7157f-ew-and-200-settings-852x393-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-v1-read-mig-7157f-ew-and-200-settings-852x393-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [webkit-ui] › browser-tests/throttle-lever.spec.ts:34:1 › future v2, legacy raw and failed save remain protected through cancel and session-only use 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-future-v2-l-7c6db-cancel-and-session-only-use-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-future-v2-l-7c6db-cancel-and-session-only-use-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-future-v2-l-7c6db-cancel-and-session-only-use-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [webkit-ui] › browser-tests/throttle-lever.spec.ts:42:1 › real browser pointer and focused slider input spring home and release independently 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-real-browse-aa6fb-e-and-release-independently-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-real-browse-aa6fb-e-and-release-independently-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-real-browse-aa6fb-e-and-release-independently-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13) [webkit-ui] › browser-tests/throttle-lever.spec.ts:64:1 › Normal live flight accepts the lever, stops through settings and Easy has none 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-Normal-live-6d193--settings-and-Easy-has-none-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-Normal-live-6d193--settings-and-Easy-has-none-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-Normal-live-6d193--settings-and-Easy-has-none-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  14) [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 100% 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-hidden-HUD--4225d--controls-320x568-text-100--webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-hidden-HUD--4225d--controls-320x568-text-100--webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-hidden-HUD--4225d--controls-320x568-text-100--webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  15) [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 200% 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-hidden-HUD--de7e0--controls-320x568-text-200--webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-hidden-HUD--de7e0--controls-320x568-text-200--webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-hidden-HUD--de7e0--controls-320x568-text-200--webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  16) [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 100% 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-hidden-HUD--936f9--controls-568x320-text-100--webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-hidden-HUD--936f9--controls-568x320-text-100--webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-hidden-HUD--936f9--controls-568x320-text-100--webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  17) [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 200% 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-hidden-HUD--9904e--controls-568x320-text-200--webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-hidden-HUD--9904e--controls-568x320-text-200--webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-hidden-HUD--9904e--controls-568x320-text-200--webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  18) [webkit-ui] › browser-tests/throttle-lever.spec.ts:104:1 › settings footer and close remain reachable at 200 percent CSS zoom 
+
+    Error: browserType.launch: 
+    ╔══════════════════════════════════════════════════════╗
+    ║ Host system is missing dependencies to run browsers. ║
+    ║ Missing libraries:                                   ║
+    ║     libgtk-4.so.1                                    ║
+    ║     libgraphene-1.0.so.0                             ║
+    ║     libharfbuzz-icu.so.0                             ║
+    ║     libmanette-0.2.so.0                              ║
+    ║     libhyphen.so.0                                   ║
+    ║     libwoff2dec.so.1.0.2                             ║
+    ║     libGLESv2.so.2                                   ║
+    ╚══════════════════════════════════════════════════════╝
+
+    Error Context: test-results/throttle-lever-settings-fo-487f6-ble-at-200-percent-CSS-zoom-webkit-ui/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/throttle-lever-settings-fo-487f6-ble-at-200-percent-CSS-zoom-webkit-ui/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/throttle-lever-settings-fo-487f6-ble-at-200-percent-CSS-zoom-webkit-ui/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  18 failed
+    [webkit-ui] › browser-tests/p1-independent-ui.spec.ts:10:1 › touch preview controls fit their scroller and Gekichin settings leave other games storage untouched 
+    [webkit-ui] › browser-tests/p1-settings.spec.ts:20:1 › nine keyboard actions reject duplicate, reserved, modifier and IME input; draft and focus are transactional 
+    [webkit-ui] › browser-tests/p1-settings.spec.ts:48:1 › home editors offer both modes and persist touch size, opacity and placement only after save 
+    [webkit-ui] › browser-tests/p1-settings.spec.ts:68:1 › a multi-key save failure rolls back and only explicit session use changes active settings 
+    [webkit-ui] › browser-tests/p1-settings.spec.ts:90:1 › future-version values are never downgraded and failed drafts can be cancelled 
+    [webkit-ui] › browser-tests/p1-settings.spec.ts:104:1 › home, settings and guide stay reachable at all required viewports and 200 percent text 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 320x568 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 393x852 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 568x320 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:11:2 › v1 read migration, repeated v2 save, rectangular preview and 200% settings 852x393 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:34:1 › future v2, legacy raw and failed save remain protected through cancel and session-only use 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:42:1 › real browser pointer and focused slider input spring home and release independently 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:64:1 › Normal live flight accepts the lever, stops through settings and Easy has none 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 100% 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 320x568 text 200% 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 100% 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:78:2 › hidden HUD obstacle measurement preserves controls 568x320 text 200% 
+    [webkit-ui] › browser-tests/throttle-lever.spec.ts:104:1 › settings footer and close remain reachable at 200 percent CSS zoom 
+  39 passed (7.9m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
