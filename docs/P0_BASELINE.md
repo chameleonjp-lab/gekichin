@@ -11,7 +11,7 @@
 | 対象 | 固定値 | 確認 |
 | --- | --- | --- |
 | 実装開始時の Gekichin main/head | `4da953187ce15cbea50a6aa29fbc8ccd2f454faf` | 作業ブランチの起点 |
-| P0/P1コード候補 | `e432dd6e3921f2f19564091a931ea1dd05e19d8a` | P1 local unit/build/Chromiumの対象head。WebKit/ headed native・CIの結果は未取得 |
+| P0/P1検証候補 | `15fe3bba99d5a5964bdf9007048de315cc9f105a` | unit 12/12、build、全23件CI成功。初期ローカル検査の対象は `e432dd6` |
 | 固定要件 commit | `e9212a73a7b36c33dff7e88d3a7308be6cdcea35` | `docs/REQUIREMENTS.md` の blob `1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c` と一致 |
 | 現行計画 | 作業起点 `4da9531` | `docs/IMPLEMENTATION_PLAN.md` の blob `11dec1af2004ec3d71357d9eae029e324c6fdf3c` |
 | 既存 README | 作業起点 `4da9531` | blob `9d0cfacf52833d90d39f02a9ab1c1c57dee30aa0`。実装開始時に同じ値を再確認 |
@@ -39,7 +39,7 @@ Kaisen固定版の [`docs/PLAN.md`](https://github.com/chameleonjp-lab/kaisen/bl
 
 ## ファイル別の移行台帳
 
-「固定元blob」はKaisen固定版のGit blob ID。「本作側blob」はP1候補commit `e432dd6e3921f2f19564091a931ea1dd05e19d8a` のファイルblobで、`git hash-object` の値と照合した。SHA-1 blob IDを使い、変更があれば新しい値へ更新する。
+「固定元blob」はKaisen固定版のGit blob ID。「本作側blob」はP1検証候補commit `15fe3bba99d5a5964bdf9007048de315cc9f105a` のコード・検査ファイルblobと、後続記録commitで追加した証拠ファイルblobで、`git hash-object` の値と照合した。SHA-1 blob IDを使い、変更があれば新しい値へ更新する。
 
 | Gekichinパス | 固定元 | 固定元blob | 区分 | 本作側blob |
 | --- | --- | --- | --- | --- |
@@ -87,6 +87,16 @@ Kaisen固定版の [`docs/PLAN.md`](https://github.com/chameleonjp-lab/kaisen/bl
 | `docs/evidence/p1/chromium.log` | `df936cc0d5e9168426ca9e53b20b47a21f052418` | final local Chromium headless run, 16/16 pass |
 | `docs/evidence/p1/chromium-results.json` | `5710b2310a5dbd589ac442e60f3ecd46af7b2f7c` | structured results for the same 16 tests |
 
+| `docs/evidence/p1/native.log` | `ba8a746cefa7de875941f926e981607fafa80fd7` | local native headed 1/1 pass |
+| `docs/evidence/p1/native-results.json` | `e8e12e5183526321be75a4ae578f9aad5a305c02` | native browser build/actual viewport and result |
+| `docs/evidence/p1/ci-first-failed.log` | `c5175b7f93f1805f0ff3e3bc576d005be37adf7f` | initial CI 22/23 failure history |
+| `docs/evidence/p1/native-first.log` | `08fa2c9a2f0e92097811864dedfb17289ed491a4` | initial native fixture failure history |
+| `docs/evidence/p1/native-cleanup-retry.log` | `ef7d657ec60fc6de40fd4ba947ec4cd7cd392b0c` | final native cleanup 5/5 pass |
+| `docs/evidence/p1/native-cleanup-retry-results.json` | `067d4f36aa0c48b42ed7b857e2361d3c062bb58c` | final native repeated results |
+| `docs/evidence/p1/ci-cleanup-failed.log` | `f93e337fd6f3a070dcd449e05ce9737b99633809` | cleanup-race CI failure history |
+| `docs/evidence/p1/ci-success.log` | `3474b0ae7736ef79d7212fd593587f934a51c28a` | CI unit/build and 23/23 browser pass |
+| `docs/evidence/p1/ci-results.json` | `0da1115bf138c76e9825be61ab1ca87dfcc2bda0` | GitHub CI status/steps, browser details retained in linked artifact |
+
 P1は共通操縦の最小土台である。`flight-assist.ts` の有限補助数式は移行したが、P1の `FlightSession` が渡す標的一覧は空である。敵照準引寄せ・Easy自動射撃は、有効砲台・遮蔽データができるP2/P4まで動作しない。したがってP1だけではR30の支援全体もA07も受入済みにならない。
 
 ### P1のimport・素材依存境界
@@ -104,9 +114,9 @@ P1は共通操縦の最小土台である。`flight-assist.ts` の有限補助�
 | TypeScript / Vite / tsx | `5.9.3` / `8.3.1` / `4.21.0` | lockfile固定 |
 | Playwright / @types/three | `1.61.1` / `0.183.1` | lockfile固定 |
 | lockfile | `package-lock.json`, lockfileVersion 3 | P1で作成。`npm ci` は成功（実装担当の実行記録） |
-| CI | Ubuntu runner、Node 24、npm ci、unit/build、16 Chromium、6 WebKit DOM、1 headed Chromium | workflowは追加済み。初回CIは22/23。native fixture修正後の全23件は結果待ち |
+| CI | Ubuntu runner、Node 24、npm ci、unit/build、16 Chromium、6 WebKit DOM、1 headed Chromium | workflowは追加済み。初回CI 22/23からnative fixtureを修正。head `15fe3bb` の[CI](https://github.com/chameleonjp-lab/gekichin/actions/runs/37250362241)全23件成功 |
 
-ローカル `npm ci`、unit 12/12、TypeScript/Vite build、およびheadless Chromium 16/16（失敗0、skip0）は、P1候補commit `e432dd6e3921f2f19564091a931ea1dd05e19d8a` の内容で成功した。WebKit UI 6/6は初回CI成功。native visibilityは初回CI失敗を受けfixture修正し、ローカル仮想displayで成功。修正後CIは結果待ち。P1のホーム画面／飛行画面のChromium画像は `docs/evidence/p1/` にある。これは1366×768 CSS px、DPR1のソフトウェア描画スクリーンショットであり、性能測定ではない。PlaywrightがCI上で起動しても、それは実機iPhone SafariやGPU性能測定ではない。
+ローカル `npm ci`、unit 12/12、TypeScript/Vite build、およびheadless Chromium 16/16（失敗0、skip0）は、P1候補commit `e432dd6e3921f2f19564091a931ea1dd05e19d8a` の内容で成功した。WebKit UI 6/6は初回CI成功。native visibilityは初回CI失敗を受けfixture修正し、ローカル仮想displayで成功。修正後head `15fe3bb` の全23件CIは成功。P1のホーム画面／飛行画面のChromium画像は `docs/evidence/p1/` にある。これは1366×768 CSS px、DPR1のソフトウェア描画スクリーンショットであり、性能測定ではない。PlaywrightがCI上で起動しても、それは実機iPhone SafariやGPU性能測定ではない。
 
 ## 性能測定manifest（測定前固定）
 
@@ -124,6 +134,6 @@ R82の受入値を測定前に固定する。次の実機欄は現環境で物�
 
 - 固定要件のblob・READMEの既存blob・計画のblobを照合済み。
 - 公開固定参照とP1で採るファイル、非採用境界、Faitofuraito由来の設定コードの来歴を台帳化。
-- Node/npm・依存版・lockfile・CI/browser種類を記録。commit `e432dd6` の `npm ci`、unit 12/12、build、Chromium 16/16は成功。初回CI WebKit 6/6とローカルheaded nativeは成功。修正後全23件CIは結果待ち。
+- Node/npm・依存版・lockfile・CI/browser種類を記録。commit `e432dd6` の `npm ci`、unit 12/12、build、Chromium 16/16は成功。初回CI WebKit 6/6とローカルheaded nativeは成功。修正後head `15fe3bb` の全23件CIは成功。
 - P0性能manifestの測定条件を固定した。実PC・iPhone 17 Proは利用できないため実測なし。
 - 実装候補のblob一覧は上表へ記録し、P1の検査対象ファイルと一致を確認した。P0の合格を意味しない項目は、性能、iPhone試遊、WebKitローカル起動、聴感、素材の将来追加を含む。

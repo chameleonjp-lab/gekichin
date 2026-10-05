@@ -4,18 +4,18 @@
 対象: `chameleonjp-lab/gekichin`  
 作業ブランチ: `feat/gekichin-p0-p1`
 
-ユーザー指示「計画書に従い実装開始」に基づき、P0の基準記録とP1の操縦プロトタイプを進めている。現時点の製品は戦闘ゲームではなく、飛行と画面・操作を確認するP1のプロトタイプである。P1完了や勝利経路の受入を示す文書ではない。
+ユーザー指示「計画書に従い実装開始」に基づき、P0の基準記録とP1の操縦プロトタイプを進めている。現時点の製品は戦闘ゲームではなく、飛行と画面・操作を確認するP1のプロトタイプである。P1範囲の自動検査は成功した。勝利経路・実機・性能の受入は未実施である。
 
 ## 固定基準と作業範囲
 
-実装ブランチの起点は `4da953187ce15cbea50a6aa29fbc8ccd2f454faf`。P0/P1候補commitは `e432dd6e3921f2f19564091a931ea1dd05e19d8a`。固定要件commitは `e9212a73a7b36c33dff7e88d3a7308be6cdcea35`、要件blobは `1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c`。既存 `README.md` のblob `9d0cfacf52833d90d39f02a9ab1c1c57dee30aa0` を保った状態で始めた。P0の固定参照、ファイルごとの出典と差分、素材境界、性能manifestは [P0_BASELINE.md](./P0_BASELINE.md) に記録する。
+実装ブランチの起点は `4da953187ce15cbea50a6aa29fbc8ccd2f454faf`。初期P0/P1実装commitは `e432dd6e3921f2f19564091a931ea1dd05e19d8a`、最終コード・検査候補は `15fe3bba99d5a5964bdf9007048de315cc9f105a`。固定要件commitは `e9212a73a7b36c33dff7e88d3a7308be6cdcea35`、要件blobは `1ef91cb86cae2c7ff52f9f561f80ae4b6f18ad7c`。既存 `README.md` のblob `9d0cfacf52833d90d39f02a9ab1c1c57dee30aa0` を保った状態で始めた。P0の固定参照、ファイルごとの出典と差分、素材境界、性能manifestは [P0_BASELINE.md](./P0_BASELINE.md) に記録する。
 
 ## 段階別の状態
 
 | 段階 | 状態 | 現在確認できる範囲 |
 | --- | --- | --- |
 | P0 基準・実施条件 | 記録済み | 要件/README/計画のblob、固定参照、移行分類、依存と実行環境、性能manifestを記録。実PCとiPhone 17 Proは利用できず、性能は未測定 |
-| P1 操縦と最小画面 | 実装済み。最終受入は保留 | commit `e432dd6` の固定60Hz飛行、画面遷移、Easy/Normal、共通入力と設定、カメラ、停止と飛行プロトタイプ結果を実装。unit 12/12、build、headless Chromium 16/16は成功。初回CIでWebKit DOM 6/6成功。native visibilityはfixtureを修正しローカルheaded成功。修正後全23件CIは結果待ち |
+| P1 操縦と最小画面 | 実装・自動検査成功。実機受入は未実施 | commit `e432dd6` の固定60Hz飛行、画面遷移、Easy/Normal、共通入力と設定、カメラ、停止と飛行プロトタイプ結果を実装。unit 12/12、build、headless Chromium 16/16は成功。初回CIでWebKit DOM 6/6成功。native visibilityはfixtureを修正しローカルheaded成功。修正後head `15fe3bb` の[CI](https://github.com/chameleonjp-lab/gekichin/actions/runs/37250362241)は全23件成功（fail/skip 0） |
 | P2 母艦と砲台配置 | 未着手 | 製品用形状、100基、当たり判定、六面への攻撃経路は未実装 |
 | P3 有限残機・味方銃撃・得点 | 未着手 | 50トークン、弾倉、損傷、採点、撃沈判定は未実装 |
 | P4 敵砲台・僚機AI | 未着手 | 主砲/機銃の脅威、遮蔽、僚機攻撃経路は未実装 |
@@ -39,7 +39,7 @@ P0の実機不在は未検証として固定した。模擬ブラウザ、スク
 
 P1画面のChromium画像は `docs/evidence/p1/` に記録している。ホームと飛行画面は1366×768、キーボード／タッチ設定画面は393×852。いずれもCSS px相当、DPR1のsoftware-renderingを含むキャプチャで、ブラウザ内のWebGL画面も確認できる。画像はフレーム時間の測定、実GPU、タッチ実機、iPhone Safari、遊びやすさの評価ではない。
 
-ローカル環境はNode `v24.19.0`、npm `11.9.0`。commit `e432dd6e3921f2f19564091a931ea1dd05e19d8a` の内容で `npm ci` 成功、`npm test` は12/12成功（skipなし）、`npm run build` 成功、headless Chromiumは16/16成功（失敗0、skip0、約2.6分）を [evidence](./evidence/p1/) に保存した。buildは641.76 kBのJavaScript chunkが500 kB警告を出したため、P7で実負荷を計測し原因を検討する。Playwright行列はheadless Chromium 16、WebKit DOM検査6、headed Chromiumのnative visibility検査1。WebKitはローカル必要ライブラリ不足だが初回CIで6/6成功。初回CIのnative検査はfocus emulationにより失敗し、公開API noDefaultsで接続するfixtureへ修正した。ローカル仮想displayのnative headed検査は成功。修正後全23件CIは結果待ち。GitHub Actions workflowはNode 24上でunit/buildとこのブラウザ行列を実行する。P1の最終受入はWebKit/ headed native/CI結果を確認するまで未完了。実PC/iPhoneの性能測定、Safari実機試遊、聴感、通常入力による勝利は未実施。
+ローカル環境はNode `v24.19.0`、npm `11.9.0`。commit `e432dd6e3921f2f19564091a931ea1dd05e19d8a` の内容で `npm ci` 成功、`npm test` は12/12成功（skipなし）、`npm run build` 成功、headless Chromiumは16/16成功（失敗0、skip0、約2.6分）を [evidence](./evidence/p1/) に保存した。buildは641.76 kBのJavaScript chunkが500 kB警告を出したため、P7で実負荷を計測し原因を検討する。Playwright行列はheadless Chromium 16、WebKit DOM検査6、headed Chromiumのnative visibility検査1。WebKitはローカル必要ライブラリ不足だが初回CIで6/6成功。初回CIのnative検査はfocus emulationにより失敗し、公開API noDefaultsで接続するfixtureへ修正した。ローカル仮想displayのnative headed検査は成功。修正後head `15fe3bb` の[CI](https://github.com/chameleonjp-lab/gekichin/actions/runs/37250362241)は全23件成功（fail/skip 0）。GitHub Actions workflowはNode 24上でunit/buildとこのブラウザ行列を実行する。P1範囲の自動検査ゲートは成功。実PC/iPhoneの性能測定、Safari実機試遊、聴感、通常入力による勝利は未実施。
 
 ## ローカルで起動・確認する方法
 
@@ -65,8 +65,8 @@ npx playwright install --with-deps chromium webkit
 xvfb-run -a npm run test:browser
 ```
 
-WebKit UI検査とnative visibility検査は、CI URL・tested head・各projectの結果とともに最終記録へ追記する。
+CI tested headは `15fe3bba99d5a5964bdf9007048de315cc9f105a`。[P1_VERIFICATION.md](P1_VERIFICATION.md) にCI URL・各projectの結果・初回失敗と修正を記録した。独立レビューで重大blockerなし。
 
 ## 次の段階
 
-P1では固定参照との最終差分、入力所有と解除、設定の保存/取消/失敗、停止・再開・gap、代表画面を確定し、そのP1範囲の関連検査を実行する。P1完了後にP2へ進む。P2では100基配置データ、遮蔽、経路、砲口位置をそろえてからP3へ渡す。今後のP2–P8はすべて未完了であり、先行段階の未検証を後段の推測で埋めない。
+P1の自動検査結果と未実施の実機境界を保持し、次の実装はP2へ進む。P2では100基配置データ、遮蔽、経路、砲口位置をそろえてからP3へ渡す。今後のP2–P8はすべて未完了であり、先行段階の未検証を後段の推測で埋めない。
