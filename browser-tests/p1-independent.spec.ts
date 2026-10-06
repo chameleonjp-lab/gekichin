@@ -1,4 +1,13 @@
 import { expect, test, type Page } from '@playwright/test';
+import { guardStaticTraffic, type BlockedRequest } from './network-policy';
+
+test.use({ serviceWorkers: 'block' });
+let blockedRequests: BlockedRequest[];
+test.beforeEach(async ({ context, baseURL }) => { blockedRequests = await guardStaticTraffic(context, baseURL!); });
+test.afterEach(async ({ context }) => {
+  await context.close();
+  expect(blockedRequests, 'independent checks must not submit any outbound data').toEqual([]);
+});
 
 const app = 'http://127.0.0.1:4177/';
 
@@ -57,9 +66,9 @@ test('an event-loop stall of at least two seconds freezes the flight until expli
 test('when WebGL creation fails, settings and help remain available while flight stays disabled', async ({ page }) => {
   await page.addInitScript(() => {
     const getContext = HTMLCanvasElement.prototype.getContext;
-    HTMLCanvasElement.prototype.getContext = function(type: string, ...args: unknown[]) {
+    HTMLCanvasElement.prototype.getContext = function(this: HTMLCanvasElement, type: string, ...args: unknown[]) {
       if (type === 'webgl' || type === 'webgl2' || type === 'experimental-webgl') return null;
-      return getContext.call(this, type as never, ...args as never[]);
+      return Reflect.apply(getContext, this, [type, ...args]);
     } as typeof HTMLCanvasElement.prototype.getContext;
   });
   await page.goto(app);
