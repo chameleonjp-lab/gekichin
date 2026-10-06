@@ -1,4 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
+import { guardStaticTraffic } from './network-policy';
+
+test.use({ serviceWorkers: 'block' });
 
 async function start(page: Page, mode = 'easy') {
   await page.goto('/'); await expect(page.locator('#start')).toBeEnabled();
@@ -90,8 +93,9 @@ test('WebGL loss while paused or editing gives guidance and restoration needs ex
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'paused'); await page.locator('#resume').click(); await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing'); await extension.dispose();
 });
 
-test('an aborted combat report does not write a best record or make game API requests', async ({ page }) => {
-  const requests: string[] = [], bestWrites: string[] = []; page.on('request', request => requests.push(request.url()));
+test('an aborted combat report does not write a best record or make game API requests', async ({ page, context, baseURL }) => {
+  const blockedRequests = await guardStaticTraffic(context, baseURL!);
+  const bestWrites: string[] = [];
   await page.exposeFunction('observeBestWrite', (key: string) => bestWrites.push(key));
   await page.addInitScript(() => {
     const original = Storage.prototype.setItem;
@@ -105,8 +109,8 @@ test('an aborted combat report does not write a best record or make game API req
   await start(page); await page.locator('#pause').click(); await page.locator('#finish').click(); await expect(page.locator('#result')).toBeVisible();
   await expect(page.locator('#result-outcome')).toContainText('中断');
   await expect(page.locator('#result-best')).toContainText('勝利した作戦');
-  expect(bestWrites).toEqual([]); expect(requests.every(url => new URL(url).origin === 'http://127.0.0.1:4177')).toBe(true);
-  expect(requests.some(url => /supabase|ranking|ordnance|bomb-guide/.test(url))).toBe(false);
+  expect(bestWrites).toEqual([]);
+  expect(blockedRequests, 'R84 permits only known GET static assets').toEqual([]);
 });
 
 test('an explicit visibilitychange fixture stops flight and visible recovery never resumes it', async ({ page }) => {
