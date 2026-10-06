@@ -80,5 +80,8 @@ test('R84 installs context guard before navigation and blocks service workers', 
   assert.match(spec, /guardStaticTraffic\(context, baseURL!\)/);
   assert.match(spec, /expect\(blockedRequests,[^\n]*\)\.toEqual\(\[\]\)/);
   const abortedTest = spec.slice(spec.indexOf("test('an aborted combat"), spec.indexOf("test('an explicit visibilitychange"));
-  assert.ok(abortedTest.indexOf('guardStaticTraffic(') < abortedTest.indexOf('await start(page)'));
+  assert.match(abortedTest, /await context\.close\(\)/);
+  assert.ok(abortedTest.indexOf('await context.close()') < abortedTest.indexOf('expect(blockedRequests,'));
+  assert.match(abortedTest, /await startWithControlledFrames\(page\)/);
+  assert.ok(abortedTest.indexOf('guardStaticTraffic(') < abortedTest.indexOf('await startWithControlledFrames(page)'));
 });

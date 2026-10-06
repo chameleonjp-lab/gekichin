@@ -106,9 +106,13 @@ test('an aborted combat report does not write a best record or make game API req
       return original.call(this, key, value);
     };
   });
-  await start(page); await page.locator('#pause').click(); await page.locator('#finish').click(); await expect(page.locator('#result')).toBeVisible();
+  // R84 measures attempted communication and storage; isolate SwiftShader's cold
+  // frame latency using the existing prewarmed clock fixture, without changing
+  // the separate native lifecycle, graphics-loss or wall-gap acceptance checks.
+  await startWithControlledFrames(page); await page.locator('#pause').click(); await page.locator('#finish').click(); await expect(page.locator('#result')).toBeVisible();
   await expect(page.locator('#result-outcome')).toContainText('中断');
   await expect(page.locator('#result-best')).toContainText('勝利した作戦');
+  await context.close();
   expect(bestWrites).toEqual([]);
   expect(blockedRequests, 'R84 permits only known GET static assets').toEqual([]);
 });
