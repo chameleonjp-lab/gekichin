@@ -6,7 +6,7 @@ test('normal product camera shows a main-gun warning and an ordinary turn', asyn
   await page.setViewportSize({ width: 1366, height: 768 });
   await page.goto('/');
   await expect(page.locator('#start')).toBeEnabled();
-  await page.getByRole('radio', { name: /Normal/ }).check();
+  await page.getByRole('radio', { name: /ノーマル/ }).check();
   await page.locator('#start').click();
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
   await expect(page.locator('#app')).toHaveAttribute('data-mode', 'normal');

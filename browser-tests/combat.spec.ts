@@ -9,7 +9,7 @@ async function startCombat(page: Page, mode: 'easy' | 'normal'): Promise<void> {
   // a real two-second foreground gap in this deterministic UI test.
   await page.clock.install({ time: new Date('2026-01-01T12:00:00.000Z') });
   await page.clock.pauseAt(new Date('2026-01-01T12:00:10.000Z'));
-  await page.getByRole('radio', { name: mode === 'easy' ? /Easy/ : /Normal/ }).check();
+  await page.getByRole('radio', { name: mode === 'easy' ? /イージー/ : /ノーマル/ }).check();
   await page.locator('#start').click();
   await page.clock.runFor(500);
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');

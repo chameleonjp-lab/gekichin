@@ -5,7 +5,7 @@ test.use({ serviceWorkers: 'block' });
 
 async function start(page: Page, mode = 'easy') {
   await page.goto('/'); await expect(page.locator('#start')).toBeEnabled();
-  await page.getByRole('radio', { name: mode === 'easy' ? /Easy/ : /Normal/ }).check(); await page.locator('#start').click();
+  await page.getByRole('radio', { name: mode === 'easy' ? /イージー/ : /ノーマル/ }).check(); await page.locator('#start').click();
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
 }
 
@@ -22,7 +22,7 @@ async function startWithControlledFrames(page: Page, mode = 'easy') {
   // not how much wall time SwiftShader spends compiling its first frame.
   const pauseTime = await page.evaluate(() => Date.now() + 60_000);
   await page.clock.pauseAt(new Date(pauseTime));
-  await page.getByRole('radio', { name: mode === 'easy' ? /Easy/ : /Normal/ }).check(); await page.locator('#start').click();
+  await page.getByRole('radio', { name: mode === 'easy' ? /イージー/ : /ノーマル/ }).check(); await page.locator('#start').click();
   await page.clock.runFor(100);
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
 }
@@ -43,11 +43,11 @@ test('Normal keyboard flight, loop interruption, pause, settings, report and ref
   await page.locator('#resume').click(); await expect.poll(() => page.locator('#elapsed').textContent()).not.toBe(elapsed);
   await page.locator('#pause').click(); await page.locator('#finish').click(); await expect(page.locator('#result')).toBeVisible();
   await expect(page.locator('#result-outcome')).toContainText('中断');
-  await expect(page.locator('#result-details')).toContainText('破壊 0/100'); await expect(page.locator('#result-mode')).toContainText('Normal');
+  await expect(page.locator('#result-details')).toContainText('破壊 0/100'); await expect(page.locator('#result-mode')).toContainText('ノーマル');
   await page.screenshot({ path: info.outputPath('flight-report.png') });
   await page.locator('#result-controls').click(); await page.locator('#control-editor-touch').click(); await expect(page.locator('#control-mode')).toBeEnabled(); await page.locator('#control-close').click();
   await page.locator('#restart').click(); await expect(page.locator('#app')).toHaveAttribute('data-mode', 'normal'); await expect(page.locator('#speed')).toHaveText('110 m/s');
-  await page.locator('#pause').click(); await page.locator('#pause-home').click(); await expect(page.getByRole('radio', { name: /Normal/ })).toBeChecked();
+  await page.locator('#pause').click(); await page.locator('#pause-home').click(); await expect(page.getByRole('radio', { name: /ノーマル/ })).toBeChecked();
   expect(errors).toEqual([]);
 });
 

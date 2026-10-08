@@ -3,6 +3,13 @@ on:
   push:
     branches: [main, 'feat/**']
   pull_request:
+  workflow_dispatch:
+    inputs:
+      run_legacy_flight_comparison:
+        description: Run the preserved gameplay browser suite and same-tick baseline comparison
+        type: boolean
+        required: false
+        default: false
 permissions:
   contents: read
 jobs:
@@ -21,8 +28,32 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
-      - run: npx playwright install --with-deps chromium webkit
+      - run: npx playwright install --with-deps chromium
       - run: xvfb-run -a npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ui-only-browser-evidence
+          path: |
+            playwright-report/ui-only/
+            test-results/ui-only/
+          if-no-files-found: ignore
+  legacy-flight-comparison:
+    if: github.event_name == 'workflow_dispatch' && inputs.run_legacy_flight_comparison
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium webkit
+      - run: xvfb-run -a npm run test:browser:legacy
       - name: Read unchanged flight baseline for visual comparison
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -36,7 +67,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: browser-evidence
+          name: legacy-flight-comparison-evidence
           path: |
             playwright-report/
             test-results/

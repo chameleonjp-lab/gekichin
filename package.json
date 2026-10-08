@@ -8,9 +8,11 @@
   },
   "scripts": {
     "dev": "vite --host 127.0.0.1",
+    "dev:ui": "vite --host 127.0.0.1 --config vite.ui.config.ts",
     "build": "tsc --noEmit && vite build",
     "test": "node --import tsx --test tests/*.test.ts",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test --config=playwright.ui.config.ts",
+    "test:browser:legacy": "playwright test --config=playwright.config.ts --grep-invert='ui-only\\.spec\\.ts'"
   },
   "dependencies": {
     "three": "0.186.1"
