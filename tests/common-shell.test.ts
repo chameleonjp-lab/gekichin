@@ -71,19 +71,28 @@ test('pause and result keep all original operations and G result fields', () => 
   assert.match(source, /session\.finish\('aborted'\) && session\.report\) showReport\(session\.report\)/);
 });
 
-test('shell CSS is scoped and cannot change root fonts, HUD or flight geometry', () => {
+test('shell CSS stays scoped, with only the combat notice moved clear of flight controls', () => {
   const text = css.replace(/\/\*[^]*?\*\//g, '');
+  const noticeSelector = '#app:not([data-large-text="true"]) #hud #combat-notice';
   let rules = 0;
   for (const match of text.matchAll(/([^{}]+)\{/g)) {
     const selector = match[1].trim();
     if (selector.startsWith('@')) { assert.match(selector, /^@media /); continue; }
-    for (const part of selector.split(',')) assert.match(part.trim(), /^#(?:home|paused|result|guide)(?:\s|[.:#]|$)/);
+    for (const part of selector.split(',')) {
+      const normalized = part.trim().replace(/\s+/g, ' ');
+      assert.ok(normalized === noticeSelector || /^#(?:home|paused|result|guide)(?:\s|[.:#]|$)/.test(normalized), normalized);
+    }
     rules += 1;
   }
   assert.ok(rules > 20);
-  assert.doesNotMatch(text, /:root|#app|#hud|#scene|#flight|#combat-panel|#throttle|#control-settings|@import|@font-face/);
+  assert.doesNotMatch(text, /:root|#scene|#flight|#combat-panel|#throttle|#fire(?![\w-])|#loop(?![\w-])|#pause(?![\w-])|#control-settings|@import|@font-face/);
   assert.match(text, /min-height: 44px/);
   assert.match(text, /orientation: landscape/);
+  const noticeRules = [...text.matchAll(/#app:not\(\[data-large-text="true"\]\) #hud #combat-notice\s*\{([^}]*)\}/g)];
+  assert.equal(noticeRules.length, 2);
+  assert.match(noticeRules[0]?.[1] ?? '', /top:\s*40%;/);
+  assert.match(noticeRules[1]?.[1] ?? '', /top:\s*30%;[\s\S]*left:\s*30\.5%;[\s\S]*width:\s*min\(45%, 520px\);[\s\S]*transform:\s*none/);
+  assert.doesNotMatch(noticeRules.map(rule => rule[1]).join('\n'), /z-index|display\s*:|visibility\s*:/i);
 });
 
 test('all original template IDs remain unique and reachable by existing bindings', () => {
