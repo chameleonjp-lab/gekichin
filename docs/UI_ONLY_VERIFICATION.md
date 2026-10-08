@@ -58,7 +58,7 @@ GitHub読取でmain `600585c89832c40f75d5fe967c7533b220fac0ac` を確認した�
 | UI-only収集 | 5件/1 file。`--list`のみ、実行0件。 |
 | 旧browser収集 | 64件/12 files。`--list`のみ、実行0件。旧入口を保持。 |
 | local browser / screenshot | 既知のlocalhost socket EPERMのため再試行せず未実行。capture 0枚、画像review 0枚。 |
-| GitHub CI / 新artifact | Draft PR作成後に実行予定。 |
+| GitHub CI / 新artifact | PR #10の実行結果を後段に記録。 |
 | 実WebGL Canvas | 未確認。 |
 
 この追補ではportrait `notice-long`を非交差assertion付きで撮影し、landscape `notice-long`と`#render-note`へscrollしたWebGL不可画面のcaptureも追加する。GitHub CIの実行・artifact生成と新画像の目視結果は、local収集・画像reviewと分けて追記する。
@@ -69,4 +69,10 @@ GitHub読取でmain `600585c89832c40f75d5fe967c7533b220fac0ac` を確認した�
 
 assertion修正後も`npm test`は17/17 test files、fail 0、skip 0。production `npm run build`成功。変更13対象strictはTypeScript 5.9.3、現在この環境から参照できる既存補助`@types/node` 22.20.0で診断0。全39対象は既知のbaseline 6診断と完全一致し、追加診断0。r2時点での24.19.1補助型によるstrict記録は上記のとおり保存しているが、この追補の再実行ではその版の補助型rootを再取得できなかった。依存・lockfileは変更・追加していない。
 
-追補後のbrowser収集はUI-only 5件/1 spec、旧suite 64件/12 spec。どちらも`--list`のみで画面実行0件。既知のlocalhost socket EPERMのためbrowserを再起動していない。新しいcapture 0枚、画像目視0枚。Draft PRのCI artifact取得と目視確認は未実施。
+追補後のbrowser収集はUI-only 5件/1 spec、旧suite 64件/12 spec。どちらも`--list`のみで画面実行0件。既知のlocalhost socket EPERMのためbrowserを再起動していない。ローカルcapture 0枚、画像目視0枚。CI結果は次項に記録する。
+
+### PR #10 CI追記
+
+Draft PR #10、head `d6cfe6505869b6f97391d24b3206790559688de8` のrun `37761058106` はsuccess。`npm ci`、`npm test`、production build、Chromium導入、UI-only browser test、artifact uploadの各stepが成功し、UI-onlyは5件pass（54.4秒）。手動専用の`legacy-flight-comparison` jobは今回skipされており、旧64件やsame-tick比較の実行成功とは扱わない。
+
+artifactは`ui-only-browser-evidence`、ID `11541829036`、8,347,255 bytes。Actions runは`https://github.com/chameleonjp-lab/gekichin/actions/runs/37761058106`。GitHub artifact toolからfile referenceは得たが、このsandboxでその参照を開くsocket操作が`PermissionError: [Errno 1] Operation not permitted`となった。接続失敗後に再試行や別経路は使っていない。よってCI captureは生成済み、画像実体の目視は未確認のまま。通知の欠け・重なり、理由文captureの見え方、Canvas/WebGLの分類と画像確認時間は未確定であり、画像review完了とはしない。
