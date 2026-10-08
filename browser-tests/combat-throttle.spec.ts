@@ -6,7 +6,7 @@ async function startCombat(page: Page, mode: 'easy' | 'normal'): Promise<void> {
   await expect(page.locator('#app')).toHaveAttribute('data-renderer-ready', 'true');
   await page.clock.install({ time: new Date('2026-01-01T12:00:00.000Z') });
   await page.clock.pauseAt(new Date('2026-01-01T12:00:10.000Z'));
-  await page.getByRole('radio', { name: mode === 'easy' ? /Easy/ : /Normal/ }).check();
+  await page.getByRole('radio', { name: mode === 'easy' ? /イージー/ : /ノーマル/ }).check();
   await page.locator('#start').click();
   await page.clock.runFor(500);
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
@@ -86,7 +86,7 @@ test('Normal lever retains its target, clears on controls pause, and Easy keeps 
 
   await page.locator('#pause').click();
   await page.locator('#pause-home').click();
-  await page.getByRole('radio', { name: /Easy/ }).check();
+  await page.getByRole('radio', { name: /イージー/ }).check();
   await page.locator('#start').click();
   await page.clock.runFor(500);
   await expect(page.locator('#app')).toHaveAttribute('data-mode', 'easy');
@@ -170,7 +170,7 @@ test('large-text landscape throttle placement stays clear of real controls and m
   await page.setViewportSize({ width: 568, height: 320 });
   await page.addInitScript(layout => localStorage.setItem('gekichin-controls-v2', JSON.stringify(layout)), candidate);
   await page.goto('/');
-  await page.getByRole('radio', { name: /Normal/ }).check();
+  await page.getByRole('radio', { name: /ノーマル/ }).check();
   await page.locator('#home-controls').click();
   await page.locator('#control-editor-touch').click();
   await page.locator('#control-mode').selectOption('normal');

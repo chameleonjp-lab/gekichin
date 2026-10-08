@@ -1,6 +1,7 @@
 import './style.css';
 import { boundaryDirectionLabel } from './boundary-guidance';
 import './control-settings.css';
+import './common-shell.css';
 import { FlightControls, type FlightControlButtons } from './input';
 import { ControlSettings } from './control-settings';
 import { ControlInputPresentation, KeyboardSettings, isKeyboardEditingTarget } from './keyboard-settings';
@@ -17,38 +18,44 @@ const app = document.querySelector<HTMLDivElement>('#app')!;
 app.innerHTML = `
   <div id="scene" class="scene"></div>
   <div id="flight-surface" class="flight-surface" aria-hidden="true"></div>
-  <main id="home" class="overlay">
-    <section class="panel home-panel" aria-labelledby="game-title">
-      <p class="eyebrow">ゼロ：シリーズ</p>
+  <main id="home" class="overlay home-screen" aria-labelledby="game-title">
+    <div class="brand-line"><span class="brand-mark" aria-hidden="true">G</span><span>ゼロ：シリーズ / 全周攻略</span></div>
+    <div class="home-copy">
+      <p class="eyebrow">巨艦を、全周から。</p>
       <h1 id="game-title">ゲキチン</h1>
-      <p class="tagline">巨艦を、全周から。</p>
-      <p class="mission-badge">一隻、全周100砲台。</p>
-      <p class="objective">目標は超大型母艦の<strong>砲台100基を全破壊</strong>。味方50機は自機込みの総残機、同時出撃は8機。残機があれば復帰します。</p>
-      <p class="scope-note">主砲の予告を避け、僚機と六面へ回り込む。機銃と機関砲で装甲上の砲台を撃ち抜き、全100基で撃沈です。</p>
-      <p id="best-record" class="best-record">端末内ベスト：未記録</p>
-      <fieldset class="mode-picker">
-        <legend>操縦モード</legend>
-        <label><input type="radio" name="mode" value="easy" checked /><span><b>Easy</b><small>巡航・照準内の自動射撃</small></span></label>
-        <label><input type="radio" name="mode" value="normal" /><span><b>Normal</b><small>手動射撃・加速・減速</small></span></label>
-      </fieldset>
-      <p id="home-key-guide" class="key-guide"></p>
-      <p class="touch-guide">タッチ／マウス：触れた位置からドラッグして操縦</p>
-      <button id="start" class="primary" type="button">作戦を開始する <span aria-hidden="true">→</span></button>
-      <div class="utility-grid">
-        <button id="home-controls" data-settings type="button">操作設定</button>
-        <button id="home-guide" data-guide type="button">遊び方</button>
-        <button data-sound type="button" aria-pressed="false">音 OFF</button>
+      <p class="intro">目標は超大型母艦一隻。<br /><strong>砲台100基を全破壊</strong>して、撃沈する。</p>
+      <p class="scope-note">主砲の予告を避け、僚機と六面へ回り込む。機銃と機関砲で装甲上の砲台を撃ち抜こう。</p>
+    </div>
+    <section class="briefing" aria-label="出撃準備">
+      <div class="mission-data">
+        <div><span>母艦の砲台</span><strong>100<small>基</small></strong><em>主砲20・機銃80</em></div>
+        <div><span>味方総残機</span><strong>50<small>機</small></strong><em>自機を含む</em></div>
+        <div><span>同時出撃</span><strong>8<small>機</small></strong><em>残機があれば復帰</em></div>
       </div>
+      <fieldset class="mode-picker">
+        <legend>操作モード</legend>
+        <label><input type="radio" name="mode" value="easy" checked /><span><b>イージー</b><small>巡航・照準内の自動射撃</small></span></label>
+        <label><input type="radio" name="mode" value="normal" /><span><b>ノーマル</b><small>手動射撃・加速・減速</small></span></label>
+      </fieldset>
+      <button id="start" class="primary" type="button">出撃する <span aria-hidden="true">→</span></button>
+      <p class="touch-guide">タッチ／マウス：触れた位置からドラッグして操縦</p>
+      <p id="home-key-guide" class="key-guide"></p>
+      <div class="home-actions">
+        <button id="home-guide" data-guide class="secondary" type="button">ルールと操作方法</button>
+        <button id="home-controls" data-settings class="text-button" type="button">操作設定</button>
+      </div>
+      <p id="best-record" class="best-record">端末内ベスト：未記録</p>
       <p id="render-note" class="render-note" data-graphics-status role="status" hidden></p>
     </section>
+    <footer class="home-footer"><span>GEKICHIN / 巨艦攻略</span><button id="home-sound" data-sound class="text-button" type="button" aria-pressed="false" aria-label="音をオンにする">音をオンにする</button></footer>
   </main>
   <section id="preparing" class="overlay" aria-labelledby="preparing-title" hidden>
     <div class="panel compact-panel"><p class="eyebrow">PREPARING</p><h2 id="preparing-title">出撃を準備しています</h2><p>準備時間は作戦タイムに含めません。</p><button id="cancel-preparing" type="button">ホームへ戻る</button></div>
   </section>
   <section id="hud" class="hud" aria-label="戦闘情報" hidden>
     <div class="hud-top">
-      <div class="flight-label"><b>ゲキチン</b><span id="hud-mode">EASY</span></div>
-      <div class="hud-utility"><button data-sound type="button" aria-pressed="false">音 OFF</button><button id="pause" type="button" aria-label="一時停止">Ⅱ</button></div>
+      <div class="flight-label"><b>ゲキチン</b><span id="hud-mode">イージー</span></div>
+      <div class="hud-utility"><button data-sound type="button" aria-pressed="false" aria-label="音をオンにする">音 OFF</button><button id="pause" type="button" aria-label="一時停止">Ⅱ</button></div>
     </div>
     <div class="metrics">
       <div><small>作戦時間</small><output id="elapsed">0.00 s</output></div>
@@ -89,12 +96,16 @@ app.innerHTML = `
   </section>
   <section id="paused" class="overlay" aria-labelledby="pause-title" hidden>
     <div class="panel compact-panel">
-      <p class="eyebrow">PAUSED</p><h2 id="pause-title">停止中</h2>
+      <p class="eyebrow">PAUSED</p><h2 id="pause-title">一時停止</h2>
       <p id="pause-reason">戦闘・装填・復帰・作戦時計を停止しています。</p>
-      <button id="resume" class="primary" type="button">作戦を再開する</button>
-      <div class="utility-grid"><button id="pause-controls" data-settings type="button">操作設定</button><button data-guide type="button">遊び方</button><button data-sound type="button" aria-pressed="false">音 OFF</button></div>
+      <button id="resume" class="primary" type="button">飛行を再開</button>
       <button id="finish" class="secondary" type="button">作戦を中断する</button>
       <button id="pause-home" class="text-button" type="button">ホームへ戻る</button>
+      <div class="shell-support">
+        <button data-guide class="secondary" type="button">ルールと操作方法</button>
+        <button id="pause-controls" data-settings class="secondary" type="button">操作設定</button>
+        <button data-sound class="text-button" type="button" aria-pressed="false" aria-label="音をオンにする">音 OFF</button>
+      </div>
     </div>
   </section>
   <section id="sinking" class="overlay sinking-overlay" aria-labelledby="sinking-title" hidden>
@@ -105,33 +116,34 @@ app.innerHTML = `
       <p class="eyebrow">MISSION REPORT</p><h2 id="result-title">作戦結果</h2>
       <p class="graphics-status" data-graphics-status role="status" hidden></p>
       <p id="result-outcome" class="mission-badge">中断</p>
-      <div class="result-headline"><p class="result-time"><output id="result-time">0.00</output><span>秒</span></p><p class="result-score"><small>総得点</small><output id="result-score">0</output></p></div>
+      <div class="result-headline"><p class="result-time"><output id="result-time">0.00</output><span>秒</span></p><p class="result-score"><small>最終スコア</small><output id="result-score">0</output></p></div>
       <p id="result-mode"></p>
-      <dl id="result-components" class="result-components"></dl>
+      <section class="score-breakdown" aria-labelledby="result-breakdown-title"><h3 id="result-breakdown-title">スコアの内訳</h3><dl id="result-components" class="result-components"></dl></section>
       <p id="result-details" class="result-details"></p>
       <p id="result-best" class="best-record"></p>
       <p id="save-status" class="save-status" role="status"></p>
-      <button id="restart" class="primary" type="button">再出撃する</button>
-      <div class="utility-grid"><button id="result-controls" data-settings type="button">操作設定</button><button data-guide type="button">遊び方</button><button data-sound type="button" aria-pressed="false">音 OFF</button></div>
+      <button id="restart" class="primary" type="button">もう一度出撃</button>
       <button id="result-home" class="secondary" type="button">ホームへ戻る</button>
+      <button id="result-controls" data-settings class="text-button" type="button">操作設定</button>
+      <div class="shell-support"><button data-guide class="secondary" type="button">ルールと操作方法</button><button data-sound class="text-button" type="button" aria-pressed="false" aria-label="音をオンにする">音 OFF</button></div>
     </div>
   </section>
   <dialog id="guide" aria-labelledby="guide-title">
-    <header class="settings-header"><div><p class="eyebrow">MISSION GUIDE</p><h2 id="guide-title">遊び方</h2></div><button id="guide-close" class="settings-close" type="button" aria-label="遊び方を閉じる">×</button></header>
-    <div class="guide-content">
+    <header class="settings-header"><div><p class="eyebrow">RULES &amp; CONTROLS</p><h2 id="guide-title">ルールと操作方法</h2></div><button id="guide-close" class="settings-close" type="button" aria-label="説明を閉じる">×</button></header>
+    <div class="guide-content" tabindex="0" role="region" aria-label="ルールと操作方法の本文">
       <p class="graphics-status" data-graphics-status role="status" hidden></p>
 
       <h3>作戦の目標</h3><p>超大型母艦の主砲20基・大型機銃80基、合計100基を全破壊します。味方50機は自機を含み、同時出撃は8機。残機があれば復帰します。</p>
       <h3>飛行の操作</h3><p>画面のどこからでも、触れた位置を基準にドラッグできます。右へドラッグで右旋回、上へドラッグで上昇。離すと操縦入力を解除します。</p><p id="guide-keys"></p>
-      <p>Easyは巡航速度で、遮蔽されない砲台が照準内へ入ると自動射撃。宙返りボタン1つです。Normalは射撃・宙返りボタンと速度レバー。上で加速、下で減速、離すと中央に戻り速度を保持します。宙返り中に新しく操縦すると中止できます。</p>
+      <p>イージーは巡航速度で、遮蔽されない砲台が照準内へ入ると自動射撃。宙返りボタン1つです。ノーマルは射撃・宙返りボタンと速度レバー。上で加速、下で減速、離すと中央に戻り速度を保持します。宙返り中に新しく操縦すると中止できます。</p>
       <h3>攻略と補給</h3><p>母艦の上・下・左右・前後に砲台があります。船体の反対側へは射撃できません。六面の残数を見ながら外周を回り込みましょう。主砲は1秒、大型機銃は0.3秒の固定照準予告があり、旋回や宙返りで射線から離脱できます。予告は音OFFでも見えます。</p>
-      <p>自機と僚機のHPは80。MG288発・機関砲96発が両方空になると6秒で全装填します。補給回数に制限はありません。Normalの自機弾は味方にも当たります。Easyと僚機弾は味方を損傷させませんが、接触で弾は止まります。</p>
+      <p>自機と僚機のHPは80。MG288発・機関砲96発が両方空になると6秒で全装填します。補給回数に制限はありません。ノーマルの自機弾は味方にも当たります。イージーと僚機弾は味方を損傷させませんが、接触で弾は止まります。</p>
       <h3>残機と復帰</h3><p>50機は自機込みの総残機です。同時出撃は8機。機体を失うと予備から3秒後に復帰し、待機中も戦闘は続きます。予備がなくても生存僚機がいれば、3秒後にその機体の状態を引き継ぎます。味方残機0で敗北です。</p>
       <p>戦場は母艦中心から水平4,000m・高度50〜2,500m。境界外が能動時間10秒続くと1機を失い、領域内へ戻ると猶予は解除されます。母艦・海への衝突は即損失です。</p>
       <h3>成績</h3><p>破壊1,000点/基、編隊の実損傷2点/HP、勝利時の時間点50,000/(1＋秒/300)。自機損失2,000点、僚機損失500点、砲台命中率の低下20,000×(1−H/N)を減点します。未射撃の命中率は未定義で率減点0。とどめと損傷の自機／僚機内訳を表示し、端末内ベストは勝利だけ、モード別に記録します。</p>
       <h3>設定と停止</h3><p>設定は保存後に適用されます。「変更を破棄」やEscで編集を取り消せます。設定や説明を閉じても戦闘は停止したままです。音は初期OFF。ONで方向と距離のある合成音が鳴ります。低モーション設定は装飾だけを弱めます。</p>
     </div>
-    <footer><button id="guide-done" class="primary" type="button">閉じる</button></footer>
+    <footer><button id="guide-done" class="primary" type="button">元の画面へ戻る</button></footer>
   </dialog>`;
 
 const element = <T extends HTMLElement>(selector: string) => app.querySelector<T>(selector)!;
@@ -171,7 +183,7 @@ let disposed = false;
 const reasonText: Record<PauseReason, string> = {
   manual: '戦闘・装填・復帰・作戦時計を停止しています。',
   settings: '操作設定のため停止しています。再開はボタンから行ってください。',
-  guide: '遊び方を開くため停止しています。再開はボタンから行ってください。',
+  guide: 'ルールと操作方法を開くため停止しています。再開はボタンから行ってください。',
   hidden: '画面が非表示になったため停止しました。明示的に再開してください。',
   focus: 'フォーカスが外れたため停止しました。明示的に再開してください。',
   gap: '処理が2秒以上停止したため戦闘を止めました。明示的に再開してください。',
@@ -193,17 +205,17 @@ function renderUi(focus = false): void {
   element('#flight-surface').hidden = !playing;
   for (const name of ['fire', 'throttle'] as const) buttons[name]!.hidden = session.mode !== 'normal';
   element('#fire-status').hidden = session.mode !== 'normal';
-  element('#hud-mode').textContent = session.mode.toUpperCase();
+  element('#hud-mode').textContent = session.mode === 'easy' ? 'イージー' : 'ノーマル';
   element('#home-key-guide').textContent = keyboard.describe(selectedMode());
   element('#guide-keys').textContent = keyboard.describe(session.phase === 'home' ? selectedMode() : session.mode);
   element<HTMLButtonElement>('#start').disabled = !graphicsAvailable;
   element<HTMLButtonElement>('#restart').disabled = !graphicsAvailable;
   element<HTMLButtonElement>('#resume').disabled = !graphicsAvailable;
   if (session.pauseReason) element('#pause-reason').textContent = session.pauseReason === 'webgl' && graphicsAvailable
-    ? '3D描画が復旧しました。「作戦を再開する」で再開できます。' : session.pauseReason === 'abnormal' && session.abnormalReason ? session.abnormalReason : reasonText[session.pauseReason];
+    ? '3D描画が復旧しました。「飛行を再開」で再開できます。' : session.pauseReason === 'abnormal' && session.abnormalReason ? session.abnormalReason : reasonText[session.pauseReason];
   if (session.report) {
     element('#result-time').textContent = (session.report.endTick / FIXED_HZ).toFixed(2);
-    element('#result-mode').textContent = `${session.report.mode === 'easy' ? 'Easy' : 'Normal'} · 編隊の戦果`;
+    element('#result-mode').textContent = `${session.report.mode === 'easy' ? 'イージー' : 'ノーマル'} · 編隊の戦果`;
   }
   const best = readBest(session.phase === 'home' ? selectedMode() : session.mode);
   element('#best-record').textContent = best ? `端末内ベスト：${best.components.total.toLocaleString('ja-JP')}点 / ${(best.endTick / FIXED_HZ).toFixed(2)}秒` : '端末内ベスト：未記録';
@@ -307,7 +319,7 @@ try {
 } catch {
   for (const note of app.querySelectorAll<HTMLElement>('[data-graphics-status]')) {
     note.hidden = false;
-    note.textContent = 'この環境では3D描画を開始できません。操作設定と遊び方は確認できます。';
+    note.textContent = 'この環境では3D描画を開始できません。「操作設定」と「ルールと操作方法」は確認できます。';
   }
 }
 
@@ -349,7 +361,9 @@ for (const button of app.querySelectorAll<HTMLElement>('[data-guide]')) button.a
 for (const button of app.querySelectorAll<HTMLElement>('[data-sound]')) button.addEventListener('click', async () => {
   await audio.toggle();
   for (const item of app.querySelectorAll<HTMLElement>('[data-sound]')) {
-    item.textContent = audio.isEnabled ? '音 ON' : '音 OFF'; item.setAttribute('aria-pressed', String(audio.isEnabled));
+    const actionLabel = audio.isEnabled ? '音をオフにする' : '音をオンにする';
+    item.textContent = item.id === 'home-sound' ? actionLabel : audio.isEnabled ? '音 ON' : '音 OFF';
+    item.setAttribute('aria-label', actionLabel); item.setAttribute('aria-pressed', String(audio.isEnabled));
   }
 }, opts);
 for (const radio of app.querySelectorAll<HTMLInputElement>('input[name="mode"]')) radio.addEventListener('change', () => {

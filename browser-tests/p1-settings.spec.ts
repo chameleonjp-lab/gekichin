@@ -60,7 +60,7 @@ test('home editors offer both modes and persist touch size, opacity and placemen
   expect(JSON.parse(saved[1]!)).toMatchObject({ version: 2, controls: { loop: { x: .6 } } });
   await page.reload(); await expect(page.locator('#home-controls')).toBeVisible();
   expect(await page.locator('#loop').evaluate(element => element.style.getPropertyValue('--control-x'))).toBe('60%');
-  await page.getByRole('radio', { name: /Normal/ }).check();
+  await page.getByRole('radio', { name: /ノーマル/ }).check();
   expect(await page.locator('#fire').evaluate(element => element.style.getPropertyValue('--control-size'))).toBe('100px');
   expect(await page.locator('#fire').evaluate(element => element.style.getPropertyValue('--control-opacity'))).toBe('0.65');
 });
@@ -96,7 +96,7 @@ test('future-version values are never downgraded and failed drafts can be cancel
   await page.locator('#control-cancel').click(); await editor(page); await page.locator('#control-mode').selectOption('normal');
   await expect(page.locator('#control-x')).toHaveValue('83');
   await range(page, '#control-x', 55); await page.locator('#control-save').click(); await page.locator('#control-save').click();
-  await page.getByRole('radio', { name: /Normal/ }).check();
+  await page.getByRole('radio', { name: /ノーマル/ }).check();
   expect(await page.locator('#fire').evaluate(element => parseFloat(element.style.getPropertyValue('--control-x')))).toBeCloseTo(55);
   expect(await page.evaluate(() => localStorage.getItem('gekichin-controls-v1'))).toBe(future);
 });

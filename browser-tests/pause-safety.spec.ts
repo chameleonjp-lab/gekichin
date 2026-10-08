@@ -30,7 +30,7 @@ async function startControlledFlight(page: Page): Promise<void> {
   }
   expect(ready, 'shader preparation must finish before the safety scenario').toBe(true);
   await page.clock.pauseAt(new Date(await page.evaluate(() => Date.now() + 1_000)));
-  await page.getByRole('radio', { name: /Normal/ }).check();
+  await page.getByRole('radio', { name: /ノーマル/ }).check();
   await page.locator('#start').click();
   await page.clock.runFor(100);
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
