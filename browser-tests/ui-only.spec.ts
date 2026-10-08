@@ -7,7 +7,9 @@ test.use({ serviceWorkers: 'block' });
 type ScreenState = 'home' | 'rules' | 'settings-touch' | 'settings-keyboard' | 'settings-conflict'
   | 'hud-easy' | 'hud-normal' | 'notice-long' | 'preparing' | 'paused' | 'sinking'
   | 'settings-save-failure' | 'result-save-failure'
-  | 'result-victory' | 'result-defeat' | 'result-mutual' | 'result-aborted' | 'webgl-unavailable';
+  | 'result-victory' | 'result-defeat' | 'result-mutual' | 'result-aborted' | 'webgl-unavailable' | 'webgl-unavailable-guidance';
+
+const LONG_NOTICE = '主砲の予告を確認しました。操縦入力で射線を外し、僚機の残機と復帰状況を見ながら母艦の反対側へ回り込んでください。画面を閉じず、戦況の末尾まで確認できます。';
 
 async function boot(page: Page): Promise<void> {
   await page.goto('/');
@@ -64,6 +66,26 @@ async function expectWithinViewport(page: Page, selector: string): Promise<void>
   expect(box!.y).toBeGreaterThanOrEqual(-1);
   expect(box!.x + box!.width).toBeLessThanOrEqual(viewport!.width + 1);
   expect(box!.y + box!.height).toBeLessThanOrEqual(viewport!.height + 1);
+}
+
+async function expectNoticeClearOfControls(page: Page): Promise<void> {
+  const notice = await page.locator('#combat-notice').boundingBox();
+  expect(notice, 'long combat notice has a layout box').not.toBeNull();
+  for (const selector of ['#pause', '#fire', '#loop', '#throttle']) {
+    await expect(page.locator(selector), selector + ' is available during the normal HUD notice check').toBeVisible();
+  }
+  for (const selector of ['#pause', '#fire', '#loop', '#throttle', '#combat-panel summary']) {
+    const control = page.locator(selector);
+    if (!await control.isVisible()) continue;
+    const box = await control.boundingBox();
+    expect(box, selector + ' has a layout box').not.toBeNull();
+    const gap = 8;
+    const separated = notice!.x + notice!.width + gap <= box!.x
+      || box!.x + box!.width + gap <= notice!.x
+      || notice!.y + notice!.height + gap <= box!.y
+      || box!.y + box!.height + gap <= notice!.y;
+    expect(separated, '#combat-notice stays at least 8px clear of ' + selector).toBe(true);
+  }
 }
 
 async function expectNoHorizontalOverflow(page: Page): Promise<void> {
@@ -188,9 +210,9 @@ test('393x852 portrait directly presents the product shell, mode HUDs, and all r
   const shortNotice = '主砲予告 1基 · 射線から離脱';
   await state(page, 'showNotice', shortNotice, 'normal', false);
   await expect(page.locator('#combat-notice')).toHaveText(shortNotice);
-  const longNotice = '主砲の予告を確認しました。操縦入力で射線を外し、僚機の残機と復帰状況を見ながら母艦の反対側へ回り込んでください。画面を閉じず、戦況の末尾まで確認できます。';
-  await state(page, 'showNotice', longNotice, 'normal', false);
-  await expect(page.locator('#combat-notice')).toHaveText(longNotice);
+  await state(page, 'showNotice', LONG_NOTICE, 'normal', false);
+  await expect(page.locator('#combat-notice')).toHaveText(LONG_NOTICE);
+  await expectNoticeClearOfControls(page);
   await capture(page, info, 'notice-long', 'normal');
 
   await state(page, 'showResult', 'easy', 'victory', false);
@@ -267,6 +289,10 @@ test('852x393 landscape captures representative shared screens and preserves rea
   await state(page, 'showHud', 'normal', false);
   await expect(page.locator('#hud-mode')).toHaveText('ノーマル');
   await capture(page, info, 'hud-normal', 'normal');
+  await state(page, 'showNotice', LONG_NOTICE, 'normal', false);
+  await expect(page.locator('#combat-notice')).toHaveText(LONG_NOTICE);
+  await expectNoticeClearOfControls(page);
+  await capture(page, info, 'notice-long', 'normal');
   await page.locator('#combat-panel summary').click();
   await expect(page.locator('#combat-panel')).toHaveJSProperty('open', true);
   await page.locator('#hit-breakdown').scrollIntoViewIfNeeded();
@@ -393,6 +419,9 @@ test('initial WebGL failure uses the product guidance while rules and settings r
   await expect(page.locator('#start')).toBeDisabled();
   await expect(page.locator('#render-note')).toContainText('3D描画を開始できません');
   await capture(page, info, 'webgl-unavailable', null);
+  await page.locator('#render-note').scrollIntoViewIfNeeded();
+  await expect(page.locator('#render-note')).toBeInViewport();
+  await capture(page, info, 'webgl-unavailable-guidance', null);
   await page.locator('#home-guide').click();
   await expect(page.locator('#guide')).toBeVisible();
   await expect(page.locator('#guide [data-graphics-status]')).toContainText('確認できます');

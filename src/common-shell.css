@@ -1,4 +1,4 @@
-/* Kaisen 519fd0d5 shell adaptation. Keep root, combat HUD and controls untouched. */
+/* Kaisen 519fd0d5 shell adaptation. Keep root, HUD metrics and flight controls fixed. */
 #home, #paused, #result, #guide {
   --gold: #e4c88b;
   --muted: #b8cbce;
@@ -226,4 +226,15 @@
 }
 @media (prefers-reduced-motion: reduce) {
   #paused, #result { backdrop-filter: none; }
+}
+
+/* The normal-text notice uses the open band above flight controls. The dedicated large-text layout remains in style.css. */
+#app:not([data-large-text="true"]) #hud #combat-notice { top: 40%; }
+@media (orientation: landscape) {
+  #app:not([data-large-text="true"]) #hud #combat-notice {
+    top: 30%;
+    left: 30.5%;
+    width: min(45%, 520px);
+    transform: none;
+  }
 }

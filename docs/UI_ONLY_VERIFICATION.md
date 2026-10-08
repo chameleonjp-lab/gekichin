@@ -35,3 +35,38 @@ setup / build / UI巡回capture / 画像reviewは別々に記録する。setup�
 初回のr1検査では`@types/node`が候補の依存に無く、追加strictを開始できなかった（TS2688）。r2では既存補助typeRootsの`@types/node` 24.19.1を読み取り専用で参照し、TypeScript 5.9.3で変更13対象と全39対象をnoEmit strict検査した。変更対象は診断0、全対象はG-04 baselineと同じ既存6診断のみ。`package.json`／lockへの依存追加はしていない。初回の全19path独立レビューで撮影状態の記録、Vite pluginのserver限定、Result/Home focus分岐などを反映し、今回の型修正は`browser-tests/ui-only.spec.ts`のResult画面IDをliteral unionで渡す1行に限る。
 
 スクリーンショットの実取得・目視、focusとscrollの実ブラウザ確認、実Canvasの分類、画面確認時間は、browser serverを起動できる環境で必要。gameplayは本検査に含めず、プレイ確認は本人が行う。GitHub公開、Draft PR、merge、deployはこの候補では行っていない。
+
+## 2026-10-08 PR9後の画像レビュー追補
+
+PR #9 のmerge後main `600585c89832c40f75d5fe967c7533b220fac0ac` を追補の基点とする。別担当が既存Actions artifact `11536348320` の重複を除く24 PNGを目視し、393×852のNormal長文通知が速度レバーの操作領域と射撃操作に重なる1件を報告した。これは画像レビュー結果の共有であり、この作業環境で画像を再取得・再目視した結果ではない。
+
+修正は元の19 path内に限定する。`src/common-shell.css` で通常文字の通知だけを縦向き／横向きの操作領域間へ配置し、z-index、通知非表示、入力部品の無効化は使わない。`tests/common-shell.test.ts` はその単一selectorだけを許可し、他のHUD・操作CSSを変えない契約を維持する。`browser-tests/ui-only.spec.ts` は393×852と852×393の長文通知についてpause・fire・loop・throttle・compact HUD summaryとの8px以上の間隔を検証し、横向きcaptureも追加する。
+
+WebGL不可画面は既存の初期captureを残し、`#render-note` へscrollした後の追加captureとviewport内assertionを加える。理由文が初期表示内にないことだけから到達不能とは結論しない。320×568、568×320、1440×900、200%文字は既存のgeometry検査条件を維持し、今回の画像として扱わない。
+
+### ローカル追補検査
+
+GitHub読取でmain `600585c89832c40f75d5fe967c7533b220fac0ac` を確認した。PR #9のmerge treeは `442088bdc719545c4d884cc603bea806b4ec823d`。保存済みr2 patchをde500c3上の完全checkoutへ適用した19 pathのroot treeも同じSHAになり、修正用checkoutはmerged mainと同じ全repo treeから始めている。CLI `git fetch` は作業環境proxyへの接続失敗だったため、GitHub読取結果とlocal tree照合で基点を確認した。
+
+| 項目 | 追補の結果 |
+| --- | --- |
+| npm test | 成功。17/17 test-file workers、fail 0、skip 0。 |
+| 詳細TAP | 成功。個別135/135 cases、fail 0、skip 0。17はfile worker数。 |
+| npm run build | 成功。production typecheck / build pass。752.55 kB chunk advisoryは継続。 |
+| 変更13対象 strict | TypeScript 5.9.3、既存補助`@types/node` 24.19.1で診断0。依存・lockfile変更なし。 |
+| 全39対象 strict | G-04 baselineの6診断と完全一致。追加診断0。exit 2はbaseline診断による。 |
+| UI-only収集 | 5件/1 file。`--list`のみ、実行0件。 |
+| 旧browser収集 | 64件/12 files。`--list`のみ、実行0件。旧入口を保持。 |
+| local browser / screenshot | 既知のlocalhost socket EPERMのため再試行せず未実行。capture 0枚、画像review 0枚。 |
+| GitHub CI / 新artifact | Draft PR作成後に実行予定。 |
+| 実WebGL Canvas | 未確認。 |
+
+この追補ではportrait `notice-long`を非交差assertion付きで撮影し、landscape `notice-long`と`#render-note`へscrollしたWebGL不可画面のcaptureも追加する。GitHub CIの実行・artifact生成と新画像の目視結果は、local収集・画像reviewと分けて追記する。
+
+### 独立review追記
+
+別担当の独立reviewでは、長文通知の8px非交差検査が非表示要素をskipでき、横向きで対象操作部品が確認対象に入らない可能性を指摘した。通常HUDの通知検査に入る`#pause`、`#fire`、`#loop`、`#throttle`は、両viewportで先に表示assertionを通すよう変更した。`#combat-panel summary`だけは通常配置で非表示の場合があるため任意項目に残す。独立review担当が修正後のassertionを再確認し、指摘は解消、追加blockerなしと判定した。
+
+assertion修正後も`npm test`は17/17 test files、fail 0、skip 0。production `npm run build`成功。変更13対象strictはTypeScript 5.9.3、現在この環境から参照できる既存補助`@types/node` 22.20.0で診断0。全39対象は既知のbaseline 6診断と完全一致し、追加診断0。r2時点での24.19.1補助型によるstrict記録は上記のとおり保存しているが、この追補の再実行ではその版の補助型rootを再取得できなかった。依存・lockfileは変更・追加していない。
+
+追補後のbrowser収集はUI-only 5件/1 spec、旧suite 64件/12 spec。どちらも`--list`のみで画面実行0件。既知のlocalhost socket EPERMのためbrowserを再起動していない。新しいcapture 0枚、画像目視0枚。Draft PRのCI artifact取得と目視確認は未実施。
