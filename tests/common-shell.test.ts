@@ -13,9 +13,10 @@ const between = (start: string, end: string) => {
   return source.slice(a, b);
 };
 // These hashes come from the unchanged de500c3e base, not candidate output.
-test('G-04 changes no main runtime beyond the six explicit display substitutions', () => {
+test('common parity changes no main runtime beyond the seven explicit display substitutions', () => {
   let runtime = source.slice(source.indexOf('const element = '));
   const approved: [string, string][] = [
+    ["element('#speed').textContent = `${Math.round(session.player.speed * 3.6)} km/h`;", "element('#speed').textContent = `${session.player.speed.toFixed(0)} m/s`;"],
     ["guide: 'ルールと操作方法を開くため停止", "guide: '遊び方を開くため停止"],
     ["element('#hud-mode').textContent = session.mode === 'easy' ? 'イージー' : 'ノーマル';", "element('#hud-mode').textContent = session.mode.toUpperCase();"],
     ['「飛行を再開」で再開', '「作戦を再開する」で再開'],
@@ -32,6 +33,7 @@ test('G-04 changes no main runtime beyond the six explicit display substitutions
 
 test('combat HUD structure, preparation and sinking remain the fixed-base templates', () => {
   const hud = between('  <section id="hud"', '  <section id="paused"')
+    .replace('id="speed">396 km/h', 'id="speed">110 m/s')
     .replace('id="hud-mode">イージー', 'id="hud-mode">EASY')
     .replace(' aria-label="音をオンにする"', '');
   assert.equal(hash(hud), '9c3c14567d5ac7d89e4882777d966047e0029a9048e9459e44be60e2f8b2dc99');

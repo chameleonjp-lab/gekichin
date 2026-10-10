@@ -59,7 +59,7 @@ app.innerHTML = `
     </div>
     <div class="metrics">
       <div><small>作戦時間</small><output id="elapsed">0.00 s</output></div>
-      <div><small>速度</small><output id="speed">110 m/s</output></div>
+      <div><small>速度</small><output id="speed">396 km/h</output></div>
       <div><small>高度</small><output id="altitude">1,000 m</output></div>
     </div>
     <details id="combat-panel" class="combat-panel" open>
@@ -464,7 +464,7 @@ function updateHud(): void {
   const fleet = session.fleet.counts, player = session.fleet.player;
   const totals = session.score.totals, components = session.score.components(session.tick);
   element('#elapsed').textContent = `${(session.tick / FIXED_HZ).toFixed(2)} s`;
-  element('#speed').textContent = `${session.player.speed.toFixed(0)} m/s`;
+  element('#speed').textContent = `${Math.round(session.player.speed * 3.6)} km/h`;
   element('#altitude').textContent = `${Math.round(session.player.position.y).toLocaleString('ja-JP')} m`;
   element('#score').textContent = components.total.toLocaleString('ja-JP');
   element('#destroyed').textContent = `${100 - session.mothership.remaining} / 100`;

@@ -197,6 +197,7 @@ test('393x852 portrait directly presents the product shell, mode HUDs, and all r
 
   await state(page, 'showHud', 'normal', false);
   await expect(page.locator('#hud-mode')).toHaveText('ノーマル');
+  await expect(page.locator('#speed')).toHaveText('396 km/h');
   await expect(page.locator('#fire')).toBeVisible();
   await expect(page.locator('#loop')).toBeVisible();
   await expect(page.locator('#throttle')).toBeVisible();
