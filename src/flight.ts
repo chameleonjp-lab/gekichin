@@ -1,4 +1,5 @@
 import { resolveThrottleAxis } from './throttle-lever';
+import { createFlightTargetLock, type FlightTargetLock } from './flight-target';
 // Flight equations and loop recovery adapted from kaisen@3d751051dc6212482a129e8da596ddd349b2f9f5. See docs/P0_BASELINE.md.
 import { Euler, Quaternion, Vector3 } from 'three';
 import { PLAYER_MAX_PITCH } from './rules';
@@ -19,13 +20,14 @@ const EPSILON = 1e-8;
 const WORLD_FORWARD = new Vector3(0, 0, -1);
 
 export interface FlightController {
+  targetLock: FlightTargetLock;
   playerTargetSpeed: number; loopHeld: boolean; playerLoopActive: boolean;
   loopStartYaw: number; loopStartPitch: number; loopStartSteeringRevision: number | undefined;
   loopStartTurn: number; loopStartClimb: number;
   assistTurn: number; assistClimb: number; responseMultiplier: number;
 }
 export function createFlightController(player: Aircraft): FlightController {
-  return { playerTargetSpeed: CRUISE_SPEED, loopHeld: false, playerLoopActive: false,
+  return { targetLock: createFlightTargetLock(), playerTargetSpeed: CRUISE_SPEED, loopHeld: false, playerLoopActive: false,
     loopStartYaw: player.yaw, loopStartPitch: player.pitch, loopStartSteeringRevision: undefined,
     loopStartTurn: 0, loopStartClimb: 0, assistTurn: 0, assistClimb: 0, responseMultiplier: 1 };
 }

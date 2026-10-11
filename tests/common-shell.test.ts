@@ -104,7 +104,7 @@ test('all original template IDs remain unique and reachable by existing bindings
   for (const id of required) assert.ok(ids.includes(id), id);
 });
 
-test('all 29 other source files including root CSS, settings, scene and gameplay are fixed-base bytes', () => {
+test('historical common-shell sources remain pinned outside explicit aim and camera deltas', () => {
   const expected: Record<string, string> = {
     "src/aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
     "src/aircraft.ts": "1a9c18f93e5a48869882b2aa2946cdeb352dc4a8acd76b4fd9beade8ded621d5",
@@ -136,5 +136,10 @@ test('all 29 other source files including root CSS, settings, scene and gameplay
     "src/types.ts": "b950b23044ab0520c14cfbcbe7edf7e021652dcffdd5f455d1230e2b26015c1f",
     "src/wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f"
 };
-  for (const [path, expectedHash] of Object.entries(expected)) assert.equal(hash(read(path)), expectedHash, path);
+  const deltas = JSON.parse(read('docs/evidence/aim-camera/source-deltas.json')).files;
+  assert.deepEqual(Object.keys(deltas).sort(), ['src/flight-assist.ts','src/flight-view.ts','src/flight.ts','src/game-state.ts','src/input.ts','src/scene.ts','src/style.css','src/types.ts'].sort());
+  for (const [path, expectedHash] of Object.entries(expected)) {
+    if (deltas[path]) { assert.equal(deltas[path].historical_sha256, expectedHash, path); assert.ok(deltas[path].reason); }
+    assert.equal(hash(read(path)), deltas[path]?.approved_sha256 ?? expectedHash, path);
+  }
 });

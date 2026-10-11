@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "base_main": "cd9431c53d64543c0d49e562dea9ea03d22a609c",
+  "files": {
+    "src/flight-assist.ts": {
+      "historical_sha256": "efebdbf59bf40b715d6e33f4bbdea60bdfe4e9d2ffaee0f1b37e2887ec9ac413",
+      "approved_sha256": "bfa4b6cd836e04d86a0a0aa5c4e41f060b21fb123d846e514728cb777c091d1b",
+      "reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md"
+    },
+    "src/flight-view.ts": {
+      "historical_sha256": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
+      "approved_sha256": "1bbe39ea55172c2b8da9d60f51c896e6be9a06d7e2b131fcd963a8d51c5796f8",
+      "reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md"
+    },
+    "src/flight.ts": {
+      "historical_sha256": "41675b4e1f3bfecee95dad5b6ee2bebbd3930545ed35e6fa8260fca25a4b49b3",
+      "approved_sha256": "85af15b3b2468807f253e055064bfac8b8b2549d5247a21ae5cb647def506384",
+      "reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md"
+    },
+    "src/game-state.ts": {
+      "historical_sha256": "378bc600e3b32a598ef88d1ab93879eb7ba23524d130e9e17ab3338212cecd3e",
+      "approved_sha256": "5febafac6ed73d995c5b305a036f38711b8122f7f34d8f3da0b79a568240bb0a",
+      "reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md"
+    },
+    "src/input.ts": {
+      "historical_sha256": "569455763b08fabb046145aa21ed473aa55de5ac4c481eb884b067263b925c7a",
+      "approved_sha256": "1df31fc2ccce469fea059e40fa09f0b0a4b9d2f99f90e2abe5cf935a649ddea7",
+      "reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md"
+    },
+    "src/scene.ts": {
+      "historical_sha256": "6dc42220163e8abfe10935994ddb316622dfa2b341ced773b3d7acd787552635",
+      "approved_sha256": "2ba350d33d6ae21f9c17e1269a3aa107ec5688ed4ab9b0e57614f20b823992ca",
+      "reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md"
+    },
+    "src/style.css": {
+      "historical_sha256": "7b26f83f5bf1881ef53bd9e8b6268fc7fc23db71f0b3fef10362620b41748c55",
+      "approved_sha256": "00f1404ec98e8fc88a83e5037b9ac7934208813039b0b0dd38a44cda88700346",
+      "reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md"
+    },
+    "src/types.ts": {
+      "historical_sha256": "b950b23044ab0520c14cfbcbe7edf7e021652dcffdd5f455d1230e2b26015c1f",
+      "approved_sha256": "f3a251aa47ff5c87767d05639146367acd2edb7b80231ffb30528dc44596b316",
+      "reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md"
+    }
+  }
+}

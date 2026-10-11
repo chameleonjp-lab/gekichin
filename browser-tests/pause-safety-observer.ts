@@ -24,7 +24,7 @@ export function observePauseState(session: FlightSession, controls: Pick<FlightC
         fixedPoint: state.fixedPoint?.toArray() ?? null, fixedDirection: state.fixedDirection?.toArray() ?? null,
       })),
       wingmanAI: [...session.wingmen.states.values()].map(state => ({ ...state, route: state.route.map(point => point.toArray()) })),
-      controller: { ...session.controller },
+      controller: { ...session.controller, targetLock: { ...session.controller.targetLock } },
       score: { totals: { ...session.score.totals }, components: { ...session.score.components(session.tick) }, retainedHitIds: session.score.retainedHitIds },
       events: session.events.map(event => ({ ...event, point: event.point?.toArray() })),
       report: session.report && { ...session.report, components: { ...session.report.components } },

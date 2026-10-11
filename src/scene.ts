@@ -7,8 +7,9 @@ import {
 } from 'three';
 import { AircraftFactory, type AircraftVisual } from './aircraft';
 import { CollisionWorld } from './collision-world';
+import { projectGunSight } from './gun-sight';
 import type { AircraftToken, CombatEvent, Projectile } from './combat-types';
-import { FLIGHT_FAR, FLIGHT_FOV, getFlightCameraPose } from './flight-view';
+import { FLIGHT_FAR, FLIGHT_FOV, getEffectiveFlightCameraPose, sinkingShipPose } from './flight-view';
 import { createMothershipLayout, type BoxSpec, type MothershipLayout, type TurretKind } from './mothership-layout';
 import { Mothership, type TurretState } from './mothership';
 import type { Aircraft, GameMode } from './types';
@@ -21,8 +22,6 @@ const ENEMY_MAIN_BULLET_CAPACITY = 16;
 const TRACER_CAPACITY = FRIENDLY_BULLET_CAPACITY + ENEMY_MG_BULLET_CAPACITY + ENEMY_MAIN_BULLET_CAPACITY;
 const WARNING_CAPACITY = 16;
 const MAX_AIRCRAFT = 8;
-const CAMERA_RADIUS = 1.5;
-const CAMERA_MARGIN = 0.55;
 
 /** Only the presentation-facing portion of the combat session is needed here. */
 export interface SceneCombatState {
@@ -154,10 +153,6 @@ export class FlightScene {
   private readonly temporaryQuaternion = new Quaternion();
   private readonly auxiliaryQuaternion = new Quaternion();
   private readonly temporaryEuler = new Euler();
-  private readonly inverseShipQuaternion = new Quaternion();
-  private readonly castFrom = new Vector3();
-  private readonly castTo = new Vector3();
-  private readonly collisionNormal = new Vector3();
   private readonly temporaryColor = new Color();
   private readonly unitY = new Vector3(0, 1, 0);
   private readonly reducedMotionQuery: MediaQueryList;
@@ -754,12 +749,9 @@ export class FlightScene {
   }
 
   private setSinking(elapsedSeconds: number): void {
-    const seconds = Math.max(0, Math.min(5, elapsedSeconds));
-    const progress = seconds / 5;
-    const eased = progress * progress * (3 - 2 * progress);
-    const roll = this.reducedMotion ? 0 : Math.sin(seconds * 0.72) * 0.055 * progress;
-    this.ship.position.set(this.layout.center.x, this.layout.center.y - 126 * eased, this.layout.center.z);
-    this.ship.rotation.set(0.035 * progress + roll * 0.35, 0, 0.105 * progress + roll, 'XYZ');
+    const progress = Math.max(0, Math.min(5, elapsedSeconds)) / 5;
+    const pose = sinkingShipPose(this.layout.center, elapsedSeconds, this.reducedMotion);
+    this.ship.position.copy(pose.position); this.ship.quaternion.copy(pose.rotation);
     this.bellyLight.intensity = 12 * (1 - progress * 0.88);
   }
 
@@ -796,27 +788,15 @@ export class FlightScene {
     this.updateParticles(tick + Math.max(0, Math.min(5, sinkingElapsedSeconds)) * 60);
     this.lastTick = tick;
 
-    getFlightCameraPose(player, mode, this.position, this.rotation);
     const world = this.selectWorld(session);
-    const sinkSeconds = Math.max(0, Math.min(5, sinkingElapsedSeconds));
-    const collisionFrom = player.position, collisionTo = this.position;
-    if (sinkSeconds > 0) {
-      this.inverseShipQuaternion.copy(this.ship.quaternion).invert();
-      this.castFrom.copy(player.position).sub(this.ship.position).applyQuaternion(this.inverseShipQuaternion).add(this.layout.center);
-      this.castTo.copy(this.position).sub(this.ship.position).applyQuaternion(this.inverseShipQuaternion).add(this.layout.center);
-    }
-    const hit = world.cameraCast(sinkSeconds > 0 ? this.castFrom : collisionFrom,
-      sinkSeconds > 0 ? this.castTo : collisionTo, CAMERA_RADIUS);
-    if (hit) {
-      this.collisionNormal.copy(hit.normal);
-      this.temporaryPosition.copy(hit.point);
-      if (sinkSeconds > 0) {
-        this.temporaryPosition.sub(this.layout.center).applyQuaternion(this.ship.quaternion).add(this.ship.position);
-        this.collisionNormal.applyQuaternion(this.ship.quaternion);
-      }
-      if (sinkSeconds > 0) {
-        this.position.copy(this.temporaryPosition).addScaledVector(this.collisionNormal, CAMERA_RADIUS + CAMERA_MARGIN);
-      } else this.position.copy(this.temporaryPosition).addScaledVector(this.collisionNormal, CAMERA_RADIUS + CAMERA_MARGIN);
+    const transform = sinkingShipPose(this.layout.center, sinkingElapsedSeconds, this.reducedMotion);
+    getEffectiveFlightCameraPose(player, mode, this.position, this.rotation, world, transform);
+    const circle = this.canvas.closest('#app')?.querySelector<HTMLElement>('.aim-circle');
+    if (circle) {
+      if (mode === 'normal') {
+        const sight = projectGunSight(player, this.canvas.clientWidth, this.canvas.clientHeight, world, transform);
+        circle.style.left = `${sight.x}px`; circle.style.top = `${sight.y}px`;
+      } else { circle.style.removeProperty('left'); circle.style.removeProperty('top'); }
     }
     this.camera.position.copy(this.position);
     this.camera.quaternion.copy(this.rotation);

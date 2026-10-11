@@ -3,6 +3,8 @@ import { Vector3 } from 'three';
 import type { Aircraft, FlightInput, GameMode } from './types';
 import { EASY_AIM_RADIUS, FLIGHT_CAMERA_BANK_FACTOR, FLIGHT_FOV, projectFlightTarget } from './flight-view';
 import { PLAYER_MAX_PITCH } from './rules';
+import { flightTargetKey, selectProjectedTarget, type FlightTargetLock } from './flight-target';
+import type { FlightCameraCollision } from './flight-view';
 
 export const OFFSCREEN_RESPONSE_MULTIPLIER = 1.65;
 export const EASY_TARGET_TRACKING_STRENGTH = 0.25;
@@ -12,6 +14,7 @@ export const EASY_SHOT_PREDICTION_GATE = 0.16;
 
 /** P2/P4 must supply an actual turret aim point and shared occlusion result. */
 export interface FlightAssistTarget {
+  id?: string | number;
   aimPoint: Vector3;
   alive: boolean;
   exposed: boolean;
@@ -27,19 +30,23 @@ export function applyEasyShotCorrection(forward: Vector3, predicted: Vector3): V
     .addScaledVector(predicted, Math.sin(correction) / Math.sin(angle)).normalize();
 }
 
-export function getFlightAssist(player: Aircraft, targets: readonly FlightAssistTarget[], input: FlightInput, mode: GameMode) {
+export function selectFlightAssistTarget<T extends FlightAssistTarget>(player: Aircraft, targets: readonly T[], aspect: number,
+  mode: GameMode, lock?: FlightTargetLock, manual = lock?.manual ?? false, world?: FlightCameraCollision) {
+  return selectProjectedTarget(targets.filter(t => t.alive && t.exposed).map(enemy => ({ enemy,
+    key: flightTargetKey({ ...enemy, position: enemy.aimPoint }), projection: projectFlightTarget(player, enemy.aimPoint, aspect, mode, world),
+  })), aspect, 1500, mode === 'easy' ? lock : undefined, manual);
+}
+
+export function getFlightAssist(player: Aircraft, targets: readonly FlightAssistTarget[], input: FlightInput, mode: GameMode,
+  lock?: FlightTargetLock, world?: FlightCameraCollision) {
   const manualTurn = clamp(input.turn, -1, 1), manualClimb = clamp(input.climb, -1, 1);
   const aspect = Number.isFinite(input.viewAspect) && (input.viewAspect ?? 0) > 0 ? input.viewAspect! : 393 / 852;
-  let target: ReturnType<typeof projectFlightTarget> | null = null;
-  for (const candidate of targets) {
-    if (!candidate.alive || !candidate.exposed) continue;
-    const projection = projectFlightTarget(player, candidate.aimPoint, aspect, mode);
-    if (projection.visible && (!target || projection.distance < target.distance)) target = projection;
-  }
+  const target = selectFlightAssistTarget(player, targets, aspect, mode, lock,
+    !!input.steeringActive || Math.max(Math.abs(manualTurn), Math.abs(manualClimb)) > 1e-4, world)?.projection ?? null;
   const hasVisibleTarget = target !== null;
   const responseMultiplier = targets.some(candidate => candidate.alive) && !hasVisibleTarget
     ? OFFSCREEN_RESPONSE_MULTIPLIER : 1;
-  if (mode !== 'easy' || !target) return { turn: manualTurn, climb: manualClimb, responseMultiplier, hasVisibleTarget };
+  if (mode !== 'easy' || !target || input.steeringActive) return { turn: manualTurn, climb: manualClimb, responseMultiplier, hasVisibleTarget };
   const screenRadius = Math.hypot(target.x * Math.max(1, aspect), target.y * Math.max(1, 1 / aspect)) / 2;
   const manualWeight = clamp(Math.max(Math.abs(manualTurn), Math.abs(manualClimb)) / 0.35, 0, 1);
   const assistFade = clamp((screenRadius - EASY_AIM_RADIUS) / (EASY_AIM_RADIUS * 2), 0, 1)
