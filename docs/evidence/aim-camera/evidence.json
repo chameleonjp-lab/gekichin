@@ -1,0 +1,1381 @@
+{
+  "schema_version": 1,
+  "repository": "chameleonjp-lab/gekichin",
+  "base_main": "cd9431c53d64543c0d49e562dea9ea03d22a609c",
+  "branch": "codex/zero-series-aim-camera-20261012",
+  "recorded_at": "2026-10-11T16:44:33.212630+00:00",
+  "source_sha256": {
+    "src/aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
+    "src/aircraft.ts": "1a9c18f93e5a48869882b2aa2946cdeb352dc4a8acd76b4fd9beade8ded621d5",
+    "src/audio.ts": "99057cd1e53413459802ada6d442a31de7feb8ee91008df540901b085d2731ab",
+    "src/boundary-guidance.ts": "7deac567a22cf2cf64693bb6777adf3e0491cc0d213ac6ecc53d9c5cfc7ebb21",
+    "src/collision-world.ts": "7ae49cac6c5a7d818c078d445f77f3053677d3e8bd2a659a5d383c786f7de519",
+    "src/combat-types.ts": "24f46be13ddb2a8e9dc3ec4a8b0b16f22cb530f140794bbc71c1925b09c98bd0",
+    "src/common-shell.css": "ab59882187eb35bf1411a7df8c4875b07a5b5ea534dd4798875854a58003a08f",
+    "src/control-obstacles.ts": "1717aefae64cd5b9b1d33a27c0cd3cccb4505cd4e07fc71b48c7e02c2f32abf2",
+    "src/control-settings.css": "a1f847ead95f731cf1f4f127bd3de82581d4fe3aaebd0b388cf72ddf3f438618",
+    "src/control-settings.ts": "005d66d0af205faf91c64c9aedfd72920bcb997b8867e9c90f8af297dc3f6726",
+    "src/dialog-focus.ts": "86d631a4d618558e1ca671004c12ccc1fbdfe75516e6c5d04f962acd2c5e1996",
+    "src/fleet.ts": "de29a3e7e875def5a69a569803e2cb35d151c27c7a87054a69f5d9a576d9ca90",
+    "src/flight-assist.ts": "bfa4b6cd836e04d86a0a0aa5c4e41f060b21fb123d846e514728cb777c091d1b",
+    "src/flight-target.ts": "d93d32e3afa7814005de2f8f5a102a624350db6cd9f5e1ebe46eb94350763961",
+    "src/flight-view.ts": "1bbe39ea55172c2b8da9d60f51c896e6be9a06d7e2b131fcd963a8d51c5796f8",
+    "src/flight.ts": "85af15b3b2468807f253e055064bfac8b8b2549d5247a21ae5cb647def506384",
+    "src/game-state.ts": "5febafac6ed73d995c5b305a036f38711b8122f7f34d8f3da0b79a568240bb0a",
+    "src/gun-sight.ts": "3a49abba22b6ab1f5bc748c8ddcf7910e80e4e7c0f55f93c5e1fdd165aa478e2",
+    "src/input.ts": "1df31fc2ccce469fea059e40fa09f0b0a4b9d2f99f90e2abe5cf935a649ddea7",
+    "src/keyboard-settings.ts": "cdf9495e1e8e68c9c7c75a8210ab44a7dcb2b2c94c27506d4615fd3ee90c86f6",
+    "src/main.ts": "d95fe53844684bc5d6e299b53590c70a48494485b0d78e0afba40996d82e8b00",
+    "src/mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+    "src/mothership.ts": "10eb613bce21c94115abe3665bb44d677059b8293e97f4307adae2b813a71466",
+    "src/rules.ts": "897ed57877f1986073e51efbfa96448409c89574959b6885b5e6924200f7e414",
+    "src/scene.ts": "2ba350d33d6ae21f9c17e1269a3aa107ec5688ed4ab9b0e57614f20b823992ca",
+    "src/scoring.ts": "95ee5ca3bac53b1e60b5c2cd804f35b7b7c91148851b5fcf99178c8aafd86494",
+    "src/settings-storage.ts": "dcc3d156e6872f3876624d285bb327c421073785afd6e00ada1f83a6f33cfb28",
+    "src/style.css": "00f1404ec98e8fc88a83e5037b9ac7934208813039b0b0dd38a44cda88700346",
+    "src/throttle-control.ts": "99b45ef5b506ee7a051f80152bf3ce1dcf7a5f521a7c446f6021e76a67163466",
+    "src/throttle-lever.ts": "e83fe3c570581d16cb76e08ef9a039bbe9d4a50da6575366ac7e126bf3f30cf0",
+    "src/turret-combat.ts": "fd9cf7163da2bb89bd3a755d35220f0720e33eb2b1bc5def7ed2b416c56a2e71",
+    "src/types.ts": "f3a251aa47ff5c87767d05639146367acd2edb7b80231ffb30528dc44596b316",
+    "src/wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f",
+    "tests/aim-camera-regression.test.ts": "c477079279be0a464a246e05729d2da0815436c4571267bd26d1c4b7f2f7257e",
+    "tests/boundary-guidance.test.ts": "504b429f60dc130125ea319e9ff734ee77703b6e1b86093cab38498af6b8d162",
+    "tests/combat-core.test.ts": "62a4c274ef7fdea987d979f1f1ae15cf335821eac8a86895b696e82fc6299bc3",
+    "tests/common-shell.test.ts": "b54c6d836de8e83d3b2f7677cd6e8dfe4c94d3bb46ec697b120dbc287b021a0c",
+    "tests/enemy-ai.test.ts": "10dc559f29ab66095d3088d11bb98367937b1debc1797ebd43081ee856c5315e",
+    "tests/evasion-fixture.ts": "645fa9554f593b4d70881e99ac54982cb738cbb30fa51751d3dc584f9cc28c20",
+    "tests/evasion.test.ts": "44e77deb54d9939fb520edcab7ebe8d9f253860e761ef69a893b14bb2db2bfee",
+    "tests/fixtures/throttle-lever-v1.json": "416c5ac01d4d14d1f45d94385e07233090740db04382e468db1f0c64689df8ca",
+    "tests/flight.test.ts": "fe12057a7a771971d98729fd2efea910a4422003e9b9d65a64da72f5ea9251f0",
+    "tests/input-ownership-regression.test.ts": "37fac20e30b9257d0dcacd49e320ac58dc33402046996a2cdbd06cd4307e6ccf",
+    "tests/mission-acceptance.test.ts": "edf0815093ea18eefa7a900090cb03e2c14ee9cbf4ca3976808936de9df4501c",
+    "tests/mothership.test.ts": "5f2b09d8f8f83ed798744caea1f3d98f607744581a9186c27cbb743587ea5e60",
+    "tests/network-policy.test.ts": "653a1b3056a5f64c04c203c9985a9bda00688a527e4d18948a7bd39c095364f4",
+    "tests/p1-independent.test.ts": "dc26696764741abf69c4c4df687a2dd3f486e7a2adf7396baf13500ff3b891dc",
+    "tests/pages-deployment.test.ts": "f4dfe38fefdf02cbfbb1e182b3dc0bc5fd2c56934d0a3bc7e620243102efc9c2",
+    "tests/pause-safety.test.ts": "716b702be6cb819885abe483e311c0613b0d491cf20b0a541d7064d8c7034dd3",
+    "tests/throttle-combat.test.ts": "b275d3faab53c95b93d0bb92a20fab465489548c5e21e06c19511352a4e653d4",
+    "tests/throttle-input-storage.test.ts": "bb7b69f6202c347388f5c84a685397c035a70cd38b08fe7751020d4fa99847cb",
+    "tests/throttle-lever.test.ts": "fb2ce8c67c7c681c21f6cd85fa435d58caa0e641f6d8345b2e001f795ffbbce2",
+    "tests/throttle-review.test.ts": "f2a10fb057594a3f6fd9ee0ff2246308c9a5c4a8bffc64ceed8512cf7e134511",
+    "tests/ui-only-contract.test.ts": "d2fd451870b3228a980512b6ee537330fbd61ab0661c2525c9faa843c5a1ddf6",
+    "scripts/browser-product-run.ts": "d2956ed6cb23ca37f75581336134e945f4a9a99bd0064328544460c589f46065",
+    "scripts/capture-throttle-comparison.mjs": "e3ca97f3e9e3da83589eef52f416ea96a9bbecf9158f8111902f7e4f7e0991b8",
+    "scripts/core-load-runner.ts": "06590271a3020c69dc5e5bd06db4ac68b9f4627072c620a7bc3abff346287f1d",
+    "scripts/mission-replay.ts": "5836db325e792f0f50d10bf247c326e0273c8d9dde3e35d952c9c7c71017c4c8",
+    "scripts/mission-runner.ts": "b141d39ce1d27b698bb78c81154edbc37763c017c17fd4715f26c9490589b5cb",
+    "scripts/normal-enemy-respawn-run.mjs": "92bd4d9419d8dbb3ac8ac528220fc94572e4c52ee3e198285205eaa87194bcc5",
+    "scripts/prepare-pages.mjs": "903be1f92e0a4ad67e1c438ec9742b031524df77b3ba4e4143c7f456ed010a0c",
+    "browser-tests/combat-throttle.spec.ts": "b002356eb610a252ce3c443e5ed4052feb36971e86ef90d48460e5ffcb8652ac",
+    "browser-tests/combat.spec.ts": "e3ff88794ae791d42c4216990ec40de860ef4144597d6d5c84c392c4570e594e",
+    "browser-tests/common-shell.spec.ts": "5556d0c74d310edcb0eccccc178ace1d06b9339c6794ee97e5166233be951f0e",
+    "browser-tests/evasion-recorder.html": "29fc55b43d86e8e57a01a2cbf2554c1885f8e179357f874d45b800f8b7c7f1e0",
+    "browser-tests/evasion-recorder.ts": "fe7f7f1e7654048bf41b283791f53a67c32b152d772ab29b4520654861bf0e03",
+    "browser-tests/evasion-recording.spec.ts": "bd111b47240df7973d7eed4769edd9501b028aff9d465eb4cbd9b5c3620692ab",
+    "browser-tests/evasion-visual.spec.ts": "c6c0d62f4ba3985f47d5fa5aea5d619cc6cc6ff1a318cb9909e663234c8c52f1",
+    "browser-tests/network-policy.ts": "a8a643fe52d5f33600babd55668568db9c5362078b5296a20afeffe8c394d8d8",
+    "browser-tests/p1-flow.spec.ts": "703ca77c53f4cb73223772d3eea4dadb2df82a25adb29faf5bad41de034316e0",
+    "browser-tests/p1-independent-ui.spec.ts": "8f1003ef6e9e45e8088071ad8caa93a62426b257866a3d49f0e2052b341f5024",
+    "browser-tests/p1-independent.spec.ts": "d9f1834b71d22ee017893db5e3cd1a28a99f2c32072cb3f83308ad536cfb95ba",
+    "browser-tests/p1-native-visibility.spec.ts": "87070ad1eb9a76a076b3167a7145ee0308b4467109d14d85a656ce8bfcea9568",
+    "browser-tests/p1-settings.spec.ts": "8d28ec4465e222d377c748ed6f086ac25b908b904c696ab6f0fc680bbc838af5",
+    "browser-tests/pause-safety-assets.ts": "94a49230e08ba60ea33733719800e1ee72f7db4ff5b24491903bc1b30d05cfee",
+    "browser-tests/pause-safety-observer.ts": "f907bf3a8709031cbf53098ab4dbdc74bfc9bf6d80fc6529642c966452f86334",
+    "browser-tests/pause-safety-oracle.ts": "56fb29d9ef3762fd6877cba27bbe7258fa21dc589471c0582e14400f8dd78db5",
+    "browser-tests/pause-safety.spec.ts": "c1c09465cf7dc559a422a99a78ff78592991ef06ecda44705f869b09e46baf0f",
+    "browser-tests/throttle-lever.spec.ts": "0fbeb666373bc7d13c62985a12fca63215f7d8644c5615298a911ea42916ee95",
+    "browser-tests/ui-only-state.ts": "74c1dc3d4809ad234f58d7ed56b389eb15097c6e7a9363b1c85b990e4b908a15",
+    "browser-tests/ui-only.spec.ts": "8af65f06759553d29d179303c4cbc89608c347e73d1352ada911340444068dab",
+    "docs/evidence/aim-camera/verify-normal-fire.mts": "f120e6fdcd846bfded494c3683751e8f05257c74767caebd64603d4a838001bd"
+  },
+  "checks": {
+    "unit": {
+      "command": "npm test",
+      "exit_code": 0,
+      "passed": 142,
+      "skipped": 0,
+      "log_sha256": "7c21c27f1393263a3c4dea36ec8c1629278d13f245ce49678767648dca22b5e0",
+      "log_utc_mtime": "2026-10-11T16:10:08.962816+00:00"
+    },
+    "build": {
+      "command": "npm run build",
+      "exit_code": 0,
+      "log_sha256": "bb0741e8d115398949f3605a1f9c97af62d0b2005ba2cdc8602a786858ca8d98"
+    },
+    "related_browser": {
+      "command": "PLAYWRIGHT_BROWSERS_PATH=<browser-cache> npm run test:browser",
+      "result": "5 pass（指定UI suite、日本語font）。",
+      "log_sha256": "96d014ddc092f70cf8ba593eddc284665efdffb10f2461d0738977d2e5398b93"
+    },
+    "normal_fire": {
+      "command": "node --import tsx docs/evidence/aim-camera/verify-normal-fire.mts",
+      "exit_code": 0,
+      "result_sha256": "4392b5f453bc3859e022a9a3742344679757b55b6ee7fe420aa3dd7b2f420806",
+      "script_sha256": "f120e6fdcd846bfded494c3683751e8f05257c74767caebd64603d4a838001bd"
+    }
+  },
+  "product_browser": {
+    "browser": "153.0.8010.0",
+    "engine": "Chromium / SwiftShader",
+    "built_bundle": true,
+    "font": "Noto Sans JP / @fontsource/noto-sans-jp 5.3.1, installed only in verification environment",
+    "deterministic_seed": false,
+    "note": "native start/mode/resize/pause/settings, no fixture injection; protective RAF pause may cover a live last accepted frame",
+    "rows": [
+      {
+        "repo": "gekichin",
+        "mode": "normal",
+        "width": 320,
+        "height": 568,
+        "dpr": 1,
+        "file": "normal-320x568-dpr1.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 205.46875,
+              "y": 12,
+              "width": 53.53125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 262,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "fire",
+            "rect": {
+              "x": 216,
+              "y": 429.109375,
+              "width": 96,
+              "height": 96
+            },
+            "label": "射撃MG・機関砲"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 229.59375,
+              "y": 338.875,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          },
+          {
+            "id": "throttle",
+            "rect": {
+              "x": 22.390625,
+              "y": 362,
+              "width": 64,
+              "height": 128
+            },
+            "label": "速度レバー"
+          }
+        ],
+        "sight": {
+          "x": 142,
+          "y": 188.265625,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 320,
+          "height": 568
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "normal",
+        "width": 393,
+        "height": 852,
+        "dpr": 1,
+        "file": "normal-393x852-dpr1.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 270.875,
+              "y": 12,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 335,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "fire",
+            "rect": {
+              "x": 278.1875,
+              "y": 667.671875,
+              "width": 96,
+              "height": 96
+            },
+            "label": "射撃MG・機関砲"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 290.1875,
+              "y": 526.3125,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          },
+          {
+            "id": "throttle",
+            "rect": {
+              "x": 34.796875,
+              "y": 575,
+              "width": 64,
+              "height": 128
+            },
+            "label": "速度レバー"
+          }
+        ],
+        "sight": {
+          "x": 178.5,
+          "y": 291.40625,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 393,
+          "height": 852
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "normal",
+        "width": 852,
+        "height": 393,
+        "dpr": 1,
+        "file": "normal-852x393-dpr1.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 729.875,
+              "y": 8,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 794,
+              "y": 8,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "fire",
+            "rect": {
+              "x": 675.71875,
+              "y": 298.671875,
+              "width": 62.875,
+              "height": 62.875
+            },
+            "label": "射撃MG・機関砲"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 675.71875,
+              "y": 227.9375,
+              "width": 62.875,
+              "height": 62.875
+            },
+            "label": "宙返り準備OK"
+          },
+          {
+            "id": "throttle",
+            "rect": {
+              "x": 113.390625,
+              "y": 231.875,
+              "width": 62.875,
+              "height": 125.75
+            },
+            "label": "速度レバー"
+          }
+        ],
+        "sight": {
+          "x": 408,
+          "y": 124.71875,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 852,
+          "height": 393
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "normal",
+        "width": 568,
+        "height": 320,
+        "dpr": 1,
+        "file": "normal-568x320-dpr1.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 445.875,
+              "y": 8,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 510,
+              "y": 8,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "fire",
+            "rect": {
+              "x": 445.84375,
+              "y": 243.203125,
+              "width": 51.1875,
+              "height": 51.1875
+            },
+            "label": "射撃MG・機関砲"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 445.84375,
+              "y": 185.59375,
+              "width": 51.1875,
+              "height": 51.1875
+            },
+            "label": "宙返り準備OK"
+          },
+          {
+            "id": "throttle",
+            "rect": {
+              "x": 70.953125,
+              "y": 188.8046875,
+              "width": 51.1875,
+              "height": 102.390625
+            },
+            "label": "速度レバー"
+          }
+        ],
+        "sight": {
+          "x": 266,
+          "y": 98.203125,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 568,
+          "height": 320
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "normal",
+        "width": 1280,
+        "height": 720,
+        "dpr": 1,
+        "file": "normal-1280x720-dpr1.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 1157.875,
+              "y": 12,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 1222,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "fire",
+            "rect": {
+              "x": 1014.390625,
+              "y": 556.796875,
+              "width": 96,
+              "height": 96
+            },
+            "label": "射撃MG・機関砲"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 1026.390625,
+              "y": 439.1875,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          },
+          {
+            "id": "throttle",
+            "rect": {
+              "x": 185.59375,
+              "y": 476,
+              "width": 64,
+              "height": 128
+            },
+            "label": "速度レバー"
+          }
+        ],
+        "sight": {
+          "x": 622,
+          "y": 243.46875,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "easy",
+        "width": 320,
+        "height": 568,
+        "dpr": 1,
+        "file": "easy-320x568-dpr1.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 205.46875,
+              "y": 12,
+              "width": 53.53125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 262,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 229.59375,
+              "y": 338.875,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          }
+        ],
+        "sight": {
+          "x": 142,
+          "y": 266,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 320,
+          "height": 568
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "easy",
+        "width": 393,
+        "height": 852,
+        "dpr": 1,
+        "file": "easy-393x852-dpr1.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 270.875,
+              "y": 12,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 335,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 290.1875,
+              "y": 526.3125,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          }
+        ],
+        "sight": {
+          "x": 178.5,
+          "y": 408,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 393,
+          "height": 852
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "easy",
+        "width": 852,
+        "height": 393,
+        "dpr": 1,
+        "file": "easy-852x393-dpr1.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 729.875,
+              "y": 8,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 794,
+              "y": 8,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 675.71875,
+              "y": 227.9375,
+              "width": 62.875,
+              "height": 62.875
+            },
+            "label": "宙返り準備OK"
+          }
+        ],
+        "sight": {
+          "x": 408,
+          "y": 178.5,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 852,
+          "height": 393
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "easy",
+        "width": 568,
+        "height": 320,
+        "dpr": 1,
+        "file": "easy-568x320-dpr1.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 445.875,
+              "y": 8,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 510,
+              "y": 8,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 445.84375,
+              "y": 185.59375,
+              "width": 51.1875,
+              "height": 51.1875
+            },
+            "label": "宙返り準備OK"
+          }
+        ],
+        "sight": {
+          "x": 266,
+          "y": 142,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 568,
+          "height": 320
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "easy",
+        "width": 1280,
+        "height": 720,
+        "dpr": 1,
+        "file": "easy-1280x720-dpr1.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 1157.875,
+              "y": 12,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 1222,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 1026.390625,
+              "y": 439.1875,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          }
+        ],
+        "sight": {
+          "x": 622,
+          "y": 342,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "normal",
+        "width": 320,
+        "height": 568,
+        "dpr": 2,
+        "file": "normal-320x568-dpr2.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 205.46875,
+              "y": 12,
+              "width": 53.53125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 262,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "fire",
+            "rect": {
+              "x": 216,
+              "y": 429.109375,
+              "width": 96,
+              "height": 96
+            },
+            "label": "射撃MG・機関砲"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 229.59375,
+              "y": 338.875,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          },
+          {
+            "id": "throttle",
+            "rect": {
+              "x": 22.390625,
+              "y": 362,
+              "width": 64,
+              "height": 128
+            },
+            "label": "速度レバー"
+          }
+        ],
+        "sight": {
+          "x": 142,
+          "y": 188.265625,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 320,
+          "height": 568
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "normal",
+        "width": 393,
+        "height": 852,
+        "dpr": 2,
+        "file": "normal-393x852-dpr2.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 270.875,
+              "y": 12,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 335,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "fire",
+            "rect": {
+              "x": 278.1875,
+              "y": 667.671875,
+              "width": 96,
+              "height": 96
+            },
+            "label": "射撃MG・機関砲"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 290.1875,
+              "y": 526.3125,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          },
+          {
+            "id": "throttle",
+            "rect": {
+              "x": 34.796875,
+              "y": 575,
+              "width": 64,
+              "height": 128
+            },
+            "label": "速度レバー"
+          }
+        ],
+        "sight": {
+          "x": 178.5,
+          "y": 291.40625,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 393,
+          "height": 852
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "normal",
+        "width": 852,
+        "height": 393,
+        "dpr": 2,
+        "file": "normal-852x393-dpr2.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 729.875,
+              "y": 8,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 794,
+              "y": 8,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "fire",
+            "rect": {
+              "x": 675.71875,
+              "y": 298.671875,
+              "width": 62.875,
+              "height": 62.875
+            },
+            "label": "射撃MG・機関砲"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 675.71875,
+              "y": 227.9375,
+              "width": 62.875,
+              "height": 62.875
+            },
+            "label": "宙返り準備OK"
+          },
+          {
+            "id": "throttle",
+            "rect": {
+              "x": 113.390625,
+              "y": 231.875,
+              "width": 62.875,
+              "height": 125.75
+            },
+            "label": "速度レバー"
+          }
+        ],
+        "sight": {
+          "x": 408,
+          "y": 124.71875,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 852,
+          "height": 393
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "normal",
+        "width": 568,
+        "height": 320,
+        "dpr": 2,
+        "file": "normal-568x320-dpr2.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 445.875,
+              "y": 8,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 510,
+              "y": 8,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "fire",
+            "rect": {
+              "x": 445.84375,
+              "y": 243.203125,
+              "width": 51.1875,
+              "height": 51.1875
+            },
+            "label": "射撃MG・機関砲"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 445.84375,
+              "y": 185.59375,
+              "width": 51.1875,
+              "height": 51.1875
+            },
+            "label": "宙返り準備OK"
+          },
+          {
+            "id": "throttle",
+            "rect": {
+              "x": 70.953125,
+              "y": 188.8046875,
+              "width": 51.1875,
+              "height": 102.390625
+            },
+            "label": "速度レバー"
+          }
+        ],
+        "sight": {
+          "x": 266,
+          "y": 98.203125,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 568,
+          "height": 320
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "normal",
+        "width": 1280,
+        "height": 720,
+        "dpr": 2,
+        "file": "normal-1280x720-dpr2.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 1157.875,
+              "y": 12,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 1222,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "fire",
+            "rect": {
+              "x": 1014.390625,
+              "y": 556.796875,
+              "width": 96,
+              "height": 96
+            },
+            "label": "射撃MG・機関砲"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 1026.390625,
+              "y": 439.1875,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          },
+          {
+            "id": "throttle",
+            "rect": {
+              "x": 185.59375,
+              "y": 476,
+              "width": 64,
+              "height": 128
+            },
+            "label": "速度レバー"
+          }
+        ],
+        "sight": {
+          "x": 622,
+          "y": 243.46875,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "easy",
+        "width": 320,
+        "height": 568,
+        "dpr": 2,
+        "file": "easy-320x568-dpr2.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 205.46875,
+              "y": 12,
+              "width": 53.53125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 262,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 229.59375,
+              "y": 338.875,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          }
+        ],
+        "sight": {
+          "x": 142,
+          "y": 266,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 320,
+          "height": 568
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "easy",
+        "width": 393,
+        "height": 852,
+        "dpr": 2,
+        "file": "easy-393x852-dpr2.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 270.875,
+              "y": 12,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 335,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 290.1875,
+              "y": 526.3125,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          }
+        ],
+        "sight": {
+          "x": 178.5,
+          "y": 408,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 393,
+          "height": 852
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "easy",
+        "width": 852,
+        "height": 393,
+        "dpr": 2,
+        "file": "easy-852x393-dpr2.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 729.875,
+              "y": 8,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 794,
+              "y": 8,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 675.71875,
+              "y": 227.9375,
+              "width": 62.875,
+              "height": 62.875
+            },
+            "label": "宙返り準備OK"
+          }
+        ],
+        "sight": {
+          "x": 408,
+          "y": 178.5,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 852,
+          "height": 393
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "easy",
+        "width": 568,
+        "height": 320,
+        "dpr": 2,
+        "file": "easy-568x320-dpr2.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 445.875,
+              "y": 8,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 510,
+              "y": 8,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 445.84375,
+              "y": 185.59375,
+              "width": 51.1875,
+              "height": 51.1875
+            },
+            "label": "宙返り準備OK"
+          }
+        ],
+        "sight": {
+          "x": 266,
+          "y": 142,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 568,
+          "height": 320
+        }
+      },
+      {
+        "repo": "gekichin",
+        "mode": "easy",
+        "width": 1280,
+        "height": 720,
+        "dpr": 2,
+        "file": "easy-1280x720-dpr2.png",
+        "pageErrors": [],
+        "controls": [
+          {
+            "id": "",
+            "rect": {
+              "x": 1157.875,
+              "y": 12,
+              "width": 58.125,
+              "height": 44
+            },
+            "label": "音をオンにする"
+          },
+          {
+            "id": "pause",
+            "rect": {
+              "x": 1222,
+              "y": 12,
+              "width": 44,
+              "height": 44
+            },
+            "label": "一時停止"
+          },
+          {
+            "id": "loop",
+            "rect": {
+              "x": 1026.390625,
+              "y": 439.1875,
+              "width": 72,
+              "height": 72
+            },
+            "label": "宙返り準備OK"
+          }
+        ],
+        "sight": {
+          "x": 622,
+          "y": 342,
+          "width": 36,
+          "height": 36
+        },
+        "scroll": {
+          "width": 1280,
+          "height": 720
+        }
+      }
+    ],
+    "raw_image_sha256": {
+      "normal-320x568-dpr1.png": "40f108737d5c1f143c1fe20cf294b618a37c30178f941f62147b4675623e58fc",
+      "normal-393x852-dpr1.png": "726e80bba1c7547ea38ad49bf56037b315576f5fb5c45992c68befdbf331b754",
+      "normal-852x393-dpr1.png": "abc6eac0bf20817d8182362235167829bd9e04e9879c07db5f3c4b7ff2a8c47f",
+      "normal-568x320-dpr1.png": "37445675c6db6c28bded0bae50a2a79dd8d621c3980962094fe4f0df9d51b470",
+      "normal-1280x720-dpr1.png": "7c7fb08c0cb442fb0b1db360f3afaa878bec0a78e8f0ee2e4b18e6ff80b10310",
+      "easy-320x568-dpr1.png": "603c54d5c6af37f793347d2ead8294c9ec8a3affff54bd7ac636f02fdda56955",
+      "easy-393x852-dpr1.png": "d7f92db06736cc053fe835bc98762839ae596e478455320ef69c116cf35dfb84",
+      "easy-852x393-dpr1.png": "dd9b52827127f914ae161d8baf4e2effeca61928339d2566daace7d8a86b1dde",
+      "easy-568x320-dpr1.png": "c6399d260338711ca838b9ae5b94393e0bc23bd64b9d9efe43c6d986915d3d61",
+      "easy-1280x720-dpr1.png": "7f52c2e6f3fdb8b892f26202ee030883a4deb23ebea4c74071073720ae600edb",
+      "normal-320x568-dpr2.png": "7f0e76a02b06d79692edddf0a2b684d117cb6d7e29572ba7248eb1bde7bd6bac",
+      "normal-393x852-dpr2.png": "6c1e5dbd4187f3a5575fd112e11b5559358896e97f7a757de864aec9844bb22f",
+      "normal-852x393-dpr2.png": "b360fa3f4014bac2285d1aa1d311d1f759dbc9a43ba2a65f0a85c17e156754bb",
+      "normal-568x320-dpr2.png": "3fd75173c55de5bdc0ac694cfb0d0e82baec82c7f46a11310b070e30c85e34fc",
+      "normal-1280x720-dpr2.png": "c89788cc8d6f050855b84bf063bd92760aba11bf99d5f5babcd1db2d77b80777",
+      "easy-320x568-dpr2.png": "a4cd06dac0aadf560729c651ef1d89759f6cdf7d9523de24c5f3742a2c239003",
+      "easy-393x852-dpr2.png": "c135b06411a7ac85a015b5c5b404ffa29461c375a3aa854e0495c6fef203b732",
+      "easy-852x393-dpr2.png": "ab6d3fb1b185dcba2e61375d86dda44626c023d48124cf3cb70509a6d8c12cbd",
+      "easy-568x320-dpr2.png": "965eca3cfffd32636b95a0273fecc9b38f1e7f21fcaacbc7e331c40e9354ab94",
+      "easy-1280x720-dpr2.png": "e1194f7752d1bb0d6ce05a7ea4d2db32abf46f577e19eedbce7dde06990eb46b"
+    }
+  },
+  "committed_images": {
+    "pause-settings.jpg": "af7d07e3575a903f84bab50b148abc3f6b394e0b72f0112557c3938b9461f2cd",
+    "portrait-comparison.jpg": "ed6662e1719d9856976519fdb0ba3797e5f7f2199a6eb3002dbf53b1dd323b0b",
+    "viewport-contact.jpg": "f030853086ea34d3f9772c46e2b2dc39f48340398cd9ea7465f8caeac7004978",
+    "viewport-dpr2.jpg": "92a2447caf6f7661fd1959b2749f9260aefc1d26790fbac8800a079743e5e088"
+  },
+  "unconfirmed": [
+    "physical iPhone Safari symptom/acceptance",
+    "WebKit automation (browser download unavailable)",
+    "actual render 30/60/120Hz comparison",
+    "product bundle 200% text/safe-area overrides (UI-only checks separate)"
+  ]
+}

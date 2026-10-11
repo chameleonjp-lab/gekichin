@@ -1,8 +1,8 @@
 import { Quaternion, Vector3 } from 'three';
 import { advanceThrottle, createFlightController, updateAircraftMotion, updatePlayerLoop, updateQuaternion, CRUISE_SPEED, ENEMY_MAX_PITCH, MAX_SPEED, type FlightController } from './flight';
 import { AIRCRAFT_RADIUS, BOUNDARY_GRACE_TICKS, BOUNDARY_HIGH, BOUNDARY_LOW, BOUNDARY_RADIUS, BOUNDARY_WARNING, FIXED_DT, INITIAL_SEED } from './rules';
-import { getFlightAssist } from './flight-assist';
-import { projectFlightTarget } from './flight-view';
+import { getFlightAssist, selectFlightAssistTarget } from './flight-assist';
+import { clearFlightAssistance, smoothFlightAssistance } from './flight-target';
 import { AircraftWeapons, advanceAmmunition, friendlyDamageMilli, type FriendlyFireRequest } from './aircraft-weapons';
 import { Fleet } from './fleet';
 import { ScoreLedger } from './scoring';
@@ -126,6 +126,7 @@ export class FlightSession {
     if (this.phase !== 'playing') return false;
     this.phase = 'paused';
     this.pauseReason = reason;
+    clearFlightAssistance(this.controller);
     return true;
   }
 
@@ -157,23 +158,24 @@ export class FlightSession {
     this.weapons.expire(tick);
     for (const bullet of [...this.enemyCombat.bullets]) if (tick >= bullet.expiresTick) this.enemyCombat.remove(bullet.id);
     const targets = player ? this.mothership.turrets.filter(turret => turret.hpMilli > 0).map(turret => ({ turret,
-      aimPoint: turret.layout.aimPoint, alive: true, exposed: this.world.lineOfSight(player.position, turret.layout.aimPoint, turret.layout.id) })) : [];
+      id: turret.layout.id, aimPoint: turret.layout.aimPoint, alive: true, exposed: this.world.lineOfSight(player.position, turret.layout.aimPoint, turret.layout.id) })) : [];
     const aspect = accepted.viewAspect ?? 393 / 852;
-    const visible = player ? targets.filter(candidate => candidate.exposed && projectFlightTarget(player, candidate.aimPoint, aspect, this.mode).visible)
-      .sort((a, b) => player.position.distanceToSquared(a.aimPoint) - player.position.distanceToSquared(b.aimPoint) || a.turret.layout.id - b.turret.layout.id) : [];
-    this.target = visible[0]?.turret ?? null;
+    const selected = player ? selectFlightAssistTarget(player, targets, aspect, this.mode, this.controller.targetLock,
+      !!accepted.steeringActive || Math.max(Math.abs(accepted.turn), Math.abs(accepted.climb)) > 1e-4, this.world) : null;
+    this.target = selected?.enemy.turret ?? null;
     const intents = this.wingmen.step(tick, aircraft, this.mothership, this.world);
     const enemyRequests = this.enemyCombat.step(tick, this.mothership.turrets, aircraft, this.world);
     const friendlyRequests: FriendlyFireRequest[] = [];
     for (const plane of aircraft) {
       if (plane.owner === 'player') {
         // Fire at the tick's starting position, attitude and speed; motion follows.
-        const autoFire = this.mode === 'easy' && this.target !== null && projectFlightTarget(plane, this.target.layout.aimPoint, aspect, this.mode).inCircle;
+        const autoFire = this.mode === 'easy' && selected?.projection.inCircle === true;
         friendlyRequests.push(...this.weapons.plan(plane, tick, this.mode === 'easy' ? autoFire : accepted.fire, this.mode === 'easy', this.target?.layout.aimPoint ?? null));
         const preferredSpeed = advanceThrottle(this.controller, accepted, this.mode, FIXED_DT);
-        const assist = getFlightAssist(plane, targets, accepted, this.mode);
-        updatePlayerLoop(plane, this.controller, { ...accepted, turn: assist.turn, climb: assist.climb }, accepted, accepted.loop,
-          FIXED_DT, preferredSpeed, this.mode === 'easy' ? CRUISE_SPEED : MAX_SPEED, assist.responseMultiplier);
+        const assist = getFlightAssist(plane, targets, accepted, this.mode, this.controller.targetLock, this.world);
+        const adjusted = { ...accepted, ...smoothFlightAssistance(this.controller, accepted, assist, FIXED_DT) };
+        updatePlayerLoop(plane, this.controller, adjusted, accepted, accepted.loop,
+          FIXED_DT, preferredSpeed, this.mode === 'easy' ? CRUISE_SPEED : MAX_SPEED, this.controller.responseMultiplier);
       } else {
         const intent = intents.get(plane.tokenId) ?? { turn: 0, climb: 0, fire: false };
         friendlyRequests.push(...this.weapons.plan(plane, tick, intent.fire));

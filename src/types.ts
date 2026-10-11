@@ -17,6 +17,7 @@ export interface Aircraft {
 }
 
 export interface FlightInput {
+  steeringActive?: boolean;
   turn: number;
   climb: number;
   fire: boolean;

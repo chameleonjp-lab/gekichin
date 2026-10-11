@@ -147,3 +147,6 @@ dialog { width: min(94vw, 520px); color: #ecf1eb; background: #112c3a; border: 1
 /* Decorative button text must not extend the input hit area beyond the button.
  * In enlarged text, an overflow label must not steal the adjacent Pause control. */
 #hud #fire > *, #hud #loop > * { pointer-events: none; }
+
+/* Normal uses the projected bore; Easy retains its fixed auto-fire circle. */
+#app:not(.easy-mode) .aim-circle { width: 36px; height: 36px; border-color: #d5e3d8b0; }

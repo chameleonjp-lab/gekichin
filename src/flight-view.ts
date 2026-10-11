@@ -1,5 +1,5 @@
 // Camera equations from kaisen@3d751051dc6212482a129e8da596ddd349b2f9f5. See docs/P0_BASELINE.md.
-import { Quaternion, Vector3 } from 'three';
+import { Euler, Quaternion, Vector3 } from 'three';
 import type { Aircraft, GameMode } from './types';
 
 export const FLIGHT_FOV = 64;
@@ -14,6 +14,34 @@ const NORMAL_LOOK = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), -0.1
 const EASY_LOOK = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), -Math.atan2(11, 479));
 const TAN_HALF_FOV = Math.tan(FLIGHT_FOV * Math.PI / 360);
 
+export interface FlightCameraCollision { cameraCast(from: Vector3, to: Vector3, radius: number): { point: Vector3; normal: Vector3 } | null }
+export interface ShipCameraTransform { position: Vector3; rotation: Quaternion; center: Vector3 }
+export function sinkingShipPose(center: Vector3, elapsedSeconds: number, reducedMotion: boolean): ShipCameraTransform {
+  const seconds = Math.max(0, Math.min(5, elapsedSeconds)), progress = seconds / 5;
+  const eased = progress * progress * (3 - 2 * progress);
+  const roll = reducedMotion ? 0 : Math.sin(seconds * .72) * .055 * progress;
+  return { center, position: new Vector3(center.x, center.y - 126 * eased, center.z),
+    rotation: new Quaternion().setFromEuler(new Euler(.035 * progress + roll * .35, 0, .105 * progress + roll, 'XYZ')) };
+}
+
+/** Collision is derived from the logical world, including the ship's presentation transform. */
+export function getEffectiveFlightCameraPose(player: Aircraft, mode: GameMode, position: Vector3, rotation: Quaternion,
+  world?: FlightCameraCollision, ship?: ShipCameraTransform): void {
+  getFlightCameraPose(player, mode, position, rotation);
+  if (!world) return;
+  let from = player.position, to = position;
+  if (ship) {
+    const inverse = ship.rotation.clone().invert();
+    from = player.position.clone().sub(ship.position).applyQuaternion(inverse).add(ship.center);
+    to = position.clone().sub(ship.position).applyQuaternion(inverse).add(ship.center);
+  }
+  const hit = world.cameraCast(from, to, 1.5);
+  if (!hit) return;
+  const normal = hit.normal.clone(); position.copy(hit.point);
+  if (ship) { position.sub(ship.center).applyQuaternion(ship.rotation).add(ship.position); normal.applyQuaternion(ship.rotation); }
+  position.addScaledVector(normal, 2.05);
+}
+
 /** Shared by rendering and targeting so the displayed circle is the actual firing gate. */
 export function getFlightCameraPose(player: Aircraft, mode: GameMode, position: Vector3, rotation: Quaternion): void {
   // Retain pitch/yaw and loops, but transmit only 45% of the bank to the view.
@@ -23,10 +51,11 @@ export function getFlightCameraPose(player: Aircraft, mode: GameMode, position: 
   rotation.multiply(mode === 'easy' ? EASY_LOOK : NORMAL_LOOK);
 }
 
-export function projectFlightTarget(player: Aircraft, target: Vector3, aspect: number, mode: GameMode) {
+export function projectFlightTarget(player: Aircraft, target: Vector3, aspect: number, mode: GameMode,
+  world?: FlightCameraCollision, ship?: ShipCameraTransform) {
   const safeAspect = Number.isFinite(aspect) && aspect > 0 ? aspect : 393 / 852;
   const position = new Vector3(), rotation = new Quaternion();
-  getFlightCameraPose(player, mode, position, rotation);
+  getEffectiveFlightCameraPose(player, mode, position, rotation, world, ship);
   const local = target.clone().sub(position).applyQuaternion(rotation.invert());
   const depth = -local.z, divisor = Math.max(0.0001, Math.abs(depth));
   const x = local.x / (divisor * TAN_HALF_FOV * safeAspect);

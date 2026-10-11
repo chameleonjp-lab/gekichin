@@ -303,3 +303,7 @@ HUD／結果には「砲台命中率H/N」「主砲への有効命中Hmain発」
 利用者の共通操作変更に基づきR30/R61/R62/R63/R64の操作・保存部分だけを次で置換する。Normalは射撃・宙返り2ボタンと縦レバー1本（旧4ボタンを置換）。Easyは宙返りのみを保持。上で目標速度を増やし、下で減らし、中央／指を離すと目標速度保持。最大18 m/s毎秒・65〜141m/sと機体式を維持し、PC9操作の加速・減速キーは残す。標準レバーはx=.17/y=.75/幅64px/高さ128px/不透明度.82、safe-areaと重複回避は共通契約どおり。
 
 新規保存はgekichin-controls-v2 / gekichin-controls-easy-v2へ明示Save時のみ。既存v1 rawは変更・削除せず、専用keyboard-v1は維持。対象3キーだけのbounded復元控えで失敗復旧を行う。A07の操縦部分とA16/A17/A20へ共通fixture・複数指・速度保持・解除・保存互換・縦横200%を追加する。戦闘／残機／採点の要件・P1以降の未実装状態は変更しない。[共通契約](THROTTLE_LEVER_CONTRACT.md) と [今回の検査記録](THROTTLE_LEVER_VERIFICATION.md) を参照。
+
+## 2026-10-11依頼：操作・標的・照準の共通追補
+
+今回の採用契約は [ZERO_SERIES_AIM_CONTRACT.md](ZERO_SERIES_AIM_CONTRACT.md)、実行結果と未確認項目は [ZERO_SERIES_AIM_VERIFICATION.md](ZERO_SERIES_AIM_VERIFICATION.md)。R1–R8の対象・意図的な作品差・基点を明示する。過去の「未実施」「文書のみ」は当時の工程の記録で、この追補の結果やSafari実機受入とは別。main宛てDraft PRまでとし、公開/mergeは今回実施しない。

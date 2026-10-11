@@ -13,6 +13,13 @@ const none: FlightInput = { turn: 0, climb: 0, fire: false, loop: false };
 const circleAndFire: FlightInput = { ...none, turn: 1, fire: true };
 const snapshot = (session: FlightSession) => observePauseState(session, controls, 'frozen elapsed display');
 
+function afterInputRelease(before: PauseSafetySnapshot): PauseSafetySnapshot {
+  const expected = structuredClone(before);
+  Object.assign(expected.world.controller, { assistTurn: 0, assistClimb: 0, responseMultiplier: 1,
+    targetLock: { key: null, manual: false, changed: false } });
+  return expected;
+}
+
 function flight(): FlightSession {
   const session = new FlightSession();
   const operation = session.prepare('normal')!;
@@ -32,7 +39,7 @@ test('the gap discards missed ticks and freezes live authoritative world state u
   assert.ok(before.world.score.totals.N > 0);
   assert.equal(stepper.frame(2600, true, () => session.step(circleAndFire), () => { session.pause('gap'); stepper.reset(); }), 0);
   const paused = snapshot(session);
-  assert.deepEqual(gapFreezeViolations(before, paused), []);
+  assert.deepEqual(gapFreezeViolations(afterInputRelease(before), paused), []);
   for (let attempt = 0; attempt < 600; attempt += 1) session.step(circleAndFire);
   stepper.frame(12600, false, () => session.step(circleAndFire), () => assert.fail('already paused'));
   assert.deepEqual(gapFreezeViolations(paused, snapshot(session)), []);
@@ -54,7 +61,7 @@ test('ordinary circling/firing produces a real reload which pauses and completes
   const before = snapshot(session);
   session.pause('gap');
   for (let attempt = 0; attempt < 600; attempt += 1) session.step(none);
-  assert.deepEqual(gapFreezeViolations(before, snapshot(session)), []);
+  assert.deepEqual(gapFreezeViolations(afterInputRelease(before), snapshot(session)), []);
   session.resume();
   while (session.tick < due - 1) session.step(none);
   assert.equal(session.fleet.player!.ammunition.reloadUntilTick, due);
@@ -73,7 +80,7 @@ test('ordinary diving produces a real respawn reservation that survives pause an
   const before = snapshot(session);
   session.pause('gap');
   for (let attempt = 0; attempt < 600; attempt += 1) session.step(none);
-  assert.deepEqual(gapFreezeViolations(before, snapshot(session)), []);
+  assert.deepEqual(gapFreezeViolations(afterInputRelease(before), snapshot(session)), []);
   session.resume();
   while (session.tick < reservation.dueTick - 1) session.step(none);
   assert.equal(session.fleet.player, null);
