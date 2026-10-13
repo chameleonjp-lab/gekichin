@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import ts from 'typescript';
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const source = read('src/main.ts');
@@ -12,31 +13,28 @@ const between = (start: string, end: string) => {
   assert.ok(a >= 0 && b > a, `${start} boundary exists`);
   return source.slice(a, b);
 };
-// These hashes come from the unchanged de500c3e base, not candidate output.
-test('common parity changes no main runtime beyond the seven explicit display substitutions', () => {
-  let runtime = source.slice(source.indexOf('const element = '));
-  const approved: [string, string][] = [
-    ["element('#speed').textContent = `${Math.round(session.player.speed * 3.6)} km/h`;", "element('#speed').textContent = `${session.player.speed.toFixed(0)} m/s`;"],
-    ["guide: 'ルールと操作方法を開くため停止", "guide: '遊び方を開くため停止"],
-    ["element('#hud-mode').textContent = session.mode === 'easy' ? 'イージー' : 'ノーマル';", "element('#hud-mode').textContent = session.mode.toUpperCase();"],
-    ['「飛行を再開」で再開', '「作戦を再開する」で再開'],
-    ["session.report.mode === 'easy' ? 'イージー' : 'ノーマル'", "session.report.mode === 'easy' ? 'Easy' : 'Normal'"],
-    ['「操作設定」と「ルールと操作方法」は確認できます。', '操作設定と遊び方は確認できます。'],
-    ["    const actionLabel = audio.isEnabled ? '音をオフにする' : '音をオンにする';\n    item.textContent = item.id === 'home-sound' ? actionLabel : audio.isEnabled ? '音 ON' : '音 OFF';\n    item.setAttribute('aria-label', actionLabel); item.setAttribute('aria-pressed', String(audio.isEnabled));", "    item.textContent = audio.isEnabled ? '音 ON' : '音 OFF'; item.setAttribute('aria-pressed', String(audio.isEnabled));"],
-  ];
-  for (const [current, original] of approved) {
-    assert.equal(runtime.split(current).length - 1, 1, current);
-    runtime = runtime.replace(current, original);
-  }
-  assert.equal(hash(runtime), 'af420d1e1e31b43cfea2ddceb44517e5ed1fc4394da0d13c9ebbcd8a6e54f15f');
+// The HUD is now explicitly authorized to change. Keep the complete unchanged
+// phase, fixed-step, reporting, event and disposal functions tied to the parent.
+test('HUD reorganization preserves the parent phase and simulation runtime functions', () => {
+  const deltas = JSON.parse(read('docs/evidence/hud-fortress-20261013/source-deltas.json'));
+  assert.equal(deltas.base_main, '5608761348029bb65c635ffd7ab22014020afbec');
+  const names = ['selectedMode', 'pause', 'start', 'goHome', 'openSettings', 'openGuide', 'showReport', 'combatSound', 'consumeEvents', 'frame', 'dispose'];
+  assert.deepEqual(Object.keys(deltas.unchanged_runtime_functions).sort(), [...names].sort());
+  const tree = ts.createSourceFile('main.ts', source, ts.ScriptTarget.Latest, true);
+  const functions = new Map(tree.statements.filter(ts.isFunctionDeclaration)
+    .filter(node => node.name).map(node => [node.name!.text, node.getText()]));
+  for (const name of names) assert.equal(hash(functions.get(name)!), deltas.unchanged_runtime_functions[name], name);
 });
 
-test('combat HUD structure, preparation and sinking remain the fixed-base templates', () => {
-  const hud = between('  <section id="hud"', '  <section id="paused"')
-    .replace('id="speed">396 km/h', 'id="speed">110 m/s')
-    .replace('id="hud-mode">イージー', 'id="hud-mode">EASY')
-    .replace(' aria-label="音をオンにする"', '');
-  assert.equal(hash(hud), '9c3c14567d5ac7d89e4882777d966047e0029a9048e9459e44be60e2f8b2dc99');
+test('combat HUD has explicit disclosures while preparation and sinking retain fixed-base templates', () => {
+  const hud = between('  <section id="hud"', '  <section id="paused"');
+  assert.match(hud, /<details id="combat-panel" class="combat-panel">/);
+  assert.match(hud, /id="face-toggle"[^>]*aria-pressed="false"[^>]*aria-controls="face-guide"/);
+  assert.ok(hud.indexOf('id="target-status"') > hud.indexOf('<details id="combat-panel"'), 'target details are available in the combat disclosure');
+  assert.match(hud, /戦闘・作戦時計は進行中です/);
+  for (const id of ['player-hp', 'health-bar', 'mg-ammo', 'cannon-ammo', 'reload']) {
+    assert.ok(hud.indexOf(`id="${id}"`) < hud.indexOf('<details id="combat-panel"'), id + ' is outside closed details');
+  }
   assert.equal(hash(between('  <section id="preparing"', '  <section id="hud"')), '68cb7342c7ed4c9fc378ace1dd6220337793c80e4d08833ce3161c55d581e5d4');
   assert.equal(hash(between('  <section id="sinking"', '  <section id="result"')), 'b0c27b71f0e407e64679fa8a3c13dd4492da79e9ad8871d09d15968331625bfa');
 });
@@ -73,16 +71,15 @@ test('pause and result keep all original operations and G result fields', () => 
   assert.match(source, /session\.finish\('aborted'\) && session\.report\) showReport\(session\.report\)/);
 });
 
-test('shell CSS stays scoped, with only the combat notice moved clear of flight controls', () => {
+test('shared screen CSS remains scoped while combat layout belongs to the combat stylesheet', () => {
   const text = css.replace(/\/\*[^]*?\*\//g, '');
-  const noticeSelector = '#app:not([data-large-text="true"]) #hud #combat-notice';
   let rules = 0;
   for (const match of text.matchAll(/([^{}]+)\{/g)) {
     const selector = match[1].trim();
     if (selector.startsWith('@')) { assert.match(selector, /^@media /); continue; }
     for (const part of selector.split(',')) {
       const normalized = part.trim().replace(/\s+/g, ' ');
-      assert.ok(normalized === noticeSelector || /^#(?:home|paused|result|guide)(?:\s|[.:#]|$)/.test(normalized), normalized);
+      assert.ok(/^#(?:home|paused|result|guide)(?:\s|[.:#]|$)/.test(normalized), normalized);
     }
     rules += 1;
   }
@@ -90,11 +87,7 @@ test('shell CSS stays scoped, with only the combat notice moved clear of flight 
   assert.doesNotMatch(text, /:root|#scene|#flight|#combat-panel|#throttle|#fire(?![\w-])|#loop(?![\w-])|#pause(?![\w-])|#control-settings|@import|@font-face/);
   assert.match(text, /min-height: 44px/);
   assert.match(text, /orientation: landscape/);
-  const noticeRules = [...text.matchAll(/#app:not\(\[data-large-text="true"\]\) #hud #combat-notice\s*\{([^}]*)\}/g)];
-  assert.equal(noticeRules.length, 2);
-  assert.match(noticeRules[0]?.[1] ?? '', /top:\s*40%;/);
-  assert.match(noticeRules[1]?.[1] ?? '', /top:\s*30%;[\s\S]*left:\s*30\.5%;[\s\S]*width:\s*min\(45%, 520px\);[\s\S]*transform:\s*none/);
-  assert.doesNotMatch(noticeRules.map(rule => rule[1]).join('\n'), /z-index|display\s*:|visibility\s*:/i);
+  assert.doesNotMatch(text, /#hud|combat-notice/);
 });
 
 test('all original template IDs remain unique and reachable by existing bindings', () => {
@@ -104,7 +97,7 @@ test('all original template IDs remain unique and reachable by existing bindings
   for (const id of required) assert.ok(ids.includes(id), id);
 });
 
-test('historical common-shell sources remain pinned outside explicit aim and camera deltas', () => {
+test('historical sources remain pinned through explicit aim-camera and authorized HUD-fortress deltas', () => {
   const expected: Record<string, string> = {
     "src/aircraft-weapons.ts": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
     "src/aircraft.ts": "1a9c18f93e5a48869882b2aa2946cdeb352dc4a8acd76b4fd9beade8ded621d5",
@@ -137,9 +130,16 @@ test('historical common-shell sources remain pinned outside explicit aim and cam
     "src/wingman-ai.ts": "06f7f12d1cc7772b448aec5cb60af1c13901a6b678c8220d3591eff9be78c55f"
 };
   const deltas = JSON.parse(read('docs/evidence/aim-camera/source-deltas.json')).files;
+  const hudDeltas = JSON.parse(read('docs/evidence/hud-fortress-20261013/source-deltas.json')).files;
+  assert.deepEqual(Object.keys(hudDeltas).sort(), ['src/main.ts', 'src/style.css', 'src/common-shell.css', 'src/control-obstacles.ts', 'src/mothership-layout.ts', 'src/scene.ts', 'src/hud-presentation.ts'].sort());
   assert.deepEqual(Object.keys(deltas).sort(), ['src/flight-assist.ts','src/flight-view.ts','src/flight.ts','src/game-state.ts','src/input.ts','src/scene.ts','src/style.css','src/types.ts'].sort());
   for (const [path, expectedHash] of Object.entries(expected)) {
     if (deltas[path]) { assert.equal(deltas[path].historical_sha256, expectedHash, path); assert.ok(deltas[path].reason); }
-    assert.equal(hash(read(path)), deltas[path]?.approved_sha256 ?? expectedHash, path);
+    const previous = deltas[path]?.approved_sha256 ?? expectedHash;
+    if (hudDeltas[path]) { assert.equal(hudDeltas[path].base_sha256, previous, path); assert.ok(hudDeltas[path].reason); }
+    assert.equal(hash(read(path)), hudDeltas[path]?.approved_sha256 ?? previous, path);
+  }
+  for (const [path, entry] of Object.entries(hudDeltas) as [string, { approved_sha256: string; reason: string }][]) {
+    assert.ok(entry.reason, path); assert.equal(hash(read(path)), entry.approved_sha256, path);
   }
 });

@@ -11,6 +11,12 @@ import {
 const box = (center = new Vector3(), halfSize = new Vector3(1, 1, 1), rotation = new Quaternion()): BoxSpec => ({
   id: 'synthetic-box', kind: 'hull', center, halfSize, rotation,
 });
+const containsPoint = (part: BoxSpec, point: Vector3): boolean => {
+  const local = point.clone().sub(part.center).applyQuaternion(part.rotation.clone().invert());
+  return Math.abs(local.x) <= part.halfSize.x + 1e-8
+    && Math.abs(local.y) <= part.halfSize.y + 1e-8
+    && Math.abs(local.z) <= part.halfSize.z + 1e-8;
+};
 
 test('canonical layout has fixed100 unique IDs, six-face20/80 distribution and24,000HP', () => {
   const layout = createMothershipLayout();
@@ -49,6 +55,36 @@ test('every turret has a350m ordinary-flight approach with aircraft radius+10m c
     const contact = world.sweep(end, turret.layout.aimPoint, { aircraft: false });
     assert.equal(contact?.kind, 'turret', `${turret.layout.label} first contact`); assert.equal(contact?.id, turret.id, turret.layout.label);
     assert.equal(world.lineOfSight(end, turret.layout.aimPoint, turret.id), true);
+  }
+});
+
+test('segmented keel, gun decks, side pods and stepped tower keep every turret base fully supported', () => {
+  const layout = createMothershipLayout();
+  const hull = layout.hullParts.filter(part => part.kind === 'hull');
+  const structures = layout.hullParts.filter(part => part.kind === 'structure');
+  const keel = layout.hullParts.find(part => part.id === 'keel-spine')!;
+  assert.deepEqual(keel.halfSize.toArray(), [120, 80, 520], 'the main spine is narrow and 160m thick');
+  assert.equal(hull.filter(part => part.id.startsWith('top-gun-deck-')).length, 5);
+  assert.equal(hull.filter(part => part.id.startsWith('bottom-gun-deck-')).length, 5);
+  assert.equal(hull.filter(part => part.id.startsWith('side-pod-')).length, 10);
+  assert.equal(hull.filter(part => part.id.startsWith('side-link-')).length, 8);
+  assert.ok(hull.some(part => containsPoint(part, new Vector3(250, 1000, 0))), 'midship wing reaches the full-width armor rail');
+  assert.equal(hull.some(part => containsPoint(part, new Vector3(250, 1000, 580))), false,
+    'the fore and aft outline narrows back to the keel');
+  const towerTop = Math.max(...structures.map(part => boundsOfBox(part).max.y));
+  assert.equal(towerTop, 1260, 'stepped command tower uses real shared structure boxes');
+  const commandBase = structures.find(part => part.id === 'command-base')!;
+  const commandDeck = hull.find(part => part.id === 'top-gun-deck-2')!;
+  const towerFootprint = [-40, 40].flatMap(x => [-60, 60].map(z => new Vector3(x, 1120, z)));
+  assert.ok(towerFootprint.every(point => containsPoint(commandBase, point)));
+  assert.ok(towerFootprint.every(point => containsPoint(commandDeck, point)), 'the tower has a continuous collidable deck beneath its full base');
+  for (const turret of layout.turrets) {
+    const baseHalf = turret.kind === 'main' ? 16 : 9;
+    const corners = [-baseHalf, baseHalf].flatMap(right => [-baseHalf, baseHalf].map(tangent =>
+      turret.position.clone().addScaledVector(turret.normal, -0.5)
+        .addScaledVector(turret.right, right).addScaledVector(turret.tangent, tangent)));
+    assert.ok(hull.some(part => corners.every(point => containsPoint(part, point))),
+      `${turret.label} has a physically supported full base footprint`);
   }
 });
 
@@ -95,7 +131,10 @@ test('shared first-contact geometry blocks opposite faces but keeps visible armo
   }
   assert.equal(world.sweep(new Vector3(260, 1000, 2000), new Vector3(260, 1000, 500), { radius: AIRCRAFT_RADIUS, aircraft: false }), null);
   const crossing = world.sweep(new Vector3(260, 1000, 500), new Vector3(260, 1000, 0), { aircraft: false });
-  assert.equal(crossing?.partId, 'right-armor'); assert.equal(crossing?.point.z, 460);
+  assert.equal(crossing?.partId, 'wingtip-right-bow');
+  assert.ok(crossing!.point.z < 500 && crossing!.point.z > 450);
+  assert.ok(Math.abs(crossing!.normal.x - Math.SQRT1_2) < 1e-12);
+  assert.ok(Math.abs(crossing!.normal.z - Math.SQRT1_2) < 1e-12);
 });
 
 test('rounded-box sweeps catch tunnelling, reject inflated-box corner false positives and handle rotated boxes', () => {

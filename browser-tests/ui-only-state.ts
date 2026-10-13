@@ -4,6 +4,7 @@ import type { FlightSession } from '../src/game-state';
 import type { CombatEvent, MissionOutcome } from '../src/combat-types';
 import type { ControlSettings } from '../src/control-settings';
 import type { GameMode } from '../src/types';
+import type { FlightControls } from '../src/input';
 
 export type UiOnlyRendererStatus = { available: boolean; ready: boolean; canvas: boolean };
 export type UiOnlyState = {
@@ -17,6 +18,7 @@ export type UiOnlyState = {
   drawStaticFrame(sinkSeconds?: number): Promise<boolean>;
   rendererStatus(): UiOnlyRendererStatus;
   inspect(): { phase: string; mode: GameMode; tick: number; operationId: number };
+  inspectInput(): ReturnType<FlightControls['peek']>;
 };
 
 declare global {
@@ -28,6 +30,7 @@ type UiOnlyBindings = {
   session: FlightSession;
   guide: HTMLDialogElement;
   settings: ControlSettings;
+  controls: Pick<FlightControls, 'peek' | 'setMode'>;
   renderUi: (focus?: boolean) => void;
   updateHud: () => void;
   showReport: (report: CombatReport) => void;
@@ -102,6 +105,7 @@ export function installUiOnlyState(bindings: UiOnlyBindings): void {
     reset(mode);
     session.mode = mode;
     session.phase = 'playing';
+    bindings.controls.setMode(mode);
     bindings.renderUi();
     bindings.updateHud();
     return draw ? bindings.drawStaticFrame() : false;
@@ -152,6 +156,7 @@ export function installUiOnlyState(bindings: UiOnlyBindings): void {
     drawStaticFrame: bindings.drawStaticFrame,
     rendererStatus: bindings.rendererStatus,
     inspect: () => ({ phase: session.phase, mode: session.mode, tick: session.tick, operationId: session.operationId }),
+    inspectInput: () => bindings.controls.peek(),
   });
   Object.defineProperty(window, '__gekichinUiOnly', { configurable: false, enumerable: false, value: adapter });
 }

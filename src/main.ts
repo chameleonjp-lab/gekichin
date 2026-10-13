@@ -10,6 +10,7 @@ import { FlightSession, FixedStepper } from './game-state';
 import { FlightScene } from './scene';
 import { FlightAudio, type CombatSound } from './audio';
 import { FIXED_HZ } from './rules';
+import { formatHudNotice, formatOperationTime } from './hud-presentation';
 import { readBest, saveBest } from './scoring';
 import type { CombatEvent, CombatReport } from './combat-types';
 import type { GameMode, PauseReason } from './types';
@@ -53,36 +54,53 @@ app.innerHTML = `
     <div class="panel compact-panel"><p class="eyebrow">PREPARING</p><h2 id="preparing-title">出撃を準備しています</h2><p>準備時間は作戦タイムに含めません。</p><button id="cancel-preparing" type="button">ホームへ戻る</button></div>
   </section>
   <section id="hud" class="hud" aria-label="戦闘情報" hidden>
-    <div class="hud-top">
-      <div class="flight-label"><b>ゲキチン</b><span id="hud-mode">イージー</span></div>
-      <div class="hud-utility"><button data-sound type="button" aria-pressed="false" aria-label="音をオンにする">音 OFF</button><button id="pause" type="button" aria-label="一時停止">Ⅱ</button></div>
-    </div>
-    <div class="metrics">
-      <div><small>作戦時間</small><output id="elapsed">0.00 s</output></div>
-      <div><small>速度</small><output id="speed">396 km/h</output></div>
-      <div><small>高度</small><output id="altitude">1,000 m</output></div>
-    </div>
-    <details id="combat-panel" class="combat-panel" open>
-      <summary>戦況</summary>
-      <div class="combat-metrics" tabindex="0" role="region" aria-label="戦況一覧">
-      <div><small>暫定スコア</small><output id="score">0</output></div>
-      <div><small>破壊 / 100</small><output id="destroyed">0 / 100</output></div>
-      <div><small>主砲残 / 20</small><output id="main-left">20 / 20</output></div>
-      <div><small>機銃残 / 80</small><output id="mg-left">80 / 80</output></div>
-      <div><small>味方残機・自機込み</small><output id="fleet-left">50</output></div>
-      <div><small>出撃 / 予備＋予約</small><output id="fleet-active">8 / 42</output></div>
-      <div><small>自機 HP</small><output id="player-hp">80 / 80</output></div>
-      <div><small>MG / 機関砲</small><output id="ammunition">288 / 96</output></div>
-      <div><small>装填</small><output id="reload">準備OK</output></div>
-      <div><small>砲台命中 H/N</small><output id="accuracy">—</output></div>
-      <div><small>主砲命中 / 機銃命中</small><output id="hit-breakdown">0 / 0</output></div>
+    <div class="hud-frame">
+      <div class="hud-top">
+        <div class="time-block"><span>作戦経過 · <b id="hud-mode">イージー</b></span><output id="elapsed">00:00.00</output></div>
+        <div class="targets" aria-label="編隊全体の砲台破壊進捗">
+          <div class="target-tally"><span>砲台破壊</span><output id="destroyed">0 / 100</output><small>全100基</small></div>
+          <div class="hud-utility hud-actions"><button id="game-sound" data-sound type="button" aria-pressed="false" aria-label="音をオンにする">音 OFF</button><button id="pause" type="button" aria-label="一時停止">Ⅱ</button></div>
+        </div>
       </div>
-    </details>
-    <p id="target-status" class="target-status">標的：照準内なし</p>
-    <p id="boundary-status" class="boundary-status" hidden></p>
-    <p id="respawn-status" class="respawn-status" hidden></p>
-    <div id="face-guide" class="face-guide" aria-label="六面の残存砲台"></div>
-    <p id="combat-notice" class="combat-notice" role="status" aria-live="polite"></p>
+      <div class="hud-instruments">
+        <div class="flight-data" role="group" aria-label="自機と味方の飛行情報">
+          <div class="health-label"><span>自機HP</span><output id="player-hp"><span id="player-hp-value">80.0</span><small id="player-hp-max"> / 80</small></output></div>
+          <div class="health-track" aria-hidden="true"><i id="health-bar"></i></div>
+          <div class="instrument"><output id="altitude" aria-label="高度">1,000 m</output><output id="speed" aria-label="速度">396 km/h</output></div>
+          <div class="wingmen"><span>味方残機</span><output id="fleet-left">50</output><small>自機込み</small></div>
+          <div class="score-readout"><span>暫定点</span><output id="score" aria-label="暫定スコア">0</output></div>
+          <div id="ammunition" class="ammo" role="group" aria-label="自機の残弾数"><div><span>機銃</span><output id="mg-ammo">288</output></div><div><span>機関砲</span><output id="cannon-ammo">96</output></div></div>
+          <div class="reload-readout"><span>装填</span><output id="reload">OK</output></div>
+        </div>
+        <div class="hud-options">
+          <div class="hud-toggles">
+            <button id="face-toggle" type="button" aria-pressed="false" aria-controls="face-guide">面別</button>
+            <details id="combat-panel" class="combat-panel">
+              <summary aria-label="戦況詳細" aria-controls="combat-details">戦況<span class="combat-summary-detail">詳細</span></summary>
+              <div id="combat-details" class="combat-details">
+                <p class="combat-reading-note">詳細を開いている間は操縦入力を受け付けません。<strong>戦闘・作戦時計は進行中です。</strong>閉じると操縦できます。</p>
+                <h3 class="target-label">照準中の標的</h3>
+                <p id="target-status" class="target-status">標的：照準内なし</p>
+                <div class="combat-metrics" tabindex="0" role="region" aria-label="戦況一覧">
+                  <div><small>主砲残 / 20</small><output id="main-left">20 / 20</output></div>
+                  <div><small>機銃残 / 80</small><output id="mg-left">80 / 80</output></div>
+                  <div><small>出撃 / 予備＋予約</small><output id="fleet-active">8 / 42</output></div>
+                  <div><small>砲台命中 H/N</small><output id="accuracy">—</output></div>
+                  <div><small>主砲命中 / 機銃命中</small><output id="hit-breakdown">0 / 0</output></div>
+                </div>
+                <button id="combat-close" type="button">詳細を閉じて操縦へ</button>
+              </div>
+            </details>
+          </div>
+          <div id="face-guide" class="face-guide" aria-label="六面の残存砲台" hidden></div>
+        </div>
+      </div>
+    </div>
+    <div class="hud-alerts">
+      <p id="combat-notice" class="combat-notice" role="status" aria-live="polite"></p>
+      <p id="respawn-status" class="respawn-status" role="status" hidden></p>
+      <p id="boundary-status" class="boundary-status" role="status" hidden></p>
+    </div>
     <div class="aim-circle" aria-hidden="true"><i></i></div>
 
     <p id="fire-status" class="fire-status" hidden>射撃：待機</p>
@@ -157,9 +175,10 @@ const buttons: FlightControlButtons = {
   fire: element('#fire'), loop: element('#loop'), throttle: element('#throttle'),
 };
 const guide = element<HTMLDialogElement>('#guide');
+const combatPanel = element<HTMLDetailsElement>('#combat-panel');
 const controls = new FlightControls(element('#flight-surface'), buttons,
   () => session.phase === 'playing' && !!session.fleet.player && !guide.open && !settings.isOpen
-    && !(app.dataset.compactHud === 'true' && element<HTMLDetailsElement>('#combat-panel').open), keyboard);
+    && !combatPanel.open, keyboard);
 const settings = new ControlSettings(buttons, keyboard, inputPresentation);
 let scene: FlightScene | null = null;
 let graphicsAvailable = false;
@@ -177,7 +196,7 @@ let sinkingElapsed = 0;
 let sinking = false;
 let lastFrameTime: number | null = null;
 let noticeUntilTick = 0;
-let compactHud = false;
+let showFaces = false;
 let disposed = false;
 
 const reasonText: Record<PauseReason, string> = {
@@ -201,6 +220,7 @@ function renderUi(focus = false): void {
   element('#sinking').hidden = !sinking;
   if (sinking) element('#result').hidden = true;
   const playing = session.phase === 'playing';
+  if (!playing) combatPanel.open = false;
   element('#hud').hidden = !playing;
   element('#flight-surface').hidden = !playing;
   for (const name of ['fire', 'throttle'] as const) buttons[name]!.hidden = session.mode !== 'normal';
@@ -208,6 +228,8 @@ function renderUi(focus = false): void {
   element('#hud-mode').textContent = session.mode === 'easy' ? 'イージー' : 'ノーマル';
   element('#home-key-guide').textContent = keyboard.describe(selectedMode());
   element('#guide-keys').textContent = keyboard.describe(session.phase === 'home' ? selectedMode() : session.mode);
+  applyHudVisibility();
+  syncCombatReading();
   element<HTMLButtonElement>('#start').disabled = !graphicsAvailable;
   element<HTMLButtonElement>('#restart').disabled = !graphicsAvailable;
   element<HTMLButtonElement>('#resume').disabled = !graphicsAvailable;
@@ -231,14 +253,53 @@ function fitHud(): void {
   const largeText = parseFloat(getComputedStyle(document.documentElement).fontSize) >= 24;
   const small = app.clientHeight <= 450 || largeText;
   const layoutChanged = app.dataset.compactHud !== String(small) || app.dataset.largeText !== String(largeText);
-  if (small !== compactHud) {
-    compactHud = small;
-    element<HTMLDetailsElement>('#combat-panel').open = !small;
-    if (!small) for (const button of Object.values(buttons)) button.inert = false;
-  }
   app.dataset.compactHud = String(small);
   app.dataset.largeText = String(largeText);
+  presentHudNotices();
+  fitCombatDetails();
   if (layoutChanged) { controls.clear(); settings.refresh(); }
+}
+
+function presentHudNotices(): void {
+  const compact = app.dataset.largeText === 'true' && app.clientWidth <= 360 && app.clientHeight >= 451;
+  for (const notice of app.querySelectorAll<HTMLElement>('.hud-alerts > p')) {
+    const text = notice.textContent ?? '';
+    // Event consumers keep writing their full message. Retain that source so
+    // a viewport change can restore it even while the combat clock is stopped.
+    const source = (text === notice.dataset.noticeRendered ? notice.dataset.noticeSource : text) ?? text;
+    const rendered = formatHudNotice(source, compact);
+    notice.dataset.noticeSource = source;
+    notice.dataset.noticeRendered = rendered;
+    if (text !== rendered) notice.textContent = rendered;
+  }
+}
+
+function fitCombatDetails(): void {
+  if (session.phase !== 'playing' || !combatPanel.open) return;
+  const details = element('#combat-details');
+  const bounds = details.getBoundingClientRect(), appBounds = app.getBoundingClientRect();
+  const scale = app.clientHeight / Math.max(1, appBounds.height);
+  details.style.setProperty('--combat-space', `${Math.max(44, (appBounds.bottom - bounds.top) * scale - 12)}px`);
+}
+
+function applyHudVisibility(): void {
+  element('#face-guide').hidden = !showFaces;
+  element('#face-toggle').setAttribute('aria-pressed', String(showFaces));
+}
+
+function syncCombatReading(): void {
+  const reading = session.phase === 'playing' && combatPanel.open;
+  app.dataset.readingCombat = String(reading);
+  element('#flight-surface').inert = reading;
+  for (const button of Object.values(buttons)) button.inert = reading;
+  fitCombatDetails();
+}
+
+function closeCombatReading(): void {
+  combatPanel.open = false;
+  controls.clear();
+  syncCombatReading();
+  element('#combat-panel summary').focus({ preventScroll: true });
 }
 
 function pause(reason: PauseReason): void {
@@ -326,24 +387,44 @@ try {
 const opts = { signal: abort.signal };
 const textScaleObserver = new MutationObserver(fitHud);
 textScaleObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['style', 'class'] });
+const hudSizeObserver = new ResizeObserver(() => settings.refresh());
+hudSizeObserver.observe(element('.flight-data'));
+hudSizeObserver.observe(element('.hud-top'));
+abort.signal.addEventListener('abort', () => hudSizeObserver.disconnect(), { once: true });
 window.addEventListener('resize', fitHud, opts);
 window.visualViewport?.addEventListener('resize', fitHud, opts);
 element('#start').addEventListener('click', () => start(selectedMode()), opts);
 element('#restart').addEventListener('click', () => start(session.mode), opts);
 element('#cancel-preparing').addEventListener('click', goHome, opts);
 element('#pause').addEventListener('click', () => pause('manual'), opts);
-element('#combat-panel').addEventListener('keydown', event => {
-  if (event instanceof KeyboardEvent && event.key === 'Escape' && compactHud) {
-    element<HTMLDetailsElement>('#combat-panel').open = false;
-    element<HTMLElement>('#combat-panel summary').focus();
-    event.stopPropagation();
+combatPanel.addEventListener('keydown', event => {
+  // Native disclosure activation must not also fire a mapped aircraft action.
+  // Steering and pause keys still work from its focus after the panel closes.
+  if (event.target === element('#combat-panel summary') && ['Enter', ' '].includes(event.key)) {
+    controls.clear(); event.stopPropagation();
   }
+}, { ...opts, capture: true });
+combatPanel.addEventListener('toggle', () => {
+  if (combatPanel.open) controls.clear();
+  syncCombatReading();
 }, opts);
-element('#combat-panel').addEventListener('toggle', () => {
-  const reading = compactHud && element<HTMLDetailsElement>('#combat-panel').open;
-  if (reading) controls.clear();
-  for (const button of Object.values(buttons)) button.inert = reading;
+element('#combat-panel summary').addEventListener('click', event => {
+  event.preventDefault();
+  if (combatPanel.open) closeCombatReading();
+  else { controls.clear(); combatPanel.open = true; syncCombatReading(); }
 }, opts);
+element('#combat-close').addEventListener('click', closeCombatReading, opts);
+element('#face-toggle').addEventListener('click', () => {
+  controls.clear();
+  showFaces = !showFaces;
+  applyHudVisibility();
+  settings.refresh();
+}, opts);
+window.addEventListener('keydown', event => {
+  if (session.phase !== 'playing' || !combatPanel.open || event.key !== 'Escape' || event.isComposing) return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  closeCombatReading();
+}, { ...opts, capture: true });
 element('#resume').addEventListener('click', () => {
   if (!graphicsAvailable || document.hidden || settings.isOpen || guide.open) return;
   controls.clear(); stepper.reset();
@@ -378,7 +459,7 @@ guide.addEventListener('close', () => {
 keyboard.subscribe(() => renderUi());
 window.addEventListener('keydown', event => {
   // Home/result native Enter activation must never be stolen by a custom pause binding.
-  if (event.defaultPrevented || settings.isOpen || guide.open || isKeyboardEditingTarget(event.target)
+  if (event.defaultPrevented || settings.isOpen || guide.open || combatPanel.open || isKeyboardEditingTarget(event.target)
     || !keyboard.matchesPause(event) || !['playing', 'paused'].includes(session.phase)) return;
   if (event.code === 'Enter' && event.target instanceof HTMLElement && event.target.closest('button, a')) return;
   event.preventDefault();
@@ -463,7 +544,7 @@ function consumeEvents(): void {
 function updateHud(): void {
   const fleet = session.fleet.counts, player = session.fleet.player;
   const totals = session.score.totals, components = session.score.components(session.tick);
-  element('#elapsed').textContent = `${(session.tick / FIXED_HZ).toFixed(2)} s`;
+  element('#elapsed').textContent = formatOperationTime(session.tick);
   element('#speed').textContent = `${Math.round(session.player.speed * 3.6)} km/h`;
   element('#altitude').textContent = `${Math.round(session.player.position.y).toLocaleString('ja-JP')} m`;
   element('#score').textContent = components.total.toLocaleString('ja-JP');
@@ -472,15 +553,19 @@ function updateHud(): void {
   element('#mg-left').textContent = `${session.mothership.remainingMG} / 80`;
   element('#fleet-left').textContent = String(fleet.remaining);
   element('#fleet-active').textContent = `${fleet.active} / ${fleet.reserve + fleet.reserved}`;
-  element('#player-hp').textContent = player ? `${(player.hpMilli / 1000).toFixed(1)} / 80` : '復帰待ち';
-  element('#ammunition').textContent = player ? `${player.ammunition.mg} / ${player.ammunition.cannon}` : '— / —';
-  element('#reload').textContent = player?.ammunition.reloadUntilTick !== null && player ? `${Math.max(0, player.ammunition.reloadUntilTick! - session.tick) / FIXED_HZ < .1 ? 'まもなく' : (Math.max(0, player.ammunition.reloadUntilTick! - session.tick) / FIXED_HZ).toFixed(1) + '秒'}` : '準備OK';
+  element('#player-hp-value').textContent = player ? (player.hpMilli / 1000).toFixed(1) : '復帰待ち';
+  element('#player-hp-max').textContent = player ? ' / 80' : '';
+  element('#player-hp-max').hidden = !player;
+  element('#health-bar').style.width = `${player ? Math.max(0, Math.min(100, player.hpMilli / player.maxHpMilli * 100)) : 0}%`;
+  element('#mg-ammo').textContent = player ? String(player.ammunition.mg) : '—';
+  element('#cannon-ammo').textContent = player ? String(player.ammunition.cannon) : '—';
+  element('#reload').textContent = !player ? '復帰待ち' : player.ammunition.reloadUntilTick !== null ? `${Math.max(0, player.ammunition.reloadUntilTick - session.tick) / FIXED_HZ < .1 ? 'まもなく' : (Math.max(0, player.ammunition.reloadUntilTick - session.tick) / FIXED_HZ).toFixed(1) + '秒'}` : 'OK';
   element('#accuracy').textContent = totals.N ? `${(100 * (totals.Hmain + totals.Hmg) / totals.N).toFixed(1)}% (${totals.Hmain + totals.Hmg}/${totals.N})` : '— 未射撃';
   element('#hit-breakdown').textContent = `${totals.Hmain}発 / ${totals.Hmg}発`;
   const wait = session.fleet.wait;
   const priorityNotice = session.boundary.warning || (!player && !!wait);
-  element('#combat-notice').hidden = priorityNotice;
-  element('#target-status').hidden = app.dataset.largeText === 'true' && (priorityNotice || !!element('#combat-notice').textContent);
+  element('#combat-notice').hidden = priorityNotice && !element('#combat-notice').textContent?.startsWith('主砲予告');
+  applyHudVisibility();
   element('#respawn-status').hidden = !!player || !wait;
   if (wait) element('#respawn-status').textContent = `${wait.kind === 'handoff' ? '僚機へ引継ぎ' : wait.kind === 'deployment' ? '出撃回廊の空きを待機' : '自機復帰'}${wait.untilTick === null ? '' : ` · ${Math.max(0, wait.untilTick - session.tick) / FIXED_HZ < .1 ? 'まもなく' : (Math.max(0, wait.untilTick - session.tick) / FIXED_HZ).toFixed(1) + '秒'}`}`;
   for (const [face] of faceEntries) {
@@ -494,6 +579,7 @@ function updateHud(): void {
     const arrow = boundaryDirectionLabel(direction, session.player.yaw);
     element('#boundary-status').textContent = session.boundary.outside ? `${arrow} 帰還 · 戻らないと${Math.ceil(session.boundary.remainingTicks / FIXED_HZ)}秒で機体損失` : `${arrow} 帰還 · 境界まで${Math.max(0, Math.round(session.boundary.distance))}m`;
   }
+  presentHudNotices();
   const hud = element('#hud');
   hud.dataset.position = session.player.position.toArray().map(value => value.toFixed(6)).join(',');
   hud.dataset.yaw = String(session.player.yaw); hud.dataset.pitch = String(session.player.pitch);

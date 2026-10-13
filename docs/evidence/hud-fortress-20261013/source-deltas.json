@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "base_main": "5608761348029bb65c635ffd7ab22014020afbec",
+  "reference_main": {
+    "kaisen": "6d5fa6b57c0e7bd1fed04f60c883ba82a8152751",
+    "faitofuraito": "ea274e5cb4329392c0bfa7b58d0c01c0624f0641"
+  },
+  "files": {
+    "src/main.ts": {
+      "base_sha256": "d95fe53844684bc5d6e299b53590c70a48494485b0d78e0afba40996d82e8b00",
+      "approved_sha256": "dd472b5387c6c0cb08268785bde235ad244a7e323cb2dd8b31436df488ecfeab",
+      "reason": "R65: common combat HUD, explicit disclosure and visibility controls; fixed physics/phase functions unchanged"
+    },
+    "src/style.css": {
+      "base_sha256": "00f1404ec98e8fc88a83e5037b9ac7934208813039b0b0dd38a44cda88700346",
+      "approved_sha256": "fd3d39c4bce9ba387a012ad285718b553826a1e6eb5f416a283f24991f6e1f73",
+      "reason": "R65: compact permanent instruments, responsive disclosure layout and priority notices kept clear of all controls at narrow 200 percent text"
+    },
+    "src/common-shell.css": {
+      "base_sha256": "ab59882187eb35bf1411a7df8c4875b07a5b5ea534dd4798875854a58003a08f",
+      "approved_sha256": "3fd2df8320108de7ba5d404ad30c8912e354b938740f904280d6dad866849294",
+      "reason": "R65: combat notice styling moved into combat stylesheet; shared other screens unchanged"
+    },
+    "src/control-obstacles.ts": {
+      "base_sha256": "1717aefae64cd5b9b1d33a27c0cd3cccb4505cd4e07fc71b48c7e02c2f32abf2",
+      "approved_sha256": "ef969861b5bb51e99691ff8f470c155b9f2863f19ced3b5e353e753f4c2d7515",
+      "reason": "R65/R62: include permanent HUD rectangles in the existing control placement solver"
+    },
+    "src/mothership-layout.ts": {
+      "base_sha256": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+      "approved_sha256": "4016dc20b61c7032362fbbdc138888840c72fda48c139165f9e058122a5233b8",
+      "reason": "R10/R12: segmented keel, swept armor wings and shared collidable stepped tower; fixed turret definitions"
+    },
+    "src/scene.ts": {
+      "base_sha256": "2ba350d33d6ae21f9c17e1269a3aa107ec5688ed4ab9b0e57614f20b823992ca",
+      "approved_sha256": "5a54134e9ac402346be47e36c1a787c4630917f9549d8e5e3ba3853868ba1e4b",
+      "reason": "R10/R12: draw the shared revised hull parts and bounded light markings; existing camera/render logic retained"
+    },
+    "src/hud-presentation.ts": {
+      "base_sha256": null,
+      "approved_sha256": "201fd99112268465b2935e19fea1b94184358b271a23d746497ca4c754804fff",
+      "reason": "R65: presentation-only operation clock and compact threat/direction/deadline/wait-kind notice formatting; source messages retained for resize restoration"
+    }
+  },
+  "unchanged_runtime_functions": {
+    "selectedMode": "7a40e0f09c81d4ecd46de60a367aa35fa7ba920651778f7b3023b41040465f53",
+    "pause": "aa7f52598ab8adf0e2e0bcfd4e8905bfec96b04c27c9d0fed8f7aafdb3021ee1",
+    "start": "8dac192b7ff63b56193e67a6f34f32d48f309259d9df117b4e74c1554130470c",
+    "goHome": "f674aedc137abe09cba06f6f4aa05a9b370d0523e3e026bcd0f4df5fc43daa37",
+    "openSettings": "fc972a8ea6523d2e108d3c2df201d841fb7eaa21d34a58723155fdd71d265235",
+    "openGuide": "eaabd50aef1efb016ff1dadade06515cc0a682056c799998ee31934c895a2b4e",
+    "showReport": "00087e54a1d1fc42679970f67d0a2dede79cf3d6e6e37ef1918d1ddbc1286682",
+    "combatSound": "666fb171b66048fc1f9da6b7d0ad792c6188f6e80eb257724c169496d37c303b",
+    "consumeEvents": "dd3446996891043614d3b4f95eb6b8d0e3692f7a2dfb96b57d9f913ffc5f88b2",
+    "frame": "b54f552f15776ed5c888cdaa412f6f24c81f20cea2ec01281378a09aab170ef3",
+    "dispose": "767511dbc51e8b63373e627a75f68973d7386755bf65beb66c00a3863b3ae078"
+  }
+}

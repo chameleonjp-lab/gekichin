@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "kind": "before",
+  "browser": "153.0.8010.0",
+  "deviceScaleFactor": 1,
+  "japaneseFont": "Noto Sans JP; QA environment only, no production dependency",
+  "sourceSha256": {
+    "src/main.ts": "d95fe53844684bc5d6e299b53590c70a48494485b0d78e0afba40996d82e8b00",
+    "src/style.css": "00f1404ec98e8fc88a83e5037b9ac7934208813039b0b0dd38a44cda88700346",
+    "src/common-shell.css": "ab59882187eb35bf1411a7df8c4875b07a5b5ea534dd4798875854a58003a08f",
+    "src/scene.ts": "2ba350d33d6ae21f9c17e1269a3aa107ec5688ed4ab9b0e57614f20b823992ca",
+    "src/mothership-layout.ts": "8ea6c7f0d34587ccfd51d028d2c96e4004d5d0c22055eb54c30f3887c6393937",
+    "src/control-obstacles.ts": "1717aefae64cd5b9b1d33a27c0cd3cccb4505cd4e07fc71b48c7e02c2f32abf2"
+  },
+  "captures": [
+    {
+      "name": "portrait",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "font": 16,
+      "rendered": true,
+      "errors": [],
+      "state": {
+        "phase": {
+          "phase": "playing",
+          "mode": "normal",
+          "tick": 0,
+          "operationId": 1
+        },
+        "renderer": {
+          "available": true,
+          "ready": true,
+          "canvas": true
+        },
+        "overflow": false,
+        "details": true
+      }
+    },
+    {
+      "name": "small",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "font": 16,
+      "rendered": true,
+      "errors": [],
+      "state": {
+        "phase": {
+          "phase": "playing",
+          "mode": "normal",
+          "tick": 0,
+          "operationId": 1
+        },
+        "renderer": {
+          "available": true,
+          "ready": true,
+          "canvas": true
+        },
+        "overflow": false,
+        "details": true
+      }
+    },
+    {
+      "name": "landscape",
+      "viewport": {
+        "width": 852,
+        "height": 393
+      },
+      "font": 16,
+      "rendered": true,
+      "errors": [],
+      "state": {
+        "phase": {
+          "phase": "playing",
+          "mode": "normal",
+          "tick": 0,
+          "operationId": 1
+        },
+        "renderer": {
+          "available": true,
+          "ready": true,
+          "canvas": true
+        },
+        "overflow": false,
+        "details": false
+      }
+    },
+    {
+      "name": "large-text",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "font": 32,
+      "rendered": true,
+      "errors": [],
+      "state": {
+        "phase": {
+          "phase": "playing",
+          "mode": "normal",
+          "tick": 0,
+          "operationId": 1
+        },
+        "renderer": {
+          "available": true,
+          "ready": true,
+          "canvas": true
+        },
+        "overflow": false,
+        "details": false
+      }
+    },
+    {
+      "name": "isometric",
+      "info": {
+        "drawCalls": 100,
+        "triangles": 142284,
+        "hullParts": 6,
+        "camera": [
+          1200,
+          2000,
+          1500
+        ]
+      },
+      "evidenceKind": "production FlightScene, frozen design inspection camera"
+    },
+    {
+      "name": "rear",
+      "info": {
+        "drawCalls": 100,
+        "triangles": 142284,
+        "hullParts": 6,
+        "camera": [
+          -1200,
+          1550,
+          -1500
+        ]
+      },
+      "evidenceKind": "production FlightScene, frozen design inspection camera"
+    },
+    {
+      "name": "underside",
+      "info": {
+        "drawCalls": 100,
+        "triangles": 142284,
+        "hullParts": 6,
+        "camera": [
+          1100,
+          180,
+          1400
+        ]
+      },
+      "evidenceKind": "production FlightScene, frozen design inspection camera"
+    }
+  ]
+}

@@ -11,6 +11,12 @@ test.afterEach(async ({ context }) => {
 
 const app = 'http://127.0.0.1:4177/';
 
+function elapsedSeconds(text: string): number {
+  const match = /^(\d+):(\d{2})\.(\d{2})$/.exec(text.trim());
+  expect(match, 'operation clock uses minutes, seconds and centiseconds').not.toBeNull();
+  return Number(match![1]) * 60 + Number(match![2]) + Number(match![3]) / 100;
+}
+
 async function openFlight(page: Page): Promise<void> {
   await page.goto(app);
   await expect(page.locator('#start')).toBeEnabled();
@@ -46,7 +52,7 @@ test('an event-loop stall of at least two seconds freezes the flight until expli
   await openFlight(page);
   await page.locator('#start').click();
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
-  await expect.poll(async () => Number.parseFloat(await page.locator('#elapsed').innerText())).toBeGreaterThan(0);
+  await expect.poll(async () => elapsedSeconds(await page.locator('#elapsed').innerText())).toBeGreaterThan(0);
 
   await page.evaluate(() => {
     const until = performance.now() + 2_100;
@@ -60,7 +66,7 @@ test('an event-loop stall of at least two seconds freezes the flight until expli
 
   await page.locator('#resume').click();
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
-  await expect.poll(async () => Number.parseFloat(await page.locator('#elapsed').innerText())).toBeGreaterThan(Number.parseFloat(frozenTime));
+  await expect.poll(async () => elapsedSeconds(await page.locator('#elapsed').innerText())).toBeGreaterThan(elapsedSeconds(frozenTime));
 });
 
 test('when WebGL creation fails, settings and help remain available while flight stays disabled', async ({ page }) => {

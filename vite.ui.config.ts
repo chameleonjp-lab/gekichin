@@ -4,7 +4,7 @@ import { dirname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, type Plugin } from 'vite';
 
-export const UI_ONLY_MAIN_SOURCE_SHA256 = 'd95fe53844684bc5d6e299b53590c70a48494485b0d78e0afba40996d82e8b00';
+export const UI_ONLY_MAIN_SOURCE_SHA256 = 'dd472b5387c6c0cb08268785bde235ad244a7e323cb2dd8b31436df488ecfeab';
 export const UI_ONLY_MAIN_ANCHORS = [
   'function renderUi(focus = false): void {',
   'function showReport(report: CombatReport): void {',
@@ -50,7 +50,7 @@ export function createUiOnlyMainPlugin(root = projectRoot): Plugin {
         return null;
       }
       validateUiOnlyMainSource(actualPath, source, root);
-      return `${source}\nimport { installUiOnlyState } from '/browser-tests/ui-only-state.ts';\ninstallUiOnlyState({\n  app, session, guide, settings, renderUi, updateHud, showReport, consumeEvents, fitHud,\n  stopWorld: () => { cancelAnimationFrame(animation); animation = 0; controls.clear(); stepper.reset(); audio.setActive(false); },\n  resetPresentation: () => { sinking = false; sinkingElapsed = 0; shownReport = null; noticeUntilTick = 0; lastEventSequence = 0; },\n  drawStaticFrame: async (sinkSeconds = 0) => {\n    if (!scene || !graphicsAvailable) return false;\n    try { await scene.ready; } catch { return false; }\n    sceneReady = true;\n    scene.render(session.player, session.mode, session.tick, session, sinkSeconds);\n    return true;\n  },\n  rendererStatus: () => ({\n    available: graphicsAvailable, ready: sceneReady,\n    canvas: !!app.querySelector('#flight-canvas'),\n  }),\n});`;
+      return `${source}\nimport { installUiOnlyState } from '/browser-tests/ui-only-state.ts';\ninstallUiOnlyState({\n  app, session, guide, settings, controls, renderUi, updateHud, showReport, consumeEvents, fitHud,\n  stopWorld: () => { cancelAnimationFrame(animation); animation = 0; controls.clear(); stepper.reset(); audio.setActive(false); },\n  resetPresentation: () => { sinking = false; sinkingElapsed = 0; shownReport = null; noticeUntilTick = 0; lastEventSequence = 0; combatPanel.open = false; syncCombatReading(); },\n  drawStaticFrame: async (sinkSeconds = 0) => {\n    if (!scene || !graphicsAvailable) return false;\n    try { await scene.ready; } catch { return false; }\n    sceneReady = true;\n    scene.render(session.player, session.mode, session.tick, session, sinkSeconds);\n    return true;\n  },\n  rendererStatus: () => ({\n    available: graphicsAvailable, ready: sceneReady,\n    canvas: !!app.querySelector('#flight-canvas'),\n  }),\n});`;
     },
   };
 }

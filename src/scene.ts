@@ -290,55 +290,77 @@ export class FlightScene {
   private createHull(): void {
     this.ship.position.copy(this.layout.center);
     const hull = new MeshStandardMaterial({ color: 0x3b4d5a, metalness: 0.42, roughness: 0.58 });
-    const armor = new MeshStandardMaterial({ color: 0x667984, metalness: 0.4, roughness: 0.52 });
-    const structure = new MeshStandardMaterial({ color: 0x536976, metalness: 0.36, roughness: 0.56 });
+    const armor = new MeshStandardMaterial({ color: 0x526d7b, metalness: 0.58, roughness: 0.38 });
+    const structure = new MeshStandardMaterial({ color: 0x536976, metalness: 0.46, roughness: 0.48 });
+    const command = new MeshStandardMaterial({ color: 0x253d4b, metalness: 0.72, roughness: 0.32 });
     const trim = new MeshStandardMaterial({ color: 0x243b48, metalness: 0.82, roughness: 0.38 });
     const glow = new MeshBasicMaterial({ color: 0x54d5ef, toneMapped: false });
     const warmLight = new MeshBasicMaterial({ color: 0xffc66f, toneMapped: false });
     for (const part of this.layout.hullParts) {
-      const material = part.kind === 'structure' ? structure : part.id.includes('armor') ? armor : hull;
+      const material = part.id.startsWith('command-') ? command
+        : part.kind === 'structure' ? structure
+          : part.id.includes('deck') || part.id.includes('pod') || part.id.includes('link')
+            || part.id.includes('endcap') || part.id.startsWith('wingtip-') ? armor : hull;
       const mesh = this.addHullBox(this.ship, part.halfSize.clone().multiplyScalar(2), part.center.clone().sub(this.layout.center), material);
       mesh.quaternion.copy(part.rotation);
       mesh.name = part.id;
     }
 
-    // Armor seams, rails, and access panels add scale cues without changing
-    // the shared hull collision boxes.
+    // Each deck and side pod gets surface-only seams, inset so no mark floats
+    // beyond the smaller segmented armor faces or crosses a turret base.
+    const deckRows = [-480, -240, 0, 240, 480];
     for (const side of [-1, 1]) {
-      for (let rib = 0; rib < 7; rib += 1) {
-        this.addHullDecal(new Vector3(side * 300.025, -5, -410 + rib * 128), new Vector3(134, 3, 1),
-          new Euler(0, side * Math.PI / 2, 0), trim);
-      }
-      this.addHullDecal(new Vector3(side * 300.025, 52, 0), new Vector3(220, 5, 1),
-        new Euler(0, side * Math.PI / 2, 0), glow);
-      for (let panel = 0; panel < 5; panel += 1) {
-        this.addHullDecal(new Vector3(side * 300.025, -48, -330 + panel * 165), new Vector3(62, 9, 1),
-          new Euler(0, side * Math.PI / 2, 0), structure);
+      for (const z of [-400, -200, 0, 200, 400]) {
+        const sideRotation = new Euler(0, side * Math.PI / 2, 0);
+        this.addHullDecal(new Vector3(side * 300.025, 0, z), new Vector3(104, 2, 1), sideRotation, glow);
+        this.addHullDecal(new Vector3(side * 300.025, -35, z), new Vector3(82, 2, 1), sideRotation, trim);
       }
     }
-    for (const z of [-482, -320, -160, 0, 160, 320, 482]) {
-      this.addHullDecal(new Vector3(0, 120.025, z), new Vector3(330, 3, 1), new Euler(-Math.PI / 2, 0, 0), trim);
-      this.addHullDecal(new Vector3(0, -120.025, z), new Vector3(330, 3, 1), new Euler(Math.PI / 2, 0, 0), trim);
+    for (const [row, z] of deckRows.entries()) {
+      for (const edge of [-1, 1]) {
+        this.addHullDecal(new Vector3(0, 120.025, z + edge * 46), new Vector3(316, 2, 1),
+          new Euler(-Math.PI / 2, 0, 0), trim);
+        this.addHullDecal(new Vector3(0, -120.025, z + edge * 46), new Vector3(316, 2, 1),
+          new Euler(Math.PI / 2, 0, 0), trim);
+      }
+      if (row !== 2) {
+        for (const edge of [-1, 1]) {
+          this.addHullDecal(new Vector3(0, 120.03, z + edge * 34), new Vector3(36, 2, 1),
+            new Euler(-Math.PI / 2, 0, 0), glow);
+          this.addHullDecal(new Vector3(0, -120.03, z + edge * 34), new Vector3(36, 2, 1),
+            new Euler(Math.PI / 2, 0, 0), glow);
+        }
+      }
     }
-    this.addHullDecal(new Vector3(0, 120.03, -2), new Vector3(180, 5, 1), new Euler(-Math.PI / 2, 0, 0), glow);
-    this.addHullDecal(new Vector3(0, -120.03, -2), new Vector3(180, 5, 1), new Euler(Math.PI / 2, 0, 0), glow);
 
-    for (const bridgeZ of [-330, 0, 330]) {
-      for (let window = 0; window < 5; window += 1) {
-        this.addHullDecal(new Vector3(-27 + window * 13.5, 170.025, bridgeZ), new Vector3(11, 14, 1),
-          new Euler(-Math.PI / 2, 0, 0), window === 2 ? warmLight : glow);
-      }
+    for (let window = 0; window < 5; window += 1) {
+      this.addHullDecal(new Vector3(-24 + window * 12, 190, 45.025), new Vector3(8, 18, 1),
+        new Euler(0, 0, 0), window === 2 ? warmLight : glow);
     }
 
     // A flat emissive marking and point light give the belly a readable glow
     // without placing a collisionless solid over the bottom turret aim points.
-    const bellyRing = new Mesh(new RingGeometry(84, 102, 48), new MeshBasicMaterial({
+    const bellyRing = new Mesh(new RingGeometry(34, 44, 48), new MeshBasicMaterial({
       color: 0x70e5f7, transparent: true, opacity: 0.92, depthWrite: false, toneMapped: false,
     }));
     bellyRing.rotation.x = Math.PI / 2;
     bellyRing.position.set(0, -120.025, 18);
     bellyRing.renderOrder = 2;
     this.ship.add(bellyRing);
+
+    // Rear engine ports are flat emissive markings on the actual stern face;
+    // they add no invisible solid and stay clear of the fixed rear turret rows.
+    const enginePorts = new InstancedMesh(new RingGeometry(10, 18, 24), new MeshBasicMaterial({
+      color: 0x8cecff, transparent: true, opacity: 0.88, depthWrite: false, toneMapped: false,
+    }), 4);
+    enginePorts.name = 'rear engine emissive ports';
+    const sternFacing = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), Math.PI);
+    for (const [index, x] of [-108, -36, 36, 108].entries()) {
+      this.matrix.compose(new Vector3(x, 0, -600.025), sternFacing, new Vector3(1, 1, 1));
+      enginePorts.setMatrixAt(index, this.matrix);
+    }
+    enginePorts.instanceMatrix.needsUpdate = true;
+    this.ship.add(enginePorts);
   }
 
   private createTurretMeshes(): void {

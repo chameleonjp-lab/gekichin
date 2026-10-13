@@ -84,17 +84,69 @@ export function turretBoxes(turret: TurretDefinition, yaw = 0, pitch = Math.PI /
   return [base, head, ...barrels];
 }
 
-function hullBox(id: string, kind: BoxSpec['kind'], x: number, localY: number, z: number, width: number, height: number, length: number): BoxSpec {
-  return { id, kind, center: new Vector3(x, 1000 + localY, z), halfSize: new Vector3(width / 2, height / 2, length / 2), rotation: new Quaternion() };
+function hullBox(
+  id: string,
+  kind: BoxSpec['kind'],
+  x: number,
+  localY: number,
+  z: number,
+  width: number,
+  height: number,
+  length: number,
+  rotation = new Quaternion(),
+): BoxSpec {
+  return {
+    id, kind, center: new Vector3(x, 1000 + localY, z),
+    halfSize: new Vector3(width / 2, height / 2, length / 2), rotation: rotation.clone(),
+  };
 }
 
 export function createMothershipLayout(): MothershipLayout {
   const center = MOTHERSHIP_CENTER.clone();
+  // A narrow keel carries the six turret faces. The paired end sections step
+  // inward from the center block, while separate side armor wings flare out
+  // and sweep back into the prow and stern as rotated, collidable armor.
+  const wingTipHalfWidth = 30, wingTipHalfLength = 110, wingTipAngle = Math.PI / 4;
+  const wingTipExtent = (wingTipHalfWidth + wingTipHalfLength) * Math.SQRT1_2;
+  const wingTipCenterX = MOTHERSHIP_WIDTH / 2 - wingTipExtent;
+  const wingTipCenterZ = MOTHERSHIP_LENGTH / 2 - wingTipExtent;
+  const topBottomTurretRows = [-480, -240, 0, 240, 480] as const;
+  const sideTurretRows = [-400, -200, 0, 200, 400] as const;
+  const wingLinkRows = [-300, -100, 100, 300] as const;
   const hullParts = [
-    hullBox('central-hull', 'hull', 0, 0, 0, 420, 240, 1200),
-    hullBox('left-armor', 'hull', -255, 0, -20, 90, 160, 960),
-    hullBox('right-armor', 'hull', 255, 0, -20, 90, 160, 960),
-    ...[-330, 0, 330].map((z, index) => hullBox(`superstructure-${index}`, 'structure', 0, 145, z, 80, 50, 120)),
+    hullBox('keel-spine', 'hull', 0, 0, 0, 240, 160, 1040),
+    hullBox('bow-endcap', 'hull', 0, 0, 560, 340, 180, 80),
+    hullBox('stern-endcap', 'hull', 0, 0, -560, 340, 180, 80),
+    ...topBottomTurretRows.flatMap((z, row) => {
+      const length = row === 2 ? 140 : 100;
+      return [
+        hullBox(`top-gun-deck-${row}`, 'hull', 0, 100, z, 340, 40, length),
+        hullBox(`bottom-gun-deck-${row}`, 'hull', 0, -100, z, 340, 40, length),
+      ];
+    }),
+    ...([-1, 1] as const).flatMap(side => sideTurretRows.map((z, row) =>
+      hullBox(`side-pod-${side < 0 ? 'left' : 'right'}-${row}`, 'hull', side * 235, 0, z, 130, 160, 120))),
+    ...([-1, 1] as const).flatMap(side => wingLinkRows.map((z, row) => {
+      // Each oblique bridge overlaps its neighboring pod ends and reaches back
+      // into the keel, keeping the scalloped wing one continuous solid shell.
+      const angle = -side * Math.sign(z) * Math.PI / 10;
+      return hullBox(`side-link-${side < 0 ? 'left' : 'right'}-${row}`, 'hull', side * 181, 0, z,
+        140, 100, 80, new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), angle));
+    })),
+    ...([-1, 1] as const).flatMap(side => ([-1, 1] as const).map(end => {
+      const angle = -side * end * wingTipAngle;
+      const centerX = side * wingTipCenterX;
+      const centerZ = end * wingTipCenterZ;
+      return hullBox(`wingtip-${side < 0 ? 'left' : 'right'}-${end < 0 ? 'stern' : 'bow'}`, 'hull',
+        centerX, 0, centerZ, wingTipHalfWidth * 2, 160, wingTipHalfLength * 2,
+        new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), angle));
+    })),
+    // The tower rises 180m above the 160m keel and 140m above the fixed main
+    // hull maximum. Each narrowing stage remains below100m wide and sits on the
+    // enlarged, central top-gun deck rather than overhanging into empty space.
+    hullBox('command-base', 'structure', 0, 140, 0, 80, 40, 120),
+    hullBox('command-bridge', 'structure', 0, 190, 0, 64, 60, 90),
+    hullBox('command-crown', 'structure', 0, 240, 0, 48, 40, 60),
   ];
   const turrets: TurretDefinition[] = [];
   const add = (face: MothershipFace, kind: TurretKind, local: Vector3, normal: Vector3, tangent: Vector3) => {
