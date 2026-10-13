@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "5608761348029bb65c635ffd7ab22014020afbec",
+  "verifiedSourceSha256": {
+    "src/main.ts": "dd472b5387c6c0cb08268785bde235ad244a7e323cb2dd8b31436df488ecfeab",
+    "src/style.css": "fd3d39c4bce9ba387a012ad285718b553826a1e6eb5f416a283f24991f6e1f73",
+    "src/common-shell.css": "3fd2df8320108de7ba5d404ad30c8912e354b938740f904280d6dad866849294",
+    "src/control-obstacles.ts": "ef969861b5bb51e99691ff8f470c155b9f2863f19ced3b5e353e753f4c2d7515",
+    "src/mothership-layout.ts": "4016dc20b61c7032362fbbdc138888840c72fda48c139165f9e058122a5233b8",
+    "src/scene.ts": "5a54134e9ac402346be47e36c1a787c4630917f9549d8e5e3ba3853868ba1e4b",
+    "src/hud-presentation.ts": "201fd99112268465b2935e19fea1b94184358b271a23d746497ca4c754804fff"
+  },
+  "unit": {
+    "command": "npm test",
+    "passed": 145,
+    "failed": 0,
+    "skipped": 0
+  },
+  "productionBuild": {
+    "command": "npm run build",
+    "status": "passed"
+  },
+  "uiOnly": {
+    "suite": "browser-tests/ui-only.spec.ts",
+    "stats": {
+      "startTime": "2026-10-13T03:15:32.040Z",
+      "duration": 59688.098000000005,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "393x852 portrait directly presents the product shell, mode HUDs, and all result states",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 13737,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "852x393 landscape captures representative shared screens and preserves reachable controls",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 7649,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "small, landscape, desktop, and computed 200 percent text retain screen geometry and control access",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 7473,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "HUD choices persist through a new sortie and resizing never opens the combat details",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 4149,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "HUD toggles release held flight input and combat reading blocks new steering and fire until it closes",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 4537,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "both modes keep essential flight information and HUD toggles reachable at small sizes and 200 percent text",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 14055,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "settings storage failure, session-only use, and result save failure are visible",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 3673,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "initial WebGL failure uses the product guidance while rules and settings remain usable",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 3783,
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "productionInputChecks": {
+    "suite": "selected existing combat.spec.ts and combat-throttle.spec.ts tests, production Vite without UI adapter",
+    "stats": {
+      "startTime": "2026-10-13T03:15:31.985Z",
+      "duration": 38868.353,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "large-text landscape throttle placement stays clear of real controls and matches the saved preview",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 7341,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "Easy combat clock, six-face HUD, pause and explicit resume follow product controls",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 12791,
+            "retry": 0
+          }
+        ]
+      },
+      {
+        "title": "Normal keyboard firing consumes real ammunition and updates flight HUD, then pauses cleanly",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 18155,
+            "retry": 0
+          }
+        ]
+      }
+    ]
+  },
+  "environment": {
+    "node": "24.19.0",
+    "browser": "153.0.8010.0",
+    "renderer": "Chromium headless shell with SwiftShader",
+    "font": "Noto Sans JP for local QA only",
+    "configuration": "local runner adjusts Chromium executable and server startup; no product hooks in production checks"
+  },
+  "captureKinds": {
+    "hud": "frozen UI-only presentation",
+    "denseHud": "DOM display overrides; simulation state remains unchanged",
+    "fortress": "production FlightScene with frozen inspection cameras; no mission-clear or performance claim"
+  },
+  "notVerified": [
+    "physical iPhone/Safari performance and human controls",
+    "real VoiceOver reading",
+    "audio listening",
+    "complete missions with the revised fortress"
+  ],
+  "ci": "See the submitted PR Checks for the final commit; no merge or deployment",
+  "independentReview": {
+    "status": "passed",
+    "blockingFindings": 0,
+    "checksPassed": 25,
+    "scope": "independent final diff, seven source hashes, eleven baseline runtime functions, six capture manifests, visual notice/control separation and fortress silhouette",
+    "verifiedSourceSha256": {
+      "src/main.ts": "dd472b5387c6c0cb08268785bde235ad244a7e323cb2dd8b31436df488ecfeab",
+      "src/style.css": "fd3d39c4bce9ba387a012ad285718b553826a1e6eb5f416a283f24991f6e1f73",
+      "src/common-shell.css": "3fd2df8320108de7ba5d404ad30c8912e354b938740f904280d6dad866849294",
+      "src/control-obstacles.ts": "ef969861b5bb51e99691ff8f470c155b9f2863f19ced3b5e353e753f4c2d7515",
+      "src/mothership-layout.ts": "4016dc20b61c7032362fbbdc138888840c72fda48c139165f9e058122a5233b8",
+      "src/scene.ts": "5a54134e9ac402346be47e36c1a787c4630917f9549d8e5e3ba3853868ba1e4b",
+      "src/hud-presentation.ts": "201fd99112268465b2935e19fea1b94184358b271a23d746497ca4c754804fff"
+    }
+  }
+}

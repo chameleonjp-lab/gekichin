@@ -1,5 +1,7 @@
 # ゲキチン 実装計画書案
 
+2026-10-13の実装追補: 画面情報の整理と近未来巨大要塞の形状変更を [HUD_FORTRESS_20261013.md](./HUD_FORTRESS_20261013.md) に定義する。実装前の決定、検査計画、実施結果を分け、元の計画・過去証拠を保持する。
+
 対象: `chameleonjp-lab/gekichin`  
 基準要件: [要件PR #1](https://github.com/chameleonjp-lab/gekichin/pull/1)  
 要件固定head: `e9212a73a7b36c33dff7e88d3a7308be6cdcea35`  

@@ -47,7 +47,7 @@ export function measureHudObstacles(app: HTMLElement, options: HudObstacleOption
     if (!host.isConnected) return [];
     const origin = host.getBoundingClientRect();
     const scaleX = rect.width / origin.width, scaleY = rect.height / origin.height;
-    const elements = new Set([...copy.querySelectorAll<HTMLElement>('button:not(.action-control):not(.flight-button):not([data-flight-control]), .combat-panel > summary'), ...peers.keys()]);
+    const elements = new Set([...copy.querySelectorAll<HTMLElement>('button:not(.action-control):not(.flight-button):not([data-flight-control]), .combat-panel > summary, .hud-top, .flight-data, .face-guide'), ...peers.keys()]);
     return [...elements]
       .filter(element => !element.hidden && !element.closest('[hidden]'))
       .map(element => ({ element, item: element.getBoundingClientRect() }))

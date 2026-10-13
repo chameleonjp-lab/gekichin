@@ -1,0 +1,52 @@
+{
+  "screen": "hud-dense",
+  "mode": "easy",
+  "modeScope": "specific",
+  "phase": "playing",
+  "tick": 0,
+  "viewport": {
+    "width": 568,
+    "height": 320
+  },
+  "fontCondition": "200 percent text at 568x320; DOM display fixture",
+  "computedRootFontPx": 32,
+  "renderer": {
+    "available": true,
+    "ready": true,
+    "canvas": true
+  },
+  "fixedFrameDrawn": true,
+  "displayFixture": {
+    "overrides": {
+      "score": "148,000",
+      "reload": "復帰待ち",
+      "playerHp": "復帰待ち",
+      "healthBar": "0%",
+      "faceGuide": "on",
+      "criticalNotices": null
+    },
+    "logicalStateUnchanged": true,
+    "logicalStateBefore": {
+      "phase": "playing",
+      "mode": "easy",
+      "tick": 0,
+      "operationId": 14
+    },
+    "logicalStateAfter": {
+      "phase": "playing",
+      "mode": "easy",
+      "tick": 0,
+      "operationId": 14
+    }
+  },
+  "evidenceKind": "real Three.js WebGLRenderer frozen frame",
+  "verifiedSourceSha256": {
+    "src/main.ts": "dd472b5387c6c0cb08268785bde235ad244a7e323cb2dd8b31436df488ecfeab",
+    "src/style.css": "fd3d39c4bce9ba387a012ad285718b553826a1e6eb5f416a283f24991f6e1f73",
+    "src/common-shell.css": "3fd2df8320108de7ba5d404ad30c8912e354b938740f904280d6dad866849294",
+    "src/control-obstacles.ts": "ef969861b5bb51e99691ff8f470c155b9f2863f19ced3b5e353e753f4c2d7515",
+    "src/mothership-layout.ts": "4016dc20b61c7032362fbbdc138888840c72fda48c139165f9e058122a5233b8",
+    "src/scene.ts": "5a54134e9ac402346be47e36c1a787c4630917f9549d8e5e3ba3853868ba1e4b",
+    "src/hud-presentation.ts": "201fd99112268465b2935e19fea1b94184358b271a23d746497ca4c754804fff"
+  }
+}

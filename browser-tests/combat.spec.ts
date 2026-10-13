@@ -76,6 +76,40 @@ test('Normal keyboard firing consumes real ammunition and updates flight HUD, th
   expect(Number(await page.locator('#app').getAttribute('data-tick'))).toBeGreaterThan(30);
   await page.screenshot({ path: info.outputPath('normal-combat-hud.png') });
 
+  // The new combat disclosure blocks piloting, but is not a pause screen.
+  await page.locator('#combat-panel summary').click();
+  await expect(page.locator('#app')).toHaveAttribute('data-reading-combat', 'true');
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', true);
+  await page.locator('#combat-panel .combat-metrics').focus();
+  const readingTick = Number(await page.locator('#app').getAttribute('data-tick'));
+  const readingAmmo = await page.locator('#ammunition').textContent();
+  await page.keyboard.down('Space');
+  await page.clock.runFor(250);
+  await page.keyboard.up('Space');
+  expect(Number(await page.locator('#app').getAttribute('data-tick'))).toBeGreaterThan(readingTick);
+  expect(await page.locator('#ammunition').textContent()).toBe(readingAmmo);
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', true);
+  await expect(page.locator('#flight-surface')).toHaveJSProperty('inert', true);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
+  await expect(page.locator('#app')).toHaveAttribute('data-reading-combat', 'false');
+  await expect(page.locator('#combat-panel summary')).toBeFocused();
+  const pitchBefore = Number(await page.locator('#hud').getAttribute('data-pitch'));
+  await page.keyboard.down('ArrowUp');
+  await page.clock.runFor(250);
+  await page.keyboard.up('ArrowUp');
+  await page.clock.runFor(20);
+  expect(Number(await page.locator('#hud').getAttribute('data-pitch'))).toBeGreaterThan(pitchBefore + 0.001);
+  await expect(page.locator('#combat-panel summary')).toBeFocused();
+  // Focus returns to the native summary; touch/mouse firing must resume
+  // immediately without stealing that disclosure's Space activation key.
+  await page.locator('#fire').hover();
+  await page.mouse.down();
+  await page.clock.runFor(100);
+  await page.mouse.up();
+  expect(await page.locator('#ammunition').textContent()).not.toBe(readingAmmo);
+
+  await expect(page.locator('#combat-panel summary')).toBeFocused();
   await page.keyboard.press('Escape'); await expect(page.locator('#paused')).toBeVisible();
   const stoppedTick = await page.locator('#app').getAttribute('data-tick');
   const stoppedScore = await page.locator('#score').textContent();
@@ -177,7 +211,7 @@ test('Normal sea contact clears held controls and respawns the player under new 
       pitch: Number(hud.dataset.pitch ?? Number.NaN),
       altitudeText: document.querySelector('#altitude')?.textContent?.trim() ?? '',
       playerHp: document.querySelector('#player-hp')?.textContent?.trim() ?? '',
-      ammunition: document.querySelector('#ammunition')?.textContent?.trim() ?? '',
+      ammunition: `${document.querySelector('#mg-ammo')?.textContent?.trim()} / ${document.querySelector('#cannon-ammo')?.textContent?.trim()}`,
       respawn: document.querySelector<HTMLElement>('#respawn-status')?.textContent?.trim() ?? '',
       respawnVisible: !document.querySelector<HTMLElement>('#respawn-status')!.hidden,
       fire: document.querySelector('#fire-status')?.textContent?.trim() ?? '',

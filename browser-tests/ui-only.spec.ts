@@ -4,7 +4,7 @@ import { join } from 'node:path';
 
 test.use({ serviceWorkers: 'block' });
 
-type ScreenState = 'home' | 'rules' | 'settings-touch' | 'settings-keyboard' | 'settings-conflict'
+type ScreenState = 'home' | 'rules' | 'settings-touch' | 'settings-keyboard' | 'settings-conflict' | 'hud-dense'
   | 'hud-easy' | 'hud-normal' | 'notice-long' | 'preparing' | 'paused' | 'sinking'
   | 'settings-save-failure' | 'result-save-failure'
   | 'result-victory' | 'result-defeat' | 'result-mutual' | 'result-aborted' | 'webgl-unavailable' | 'webgl-unavailable-guidance';
@@ -24,7 +24,7 @@ async function state(page: Page, name: keyof NonNullable<Window['__gekichinUiOnl
   }, { name, args });
 }
 
-async function capture(page: Page, info: TestInfo, screen: ScreenState, mode: 'easy' | 'normal' | null, fontCondition = 'default browser text'): Promise<void> {
+async function capture(page: Page, info: TestInfo, screen: ScreenState, mode: 'easy' | 'normal' | null, fontCondition = 'default browser text', displayFixture?: Record<string, unknown>): Promise<void> {
   const directory = info.outputPath('captures');
   await mkdir(directory, { recursive: true });
   const stem = screen + '-' + (mode ?? 'shared') + '-' + fontCondition.replace(/[^a-z0-9]+/gi, '-').toLowerCase();
@@ -49,6 +49,7 @@ async function capture(page: Page, info: TestInfo, screen: ScreenState, mode: 'e
     computedRootFontPx: await page.evaluate(() => Number.parseFloat(getComputedStyle(document.documentElement).fontSize)),
     renderer: frame.renderer,
     fixedFrameDrawn: frame.drawn,
+    displayFixture,
     evidenceKind: frame.drawn
       ? 'real Three.js WebGLRenderer frozen frame'
       : 'DOM fixture; real renderer unavailable',
@@ -68,23 +69,29 @@ async function expectWithinViewport(page: Page, selector: string): Promise<void>
   expect(box!.y + box!.height).toBeLessThanOrEqual(viewport!.height + 1);
 }
 
-async function expectNoticeClearOfControls(page: Page): Promise<void> {
-  const notice = await page.locator('#combat-notice').boundingBox();
-  expect(notice, 'long combat notice has a layout box').not.toBeNull();
-  for (const selector of ['#pause', '#fire', '#loop', '#throttle']) {
-    await expect(page.locator(selector), selector + ' is available during the normal HUD notice check').toBeVisible();
+async function expectNoticeClearOfControls(page: Page, mode: 'easy' | 'normal' = 'normal', notices = ['#combat-notice']): Promise<void> {
+  const controls = ['#game-sound', '#pause', '#fire', '#loop', '#throttle', '#face-toggle', '#combat-panel summary'];
+  const boxes = await page.evaluate(selectors => Object.fromEntries(selectors.map(selector => {
+    const element = document.querySelector<HTMLElement>(selector)!;
+    const box = element.getBoundingClientRect();
+    return [selector, element.getClientRects().length ? { x: box.x, y: box.y, width: box.width, height: box.height } : null];
+  })), [...notices, ...controls]);
+  for (const selector of mode === 'normal' ? controls : ['#game-sound', '#pause', '#loop', '#face-toggle', '#combat-panel summary']) {
+    expect(boxes[selector], selector + ' is available during the HUD notice check').not.toBeNull();
   }
-  for (const selector of ['#pause', '#fire', '#loop', '#throttle', '#combat-panel summary']) {
-    const control = page.locator(selector);
-    if (!await control.isVisible()) continue;
-    const box = await control.boundingBox();
-    expect(box, selector + ' has a layout box').not.toBeNull();
-    const gap = 8;
-    const separated = notice!.x + notice!.width + gap <= box!.x
-      || box!.x + box!.width + gap <= notice!.x
-      || notice!.y + notice!.height + gap <= box!.y
-      || box!.y + box!.height + gap <= notice!.y;
-    expect(separated, '#combat-notice stays at least 8px clear of ' + selector).toBe(true);
+  for (const selector of notices) {
+    const notice = boxes[selector];
+    expect(notice, selector + ' has a layout box').not.toBeNull();
+    for (const control of controls) {
+      const box = boxes[control];
+      if (!box) continue;
+      const gap = 8;
+      const separated = notice!.x + notice!.width + gap <= box.x
+        || box.x + box.width + gap <= notice!.x
+        || notice!.y + notice!.height + gap <= box.y
+        || box.y + box.height + gap <= notice!.y;
+      expect(separated, selector + ' stays at least 8px clear of ' + control).toBe(true);
+    }
   }
 }
 
@@ -187,6 +194,13 @@ test('393x852 portrait directly presents the product shell, mode HUDs, and all r
   await expect(page.locator('#mg-left')).toHaveText('80 / 80');
   await expect(page.locator('#fleet-left')).toHaveText('50');
   await expect(page.locator('#fleet-active')).toHaveText('8 / 42');
+  await expect(page.locator('#elapsed')).toHaveText('00:00.00');
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', false);
+  await expect(page.locator('#face-guide')).toBeHidden();
+  await expect(page.locator('#face-toggle')).toHaveAttribute('aria-pressed', 'false');
+  for (const selector of ['#player-hp', '#health-bar', '#fleet-left', '#mg-ammo', '#cannon-ammo', '#reload', '#altitude', '#speed', '#score']) {
+    await expect(page.locator(selector)).toBeVisible();
+  }
   await expect(page.locator('#face-guide [data-face]')).toHaveCount(6);
   const faceTotal = await page.locator('#face-guide [data-face] b').evaluateAll(items => items.reduce((sum, item) => sum + Number(item.textContent), 0));
   expect(faceTotal).toBe(100);
@@ -202,11 +216,20 @@ test('393x852 portrait directly presents the product shell, mode HUDs, and all r
   await expect(page.locator('#loop')).toBeVisible();
   await expect(page.locator('#throttle')).toBeVisible();
   await expect(page.locator('#accuracy')).toHaveText('— 未射撃');
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', false);
+  await capture(page, info, 'hud-normal', 'normal');
+  await page.locator('#combat-panel summary').click();
   await expect(page.locator('#combat-panel')).toHaveJSProperty('open', true);
+  await expect(page.locator('.combat-reading-note')).toContainText('戦闘・作戦時計は進行中');
+  await expect(page.locator('#app')).toHaveAttribute('data-reading-combat', 'true');
+  await expect(page.locator('#target-status')).toBeVisible();
   await page.locator('#hit-breakdown').scrollIntoViewIfNeeded();
   await expect(page.locator('#hit-breakdown')).toBeVisible();
   await expect(page.locator('#face-guide [data-face]')).toHaveCount(6);
-  await capture(page, info, 'hud-normal', 'normal');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#combat-panel summary')).toBeFocused();
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', false);
+  await expect(page.locator('#app')).toHaveAttribute('data-reading-combat', 'false');
 
   const shortNotice = '主砲予告 1基 · 射線から離脱';
   await state(page, 'showNotice', shortNotice, 'normal', false);
@@ -369,6 +392,235 @@ test('small, landscape, desktop, and computed 200 percent text retain screen geo
   await state(page, 'showResult', 'normal', 'defeat', false);
   await page.locator('#result-home').scrollIntoViewIfNeeded();
   await expectWithinViewport(page, '#result-home');
+});
+
+test('HUD choices persist through a new sortie and resizing never opens the combat details', async ({ page }) => {
+  await page.setViewportSize({ width: 393, height: 852 });
+  await boot(page);
+  await state(page, 'showHud', 'normal', false);
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', false);
+  await expect(page.locator('#face-guide')).toBeHidden();
+  await expect(page.locator('#target-status')).toBeHidden();
+
+  await page.locator('#face-toggle').click();
+  await expect(page.locator('#face-guide')).toBeVisible();
+  await expect(page.locator('#face-toggle')).toHaveAttribute('aria-pressed', 'true');
+  await state(page, 'showHome', 'normal');
+  await state(page, 'showHud', 'normal', false);
+  await expect(page.locator('#face-guide')).toBeVisible();
+  await expect(page.locator('#target-status')).toBeHidden();
+
+  for (const viewport of [{ width: 852, height: 393 }, { width: 1366, height: 768 }, { width: 320, height: 568 }]) {
+    await page.setViewportSize(viewport);
+    await expect(page.locator('#combat-panel')).toHaveJSProperty('open', false);
+    await expect(page.locator('#face-guide')).toBeVisible();
+    await expect(page.locator('#target-status')).toBeHidden();
+  }
+
+  await page.locator('#combat-panel summary').focus();
+  await page.keyboard.press('Space');
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', true);
+  await expect(page.locator('#flight-surface')).toHaveJSProperty('inert', true);
+  for (const selector of ['#fire', '#loop', '#throttle']) await expect(page.locator(selector)).toHaveJSProperty('inert', true);
+  await page.keyboard.press('Space');
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', false);
+  await expect(page.locator('#flight-surface')).toHaveJSProperty('inert', false);
+  expect(await page.evaluate(() => window.__gekichinUiOnly!.inspectInput().keys)).toEqual([]);
+  await page.keyboard.press('Space');
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', true);
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', true);
+  await expect(page.locator('#hit-breakdown')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', false);
+  await expect(page.locator('#combat-panel summary')).toBeFocused();
+  await expect(page.locator('#flight-surface')).toHaveJSProperty('inert', false);
+  for (const selector of ['#fire', '#loop', '#throttle']) await expect(page.locator(selector)).toHaveJSProperty('inert', false);
+});
+
+test('HUD toggles release held flight input and combat reading blocks new steering and fire until it closes', async ({ page }) => {
+  await page.setViewportSize({ width: 393, height: 852 });
+  await boot(page);
+  await state(page, 'showHud', 'normal', false);
+  const input = () => page.evaluate(() => window.__gekichinUiOnly!.inspectInput());
+  await page.keyboard.down('ArrowRight');
+  await page.keyboard.down('Space');
+  expect((await input()).keys).toEqual(expect.arrayContaining(['ArrowRight', 'Space']));
+  await page.locator('#face-toggle').click();
+  expect((await input()).keys).toEqual([]);
+  await page.keyboard.up('ArrowRight');
+  await page.keyboard.up('Space');
+  await expect(page.locator('#joystick')).toBeHidden();
+
+  // A second pointer can open a HUD control while steering is still held.
+  await page.locator('#flight-surface').dispatchEvent('pointerdown', { pointerId: 41, pointerType: 'touch', isPrimary: true, button: 0, buttons: 1, clientX: 195, clientY: 400 });
+  await page.locator('#flight-surface').dispatchEvent('pointermove', { pointerId: 41, pointerType: 'touch', buttons: 1, clientX: 230, clientY: 400 });
+  expect((await input()).turn).toBeGreaterThan(0);
+  await page.locator('#combat-panel summary').click();
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', true);
+  await expect.poll(async () => (await input()).steerPointer).toBeNull();
+  expect((await input()).turn).toBe(0);
+  expect((await input()).climb).toBe(0);
+  await expect(page.locator('#joystick')).toBeHidden();
+  await expect(page.locator('#flight-surface')).toHaveJSProperty('inert', true);
+  await page.locator('#combat-panel .combat-metrics').focus();
+  await page.keyboard.down('ArrowRight');
+  await page.keyboard.down('Space');
+  await page.keyboard.press('L');
+  await page.locator('#flight-surface').dispatchEvent('pointerdown', { pointerId: 42, pointerType: 'touch', isPrimary: true, button: 0, buttons: 1, clientX: 195, clientY: 400 });
+  expect((await input()).keys).toEqual([]);
+  expect((await input()).steerPointer).toBeNull();
+  for (const pointers of Object.values((await input()).heldPointers)) expect(pointers).toEqual([]);
+  await page.keyboard.up('ArrowRight');
+  await page.keyboard.up('Space');
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', true);
+  await expect(page.locator('#flight-surface')).toHaveJSProperty('inert', true);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#combat-panel summary')).toBeFocused();
+  await expect(page.locator('#combat-panel')).toHaveJSProperty('open', false);
+  await page.keyboard.down('ArrowRight');
+  expect((await input()).keys).toContain('ArrowRight');
+  await page.keyboard.up('ArrowRight');
+  await page.evaluate(() => (document.activeElement as HTMLElement).blur());
+  await page.keyboard.down('ArrowRight');
+  await page.keyboard.down('Space');
+  expect((await input()).keys).toEqual(expect.arrayContaining(['ArrowRight', 'Space']));
+  await page.keyboard.up('ArrowRight');
+  await page.keyboard.up('Space');
+  await page.locator('#combat-panel summary').focus();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#app')).toHaveAttribute('data-phase', 'paused');
+});
+
+test('both modes keep essential flight information and HUD toggles reachable at small sizes and 200 percent text', async ({ page }, info) => {
+  await boot(page);
+  for (const fontSize of ['100%', '200%']) {
+    await page.evaluate(fontSize => { document.documentElement.style.fontSize = fontSize; }, fontSize);
+    for (const viewport of [{ width: 320, height: 568 }, { width: 393, height: 852 }, { width: 568, height: 320 }, { width: 852, height: 393 }]) {
+      await page.setViewportSize(viewport);
+      for (const mode of ['easy', 'normal'] as const) {
+        await state(page, 'showHud', mode, false);
+        const fixtureBefore = await state(page, 'inspect');
+        // This is a display fixture only: no HP, score, flight, or combat state
+        // is injected into the simulation, and its frozen tick must stay intact.
+        await page.evaluate(() => {
+          document.querySelector('#score')!.textContent = '148,000';
+          document.querySelector('#reload')!.textContent = '復帰待ち';
+          document.querySelector('#combat-notice')!.textContent = '';
+          for (const selector of ['#respawn-status', '#boundary-status']) {
+            const notice = document.querySelector<HTMLElement>(selector)!;
+            notice.textContent = ''; notice.hidden = true;
+          }
+        });
+        expect(await state(page, 'inspect')).toEqual(fixtureBefore);
+        await expect(page.locator('#combat-panel')).toHaveJSProperty('open', false);
+        for (const selector of ['#elapsed', '#destroyed', '#player-hp', '#mg-ammo', '#cannon-ammo', '#reload', '#fleet-left', '#altitude', '#speed', '#score']) {
+          await expect(page.locator(selector)).toBeVisible();
+          await expectWithinViewport(page, selector);
+        }
+        for (const selector of ['#game-sound', '#pause', '#face-toggle', '#combat-panel summary']) {
+          await expectWithinViewport(page, selector);
+          const box = await page.locator(selector).boundingBox();
+          expect(box!.width, selector + ' minimum tap width').toBeGreaterThanOrEqual(44);
+          expect(box!.height, selector + ' minimum tap height').toBeGreaterThanOrEqual(44);
+        }
+        await page.locator('#face-toggle').click();
+        await expect(page.locator('#face-guide')).toBeVisible();
+        await expectWithinViewport(page, '#face-guide');
+        const dataBox = await page.locator('.flight-data').boundingBox();
+        const faceBox = await page.locator('#face-guide').boundingBox();
+        const flightControls = mode === 'easy' ? ['#loop'] : ['#fire', '#loop', '#throttle'];
+        for (const selector of flightControls) {
+          await expect(page.locator(selector)).toBeVisible();
+          await expectWithinViewport(page, selector);
+          const box = await page.locator(selector).boundingBox();
+          const separated = dataBox!.x + dataBox!.width <= box!.x
+            || box!.x + box!.width <= dataBox!.x
+            || dataBox!.y + dataBox!.height <= box!.y
+            || box!.y + box!.height <= dataBox!.y;
+          expect(separated, '.flight-data remains clear of ' + selector).toBe(true);
+          const facesSeparated = faceBox!.x + faceBox!.width <= box!.x
+            || box!.x + box!.width <= faceBox!.x
+            || faceBox!.y + faceBox!.height <= box!.y
+            || box!.y + box!.height <= faceBox!.y;
+          expect(facesSeparated, 'visible .face-guide remains clear of ' + selector).toBe(true);
+        }
+        await expectNoHorizontalOverflow(page);
+        await page.evaluate(() => {
+          document.querySelector('#player-hp-value')!.textContent = '復帰待ち';
+          document.querySelector('#player-hp-max')!.textContent = '';
+          document.querySelector<HTMLElement>('#player-hp-max')!.hidden = true;
+          document.querySelector<HTMLElement>('#health-bar')!.style.width = '0%';
+        });
+        await expect(page.locator('#player-hp')).toHaveText('復帰待ち');
+        await expectWithinViewport(page, '#player-hp');
+        const fixtureAfter = await state(page, 'inspect');
+        expect(fixtureAfter).toEqual(fixtureBefore);
+        let criticalNotices: Record<string, string> | null = null;
+        if (fontSize === '200%' && viewport.width === 320) {
+          const main = ['主砲予告 1基 · 射線から離脱', '主砲予告 1基・射線回避'];
+          const boundary = ['← 左へ 帰還 · 戻らないと7秒で機体損失', '←左へ・帰還・7秒で機体損失'];
+          const respawn = ['自機復帰 · 1.0秒', '自機復帰・1.0秒'];
+          // These combinations can coexist in the product, including when the
+          // retained camera is outside the boundary while no player is alive.
+          const stacks: Array<Record<string, string[]>> = [
+            { '#combat-notice': main },
+            { '#combat-notice': main, '#boundary-status': boundary },
+            { '#combat-notice': main, '#respawn-status': respawn },
+            { '#combat-notice': main, '#respawn-status': respawn, '#boundary-status': boundary },
+            { '#combat-notice': main, '#respawn-status': ['僚機へ引継ぎ · 3.0秒', '僚機へ引継ぎ・3.0秒'], '#boundary-status': boundary },
+            { '#combat-notice': main, '#respawn-status': ['出撃回廊の空きを待機', '出撃回廊の空きを待機'], '#boundary-status': boundary },
+          ];
+          for (const stack of stacks) {
+            const sources = Object.fromEntries(Object.entries(stack).map(([selector, values]) => [selector, values[0]]));
+            criticalNotices = Object.fromEntries(Object.entries(stack).map(([selector, values]) => [selector, values[1]]));
+            await page.evaluate(messages => {
+              for (const selector of ['#combat-notice', '#respawn-status', '#boundary-status']) {
+                const notice = document.querySelector<HTMLElement>(selector)!;
+                notice.textContent = messages[selector] ?? ''; notice.hidden = !(selector in messages);
+              }
+              window.dispatchEvent(new Event('resize'));
+            }, sources);
+            for (const [selector, text] of Object.entries(criticalNotices)) {
+              await expect(page.locator(selector)).toHaveText(text);
+              await expectWithinViewport(page, selector);
+            }
+            await expectWithinViewport(page, '.hud-alerts');
+            await expectNoticeClearOfControls(page, mode, Object.keys(criticalNotices));
+            expect(await state(page, 'inspect')).toEqual(fixtureBefore);
+          }
+          // Restoring the full source on resize does not advance any logical
+          // state or change the selected display settings.
+          await page.setViewportSize({ width: 393, height: 852 });
+          await expect(page.locator('#combat-notice')).toHaveText(main[0]);
+          await expect(page.locator('#boundary-status')).toHaveText(boundary[0]);
+          await page.setViewportSize(viewport);
+          await expect(page.locator('#combat-notice')).toHaveText(main[1]);
+          await expect(page.locator('#boundary-status')).toHaveText(boundary[1]);
+          expect(await state(page, 'inspect')).toEqual(fixtureBefore);
+        }
+        if (fontSize === '200%' && (viewport.width === 320 || viewport.width === 568)) {
+          const logicalStateAfter = await state(page, 'inspect');
+          expect(logicalStateAfter).toEqual(fixtureBefore);
+          await capture(page, info, 'hud-dense', mode, `200 percent text at ${viewport.width}x${viewport.height}; DOM display fixture`, {
+            overrides: { score: '148,000', reload: '復帰待ち', playerHp: '復帰待ち', healthBar: '0%', faceGuide: 'on', criticalNotices },
+            logicalStateUnchanged: true,
+            logicalStateBefore: fixtureBefore,
+            logicalStateAfter,
+          });
+        }
+        await page.locator('#combat-panel summary').click();
+        await expect(page.locator('#combat-panel')).toHaveJSProperty('open', true);
+        await expectWithinViewport(page, '#combat-details');
+        await page.locator('#combat-close').scrollIntoViewIfNeeded();
+        await expectWithinViewport(page, '#combat-close');
+        await page.locator('#combat-close').click();
+        await expect(page.locator('#combat-panel summary')).toBeFocused();
+        await page.locator('#face-toggle').click();
+        await expect(page.locator('#face-guide')).toBeHidden();
+      }
+    }
+  }
 });
 
 test('settings storage failure, session-only use, and result save failure are visible', async ({ page }, info) => {
