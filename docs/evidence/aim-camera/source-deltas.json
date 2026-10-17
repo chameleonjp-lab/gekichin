@@ -9,18 +9,24 @@
     },
     "src/flight-view.ts": {
       "historical_sha256": "b8a5790501503799b1cc43e634d5ac3b6545fcaba477db970b61a5d2fbb3eb32",
-      "approved_sha256": "1bbe39ea55172c2b8da9d60f51c896e6be9a06d7e2b131fcd963a8d51c5796f8",
-      "reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md"
+      "previous_approved_sha256": "1bbe39ea55172c2b8da9d60f51c896e6be9a06d7e2b131fcd963a8d51c5796f8",
+      "previous_reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md",
+      "approved_sha256": "00a5aab43c07f7f78ae41ff8c2b53a36331b601aef10e4ca10d329efa4631f77",
+      "reason": "2026-10-17 authorized zero-camera flight/camera contract; preserves effective collision and ship projection"
     },
     "src/flight.ts": {
       "historical_sha256": "41675b4e1f3bfecee95dad5b6ee2bebbd3930545ed35e6fa8260fca25a4b49b3",
-      "approved_sha256": "85af15b3b2468807f253e055064bfac8b8b2549d5247a21ae5cb647def506384",
-      "reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md"
+      "previous_approved_sha256": "85af15b3b2468807f253e055064bfac8b8b2549d5247a21ae5cb647def506384",
+      "previous_reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md",
+      "approved_sha256": "ebb62a3c334e7a41eaef72ccbd8eccaaced160967d846112e611a322bca29c08",
+      "reason": "2026-10-17 authorized zero-camera flight/camera contract; preserves absolute Easy assist and AI operation order"
     },
     "src/game-state.ts": {
       "historical_sha256": "378bc600e3b32a598ef88d1ab93879eb7ba23524d130e9e17ab3338212cecd3e",
-      "approved_sha256": "5febafac6ed73d995c5b305a036f38711b8122f7f34d8f3da0b79a568240bb0a",
-      "reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md"
+      "previous_approved_sha256": "5febafac6ed73d995c5b305a036f38711b8122f7f34d8f3da0b79a568240bb0a",
+      "previous_reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md",
+      "approved_sha256": "c22232c4455b0c03beeef16d8cfa3a94096a33cccfffca9588a695cdcf0606b1",
+      "reason": "2026-10-17 authorized zero-camera flight/camera contract; routes the active mode into the player loop"
     },
     "src/input.ts": {
       "historical_sha256": "569455763b08fabb046145aa21ed473aa55de5ac4c481eb884b067263b925c7a",

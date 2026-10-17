@@ -28,7 +28,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps chromium webkit
+      - run: GEKICHIN_CAMERA_CONTRACT_NO_ARTIFACTS=1 xvfb-run -a npx playwright test --config=playwright.config.ts browser-tests/p1-flow.spec.ts --grep=camera-contract:chromium --project=chromium --reporter=line --trace=off --output=/tmp/gekichin-camera-contract-results
+      - run: GEKICHIN_CAMERA_CONTRACT_NO_ARTIFACTS=1 xvfb-run -a npx playwright test --config=playwright.config.ts browser-tests/p1-flow.spec.ts --grep=camera-contract:webkit --project=chromium --reporter=line --trace=off --output=/tmp/gekichin-camera-contract-webkit-results
       - run: xvfb-run -a npm run test:browser
       - uses: actions/upload-artifact@v4
         if: always()

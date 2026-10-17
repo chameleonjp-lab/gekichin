@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { guardStaticTraffic } from './network-policy';
 
 test.use({ serviceWorkers: 'block' });
+if (process.env.GEKICHIN_CAMERA_CONTRACT_NO_ARTIFACTS === '1') test.use({ screenshot: 'off', trace: 'off' });
 
 async function start(page: Page, mode = 'easy') {
   await page.goto('/'); await expect(page.locator('#start')).toBeEnabled();
@@ -9,7 +10,7 @@ async function start(page: Page, mode = 'easy') {
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
 }
 
-async function startWithControlledFrames(page: Page, mode = 'easy') {
+async function startWithControlledFrames(page: Page, mode = 'easy', beforeStart?: () => Promise<void>) {
   await page.clock.install({ time: new Date('2026-01-01T12:00:00.000Z') });
   await page.goto('/'); await expect(page.locator('#start')).toBeEnabled();
   let rendererReady = false;
@@ -22,6 +23,7 @@ async function startWithControlledFrames(page: Page, mode = 'easy') {
   // not how much wall time SwiftShader spends compiling its first frame.
   const pauseTime = await page.evaluate(() => Date.now() + 60_000);
   await page.clock.pauseAt(new Date(pauseTime));
+  if (beforeStart) await beforeStart();
   await page.getByRole('radio', { name: mode === 'easy' ? /イージー/ : /ノーマル/ }).check(); await page.locator('#start').click();
   await page.clock.runFor(100);
   await expect(page.locator('#app')).toHaveAttribute('data-phase', 'playing');
@@ -50,6 +52,276 @@ test('Normal keyboard flight, loop interruption, pause, settings, report and ref
   await page.locator('#pause').click(); await page.locator('#pause-home').click(); await expect(page.getByRole('radio', { name: /ノーマル/ })).toBeChecked();
   expect(errors).toEqual([]);
 });
+
+type CameraContractSample = {
+  calls: number; tick: number; mode: 'easy' | 'normal'; phase: string; frame: number;
+  camera: { position: number[]; quaternion: number[] };
+  player: { position: number[]; previous: number[]; quaternion: number[]; pitch: number; yaw: number; bank: number; speed: number };
+  expectedCamera: { position: number[]; quaternion: number[] };
+  sight: { x: number; y: number };
+  expectedSight: { x: number; y: number };
+  cameraProjectedSight: { x: number; y: number };
+  sightCss: { styleAttribute: string | null; inlineLeft: string; inlineTop: string; computedLeft: string; computedTop: string };
+  stateUnchanged: boolean;
+};
+
+// Measured Chromium CSSOM rounded 309.4062737320592 to 309.406px, i.e. a
+// three-decimal half-ULP of 0.0005px. Never allow a coarser string to widen it.
+const MEASURED_CSS_ROUNDING_CEILING = 0.5 * 10 ** -3;
+
+function cssRoundingBounds(serialized: string, source: number) {
+  const number = serialized.trim().replace(/px$/i, '');
+  const [mantissa, exponentText] = number.toLowerCase().split('e');
+  const decimalPlaces = mantissa?.split('.')[1]?.length ?? 0;
+  const exponent = exponentText === undefined ? 0 : Number(exponentText);
+  const textPrecisionBound = 0.5 * 10 ** (exponent - decimalPlaces);
+  const floatingConversionBound = 4 * Number.EPSILON * Math.max(1, Math.abs(source), Math.abs(Number(number)));
+  const allowedRounding = Math.min(textPrecisionBound, MEASURED_CSS_ROUNDING_CEILING) + floatingConversionBound;
+  return { decimalPlaces, exponent, textPrecisionBound, floatingConversionBound, allowedRounding };
+}
+
+// Keep the same passive, bounded render observation in Chromium and WebKit.
+const cameraContractTest = test.extend({ screenshot: 'off', trace: 'off', video: 'off' });
+const webkitCameraContractTest = cameraContractTest.extend({ browserName: 'webkit', launchOptions: { args: [] } });
+
+async function installPassiveCameraProbe(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    const [{ FlightScene }, view, { projectGunSight }] = await Promise.all([
+      import('/src/scene.ts'), import('/src/flight-view.ts'), import('/src/gun-sight.ts'),
+    ]);
+    const prototype: any = FlightScene.prototype;
+    if (prototype.__gekichinCameraContractOriginalRender) throw new Error('camera contract probe already installed');
+    const originalRender = prototype.render;
+    const probe = { calls: 0, samples: [] as any[] };
+    (window as any).__gekichinCameraContract = probe;
+    prototype.__gekichinCameraContractOriginalRender = originalRender;
+    prototype.render = function (player: any, mode: any, tick: number, session: any, sinkingElapsedSeconds = 0) {
+      const before = {
+        tick: session?.tick ?? tick, phase: session?.phase ?? '',
+        position: player.position.toArray(), previous: player.previous.toArray(), quaternion: player.quaternion.toArray(),
+        pitch: player.pitch, yaw: player.yaw, bank: player.bank, speed: player.speed,
+      };
+      const result = originalRender.call(this, player, mode, tick, session, sinkingElapsedSeconds);
+      probe.calls += 1;
+      if (session?.phase === 'playing' && probe.calls % 3 === 0) {
+        const center = this.layout.center;
+        const ship = view.sinkingShipPose(center, sinkingElapsedSeconds, this.reducedMotion);
+        const playerCopy: any = {
+          position: new (player.position.constructor)().fromArray(before.position),
+          previous: new (player.previous.constructor)().fromArray(before.previous),
+          quaternion: new (player.quaternion.constructor)().fromArray(before.quaternion),
+          pitch: before.pitch, yaw: before.yaw, bank: before.bank, speed: before.speed,
+        };
+        const expectedPosition = new (this.camera.position.constructor)();
+        const expectedQuaternion = new (this.camera.quaternion.constructor)();
+        view.getEffectiveFlightCameraPose(playerCopy, mode, expectedPosition, expectedQuaternion, session.world, ship);
+        const after = {
+          tick: session?.tick ?? tick, phase: session?.phase ?? '',
+          position: player.position.toArray(), previous: player.previous.toArray(), quaternion: player.quaternion.toArray(),
+          pitch: player.pitch, yaw: player.yaw, bank: player.bank, speed: player.speed,
+        };
+        // Match the actual source call in FlightScene.render: use the post-render
+        // player values and selectWorld() result, then keep the raw source math
+        // separate from inline CSSOM and computed CSS values below.
+        const sourcePlayer: any = {
+          position: new (player.position.constructor)().fromArray(after.position),
+          previous: new (player.previous.constructor)().fromArray(after.previous),
+          quaternion: new (player.quaternion.constructor)().fromArray(after.quaternion),
+          pitch: after.pitch, yaw: after.yaw, bank: after.bank, speed: after.speed,
+        };
+        const sourceSight = projectGunSight(sourcePlayer, this.canvas.clientWidth, this.canvas.clientHeight,
+          (this as any).selectWorld(session), ship);
+        const forward = new (player.position.constructor)(0, 0, -1).applyQuaternion(sourcePlayer.quaternion);
+        const target = new (player.position.constructor)(0, 0, -4.5).applyQuaternion(sourcePlayer.quaternion)
+          .add(sourcePlayer.position).addScaledVector(forward, 500);
+        const projectedTarget = target.project(this.camera);
+        const cameraProjectedSight = {
+          x: (projectedTarget.x * 0.5 + 0.5) * this.canvas.clientWidth,
+          y: (0.5 - projectedTarget.y * 0.5) * this.canvas.clientHeight,
+        };
+        const circle = this.canvas.closest('#app')?.querySelector('.aim-circle') as HTMLElement | null;
+        const inlineLeft = circle?.style.left ?? '';
+        const inlineTop = circle?.style.top ?? '';
+        const actualSight = { x: Number.parseFloat(inlineLeft || 'NaN'), y: Number.parseFloat(inlineTop || 'NaN') };
+        const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+        if (probe.samples.length === 16) probe.samples.shift();
+        probe.samples.push({
+          calls: probe.calls, tick, mode, phase: session.phase, frame: this.renderer.info.render.frame,
+          camera: { position: this.camera.position.toArray(), quaternion: this.camera.quaternion.toArray() },
+          player: before,
+          expectedCamera: { position: expectedPosition.toArray(), quaternion: expectedQuaternion.toArray() },
+          sight: actualSight, expectedSight: { x: sourceSight.x, y: sourceSight.y },
+          cameraProjectedSight,
+          sightCss: {
+            styleAttribute: circle?.getAttribute('style') ?? null,
+            inlineLeft, inlineTop,
+            computedLeft: circle ? getComputedStyle(circle).left : '',
+            computedTop: circle ? getComputedStyle(circle).top : '',
+          },
+          stateUnchanged: same(before, after),
+        });
+      }
+      return result;
+    };
+  });
+}
+
+async function restorePassiveCameraProbe(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    const { FlightScene } = await import('/src/scene.ts');
+    const prototype: any = FlightScene.prototype;
+    if (prototype.__gekichinCameraContractOriginalRender) {
+      prototype.render = prototype.__gekichinCameraContractOriginalRender;
+      delete prototype.__gekichinCameraContractOriginalRender;
+    }
+    delete (window as any).__gekichinCameraContract;
+  });
+}
+
+async function latestCameraSample(page: Page): Promise<CameraContractSample> {
+  const sample = await page.evaluate(() => (window as any).__gekichinCameraContract?.samples.at(-1) ?? null);
+  expect(sample, 'the actual FlightScene.render path should provide a bounded camera sample').not.toBeNull();
+  return sample!;
+}
+
+async function runCameraContract(page: Page, expectedBrowser: 'chromium' | 'webkit'): Promise<void> {
+  expectCssRoundingCases();
+  expect(page.context().browser()?.browserType().name()).toBe(expectedBrowser);
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  let probeInstalled = false;
+  try {
+    await startWithControlledFrames(page, 'normal', async () => {
+      await installPassiveCameraProbe(page);
+      probeInstalled = true;
+    });
+    await page.clock.runFor(250);
+    const initial = await latestCameraSample(page);
+    expect(initial.mode).toBe('normal');
+    expect(initial.frame).toBeGreaterThan(0);
+    expectCameraMatchesRenderedPose(initial);
+    expectSightMatchesProjection(initial);
+
+    await page.keyboard.down('ArrowUp');
+    await page.keyboard.down('ArrowRight');
+    await page.clock.runFor(500);
+    const climbed = await latestCameraSample(page);
+    expect(climbed.player.pitch).toBeGreaterThan(initial.player.pitch + 0.02);
+    expectCameraMatchesRenderedPose(climbed);
+    expectSightMatchesProjection(climbed);
+
+    const beforeVerticalRelease = await latestCameraSample(page);
+    await page.keyboard.up('ArrowUp');
+    await page.clock.runFor(100);
+    const releasedVertical = await latestCameraSample(page);
+    expect(releasedVertical.calls).toBeGreaterThan(beforeVerticalRelease.calls);
+    expect(releasedVertical.tick).toBeGreaterThan(beforeVerticalRelease.tick);
+    await page.clock.runFor(200);
+    const horizontalOnly = await latestCameraSample(page);
+    expect(climbed.player.pitch).toBeGreaterThan(initial.player.pitch + 0.02);
+    expect(Math.abs(horizontalOnly.player.pitch - releasedVertical.player.pitch)).toBeLessThan(1e-9);
+    expectCameraMatchesRenderedPose(horizontalOnly);
+    expectSightMatchesProjection(horizontalOnly);
+
+    await page.keyboard.up('ArrowRight');
+    await page.keyboard.down('l');
+    await page.clock.runFor(200);
+    await expect(page.locator('#loop-status')).toHaveText('実行中');
+    const looping = await latestCameraSample(page);
+    expectCameraMatchesRenderedPose(looping);
+    await page.keyboard.down('ArrowRight');
+    await page.clock.runFor(100);
+    await expect(page.locator('#loop-status')).not.toHaveText('実行中');
+    const interrupted = await latestCameraSample(page);
+    expectCameraMatchesRenderedPose(interrupted);
+    expectSightMatchesProjection(interrupted);
+    expect(errors).toEqual([]);
+  } finally {
+    await page.keyboard.up('ArrowUp').catch(() => {});
+    await page.keyboard.up('ArrowRight').catch(() => {});
+    await page.keyboard.up('l').catch(() => {});
+    if (probeInstalled) await restorePassiveCameraProbe(page);
+  }
+}
+
+cameraContractTest('[camera-contract:chromium] actual rendered camera pose and horizontal pitch retention', async ({ page }) => {
+  await runCameraContract(page, 'chromium');
+});
+
+webkitCameraContractTest('[camera-contract:webkit] actual rendered camera pose and horizontal pitch retention', async ({ page }) => {
+  await runCameraContract(page, 'webkit');
+});
+
+function maxQuaternionComponentDelta(left: number[], right: number[]): number {
+  const direct = Math.max(...left.map((value, i) => Math.abs(value - right[i]!)));
+  const opposite = Math.max(...left.map((value, i) => Math.abs(value + right[i]!)));
+  return Math.min(direct, opposite);
+}
+
+function expectCameraMatchesRenderedPose(sample: CameraContractSample): void {
+  const delta = (left: number[], right: number[]) => Math.hypot(...left.map((value, i) => value - right[i]!));
+  expect(delta(sample.camera.position, sample.expectedCamera.position)).toBeLessThan(1e-6);
+  expect(maxQuaternionComponentDelta(sample.camera.quaternion, sample.expectedCamera.quaternion)).toBeLessThan(1e-8);
+  expect(sample.stateUnchanged, 'the render probe and expected-pose observation must not mutate game state').toBe(true);
+  expect(sample.phase).toBe('playing');
+}
+
+function expectSightMatchesProjection(sample: CameraContractSample): void {
+  expect(Number.isFinite(sample.sight.x) && Number.isFinite(sample.sight.y)).toBe(true);
+  const xPrecision = cssRoundingBounds(sample.sightCss.inlineLeft, sample.expectedSight.x);
+  const yPrecision = cssRoundingBounds(sample.sightCss.inlineTop, sample.expectedSight.y);
+  const mathRoundoffBound = 1e-6;
+  const diagnostic = JSON.stringify({
+    source: sample.expectedSight,
+    cameraProjected: sample.cameraProjectedSight,
+    mathDelta: {
+      x: Math.abs(sample.cameraProjectedSight.x - sample.expectedSight.x),
+      y: Math.abs(sample.cameraProjectedSight.y - sample.expectedSight.y),
+    },
+    mathRoundoffBound: { x: mathRoundoffBound, y: mathRoundoffBound },
+    styleAttribute: sample.sightCss.styleAttribute,
+    inlineCssom: { left: sample.sightCss.inlineLeft, top: sample.sightCss.inlineTop },
+    computedCssom: { left: sample.sightCss.computedLeft, top: sample.sightCss.computedTop },
+    parsedActual: sample.sight,
+    cssDelta: {
+      x: Math.abs(sample.sight.x - sample.expectedSight.x),
+      y: Math.abs(sample.sight.y - sample.expectedSight.y),
+    },
+    cssRounding: { x: xPrecision, y: yPrecision },
+    measuredCssRoundingCeiling: MEASURED_CSS_ROUNDING_CEILING,
+  });
+  for (const coordinate of ['x', 'y'] as const) {
+    const source = sample.expectedSight[coordinate];
+    const mathDelta = Math.abs(sample.cameraProjectedSight[coordinate] - source);
+    expect(mathDelta, `${coordinate} mathematical projection; ${diagnostic}`)
+      .toBeLessThan(mathRoundoffBound);
+    const precision = coordinate === 'x' ? xPrecision : yPrecision;
+    const cssDelta = Math.abs(sample.sight[coordinate] - source);
+    const allowedRounding = precision.allowedRounding;
+    expect(cssDelta <= allowedRounding,
+      `${coordinate} CSS serialization; ${diagnostic}; allowedRounding=${allowedRounding}`,
+    ).toBe(true);
+  }
+}
+
+function expectCssRoundingCases(): void {
+  const cases = [
+    { serialized: '309.406px', source: 309.4062737320592, within: true, label: 'measured positive fractional rounding' },
+    { serialized: '-2.003px', source: -2.0032737320592, within: true, label: 'negative fractional rounding' },
+    { serialized: '10px', source: 10, within: true, label: 'exact integer with coarse text' },
+    { serialized: '12.34px', source: 12.34, within: true, label: 'exact decimal with coarse text' },
+    { serialized: '10px', source: 10.0005, within: true, label: 'inclusive half-ULP boundary' },
+    { serialized: '10px', source: 10.0005001, within: false, label: 'outside half-ULP cap' },
+    { serialized: '12.34px', source: 12.344, within: false, label: 'coarse string cannot allow large error' },
+  ];
+  for (const fixture of cases) {
+    const precision = cssRoundingBounds(fixture.serialized, fixture.source);
+    const delta = Math.abs(Number(fixture.serialized.replace(/px$/i, '')) - fixture.source);
+    const observed = { delta, allowed: precision.allowedRounding, within: delta <= precision.allowedRounding,
+      decimalPlaces: precision.decimalPlaces };
+    expect(observed.within, `${fixture.label}: ${JSON.stringify({ ...fixture, observed })}`).toBe(fixture.within);
+  }
+}
 
 test('multi-touch cancel, lost capture, resize and compatibility click release held input', async ({ page }) => {
   await start(page, 'normal'); const surface = page.locator('#flight-surface'), fire = page.locator('#fire');

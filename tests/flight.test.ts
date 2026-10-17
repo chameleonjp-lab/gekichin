@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { Quaternion, Vector3 } from 'three';
-import { CRUISE_SPEED, LOOP_DURATION, MAX_SPEED, STALL_SPEED, advanceThrottle, createFlightController, updateAircraftMotion, updatePlayerLoop } from '../src/flight';
+import { CRUISE_SPEED, ENEMY_MAX_PITCH, LOOP_DURATION, MAX_SPEED, STALL_SPEED, advanceThrottle, createFlightController, normalizeAngle, updateAircraftMotion, updatePlayerLoop, updateQuaternion } from '../src/flight';
 import { FLIGHT_CAMERA_BANK_FACTOR, FLIGHT_FOV, getFlightCameraPose } from '../src/flight-view';
 import { applyEasyShotCorrection, EASY_SHOT_MAX_ANGLE, getFlightAssist } from '../src/flight-assist';
 import { createPlayer, FixedStepper, FlightSession } from '../src/game-state';
@@ -10,6 +10,25 @@ import { captureKey, DEFAULT_KEY_BINDINGS, isBindableCode, KEY_ACTIONS, parseKey
 import type { FlightInput } from '../src/types';
 
 const neutral = (): FlightInput => ({ turn: 0, climb: 0, fire: false, loop: false, accelerate: false, brake: false, steeringRevision: 0 });
+
+function cameraForward(player: ReturnType<typeof createPlayer>, mode: 'easy' | 'normal'): Vector3 {
+  const position = new Vector3(), rotation = new Quaternion();
+  getFlightCameraPose(player, mode, position, rotation);
+  return new Vector3(0, 0, -1).applyQuaternion(rotation).normalize();
+}
+
+function angleBetween(from: Vector3, to: Vector3): number {
+  return Math.atan2(new Vector3().crossVectors(from, to).length(), from.dot(to));
+}
+
+function authority(speed: number): number {
+  const lowSpeed = speed <= STALL_SPEED + 20
+    ? 0.92 + ((speed - STALL_SPEED) / 20) * 0.23
+    : speed <= CRUISE_SPEED
+      ? 1.15 - ((speed - (STALL_SPEED + 20)) / (CRUISE_SPEED - (STALL_SPEED + 20))) * 0.15
+      : 1;
+  return lowSpeed * Math.max(0.78, Math.min(1, 1 - Math.max(0, speed - 115) * 0.008));
+}
 
 test('fixed source flight and camera tuning remain unchanged', () => {
   assert.equal(CRUISE_SPEED, 110); assert.equal(MAX_SPEED, 141); assert.equal(STALL_SPEED, 65);
@@ -37,6 +56,84 @@ test('right turn, climb and throttle preserve physical signs and bounded speed',
   assert.equal(easyMeta.playerTargetSpeed, CRUISE_SPEED);
 });
 
+test('manual camera forward has equal total angle for all directions, modes, speeds and attitudes', () => {
+  for (const mode of ['easy', 'normal'] as const) for (const speed of [65, 85, 110, 141]) {
+    for (const pitch of [-0.9, 0, 0.9]) for (const bank of [-0.72, 0, 0.72]) {
+      for (const yaw of [-3.14, 0, 3.14]) for (let direction = 0; direction < 8; direction += 1) {
+        for (const strength of [0.25, 0.45, 0.6]) {
+          const player = createPlayer();
+          Object.assign(player, { speed, pitch, bank, yaw }); updateQuaternion(player);
+          const before = cameraForward(player, mode);
+          const theta = direction * Math.PI / 4;
+          const input = { ...neutral(), turn: Math.cos(theta) * strength, climb: Math.sin(theta) * strength, steeringActive: true };
+          updatePlayerLoop(player, createFlightController(player), input, input, false, FIXED_DT, speed, MAX_SPEED, 1, mode);
+          const expected = 0.82 * authority(speed) * FIXED_DT * strength;
+          const actual = angleBetween(before, cameraForward(player, mode));
+          assert.ok(Math.abs(actual - expected) <= 1e-12,
+            `${mode}, speed=${speed}, pitch=${pitch}, bank=${bank}, yaw=${yaw}, direction=${direction}, strength=${strength}: ${actual} vs ${expected}`);
+        }
+      }
+    }
+  }
+});
+
+test('manual horizontal turn holds pitch, while neutral leveling is rate-limited and directly counted', () => {
+  for (const mode of ['easy', 'normal'] as const) for (const speed of [65, 85, 110, 141]) for (const pitch of [-0.9, 0.9]) {
+    const player = createPlayer(); Object.assign(player, { speed, pitch, bank: 0.4, yaw: -2.2 }); updateQuaternion(player);
+    const manual = { ...neutral(), turn: 0.6, steeringActive: true };
+    const before = cameraForward(player, mode), pitchBefore = player.pitch;
+    updatePlayerLoop(player, createFlightController(player), manual, manual, false, FIXED_DT, speed, MAX_SPEED, 1, mode);
+    assert.equal(player.pitch, pitchBefore, 'horizontal manual steering must retain pitch');
+    const actual = angleBetween(before, cameraForward(player, mode));
+    const expected = 0.82 * authority(speed) * FIXED_DT * 0.6;
+    assert.ok(Math.abs(actual - expected) <= 1e-12, `must measure camera forward before-to-after without subtracting leveling: ${actual} vs ${expected}`);
+
+    const neutralPlayer = createPlayer(); Object.assign(neutralPlayer, { speed, pitch, bank: -0.3, yaw: 2.2 }); updateQuaternion(neutralPlayer);
+    const neutralInput = { ...neutral(), steeringActive: true };
+    const neutralBefore = cameraForward(neutralPlayer, mode), neutralPitch = neutralPlayer.pitch;
+    updatePlayerLoop(neutralPlayer, createFlightController(neutralPlayer), neutralInput, neutralInput, false,
+      FIXED_DT, speed, MAX_SPEED, 1, mode);
+    const leveled = angleBetween(neutralBefore, cameraForward(neutralPlayer, mode));
+    const rateCap = 0.82 * authority(speed) * FIXED_DT;
+    assert.ok(Math.abs(neutralPlayer.pitch - neutralPitch) <= rateCap + 1e-12);
+    assert.ok(Math.abs(leveled - Math.min(Math.abs(neutralPitch) * (1 - Math.exp(-FIXED_DT * 4.2)), rateCap)) <= 1e-12);
+  }
+});
+
+test('manual response multiplier is horizontal-only and diagonals are circularly bounded', () => {
+  for (const mode of ['easy', 'normal'] as const) for (const pitch of [-0.9, 0.9]) for (const strength of [0.25, 0.45, 0.6]) {
+    const player = createPlayer(); Object.assign(player, { speed: 110, pitch, bank: 0.2, yaw: -0.7 }); updateQuaternion(player);
+    const before = cameraForward(player, mode), input = { ...neutral(), turn: strength * Math.SQRT1_2, climb: strength * Math.SQRT1_2, steeringActive: true };
+    updatePlayerLoop(player, createFlightController(player), input, input, false, FIXED_DT, 110, MAX_SPEED, 1.65, mode);
+    const expected = 0.82 * authority(110) * FIXED_DT * Math.hypot(input.turn * 1.65, input.climb);
+    assert.ok(Math.abs(angleBetween(before, cameraForward(player, mode)) - expected) <= 1e-12);
+  }
+  const player = createPlayer(); Object.assign(player, { pitch: 0, bank: 0, yaw: 0 }); updateQuaternion(player);
+  const diagonal = { ...neutral(), turn: 1, climb: 1, steeringActive: true }, before = cameraForward(player, 'normal');
+  updatePlayerLoop(player, createFlightController(player), diagonal, diagonal, false, FIXED_DT, 110, MAX_SPEED, 1, 'normal');
+  assert.ok(Math.abs(angleBetween(before, cameraForward(player, 'normal')) - 0.82 * FIXED_DT) <= 1e-12,
+    'a keyboard diagonal above unit length must normalize to the unit circle');
+});
+
+test('Easy absolute assistance and default AI motion keep their pre-manual operation order', () => {
+  const player = createPlayer(); player.pitch = 0.6; updateQuaternion(player);
+  const userInput = neutral(), adjusted = { ...neutral(), climb: -0.2 };
+  updatePlayerLoop(player, createFlightController(player), adjusted, userInput, false, FIXED_DT, CRUISE_SPEED, CRUISE_SPEED, 1, 'easy');
+  const expectedPitch = 0.6 + (-0.2 * 0.95 - 0.6) * (1 - Math.exp(-FIXED_DT * 4.2));
+  assert.equal(player.pitch, expectedPitch, 'absolute Easy assistance keeps the old exponential pitch response');
+
+  const npc = createPlayer(); Object.assign(npc, { speed: 85, pitch: 0.4, yaw: 0.3, bank: 0.2 }); updateQuaternion(npc);
+  const before = { pitch: npc.pitch, yaw: npc.yaw, bank: npc.bank };
+  const turn = 0.3, climb = -0.2, response = 1.65;
+  updateAircraftMotion(npc, turn, climb, FIXED_DT, CRUISE_SPEED, false, MAX_SPEED, ENEMY_MAX_PITCH, response);
+  const expectedAuthority = authority(85);
+  assert.equal(npc.pitch, before.pitch + (climb * ENEMY_MAX_PITCH - before.pitch) * (1 - Math.exp(-FIXED_DT * 4.2)));
+  let yawWrapped = (before.yaw - turn * 0.82 * expectedAuthority * response * FIXED_DT + Math.PI) % (Math.PI * 2);
+  if (yawWrapped < 0) yawWrapped += Math.PI * 2;
+  assert.equal(npc.yaw, yawWrapped - Math.PI, 'the preserved AI yaw normalization operation order is exact');
+  assert.equal(npc.bank, before.bank + (turn * 0.72 - before.bank) * (1 - Math.exp(-FIXED_DT * 5.5)));
+});
+
 test('five second loop ends once and new steering interrupts without teleportation', () => {
   const aircraft = createPlayer(), meta = createFlightController(aircraft);
   let completions = 0;
@@ -46,14 +143,19 @@ test('five second loop ends once and new steering interrupts without teleportati
   }
   assert.equal(completions, 1); assert.equal(aircraft.loopProgress, 0); assert.ok(aircraft.loopCooldown > 1.9);
   assert.ok(Math.abs(aircraft.pitch) < 1e-10);
-  const cancelling = createPlayer(), cancellingMeta = createFlightController(cancelling);
-  const first = { ...neutral(), loop: true };
-  updatePlayerLoop(cancelling, cancellingMeta, first, first, true, FIXED_DT, CRUISE_SPEED, MAX_SPEED, 1);
-  for (let tick = 0; tick < 60; tick += 1) updatePlayerLoop(cancelling, cancellingMeta, neutral(), neutral(), false, FIXED_DT, CRUISE_SPEED, MAX_SPEED, 1);
-  const previous = cancelling.position.clone(), input = { ...neutral(), turn: 1, steeringRevision: 1 };
-  updatePlayerLoop(cancelling, cancellingMeta, input, input, false, FIXED_DT, CRUISE_SPEED, MAX_SPEED, 1);
-  assert.equal(cancelling.loopProgress, 0); assert.equal(cancellingMeta.playerLoopActive, false);
-  assert.ok(cancelling.position.distanceTo(previous) <= MAX_SPEED * FIXED_DT + 1e-9);
+  for (const mode of ['easy','normal'] as const) for (const interruptedTick of [60,90,150,210,270]) {
+    const cancelling=createPlayer(),cancellingMeta=createFlightController(cancelling),first={...neutral(),loop:true};
+    updatePlayerLoop(cancelling,cancellingMeta,first,first,true,FIXED_DT,CRUISE_SPEED,MAX_SPEED,1,mode);
+    for(let tick=0;tick<interruptedTick;tick+=1)updatePlayerLoop(cancelling,cancellingMeta,neutral(),neutral(),false,FIXED_DT,CRUISE_SPEED,MAX_SPEED,1,mode);
+    const previous=cancelling.position.clone(),beforeCamera=cameraForward(cancelling,mode),pitchBefore=cancelling.pitch;
+    const angularStep=0.82*authority(cancelling.speed)*FIXED_DT,input={...neutral(),turn:1,steeringRevision:1};
+    updatePlayerLoop(cancelling,cancellingMeta,input,input,false,FIXED_DT,CRUISE_SPEED,MAX_SPEED,1,mode);
+    assert.equal(cancelling.loopProgress,0);assert.equal(cancellingMeta.playerLoopActive,false);
+    assert.ok(cancelling.position.distanceTo(previous)<=MAX_SPEED*FIXED_DT+1e-9);
+    const actualCameraAngle=angleBetween(beforeCamera,cameraForward(cancelling,mode));
+    assert.ok(actualCameraAngle<0.1,`${mode} interruption at ${interruptedTick} ticks uses actual camera forward before-to-after: ${actualCameraAngle}`);
+    assert.ok(Math.abs(normalizeAngle(cancelling.pitch-pitchBefore))<=angularStep+1e-12,`${mode} loop recovery pitch is rate-limited modulo full turns at ${interruptedTick}`);
+  }
 });
 
 test('no P1 placeholder target pulls steering; hidden/dead targets are rejected and shot correction is finite', () => {
