@@ -60,6 +60,8 @@ type CameraContractSample = {
   expectedCamera: { position: number[]; quaternion: number[] };
   sight: { x: number; y: number };
   expectedSight: { x: number; y: number };
+  cameraProjectedSight: { x: number; y: number };
+  sightCss: { styleAttribute: string | null; inlineLeft: string; inlineTop: string; computedLeft: string; computedTop: string };
   stateUnchanged: boolean;
 };
 
@@ -98,14 +100,34 @@ async function installPassiveCameraProbe(page: Page): Promise<void> {
         const expectedPosition = new (this.camera.position.constructor)();
         const expectedQuaternion = new (this.camera.quaternion.constructor)();
         view.getEffectiveFlightCameraPose(playerCopy, mode, expectedPosition, expectedQuaternion, session.world, ship);
-        const expectedSight = projectGunSight(playerCopy, this.canvas.clientWidth, this.canvas.clientHeight, session.world, ship);
         const after = {
           tick: session?.tick ?? tick, phase: session?.phase ?? '',
           position: player.position.toArray(), previous: player.previous.toArray(), quaternion: player.quaternion.toArray(),
           pitch: player.pitch, yaw: player.yaw, bank: player.bank, speed: player.speed,
         };
+        // Match the actual source call in FlightScene.render: use the post-render
+        // player values and selectWorld() result, then keep the raw source math
+        // separate from inline CSSOM and computed CSS values below.
+        const sourcePlayer: any = {
+          position: new (player.position.constructor)().fromArray(after.position),
+          previous: new (player.previous.constructor)().fromArray(after.previous),
+          quaternion: new (player.quaternion.constructor)().fromArray(after.quaternion),
+          pitch: after.pitch, yaw: after.yaw, bank: after.bank, speed: after.speed,
+        };
+        const sourceSight = projectGunSight(sourcePlayer, this.canvas.clientWidth, this.canvas.clientHeight,
+          (this as any).selectWorld(session), ship);
+        const forward = new (player.position.constructor)(0, 0, -1).applyQuaternion(sourcePlayer.quaternion);
+        const target = new (player.position.constructor)(0, 0, -4.5).applyQuaternion(sourcePlayer.quaternion)
+          .add(sourcePlayer.position).addScaledVector(forward, 500);
+        const projectedTarget = target.project(this.camera);
+        const cameraProjectedSight = {
+          x: (projectedTarget.x * 0.5 + 0.5) * this.canvas.clientWidth,
+          y: (0.5 - projectedTarget.y * 0.5) * this.canvas.clientHeight,
+        };
         const circle = this.canvas.closest('#app')?.querySelector('.aim-circle') as HTMLElement | null;
-        const actualSight = { x: Number.parseFloat(circle?.style.left ?? 'NaN'), y: Number.parseFloat(circle?.style.top ?? 'NaN') };
+        const inlineLeft = circle?.style.left ?? '';
+        const inlineTop = circle?.style.top ?? '';
+        const actualSight = { x: Number.parseFloat(inlineLeft || 'NaN'), y: Number.parseFloat(inlineTop || 'NaN') };
         const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
         if (probe.samples.length === 16) probe.samples.shift();
         probe.samples.push({
@@ -113,7 +135,14 @@ async function installPassiveCameraProbe(page: Page): Promise<void> {
           camera: { position: this.camera.position.toArray(), quaternion: this.camera.quaternion.toArray() },
           player: before,
           expectedCamera: { position: expectedPosition.toArray(), quaternion: expectedQuaternion.toArray() },
-          sight: actualSight, expectedSight: { x: expectedSight.x, y: expectedSight.y },
+          sight: actualSight, expectedSight: { x: sourceSight.x, y: sourceSight.y },
+          cameraProjectedSight,
+          sightCss: {
+            styleAttribute: circle?.getAttribute('style') ?? null,
+            inlineLeft, inlineTop,
+            computedLeft: circle ? getComputedStyle(circle).left : '',
+            computedTop: circle ? getComputedStyle(circle).top : '',
+          },
           stateUnchanged: same(before, after),
         });
       }
@@ -223,8 +252,43 @@ function expectCameraMatchesRenderedPose(sample: CameraContractSample): void {
 
 function expectSightMatchesProjection(sample: CameraContractSample): void {
   expect(Number.isFinite(sample.sight.x) && Number.isFinite(sample.sight.y)).toBe(true);
-  expect(Math.abs(sample.sight.x - sample.expectedSight.x)).toBeLessThan(1e-6);
-  expect(Math.abs(sample.sight.y - sample.expectedSight.y)).toBeLessThan(1e-6);
+  const cssRoundingBounds = (serialized: string, source: number) => {
+    const number = serialized.trim().replace(/px$/i, '');
+    const [mantissa, exponentText] = number.toLowerCase().split('e');
+    const decimalPlaces = mantissa?.split('.')[1]?.length ?? 0;
+    const exponent = exponentText === undefined ? 0 : Number(exponentText);
+    const textPrecisionBound = 0.5 * 10 ** (exponent - decimalPlaces);
+    const floatingConversionBound = 4 * Number.EPSILON * Math.max(1, Math.abs(source), Math.abs(Number(number)));
+    return { decimalPlaces, exponent, textPrecisionBound, floatingConversionBound,
+      totalBound: textPrecisionBound + floatingConversionBound };
+  };
+  const xPrecision = cssRoundingBounds(sample.sightCss.inlineLeft, sample.expectedSight.x);
+  const yPrecision = cssRoundingBounds(sample.sightCss.inlineTop, sample.expectedSight.y);
+  const diagnostic = JSON.stringify({
+    source: sample.expectedSight,
+    cameraProjected: sample.cameraProjectedSight,
+    mathDelta: {
+      x: Math.abs(sample.cameraProjectedSight.x - sample.expectedSight.x),
+      y: Math.abs(sample.cameraProjectedSight.y - sample.expectedSight.y),
+    },
+    styleAttribute: sample.sightCss.styleAttribute,
+    inlineCssom: { left: sample.sightCss.inlineLeft, top: sample.sightCss.inlineTop },
+    computedCssom: { left: sample.sightCss.computedLeft, top: sample.sightCss.computedTop },
+    parsedActual: sample.sight,
+    cssDelta: {
+      x: Math.abs(sample.sight.x - sample.expectedSight.x),
+      y: Math.abs(sample.sight.y - sample.expectedSight.y),
+    },
+    cssRounding: { x: xPrecision, y: yPrecision },
+  });
+  for (const coordinate of ['x', 'y'] as const) {
+    const source = sample.expectedSight[coordinate];
+    const mathDelta = Math.abs(sample.cameraProjectedSight[coordinate] - source);
+    expect(mathDelta, `${coordinate} mathematical projection; ${diagnostic}`).toBeLessThan(1e-6);
+    // Keep this strict during the diagnostic run. The failure-only message
+    // records the CSS text precision and its independently derived half-ULP.
+    expect(Math.abs(sample.sight[coordinate] - source), `${coordinate} CSS serialization; ${diagnostic}`).toBeLessThan(1e-6);
+  }
 }
 
 test('multi-touch cancel, lost capture, resize and compatibility click release held input', async ({ page }) => {
