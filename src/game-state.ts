@@ -175,7 +175,7 @@ export class FlightSession {
         const assist = getFlightAssist(plane, targets, accepted, this.mode, this.controller.targetLock, this.world);
         const adjusted = { ...accepted, ...smoothFlightAssistance(this.controller, accepted, assist, FIXED_DT) };
         updatePlayerLoop(plane, this.controller, adjusted, accepted, accepted.loop,
-          FIXED_DT, preferredSpeed, this.mode === 'easy' ? CRUISE_SPEED : MAX_SPEED, this.controller.responseMultiplier);
+          FIXED_DT, preferredSpeed, this.mode === 'easy' ? CRUISE_SPEED : MAX_SPEED, this.controller.responseMultiplier, this.mode);
       } else {
         const intent = intents.get(plane.tokenId) ?? { turn: 0, climb: 0, fire: false };
         friendlyRequests.push(...this.weapons.plan(plane, tick, intent.fire));

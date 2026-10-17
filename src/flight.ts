@@ -1,5 +1,6 @@
 import { resolveThrottleAxis } from './throttle-lever';
 import { createFlightTargetLock, type FlightTargetLock } from './flight-target';
+import { EASY_CAMERA_LOOK_ANGLE, NORMAL_CAMERA_LOOK_ANGLE } from './flight-view';
 // Flight equations and loop recovery adapted from kaisen@3d751051dc6212482a129e8da596ddd349b2f9f5. See docs/P0_BASELINE.md.
 import { Euler, Quaternion, Vector3 } from 'three';
 import { PLAYER_MAX_PITCH } from './rules';
@@ -67,9 +68,15 @@ export function updateAircraftMotion(
   speedCeiling = MAX_SPEED,
   maxPitch = ENEMY_MAX_PITCH,
   responseMultiplier = 1,
+  manualSteering = false,
+  cameraLookAngle = NORMAL_CAMERA_LOOK_ANGLE,
 ): void {
-  const turn = clamp(turnInput, -1, 1);
-  const climb = clamp(climbInput, -1, 1);
+  let turn = clamp(turnInput, -1, 1);
+  let climb = clamp(climbInput, -1, 1);
+  if (manualSteering) {
+    const magnitude = Math.hypot(turn, climb);
+    if (magnitude > 1) { turn /= magnitude; climb /= magnitude; }
+  }
   const lowSpeedAuthority = aircraft.speed <= STALL_SPEED + 20
     ? 0.92 + ((aircraft.speed - STALL_SPEED) / 20) * 0.23
     : aircraft.speed <= CRUISE_SPEED
@@ -83,8 +90,42 @@ export function updateAircraftMotion(
   if (!looping) {
     const targetPitch = climb * maxPitch;
     const pitchBlend = 1 - Math.exp(-dt * 4.2);
-    aircraft.pitch += (targetPitch - aircraft.pitch) * pitchBlend;
-    aircraft.yaw = normalizeAngle(aircraft.yaw - turn * MAX_YAW_RATE * authority * responseMultiplier * dt);
+    const angularStep = MAX_YAW_RATE * authority * dt;
+    if (manualSteering) {
+      const pitchBefore = aircraft.pitch;
+      if (Math.abs(aircraft.pitch) > maxPitch) {
+        aircraft.pitch += clamp(clamp(aircraft.pitch, -maxPitch, maxPitch) - aircraft.pitch, -angularStep, angularStep);
+      } else if (Math.abs(climb) > EPSILON) {
+        aircraft.pitch = clamp(aircraft.pitch + climb * angularStep, -maxPitch, maxPitch);
+      } else if (Math.abs(turn) <= EPSILON) {
+        // Only neutral on both manual axes may level pitch. Keep this return
+        // within the same per-tick angular budget as active manual control.
+        aircraft.pitch += clamp(-aircraft.pitch * pitchBlend, -angularStep, angularStep);
+      }
+
+      let yawStep = angularStep * responseMultiplier;
+      if (Math.abs(turn) > EPSILON && Math.abs(pitchBefore) <= maxPitch && Math.abs(aircraft.pitch) <= maxPitch) {
+        // Match the finite camera-forward angular distance rather than an Euler
+        // yaw delta. The offscreen response multiplier changes yaw only.
+        const pitchDelta = aircraft.pitch - pitchBefore;
+        const desiredHorizontal = Math.abs(turn) * angularStep * responseMultiplier;
+        const desiredTotal = Math.hypot(pitchDelta, desiredHorizontal);
+        const cameraPitchBefore = pitchBefore + cameraLookAngle;
+        const cameraPitchAfter = aircraft.pitch + cameraLookAngle;
+        const cosProduct = Math.cos(cameraPitchBefore) * Math.cos(cameraPitchAfter);
+        if (cosProduct > EPSILON) {
+          const sineHalfYaw = Math.sqrt(Math.max(0,
+            Math.sin(desiredTotal * 0.5) ** 2 - Math.sin(pitchDelta * 0.5) ** 2,
+          ) / cosProduct);
+          yawStep = 2 * Math.asin(clamp(sineHalfYaw, 0, 1)) / Math.abs(turn);
+        }
+      }
+      aircraft.yaw = normalizeAngle(aircraft.yaw - turn * yawStep);
+    } else {
+      aircraft.pitch += (targetPitch - aircraft.pitch) * pitchBlend;
+      // Keep the pre-manual operation order exactly for NPCs and absolute-pitch assistance.
+      aircraft.yaw = normalizeAngle(aircraft.yaw - turn * MAX_YAW_RATE * authority * responseMultiplier * dt);
+    }
     const targetBank = turn * MAX_BANK;
     const bankBlend = 1 - Math.exp(-dt * 5.5);
     aircraft.bank += (targetBank - aircraft.bank) * bankBlend;
@@ -136,8 +177,14 @@ export function updatePlayerLoop(
   preferredSpeed: number,
   speedCeiling: number,
   responseMultiplier: number,
+  mode: GameMode = 'normal',
 ): boolean {
   if (player.loopCooldown > 0) player.loopCooldown = Math.max(0, player.loopCooldown - dt);
+
+  const cameraLookAngle = mode === 'easy' ? EASY_CAMERA_LOOK_ANGLE : NORMAL_CAMERA_LOOK_ANGLE;
+  const manualSteering = !!userInput.steeringActive
+    || Math.max(Math.abs(userInput.turn), Math.abs(userInput.climb)) > EPSILON
+    || Math.max(Math.abs(input.turn), Math.abs(input.climb)) <= EPSILON;
 
   const revisionChanged = meta.loopStartSteeringRevision !== undefined
     && userInput.steeringRevision !== undefined
@@ -154,11 +201,12 @@ export function updatePlayerLoop(
     player.loopCooldown = LOOP_COOLDOWN;
     meta.playerLoopActive = false;
     const recoveryPitch = clamp(userInput.climb, -1, 1) * PLAYER_MAX_PITCH;
-    const attitude = new Euler().setFromQuaternion(player.quaternion, 'YXZ');
     const recoveryBank = clamp(userInput.turn, -1, 1) * MAX_BANK;
-    player.pitch = recoveryPitch + normalizeAngle(attitude.x - recoveryPitch);
-    player.yaw = attitude.y;
-    player.bank = recoveryBank + normalizeAngle(-attitude.z - recoveryBank);
+    // The tracked Euler values stay continuous through a loop. Re-extracting a
+    // canonical Euler at vertical can choose another branch and snap the view.
+    player.pitch = recoveryPitch + normalizeAngle(player.pitch - recoveryPitch);
+    player.yaw = normalizeAngle(player.yaw);
+    player.bank = recoveryBank + normalizeAngle(player.bank - recoveryBank);
     updateAircraftMotion(
       player,
       userInput.turn,
@@ -169,6 +217,8 @@ export function updatePlayerLoop(
       speedCeiling,
       PLAYER_MAX_PITCH,
       responseMultiplier,
+      true,
+      cameraLookAngle,
     );
     return false;
   }
@@ -194,6 +244,8 @@ export function updatePlayerLoop(
       speedCeiling,
       PLAYER_MAX_PITCH,
       responseMultiplier,
+      manualSteering,
+      cameraLookAngle,
     );
     return false;
   }

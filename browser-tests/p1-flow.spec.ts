@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { guardStaticTraffic } from './network-policy';
 
 test.use({ serviceWorkers: 'block' });
+if (process.env.GEKICHIN_CAMERA_CONTRACT_NO_ARTIFACTS === '1') test.use({ screenshot: 'off', trace: 'off' });
 
 async function start(page: Page, mode = 'easy') {
   await page.goto('/'); await expect(page.locator('#start')).toBeEnabled();
@@ -48,6 +49,36 @@ test('Normal keyboard flight, loop interruption, pause, settings, report and ref
   await page.locator('#result-controls').click(); await page.locator('#control-editor-touch').click(); await expect(page.locator('#control-mode')).toBeEnabled(); await page.locator('#control-close').click();
   await page.locator('#restart').click(); await expect(page.locator('#app')).toHaveAttribute('data-mode', 'normal'); await expect(page.locator('#speed')).toHaveText('110 m/s');
   await page.locator('#pause').click(); await page.locator('#pause-home').click(); await expect(page.getByRole('radio', { name: /ノーマル/ })).toBeChecked();
+  expect(errors).toEqual([]);
+});
+
+test('[camera-contract] Normal rendered sight follows fixed-tick steering and loop interruption', async ({ page }) => {
+  const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
+  await startWithControlledFrames(page, 'normal');
+  const readSight = async () => page.locator('.aim-circle').evaluate(element => {
+    const circle = element as HTMLElement;
+    return { x: Number.parseFloat(circle.style.left), y: Number.parseFloat(circle.style.top),
+      width: circle.ownerDocument.documentElement.clientWidth, height: circle.ownerDocument.documentElement.clientHeight };
+  });
+  await page.clock.runFor(250);
+  const initial = await readSight();
+  expect(Number.isFinite(initial.x) && Number.isFinite(initial.y), 'normal camera must publish a live projected sight').toBe(true);
+
+  await page.keyboard.down('ArrowRight'); await page.keyboard.down('ArrowUp'); await page.clock.runFor(500);
+  const turning = await readSight();
+  expect(Math.hypot(turning.x - initial.x, turning.y - initial.y)).toBeGreaterThan(1);
+  await page.keyboard.up('ArrowRight'); await page.keyboard.up('ArrowUp');
+
+  await page.keyboard.down('l'); await page.clock.runFor(200);
+  await expect(page.locator('#loop-status')).toHaveText('実行中');
+  const looping = await readSight();
+  await page.keyboard.down('ArrowRight'); await page.clock.runFor(100);
+  await expect(page.locator('#loop-status')).not.toHaveText('実行中');
+  await page.keyboard.up('ArrowRight'); await page.keyboard.up('l'); await page.clock.runFor(250);
+  const recovered = await readSight();
+  for (const sight of [turning, looping, recovered]) {
+    expect(Number.isFinite(sight.x) && Number.isFinite(sight.y)).toBe(true);
+  }
   expect(errors).toEqual([]);
 });
 
