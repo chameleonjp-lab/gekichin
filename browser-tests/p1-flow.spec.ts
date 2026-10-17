@@ -65,6 +65,21 @@ type CameraContractSample = {
   stateUnchanged: boolean;
 };
 
+// Measured Chromium CSSOM rounded 309.4062737320592 to 309.406px, i.e. a
+// three-decimal half-ULP of 0.0005px. Never allow a coarser string to widen it.
+const MEASURED_CSS_ROUNDING_CEILING = 0.5 * 10 ** -3;
+
+function cssRoundingBounds(serialized: string, source: number) {
+  const number = serialized.trim().replace(/px$/i, '');
+  const [mantissa, exponentText] = number.toLowerCase().split('e');
+  const decimalPlaces = mantissa?.split('.')[1]?.length ?? 0;
+  const exponent = exponentText === undefined ? 0 : Number(exponentText);
+  const textPrecisionBound = 0.5 * 10 ** (exponent - decimalPlaces);
+  const floatingConversionBound = 4 * Number.EPSILON * Math.max(1, Math.abs(source), Math.abs(Number(number)));
+  const allowedRounding = Math.min(textPrecisionBound, MEASURED_CSS_ROUNDING_CEILING) + floatingConversionBound;
+  return { decimalPlaces, exponent, textPrecisionBound, floatingConversionBound, allowedRounding };
+}
+
 // Keep the same passive, bounded render observation in Chromium and WebKit.
 const cameraContractTest = test.extend({ screenshot: 'off', trace: 'off', video: 'off' });
 const webkitCameraContractTest = cameraContractTest.extend({ browserName: 'webkit', launchOptions: { args: [] } });
@@ -170,6 +185,7 @@ async function latestCameraSample(page: Page): Promise<CameraContractSample> {
 }
 
 async function runCameraContract(page: Page, expectedBrowser: 'chromium' | 'webkit'): Promise<void> {
+  expectCssRoundingCases();
   expect(page.context().browser()?.browserType().name()).toBe(expectedBrowser);
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -252,18 +268,9 @@ function expectCameraMatchesRenderedPose(sample: CameraContractSample): void {
 
 function expectSightMatchesProjection(sample: CameraContractSample): void {
   expect(Number.isFinite(sample.sight.x) && Number.isFinite(sample.sight.y)).toBe(true);
-  const cssRoundingBounds = (serialized: string, source: number) => {
-    const number = serialized.trim().replace(/px$/i, '');
-    const [mantissa, exponentText] = number.toLowerCase().split('e');
-    const decimalPlaces = mantissa?.split('.')[1]?.length ?? 0;
-    const exponent = exponentText === undefined ? 0 : Number(exponentText);
-    const textPrecisionBound = 0.5 * 10 ** (exponent - decimalPlaces);
-    const floatingConversionBound = 4 * Number.EPSILON * Math.max(1, Math.abs(source), Math.abs(Number(number)));
-    return { decimalPlaces, exponent, textPrecisionBound, floatingConversionBound,
-      totalBound: textPrecisionBound + floatingConversionBound };
-  };
   const xPrecision = cssRoundingBounds(sample.sightCss.inlineLeft, sample.expectedSight.x);
   const yPrecision = cssRoundingBounds(sample.sightCss.inlineTop, sample.expectedSight.y);
+  const mathRoundoffBound = 1e-6;
   const diagnostic = JSON.stringify({
     source: sample.expectedSight,
     cameraProjected: sample.cameraProjectedSight,
@@ -271,6 +278,7 @@ function expectSightMatchesProjection(sample: CameraContractSample): void {
       x: Math.abs(sample.cameraProjectedSight.x - sample.expectedSight.x),
       y: Math.abs(sample.cameraProjectedSight.y - sample.expectedSight.y),
     },
+    mathRoundoffBound: { x: mathRoundoffBound, y: mathRoundoffBound },
     styleAttribute: sample.sightCss.styleAttribute,
     inlineCssom: { left: sample.sightCss.inlineLeft, top: sample.sightCss.inlineTop },
     computedCssom: { left: sample.sightCss.computedLeft, top: sample.sightCss.computedTop },
@@ -280,14 +288,38 @@ function expectSightMatchesProjection(sample: CameraContractSample): void {
       y: Math.abs(sample.sight.y - sample.expectedSight.y),
     },
     cssRounding: { x: xPrecision, y: yPrecision },
+    measuredCssRoundingCeiling: MEASURED_CSS_ROUNDING_CEILING,
   });
   for (const coordinate of ['x', 'y'] as const) {
     const source = sample.expectedSight[coordinate];
     const mathDelta = Math.abs(sample.cameraProjectedSight[coordinate] - source);
-    expect(mathDelta, `${coordinate} mathematical projection; ${diagnostic}`).toBeLessThan(1e-6);
-    // Keep this strict during the diagnostic run. The failure-only message
-    // records the CSS text precision and its independently derived half-ULP.
-    expect(Math.abs(sample.sight[coordinate] - source), `${coordinate} CSS serialization; ${diagnostic}`).toBeLessThan(1e-6);
+    expect(mathDelta, `${coordinate} mathematical projection; ${diagnostic}`)
+      .toBeLessThan(mathRoundoffBound);
+    const precision = coordinate === 'x' ? xPrecision : yPrecision;
+    const cssDelta = Math.abs(sample.sight[coordinate] - source);
+    const allowedRounding = precision.allowedRounding;
+    expect(cssDelta <= allowedRounding,
+      `${coordinate} CSS serialization; ${diagnostic}; allowedRounding=${allowedRounding}`,
+    ).toBe(true);
+  }
+}
+
+function expectCssRoundingCases(): void {
+  const cases = [
+    { serialized: '309.406px', source: 309.4062737320592, within: true, label: 'measured positive fractional rounding' },
+    { serialized: '-2.003px', source: -2.0032737320592, within: true, label: 'negative fractional rounding' },
+    { serialized: '10px', source: 10, within: true, label: 'exact integer with coarse text' },
+    { serialized: '12.34px', source: 12.34, within: true, label: 'exact decimal with coarse text' },
+    { serialized: '10px', source: 10.0005, within: true, label: 'inclusive half-ULP boundary' },
+    { serialized: '10px', source: 10.0005001, within: false, label: 'outside half-ULP cap' },
+    { serialized: '12.34px', source: 12.344, within: false, label: 'coarse string cannot allow large error' },
+  ];
+  for (const fixture of cases) {
+    const precision = cssRoundingBounds(fixture.serialized, fixture.source);
+    const delta = Math.abs(Number(fixture.serialized.replace(/px$/i, '')) - fixture.source);
+    const observed = { delta, allowed: precision.allowedRounding, within: delta <= precision.allowedRounding,
+      decimalPlaces: precision.decimalPlaces };
+    expect(observed.within, `${fixture.label}: ${JSON.stringify({ ...fixture, observed })}`).toBe(fixture.within);
   }
 }
 
