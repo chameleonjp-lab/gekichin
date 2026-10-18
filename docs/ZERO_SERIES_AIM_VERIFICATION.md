@@ -133,3 +133,31 @@ Local verification on Node 24.19.0:
   Checks; the full legacy comparison still requires its explicit workflow run.
 
 This update does not claim physical iPhone acceptance, a merge, or publication.
+
+### Speed-unit follow-up within the same eight paths
+
+The comparison also spans an intentional HUD unit change: the fixed baseline
+renders integer m/s and current main renders integer km/h. The prior parser-only
+candidate would therefore reject equivalent `110 m/s` and `396 km/h` after the
+time parser succeeded. The comparison now normalizes both elapsed formatting
+and exact displayed speed quantities. Integer m/s is multiplied by 18 and integer
+km/h by 5, giving common integer units of 1/18 m/s. No tolerance or extra rounding
+is introduced: even an adjacent km/h is unequal, and `111 m/s` versus `400 km/h`
+is deliberately rejected. Unknown, malformed and unsafe values fail. Raw HUD
+evidence and the other five fields remain untouched.
+
+Two new speed regressions failed before the follow-up and all six capture-helper
+tests now pass. Full unit suite: 163/163, zero failures/skips. TypeScript/build
+passed again with the existing bundle warning. An independent review found no
+blocker and additionally checked 144,921 quantity pairs. Direct core-session
+execution of both fixed baseline and candidate at Normal tick 12 gives physical
+speed 110 m/s and altitude 1,000 m, with the expected old/current time and speed
+displays; this is core evidence, not a browser screenshot result.
+
+PR [#16](https://github.com/chameleonjp-lab/gekichin/pull/16) initial head
+`443f4e9496fce9554ec7321437c426818932314d` passed its exact-head CI, including
+161 unit tests, Chromium/WebKit camera-contract checks (one each), and 8 UI
+checks. That head predates this speed follow-up. The explicit legacy-comparison
+run at that earlier head is [39121631165](https://github.com/chameleonjp-lab/gekichin/actions/runs/39121631165).
+Its result and the updated head's CI must be reported separately; neither an
+older success nor a running check is final-head comparison evidence.

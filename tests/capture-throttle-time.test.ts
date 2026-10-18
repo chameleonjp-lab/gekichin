@@ -22,14 +22,36 @@ test('unknown or malformed elapsed values fail instead of fabricating tick zero'
   }
 });
 
-test('comparison normalizes only elapsed formatting and preserves the raw evidence', () => {
+test('comparison preserves raw evidence and differences in every state field', () => {
   const baseline = { elapsed: '0.20 s', phase: 'playing', mode: 'normal', speed: '110 m/s', altitude: '1000 m', loop: 'ready', fire: 'ready' };
   const candidate = { ...baseline, elapsed: '00:00.20' };
   assert.deepEqual(comparableThrottleState(candidate), comparableThrottleState(baseline));
   assert.equal(candidate.elapsed, '00:00.20');
   assert.equal(baseline.elapsed, '0.20 s');
-  for (const key of ['phase', 'mode', 'speed', 'altitude', 'loop', 'fire']) {
+  for (const key of ['phase', 'mode', 'altitude', 'loop', 'fire']) {
     assert.notDeepEqual(comparableThrottleState({ ...candidate, [key]: 'changed' }), comparableThrottleState(baseline), key);
   }
+  assert.notDeepEqual(comparableThrottleState({ ...candidate, speed: '111 m/s' }), comparableThrottleState(baseline));
   assert.notDeepEqual(comparableThrottleState({ ...candidate, elapsed: '00:00.22' }), comparableThrottleState(baseline));
+});
+
+test('comparison matches exact displayed speed quantities across m/s and km/h without rounding tolerance', () => {
+  for (const [metresPerSecond, kilometresPerHour] of [[0, 0], [40, 144], [110, 396], [125, 450]]) {
+    const before = { elapsed: '0.20 s', speed: `${metresPerSecond} m/s` };
+    const after = { elapsed: '00:00.20', speed: `${kilometresPerHour} km/h` };
+    assert.deepEqual(comparableThrottleState(after), comparableThrottleState(before));
+    assert.equal(before.speed, `${metresPerSecond} m/s`);
+    assert.equal(after.speed, `${kilometresPerHour} km/h`);
+    for (const differentSpeed of [kilometresPerHour + 1, Math.max(0, kilometresPerHour - 1)].filter(value => value !== kilometresPerHour)) {
+      assert.notDeepEqual(comparableThrottleState({ ...after, speed: `${differentSpeed} km/h` }), comparableThrottleState(before));
+    }
+  }
+  // Display rounding must not silently accept a neighbouring whole km/h.
+  assert.notDeepEqual(comparableThrottleState({ elapsed: '0.20 s', speed: '111 m/s' }), comparableThrottleState({ elapsed: '00:00.20', speed: '400 km/h' }));
+});
+
+test('invalid speed displays fail instead of removing the speed comparison', () => {
+  for (const speed of ['', '110', '110 mph', '-1 m/s', '110.0 m/s', '396 km/h extra', ' 396 km/h', 'NaN km/h', undefined, null, '999999999999999999 m/s']) {
+    assert.throws(() => comparableThrottleState({ elapsed: '00:00.20', speed }));
+  }
 });

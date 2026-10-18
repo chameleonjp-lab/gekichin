@@ -14,7 +14,13 @@ export function logicalTick(state) {
 }
 
 export function comparableThrottleState(state) {
- // Preserve the original HUD text in capture evidence; normalize only the
- // elapsed display format when comparing old and current HUD versions.
- return { ...state, elapsed: logicalTick(state) };
+ assert.equal(typeof state.speed, 'string', 'Speed HUD must contain a speed string');
+ const speed = /^(\d+) (m\/s|km\/h)$/.exec(state.speed);
+ assert.ok(speed, 'Speed HUD must contain integer m/s or km/h');
+ // Compare exact displayed quantities in eighteenths of m/s. Multiplication
+ // by integers avoids conversion rounding; a neighbouring km/h still fails.
+ const speedUnits = Number(speed[1]) * (speed[2] === 'm/s' ? 18 : 5);
+ assert.ok(Number.isSafeInteger(speedUnits), 'Speed HUD must contain a safe integer quantity');
+ // Preserve both raw displays in capture evidence, and every other field.
+ return { ...state, elapsed: logicalTick(state), speed: speedUnits };
 }
