@@ -25,8 +25,14 @@
       "historical_sha256": "378bc600e3b32a598ef88d1ab93879eb7ba23524d130e9e17ab3338212cecd3e",
       "previous_approved_sha256": "5febafac6ed73d995c5b305a036f38711b8122f7f34d8f3da0b79a568240bb0a",
       "previous_reason": "2026-10-11 authorized R2/R3/R4/R5 aim-camera change; see ZERO_SERIES_AIM_CONTRACT.md",
-      "approved_sha256": "c22232c4455b0c03beeef16d8cfa3a94096a33cccfffca9588a695cdcf0606b1",
-      "reason": "2026-10-17 authorized zero-camera flight/camera contract; routes the active mode into the player loop"
+      "approval_history": [
+        {
+          "approved_sha256": "c22232c4455b0c03beeef16d8cfa3a94096a33cccfffca9588a695cdcf0606b1",
+          "reason": "2026-10-17 authorized zero-camera flight/camera contract; routes the active mode into the player loop"
+        }
+      ],
+      "approved_sha256": "b5a9f0d217dc92143f916980a1ab5de95dc16f02bb9488c9cff5c270b7b06dbb",
+      "reason": "2026-10-18 authorized Easy pitch transition; initializes neutral Easy absolute assistance from bounded live pitch while preserving manual and no-target behavior"
     },
     "src/input.ts": {
       "historical_sha256": "569455763b08fabb046145aa21ed473aa55de5ac4c481eb884b067263b925c7a",
