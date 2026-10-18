@@ -31,7 +31,7 @@ test('real mothership #95 inside the circle fires despite nearer off-circle #90'
 
 import { projectGunSight } from '../src/gun-sight';
 import { FlightScene } from '../src/scene';
-import { createFlightTargetLock, selectProjectedTarget, smoothFlightAssistance } from '../src/flight-target';
+import { clearFlightAssistance, createFlightTargetLock, selectProjectedTarget, smoothFlightAssistance, type FlightAssistanceState } from '../src/flight-target';
 
 const sizes = [[320,568],[393,852],[852,393],[568,320],[1280,720]];
 test('Normal 500m bore uses the independent rendered projection at all attitudes and sizes',()=>{
@@ -155,4 +155,80 @@ test('switch margin boundary, held manual aim, invalid release and fresh pull ar
   assert.ok(adjusted.turn<=2.5/60+1e-12);assert.ok(adjusted.climb<=1.5/60+1e-12);
   const noTarget=smoothFlightAssistance(state,input,{turn:0,climb:0,responseMultiplier:1,hasVisibleTarget:false},1/60);
   assert.equal(noTarget.turn,0);assert.equal(noTarget.climb,0);
+});
+
+test('Easy absolute pitch starts from live attitude on acquire and target switch', () => {
+  for (const sign of [-1, 1]) {
+    const state = { assistTurn: 0, assistClimb: 0, responseMultiplier: 1, targetLock: createFlightTargetLock() };
+    const a = { turn: .5, climb: sign, responseMultiplier: 1, hasVisibleTarget: true };
+    const run = smoothFlightAssistance as (...args: any[]) => {turn: number; climb: number};
+    assert.ok(Math.abs(run(state, {turn:0,climb:0}, a, 1/60, sign*.6).climb - sign*.625) < 1e-12);
+    state.targetLock.changed = true;
+    assert.ok(Math.abs(run(state, {turn:0,climb:0}, a, 1/60, sign*.8).climb - sign*.825) < 1e-12);
+  }
+});
+test('Easy history clears on loss/manual release and preserves a real zero crossing', () => {
+  const state = { assistTurn: 0, assistClimb: 0, responseMultiplier: 1, targetLock: createFlightTargetLock() };
+  const run = smoothFlightAssistance as (...args: any[]) => {turn: number; climb: number};
+  const a = {turn:0,climb:1,responseMultiplier:1,hasVisibleTarget:true};
+  run(state,{turn:0,climb:0},a,1/60,.6);
+  assert.equal(run(state,{turn:0,climb:0},{...a,climb:0,hasVisibleTarget:false},1/60,.6).climb,0);
+  assert.ok(Math.abs(run(state,{turn:0,climb:0},a,1/60,.8).climb-.825)<1e-12);
+  assert.equal(run(state,{turn:0,climb:.1},{...a,climb:.1},1/60).climb,.1);
+  assert.ok(Math.abs(run(state,{turn:0,climb:0},a,1/60,.4).climb-.425)<1e-12);
+  state.targetLock.changed=true;
+  assert.equal(run(state,{turn:0,climb:0},a,1/60,-.025).climb,0);
+  assert.equal(run(state,{turn:0,climb:0},a,1/60,-.8).climb,.025);
+});
+
+test('real exposed turret acquisition does not first steer Easy pitch away from its requested attitude', () => {
+  const session = new FlightSession(); session.begin(session.prepare('easy')!);
+  const player = session.player;
+  player.position.set(-150, 529, -1980); player.pitch = .05; player.yaw = Math.PI; player.bank = 0;
+  updateQuaternion(player);
+  const targets = session.mothership.turrets.map(t => ({ id: t.layout.id, aimPoint: t.layout.aimPoint,
+    alive: t.hpMilli > 0, exposed: session.world.lineOfSight(player.position, t.layout.aimPoint, t.layout.id) }));
+  const requested = getFlightAssist(player, targets, input, 'easy', undefined, session.world);
+  assert.ok(requested.climb > .05 / .95, 'real visible turret requests a higher absolute pitch');
+  session.step(input);
+  assert.ok(player.pitch > .05, `first tick must approach the higher target; got ${player.pitch}`);
+  assert.ok(session.target && session.target.hpMilli > 0);
+});
+
+test('turn-only input with an omitted or false ownership flag cannot inherit absolute pitch history', () => {
+  for (const steeringActive of [undefined, false]) {
+    const session = new FlightSession(); session.begin(session.prepare('easy')!);
+    const player = session.player;
+    player.position.set(-150, 529, -1980); player.pitch = .05; player.yaw = Math.PI; player.bank = 0;
+    updateQuaternion(player); session.step(input);
+    assert.equal((session.controller as FlightAssistanceState).assistClimbMode, 'absolute');
+    session.step({...input, turn: .1, steeringActive});
+    assert.notEqual((session.controller as FlightAssistanceState).assistClimbMode, 'absolute');
+    assert.ok(Math.abs(session.controller.assistClimb) <= 1.5 / 60 + 1e-12);
+  }
+});
+
+
+test('inactive and cleared assistance preserves the original own-property shape', () => {
+  const state: FlightAssistanceState = { assistTurn: 0, assistClimb: 0, responseMultiplier: 1, targetLock: createFlightTargetLock() };
+  const originalKeys = Object.keys(state).sort();
+  const active = { turn: 0, climb: 1, responseMultiplier: 1, hasVisibleTarget: true };
+  const inactive = { ...active, climb: 0, hasVisibleTarget: false };
+  const assertOriginalShape = () => {
+    assert.equal(Object.prototype.hasOwnProperty.call(state, 'assistClimbMode'), false);
+    assert.deepEqual(Object.keys(state).sort(), originalKeys);
+  };
+  smoothFlightAssistance(state, input, inactive, 1 / 60);
+  assertOriginalShape();
+  smoothFlightAssistance(state, input, active, 1 / 60, .6);
+  assert.equal(state.assistClimbMode, 'absolute');
+  smoothFlightAssistance(state, input, inactive, 1 / 60, .6);
+  assertOriginalShape();
+  smoothFlightAssistance(state, input, active, 1 / 60, .6);
+  state.targetLock.changed = true;
+  smoothFlightAssistance(state, input, inactive, 1 / 60, .6);
+  assertOriginalShape();
+  smoothFlightAssistance(state, input, active, 1 / 60, .6);
+  clearFlightAssistance(state);
+  assertOriginalShape();
 });

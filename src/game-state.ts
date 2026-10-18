@@ -1,6 +1,6 @@
 import { Quaternion, Vector3 } from 'three';
 import { advanceThrottle, createFlightController, updateAircraftMotion, updatePlayerLoop, updateQuaternion, CRUISE_SPEED, ENEMY_MAX_PITCH, MAX_SPEED, type FlightController } from './flight';
-import { AIRCRAFT_RADIUS, BOUNDARY_GRACE_TICKS, BOUNDARY_HIGH, BOUNDARY_LOW, BOUNDARY_RADIUS, BOUNDARY_WARNING, FIXED_DT, INITIAL_SEED } from './rules';
+import { AIRCRAFT_RADIUS, BOUNDARY_GRACE_TICKS, BOUNDARY_HIGH, BOUNDARY_LOW, BOUNDARY_RADIUS, BOUNDARY_WARNING, FIXED_DT, INITIAL_SEED, PLAYER_MAX_PITCH } from './rules';
 import { getFlightAssist, selectFlightAssistTarget } from './flight-assist';
 import { clearFlightAssistance, smoothFlightAssistance } from './flight-target';
 import { AircraftWeapons, advanceAmmunition, friendlyDamageMilli, type FriendlyFireRequest } from './aircraft-weapons';
@@ -173,7 +173,7 @@ export class FlightSession {
         friendlyRequests.push(...this.weapons.plan(plane, tick, this.mode === 'easy' ? autoFire : accepted.fire, this.mode === 'easy', this.target?.layout.aimPoint ?? null));
         const preferredSpeed = advanceThrottle(this.controller, accepted, this.mode, FIXED_DT);
         const assist = getFlightAssist(plane, targets, accepted, this.mode, this.controller.targetLock, this.world);
-        const adjusted = { ...accepted, ...smoothFlightAssistance(this.controller, accepted, assist, FIXED_DT) };
+        const adjusted = { ...accepted, ...smoothFlightAssistance(this.controller, accepted, assist, FIXED_DT, this.mode === 'easy' && !accepted.steeringActive && Math.max(Math.abs(accepted.turn), Math.abs(accepted.climb)) <= 1e-8 ? Math.max(-1, Math.min(1, plane.pitch / PLAYER_MAX_PITCH)) : undefined) };
         updatePlayerLoop(plane, this.controller, adjusted, accepted, accepted.loop,
           FIXED_DT, preferredSpeed, this.mode === 'easy' ? CRUISE_SPEED : MAX_SPEED, this.controller.responseMultiplier, this.mode);
       } else {

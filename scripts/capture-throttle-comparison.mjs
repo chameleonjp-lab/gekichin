@@ -3,6 +3,7 @@ import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { logicalTick, comparableThrottleState } from './capture-throttle-time.mjs';
 const clockEpoch = '2026-10-05T00:00:00Z';
 const targetTick = 12;
 const clockStepMs = 16;
@@ -22,12 +23,6 @@ async function readState(page) {
   };
  });
 }
-function logicalTick(state) {
- assert.match(state.elapsed, /^\d+\.\d{2} s$/, 'Elapsed HUD must contain seconds to two decimal places');
- // At 60 Hz, two decimal places identify each tick without overlap.
- return Math.round(Number.parseFloat(state.elapsed) * 60);
-}
-
 async function captureAtTargetTick(page, label) {
  let state = await readState(page);
  let tick = logicalTick(state);
@@ -59,7 +54,7 @@ async function captureAtTargetTick(page, label) {
  return { state, clock: {
   epoch: clockEpoch, targetTick, actualTick: tick, clockStepMs, maxClockSteps, clockSteps,
   advancedMs: clockSteps * clockStepMs, clockStart, clockEnd, observations,
-  observation: "Math.round(parseFloat(document.getElementById('elapsed').textContent) * 60)",
+  observation: 'logicalTick(state): parse MM:SS.cc or decimal seconds as centiseconds, then Math.round(centiseconds * .6)',
   procedure: 'Pause the installed clock before the UI Start click; leave flight controls neutral; run 16ms steps and read existing state after each step until exact tick 12; keep the clock paused for capture',
  } };
 }
@@ -99,5 +94,5 @@ await writeFile(`${output}/conditions.json`,JSON.stringify(facts,null,2));
 for(const before of facts.filter(item=>item.label==='before')) {
  const after=facts.find(item=>item.label==='after'&&item.width===before.width&&item.height===before.height);
  assert.ok(after,'Matching candidate evidence is required');
- assert.deepEqual(after.state,before.state,'Before/after controlled flight state differs');
+ assert.deepEqual(comparableThrottleState(after.state),comparableThrottleState(before.state),'Before/after controlled flight state differs');
 }

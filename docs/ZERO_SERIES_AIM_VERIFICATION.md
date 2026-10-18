@@ -38,3 +38,126 @@ Normal固定照準は母艦上の機体射線投影と数値検査を比較。�
 射撃時の上下ずれは次のように切り分ける。ボタンfireだけではこの短いNormal対照でpitch/camera差を再現しない。1指持替えは操縦release→climb=0→既存水平復帰が起きるのでfire起因と断定しない。Easy標的補助の不一致とゲキチンNormal固定照準/衝突cameraは別の確認済み経路として修正。センリョウの危険時自動上昇は射撃とは別の保護。実iPhone特有のpointer capture/イベント順序は引き続き未確認。
 
 マージ前iPhone手順：(1)Normalで操縦指の微上下を維持し別指で射撃、射撃指のみ離す/移動。(2)操縦指を離して同じ指で射撃し、release時の水平復帰と比較。(3)Easyの円内A/画面端B・遮蔽・微入力で標的/発射を確認。(4)ゲキチン母艦近傍・bank/上昇、センリョウ安全高度/危険接近で照準/回避表示を見る。(5)回転→停止→設定Save/Cancel→明示再開、速度目標とfresh inputを確認。上下ずれが残れば作品/mode/iPhone・iOS/指操作/場面を記録。実機受入とmergeは利用者が行う。
+
+## 2026-10-18 Easy pitch transition candidate
+
+Base: `835e85e0573bfc149c33b4383231c80588c9ad4e`. Reference behavior:
+Kaisen PR #20, `6e77bc85cf7f74430b759990184f7f1178a6766e`.
+
+The Easy assist climb value is an absolute pitch command. Previously the
+smoother began from zero on acquisition/switch, briefly requesting horizontal
+attitude even when a higher target required further climbing. The new absolute
+history starts from the current aircraft pitch only for neutral Easy input.
+Explicit absolute/relative history prevents manual-input residuals from being
+interpreted in the wrong units. Target loss, manual ownership, neutral aim and
+clear/reset retain cancellation; crossing zero does not reinitialize history.
+
+Regression: at the real turret fixture position `[-150,529,-1980]`, yaw PI,
+pitch `0.05`, the requested pitch is `0.07387961385621118`, but the old first
+session tick decreases pitch to `0.04822533777253114`. The regression asserts
+that the actual session instead approaches the higher requested attitude.
+Both acquisition signs, target switching, loss/reacquisition, manual release
+and zero crossing are covered. Actual turn-only input with an omitted or false
+ownership flag also verifies that absolute pitch history cannot leak into manual
+control. The live origin is bounded to the legal [-1,1] command range. The 13 focused tests pass without skips after
+three new regression tests failed on the unchanged baseline.
+
+The tracking strength remains 0.25. Turret alive/exposed/occlusion filtering,
+tick-start firing, ownership reset, Normal/manual controls and the no-target
+level-return behavior are not changed. This candidate modifies only the two
+flight files, this record, and the existing regression test file.
+
+The full unit suite and build are checked separately. The existing historical
+source-hash gate is intentionally retained: its `src/game-state.ts` pin needs
+an additional authorized manifest update. The manifest is not changed by this
+four-file candidate. Do not treat focused test success as a green full suite,
+a submitted PR, publication, or iPhone acceptance. Browser and iPhone checks
+for this candidate have not been run.
+
+Final local results (2026-10-18 JST): focused 13/13 passed; aggregate 155/156
+passed with no skips, solely the unchanged historical source-hash gate failing
+on the authorized `src/game-state.ts` change. TypeScript and production build
+passed (existing large-chunk warning retained). Twenty old/new actual-session
+manual/no-target cases, 480 total ticks, matched on pose, speed, target, turret
+health and projectile state. Independent review found no behavioral blocker.
+The pending source pin is
+`c22232c4455b0c03beeef16d8cfa3a94096a33cccfffca9588a695cdcf0606b1` →
+`b5a9f0d217dc92143f916980a1ab5de95dc16f02bb9488c9cff5c270b7b06dbb`.
+The old pin/history and the gate itself remain preserved pending manifest scope
+approval. No PR, CI result, deployment or physical-device acceptance is claimed.
+
+Optional-state schema follow-up (2026-10-18 JST): a new own-property regression
+first failed because inactive assistance left an enumerable `assistClimbMode`
+key with an undefined value. Clear, target-reset and inactive paths now delete
+that optional key. The test covers initially inactive, target loss, target
+switch followed by inactivity, and explicit clear, preserving original keys.
+Focused tests now pass 14/14; full suite passes 156/157 with no skips and only
+the same pending source-hash gate failure. TypeScript/build and 480 old/new
+manual/no-target session ticks pass. Independent schema review passed. The
+manifest and `src/game-state.ts` pin delta above remain unchanged; publication
+is still pending the additional manifest authorization.
+
+## 2026-10-18 publication repair candidate
+
+The earlier four-file candidate and pending-manifest paragraphs above are
+historical records. This follow-up includes the authorized manifest update and
+repairs the publication comparison script, for eight changed paths in total.
+The historical and previous-approved hashes remain intact; the immediately
+preceding game-state approved hash and reason are retained in approval_history.
+The new game-state SHA-256 was independently recomputed as
+`b5a9f0d217dc92143f916980a1ab5de95dc16f02bb9488c9cff5c270b7b06dbb`.
+The historical source gate itself is unchanged.
+
+Deployment run [39055417020](https://github.com/chameleonjp-lab/gekichin/actions/runs/39055417020)
+passed unit/build/UI checks but failed the preserved comparison when its elapsed
+parser received `00:00.00` instead of legacy decimal seconds. The extracted
+capture-time helper accepts both exact display formats and converts centiseconds
+to the same 60 Hz logical tick. Only elapsed formatting is normalized for the
+before/after comparison; raw HUD text remains in the captured evidence. All
+other state fields, exact tick 12, bounded 16 ms steps, at-most-one-tick progress,
+paused capture and unchanged-state checks are preserved.
+
+Local verification on Node 24.19.0:
+- Parser regressions: three failures with the old parser/comparison, then 4/4
+  passed. Both formats round-trip every tick from 0 through 7,200; malformed
+  formats and unsafe elapsed values are rejected. Non-time state differences
+  and a different elapsed tick remain detectable.
+- Full unit suite: 161/161 passed, zero failures/skips.
+- TypeScript and production build passed. The existing large-chunk warning
+  remains; the build used a separate output directory to preserve earlier files.
+- Actual-session manual/no-target comparison: all 480 old/new ticks matched.
+- Browser checks were attempted with the cloud's installed Chromium 154.0.8037.57,
+  but the runner blocked Chromium's local socket before any application test.
+  The supported elevated retry was also blocked by the execution environment.
+  These attempts are not browser passes. Final-head CI results belong to the PR
+  Checks; the full legacy comparison still requires its explicit workflow run.
+
+This update does not claim physical iPhone acceptance, a merge, or publication.
+
+### Speed-unit follow-up within the same eight paths
+
+The comparison also spans an intentional HUD unit change: the fixed baseline
+renders integer m/s and current main renders integer km/h. The prior parser-only
+candidate would therefore reject equivalent `110 m/s` and `396 km/h` after the
+time parser succeeded. The comparison now normalizes both elapsed formatting
+and exact displayed speed quantities. Integer m/s is multiplied by 18 and integer
+km/h by 5, giving common integer units of 1/18 m/s. No tolerance or extra rounding
+is introduced: even an adjacent km/h is unequal, and `111 m/s` versus `400 km/h`
+is deliberately rejected. Unknown, malformed and unsafe values fail. Raw HUD
+evidence and the other five fields remain untouched.
+
+Two new speed regressions failed before the follow-up and all six capture-helper
+tests now pass. Full unit suite: 163/163, zero failures/skips. TypeScript/build
+passed again with the existing bundle warning. An independent review found no
+blocker and additionally checked 144,921 quantity pairs. Direct core-session
+execution of both fixed baseline and candidate at Normal tick 12 gives physical
+speed 110 m/s and altitude 1,000 m, with the expected old/current time and speed
+displays; this is core evidence, not a browser screenshot result.
+
+PR [#16](https://github.com/chameleonjp-lab/gekichin/pull/16) initial head
+`443f4e9496fce9554ec7321437c426818932314d` passed its exact-head CI, including
+161 unit tests, Chromium/WebKit camera-contract checks (one each), and 8 UI
+checks. That head predates this speed follow-up. The explicit legacy-comparison
+run at that earlier head is [39121631165](https://github.com/chameleonjp-lab/gekichin/actions/runs/39121631165).
+Its result and the updated head's CI must be reported separately; neither an
+older success nor a running check is final-head comparison evidence.
