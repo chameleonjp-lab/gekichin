@@ -259,7 +259,7 @@ function fitHud(): void {
   app.dataset.largeText = String(largeText);
   presentHudNotices();
   fitCombatDetails();
-  if (layoutChanged) { controls.clear(); settings.refresh(); }
+  if (layoutChanged) settings.refresh();
 }
 
 function presentHudNotices(): void {

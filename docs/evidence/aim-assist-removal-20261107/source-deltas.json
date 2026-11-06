@@ -30,13 +30,13 @@
     },
     "src/input.ts": {
       "base_sha256": "1df31fc2ccce469fea059e40fa09f0b0a4b9d2f99f90e2abe5cf935a649ddea7",
-      "approved_sha256": "be8f8104115b667855fa26ce12b5323823dce42412947d5ec959d82eee847ce1",
-      "reason": "Retain and rebase height-only viewport gestures."
+      "approved_sha256": "6737caf4256247633691daea633531c952ec2d53320daf700146f02a280ae312",
+      "reason": "Retain and rebase all same-width height-only gestures, including square-aspect crossings; width or explicit orientation changes release controls."
     },
     "src/main.ts": {
       "base_sha256": "dd472b5387c6c0cb08268785bde235ad244a7e323cb2dd8b31436df488ecfeab",
-      "approved_sha256": "2cf31743b2e57cd079bdbce4fdda7785835189ac34de8956ae1f294b196d710d",
-      "reason": "Capture fixed poses and render shared interpolated view; explain controls."
+      "approved_sha256": "bfb3d89d71bcf64d3b6d07f3c4c260da1f02c4fe41360bacfab5f7e86fd68aa8",
+      "reason": "Capture fixed poses and render shared interpolated view; explain controls; HUD height breakpoints refresh layout without releasing owned input."
     },
     "src/flight-presentation.ts": {
       "base_sha256": null,

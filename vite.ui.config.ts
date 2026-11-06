@@ -4,7 +4,7 @@ import { dirname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, type Plugin } from 'vite';
 
-export const UI_ONLY_MAIN_SOURCE_SHA256 = '2cf31743b2e57cd079bdbce4fdda7785835189ac34de8956ae1f294b196d710d';
+export const UI_ONLY_MAIN_SOURCE_SHA256 = 'bfb3d89d71bcf64d3b6d07f3c4c260da1f02c4fe41360bacfab5f7e86fd68aa8';
 export const UI_ONLY_MAIN_ANCHORS = [
   'function renderUi(focus = false): void {',
   'function showReport(report: CombatReport): void {',
