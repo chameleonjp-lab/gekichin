@@ -1,0 +1,74 @@
+{
+  "base_main": "a44fc39d7bebb1409421993722bf9ba1f85de6e9",
+  "authorization": "zero-series PR13, ZERO_SERIES_AIM_ASSIST_REMOVAL_PLAN_20261107.md; Kaisen K1-K3 gate released",
+  "guide_addition": "両モードとも操縦は手動で、敵への自動旋回や弾の向きの補正はありません。指を置いたまま中央に戻すと機首角を保ち、離すと滑らかに水平へ戻ります。",
+  "files": {
+    "src/aircraft-weapons.ts": {
+      "base_sha256": "9eb8965f32a3346b1eb24f7a31e83239c8082cf194f21ae476b5e783b72af30a",
+      "approved_sha256": "703d497fce6b476af71dbfb584f1aad5b49fabb72bf1102716d8850f206c85e8",
+      "reason": "Straight player barrels; retain wingman dispersion and timing."
+    },
+    "src/flight-assist.ts": {
+      "base_sha256": "bfa4b6cd836e04d86a0a0aa5c4e41f060b21fb123d846e514728cb777c091d1b",
+      "approved_sha256": "cfc2d82a6fa0c68deda82affb67c92a7e77ae3ba2eb4a70437854594471850b3",
+      "reason": "Manual steering; lazy occlusion for projected firing/display candidates."
+    },
+    "src/flight-target.ts": {
+      "base_sha256": "388bda24a86a245e77259eff006e6c3a2bf220aeac51ccdbf489a6b8ad958a25",
+      "approved_sha256": "db1a3f70f07e373b72a0c9cbe4b2ce82a88e8e8cad3a3bf5ab77ec0f674eddf6",
+      "reason": "Remove unused historical steering smoothing."
+    },
+    "src/flight.ts": {
+      "base_sha256": "ebb62a3c334e7a41eaef72ccbd8eccaaced160967d846112e611a322bca29c08",
+      "approved_sha256": "ced30ce84ddad4e8d5f0ae2b7dfc9277e26ad654ba7272db00c70c75d9864e04",
+      "reason": "Hold neutral pitch while steering remains owned."
+    },
+    "src/game-state.ts": {
+      "base_sha256": "b5a9f0d217dc92143f916980a1ab5de95dc16f02bb9488c9cff5c270b7b06dbb",
+      "approved_sha256": "363df166399a760deddcc891c7d918e88ea5163f183b1decdee6e08212ab1c51",
+      "reason": "Separate target inspection from steering; expose presentation fraction."
+    },
+    "src/input.ts": {
+      "base_sha256": "1df31fc2ccce469fea059e40fa09f0b0a4b9d2f99f90e2abe5cf935a649ddea7",
+      "approved_sha256": "be8f8104115b667855fa26ce12b5323823dce42412947d5ec959d82eee847ce1",
+      "reason": "Retain and rebase height-only viewport gestures."
+    },
+    "src/main.ts": {
+      "base_sha256": "dd472b5387c6c0cb08268785bde235ad244a7e323cb2dd8b31436df488ecfeab",
+      "approved_sha256": "2cf31743b2e57cd079bdbce4fdda7785835189ac34de8956ae1f294b196d710d",
+      "reason": "Capture fixed poses and render shared interpolated view; explain controls."
+    },
+    "src/flight-presentation.ts": {
+      "base_sha256": null,
+      "approved_sha256": "17ff7097aed479422e9af253bae41ed3ec600347dd29253bbecd07c1032b5b1f",
+      "reason": "Render-only aircraft/projectile history with operation and generation guards."
+    }
+  },
+  "runtime_functions": {
+    "pause": {
+      "base_sha256": "aa7f52598ab8adf0e2e0bcfd4e8905bfec96b04c27c9d0fed8f7aafdb3021ee1",
+      "approved_sha256": "303db6d41e82e59653be3acb3f7a49d97ab7c86f7130b0ab6f281e07de1e5d37",
+      "reason": "Presentation history reset or render sampling; logical controls and result remain authoritative."
+    },
+    "start": {
+      "base_sha256": "8dac192b7ff63b56193e67a6f34f32d48f309259d9df117b4e74c1554130470c",
+      "approved_sha256": "1ec087c5d9e4ece5665bfeb0622bfa5bace5d166f8558937c52263f1d8624c53",
+      "reason": "Presentation history reset or render sampling; logical controls and result remain authoritative."
+    },
+    "goHome": {
+      "base_sha256": "f674aedc137abe09cba06f6f4aa05a9b370d0523e3e026bcd0f4df5fc43daa37",
+      "approved_sha256": "fd17d19e34394bee85582ea9a4ba539bdfd196758653bbe6281d507a6862d4ed",
+      "reason": "Presentation history reset or render sampling; logical controls and result remain authoritative."
+    },
+    "showReport": {
+      "base_sha256": "00087e54a1d1fc42679970f67d0a2dede79cf3d6e6e37ef1918d1ddbc1286682",
+      "approved_sha256": "fcce8420ff4c587d144fe199056c146ee3fb19e45e514e92fbdf8698db6ceef4",
+      "reason": "Presentation history reset or render sampling; logical controls and result remain authoritative."
+    },
+    "frame": {
+      "base_sha256": "b54f552f15776ed5c888cdaa412f6f24c81f20cea2ec01281378a09aab170ef3",
+      "approved_sha256": "a35ac6516121c5a3a152779ac88f11a3e7c54e1c516b097a4d805abe886782e4",
+      "reason": "Presentation history reset or render sampling; logical controls and result remain authoritative."
+    }
+  }
+}

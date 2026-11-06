@@ -3,7 +3,6 @@
 // Finite wingman magazines and atomic reserved pools are Gekichin rules.
 import { Quaternion, Vector3 } from 'three';
 import { forwardOf } from './flight';
-import { applyEasyShotCorrection } from './flight-assist';
 import { CANNON_MAGAZINE, FRIENDLY_BULLET_CAPACITY, FRIENDLY_BULLET_LIFETIME, FRIENDLY_CANNON_SPEED, FRIENDLY_MG_SPEED,
   MG_MAGAZINE, PLAYER_BULLET_RESERVE, PLAYER_CANNON_INTERVAL, PLAYER_MG_INTERVAL, RELOAD_TICKS,
   WINGMAN_CANNON_INTERVAL, WINGMAN_MG_INTERVAL } from './rules';
@@ -75,8 +74,7 @@ export class AircraftWeapons {
       const offset = kind === 'mg' ? new Vector3(side * 0.3, 0.52, -4.25) : new Vector3(side * 2.5, 0, -2.4);
       const origin = request.position.clone().add(offset.applyQuaternion(request.quaternion));
       const forward = request.forward.clone();
-      let direction = request.easy && request.aimPoint
-        ? applyEasyShotCorrection(forward, request.aimPoint.clone().sub(origin).normalize()) : forward;
+      const direction = forward;
       if (request.owner === 'wingman') {
         direction.x += Math.sin(tick * 1.7 + plane.tokenId * 3 + side) * 0.012;
         direction.y += Math.cos(tick * 1.3 + plane.tokenId * 2 + side) * 0.012;

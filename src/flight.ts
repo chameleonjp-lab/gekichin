@@ -70,6 +70,7 @@ export function updateAircraftMotion(
   responseMultiplier = 1,
   manualSteering = false,
   cameraLookAngle = NORMAL_CAMERA_LOOK_ANGLE,
+  holdNeutralPitch = false,
 ): void {
   let turn = clamp(turnInput, -1, 1);
   let climb = clamp(climbInput, -1, 1);
@@ -97,7 +98,7 @@ export function updateAircraftMotion(
         aircraft.pitch += clamp(clamp(aircraft.pitch, -maxPitch, maxPitch) - aircraft.pitch, -angularStep, angularStep);
       } else if (Math.abs(climb) > EPSILON) {
         aircraft.pitch = clamp(aircraft.pitch + climb * angularStep, -maxPitch, maxPitch);
-      } else if (Math.abs(turn) <= EPSILON) {
+      } else if (!holdNeutralPitch && Math.abs(turn) <= EPSILON) {
         // Only neutral on both manual axes may level pitch. Keep this return
         // within the same per-tick angular budget as active manual control.
         aircraft.pitch += clamp(-aircraft.pitch * pitchBlend, -angularStep, angularStep);
@@ -185,6 +186,8 @@ export function updatePlayerLoop(
   const manualSteering = !!userInput.steeringActive
     || Math.max(Math.abs(userInput.turn), Math.abs(userInput.climb)) > EPSILON
     || Math.max(Math.abs(input.turn), Math.abs(input.climb)) <= EPSILON;
+  const holdNeutralPitch = !!userInput.steeringActive
+    || Math.max(Math.abs(userInput.turn), Math.abs(userInput.climb)) > EPSILON;
 
   const revisionChanged = meta.loopStartSteeringRevision !== undefined
     && userInput.steeringRevision !== undefined
@@ -219,6 +222,7 @@ export function updatePlayerLoop(
       responseMultiplier,
       true,
       cameraLookAngle,
+      holdNeutralPitch,
     );
     return false;
   }
@@ -246,6 +250,7 @@ export function updatePlayerLoop(
       responseMultiplier,
       manualSteering,
       cameraLookAngle,
+      holdNeutralPitch,
     );
     return false;
   }

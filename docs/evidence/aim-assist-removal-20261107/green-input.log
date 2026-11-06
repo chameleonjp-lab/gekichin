@@ -1,0 +1,10 @@
+✔ three pointer owners preserve micro-steering through fire/lever release and cancel, then clear on recovery (17.298876ms)
+✔ height-only window and visualViewport resize retain the same pointer and rebase its next move (17.03796ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 66.173844

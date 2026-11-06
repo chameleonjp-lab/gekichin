@@ -1,0 +1,63 @@
+{
+  "head": "a44fc39d7bebb1409421993722bf9ba1f85de6e9",
+  "los": {
+    "easy": {
+      "livingTurrets": 100,
+      "playerTargetScan": 100,
+      "totalStepQueries": 100
+    },
+    "normal": {
+      "livingTurrets": 100,
+      "playerTargetScan": 100,
+      "totalStepQueries": 100
+    }
+  },
+  "heldNeutral": {
+    "easy": {
+      "frames": 12,
+      "seconds": 0.2,
+      "initialPitchDegrees": 20,
+      "finalPitchDegrees": 10.613817844761673,
+      "returnDegrees": 9.386182155238327
+    },
+    "normal": {
+      "frames": 12,
+      "seconds": 0.2,
+      "initialPitchDegrees": 20,
+      "finalPitchDegrees": 10.613817844761673,
+      "returnDegrees": 9.386182155238327
+    }
+  },
+  "repeatedViews": {
+    "easy": {
+      "displayHz": 120,
+      "samples": 48,
+      "repeated": 24,
+      "flightTicks": 30
+    },
+    "normal": {
+      "displayHz": 120,
+      "samples": 48,
+      "repeated": 24,
+      "flightTicks": 30
+    }
+  },
+  "easyShots": [
+    {
+      "kind": "mg",
+      "angleDegrees": 0.8209632444685673
+    },
+    {
+      "kind": "mg",
+      "angleDegrees": 0.7967403722656179
+    },
+    {
+      "kind": "cannon",
+      "angleDegrees": 0.906143754987386
+    },
+    {
+      "kind": "cannon",
+      "angleDegrees": 0.7049679903984246
+    }
+  ]
+}

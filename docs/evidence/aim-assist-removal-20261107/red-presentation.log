@@ -1,0 +1,52 @@
+✖ 120Hz presentation has0/48 repeated optical directions in both modes and leaves logic unchanged (1615.754036ms)
+✖ presentation samples aircraft and rounds at one fraction and rejects pause, replacement and old operation poses (287.851392ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1947.317912
+
+✖ failing tests:
+
+test at tests/flight-presentation.test.ts:1:357
+✖ 120Hz presentation has0/48 repeated optical directions in both modes and leaves logic unchanged (1615.754036ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  24 !== 0
+  
+      at TestContext.<anonymous> (/workspace/gekichin/tests/flight-presentation.test.ts:24:117)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 24,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/flight-presentation.test.ts:1:1710
+✖ presentation samples aircraft and rounds at one fraction and rejects pause, replacement and old operation poses (287.851392ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(half.player.position.distanceTo(before.clone().lerp(session.player.position,.5))<1e-10)
+  
+      at TestContext.<anonymous> (/workspace/gekichin/tests/flight-presentation.test.ts:36:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

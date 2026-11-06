@@ -1,0 +1,30 @@
+[
+  {
+    "path": "assets/index-CqEX_tlR.css",
+    "liveBytes": 33218,
+    "liveSha256": "b461a999193bb643071d39db99bbf55f4cfb699247f27aed20673f071190d023",
+    "manifestMatches": true,
+    "currentMainBuildMatches": true
+  },
+  {
+    "path": "assets/index-DknftEkI.js",
+    "liveBytes": 761109,
+    "liveSha256": "97221a6c39ab586274e0ef521e42c25b9c2fa1a1286bc9e1cf068ef8825019c7",
+    "manifestMatches": true,
+    "currentMainBuildMatches": true
+  },
+  {
+    "path": "index.html",
+    "liveBytes": 610,
+    "liveSha256": "e3ee22582648907cc7311e378298f37f449f4e7a839942554a5237a9da3ec390",
+    "manifestMatches": true,
+    "currentMainBuildMatches": true
+  },
+  {
+    "path": "third-party-notices.txt",
+    "liveBytes": 1082,
+    "liveSha256": "97de7ac302052bcea7f20e5ae89635c10e049614f56409288d554d63fceb614f",
+    "manifestMatches": true,
+    "currentMainBuildMatches": true
+  }
+]

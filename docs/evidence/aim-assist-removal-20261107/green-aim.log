@@ -1,0 +1,15 @@
+✔ enemy layouts cannot change steering, response or camera in either mode (76.123194ms)
+✔ real session clears stale pull and only display or firing candidates need target LOS queries (1022.606032ms)
+✔ both MG and cannon barrels leave along the captured physical nose in both modes (0.909838ms)
+✔ held neutral retains20degree pitch and release levels smoothly in both modes (0.415568ms)
+✔ eligible circle targets use current aspect and occlusion without steering (2.140905ms)
+✔ integrated turret layout fixtures change Easy trigger availability without changing flight or camera (1769.406777ms)
+✔ real hull blocks automatic fire at an otherwise in-circle rear turret (102.302428ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3006.038522

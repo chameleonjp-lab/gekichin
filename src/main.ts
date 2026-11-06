@@ -8,6 +8,7 @@ import { ControlInputPresentation, KeyboardSettings, isKeyboardEditingTarget } f
 import { containDialogTabFocus } from './dialog-focus';
 import { FlightSession, FixedStepper } from './game-state';
 import { FlightScene } from './scene';
+import { FlightPresentation, displayTarget } from './flight-presentation';
 import { FlightAudio, type CombatSound } from './audio';
 import { FIXED_HZ } from './rules';
 import { formatHudNotice, formatOperationTime } from './hud-presentation';
@@ -153,7 +154,7 @@ app.innerHTML = `
 
       <h3>作戦の目標</h3><p>超大型母艦の主砲20基・大型機銃80基、合計100基を全破壊します。味方50機は自機を含み、同時出撃は8機。残機があれば復帰します。</p>
       <h3>飛行の操作</h3><p>画面のどこからでも、触れた位置を基準にドラッグできます。右へドラッグで右旋回、上へドラッグで上昇。離すと操縦入力を解除します。</p><p id="guide-keys"></p>
-      <p>イージーは巡航速度で、遮蔽されない砲台が照準内へ入ると自動射撃。宙返りボタン1つです。ノーマルは射撃・宙返りボタンと速度レバー。上で加速、下で減速、離すと中央に戻り速度を保持します。宙返り中に新しく操縦すると中止できます。</p>
+      <p>イージーは巡航速度で、遮蔽されない砲台が照準内へ入ると自動射撃。宙返りボタン1つです。ノーマルは射撃・宙返りボタンと速度レバー。上で加速、下で減速、離すと中央に戻り速度を保持します。宙返り中に新しく操縦すると中止できます。両モードとも操縦は手動で、敵への自動旋回や弾の向きの補正はありません。指を置いたまま中央に戻すと機首角を保ち、離すと滑らかに水平へ戻ります。</p>
       <h3>攻略と補給</h3><p>母艦の上・下・左右・前後に砲台があります。船体の反対側へは射撃できません。六面の残数を見ながら外周を回り込みましょう。主砲は1秒、大型機銃は0.3秒の固定照準予告があり、旋回や宙返りで射線から離脱できます。予告は音OFFでも見えます。</p>
       <p>自機と僚機のHPは80。MG288発・機関砲96発が両方空になると6秒で全装填します。補給回数に制限はありません。ノーマルの自機弾は味方にも当たります。イージーと僚機弾は味方を損傷させませんが、接触で弾は止まります。</p>
       <h3>残機と復帰</h3><p>50機は自機込みの総残機です。同時出撃は8機。機体を失うと予備から3秒後に復帰し、待機中も戦闘は続きます。予備がなくても生存僚機がいれば、3秒後にその機体の状態を引き継ぎます。味方残機0で敗北です。</p>
@@ -167,6 +168,7 @@ app.innerHTML = `
 const element = <T extends HTMLElement>(selector: string) => app.querySelector<T>(selector)!;
 const session = new FlightSession();
 const stepper = new FixedStepper();
+const presentation = new FlightPresentation();
 const keyboard = new KeyboardSettings();
 const inputPresentation = new ControlInputPresentation();
 const audio = new FlightAudio();
@@ -304,7 +306,7 @@ function closeCombatReading(): void {
 
 function pause(reason: PauseReason): void {
   lastFrameTime = null;
-  controls.clear(); stepper.reset();
+  controls.clear(); stepper.reset(); presentation.reset();
   audio.setActive(false);
   if (session.phase === 'paused' && reason === 'webgl') {
     session.pauseReason = reason; renderUi(); return;
@@ -316,7 +318,7 @@ function start(mode: GameMode): void {
   if (!graphicsAvailable || document.hidden) return;
   const operationId = session.prepare(mode);
   if (operationId === null) return;
-  controls.clear(); controls.setMode(mode); settings.setActiveMode(mode); stepper.reset(); lastShownTick = -1; lastFire = false;
+  controls.clear(); controls.setMode(mode); settings.setActiveMode(mode); stepper.reset(); presentation.reset(); lastShownTick = -1; lastFire = false;
   sinking = false; sinkingElapsed = 0; shownReport = null; lastEventSequence = 0;
   lastOwnershipRevision = session.fleet.ownershipRevision;
   noticeUntilTick = 0; element('#combat-notice').textContent = '';
@@ -329,7 +331,7 @@ function start(mode: GameMode): void {
         pendingPreparation = null;
         if (disposed) return;
         if (!graphicsAvailable || document.hidden || !document.hasFocus()) { goHome(); return; }
-        if (session.begin(operationId)) { stepper.reset(); renderUi(true); }
+        if (session.begin(operationId)) { stepper.reset(); presentation.reset(); renderUi(true); }
       });
     });
   }).catch(() => {
@@ -340,7 +342,7 @@ function start(mode: GameMode): void {
 function goHome(): void {
   if (pendingPreparation !== null) cancelAnimationFrame(pendingPreparation);
   pendingPreparation = null;
-  controls.clear(); stepper.reset(); session.home(); lastShownTick = -1; lastFire = false;
+  controls.clear(); stepper.reset(); presentation.reset(); session.home(); lastShownTick = -1; lastFire = false;
   sinking = false; sinkingElapsed = 0; shownReport = null; lastEventSequence = 0;
   for (const radio of app.querySelectorAll<HTMLInputElement>('input[name="mode"]')) radio.checked = radio.value === session.mode;
   renderUi(true);
@@ -427,7 +429,7 @@ window.addEventListener('keydown', event => {
 }, { ...opts, capture: true });
 element('#resume').addEventListener('click', () => {
   if (!graphicsAvailable || document.hidden || settings.isOpen || guide.open) return;
-  controls.clear(); stepper.reset();
+  controls.clear(); stepper.reset(); presentation.reset();
   if (session.resume()) renderUi(true);
 }, opts);
 element('#finish').addEventListener('click', () => {
@@ -464,7 +466,7 @@ window.addEventListener('keydown', event => {
   if (event.code === 'Enter' && event.target instanceof HTMLElement && event.target.closest('button, a')) return;
   event.preventDefault();
   if (session.phase === 'playing') pause('manual');
-  else if (graphicsAvailable && !document.hidden) { controls.clear(); stepper.reset(); session.resume(); renderUi(true); }
+  else if (graphicsAvailable && !document.hidden) { controls.clear(); stepper.reset(); presentation.reset(); session.resume(); renderUi(true); }
 }, opts);
 window.addEventListener('blur', () => pause('focus'), opts);
 window.addEventListener('pagehide', () => pause('hidden'), opts);
@@ -506,7 +508,7 @@ function showReport(report: CombatReport): void {
   const saved = saveBest(report);
   element('#result-best').textContent = saved.best ? `このモードの端末内ベスト：${saved.best.components.total.toLocaleString('ja-JP')}点 / ${(saved.best.endTick / FIXED_HZ).toFixed(2)}秒` : '勝利した作戦をモード別に端末内へ記録します。';
   element('#save-status').textContent = saved.error ? '端末内記録を保存できませんでした。今回の結果はこの画面で確認できます。' : saved.saved ? '端末内ベストを更新しました。' : '';
-  controls.clear(); stepper.reset(); renderUi(true);
+  controls.clear(); stepper.reset(); presentation.reset(); renderUi(true);
 }
 
 function combatSound(event: CombatEvent): CombatSound | null {
@@ -541,6 +543,10 @@ function consumeEvents(): void {
   else if (session.tick > noticeUntilTick) element('#combat-notice').textContent = '';
 }
 
+function updateTargetDetails(player: FlightSession['player'], target: FlightSession['target']): void {
+  element('#target-status').textContent = target ? `#${target.layout.id} ${target.layout.kind === 'main' ? '主砲' : '機銃'}・${faceNames[target.layout.face]}面・${stageNames[target.stage]}\n${(target.hpMilli / 1000).toFixed(1)}HP / ${Math.round(player.position.distanceTo(target.layout.aimPoint))}m` : '標的：可視砲台なし';
+}
+
 function updateHud(): void {
   const fleet = session.fleet.counts, player = session.fleet.player;
   const totals = session.score.totals, components = session.score.components(session.tick);
@@ -571,8 +577,7 @@ function updateHud(): void {
   for (const [face] of faceEntries) {
     element(`#face-guide [data-face="${face}"] b`).textContent = String(session.mothership.turrets.filter(turret => turret.layout.face === face && turret.hpMilli > 0).length);
   }
-  const target = session.target;
-  element('#target-status').textContent = target ? `#${target.layout.id} ${target.layout.kind === 'main' ? '主砲' : '機銃'}・${faceNames[target.layout.face]}面・${stageNames[target.stage]}\n${(target.hpMilli / 1000).toFixed(1)}HP / ${Math.round(session.player.position.distanceTo(target.layout.aimPoint))}m` : '標的：可視砲台なし';
+  updateTargetDetails(session.player, session.target);
   element('#boundary-status').hidden = !session.boundary.warning;
   if (session.boundary.warning) {
     const direction = session.boundary.direction;
@@ -609,9 +614,10 @@ function frame(now: number): void {
   lastFrameTime = now;
   stepper.frame(now, session.phase === 'playing', () => {
     const input = controls.sample(); input.viewAspect = app.clientWidth / Math.max(1, app.clientHeight);
+    presentation.capture(session);
     session.step(input); lastFire = input.fire;
     if (session.fleet.ownershipRevision !== lastOwnershipRevision) {
-      controls.clear(); lastOwnershipRevision = session.fleet.ownershipRevision;
+      controls.clear(); presentation.reset(); lastOwnershipRevision = session.fleet.ownershipRevision;
     }
   }, () => pause('gap'));
   if (session.report && shownReport !== session.report) { showReport(session.report); frameSeconds = 0; }
@@ -625,7 +631,11 @@ function frame(now: number): void {
     lastShownTick = session.tick;
     updateHud();
   }
-  if (sceneReady) scene?.render(session.player, session.mode, session.tick, session, sinkingElapsed);
+  if (sceneReady) {
+    const view = presentation.sample(session, stepper.alpha);
+    scene?.render(view.player, session.mode, view.tick, view.state, sinkingElapsed);
+    if (combatPanel.open) updateTargetDetails(view.player, displayTarget(session, view.player, app.clientWidth / Math.max(1, app.clientHeight)));
+  }
   for (const [name, value] of Object.entries(audio.diagnostics)) {
     const key = `audio${name[0].toUpperCase()}${name.slice(1)}`;
     if (app.dataset[key] !== String(value)) app.dataset[key] = String(value);
