@@ -1,0 +1,33 @@
+✔ three pointer owners preserve micro-steering through fire/lever release and cancel, then clear on recovery (4.442387ms)
+✖ height-only window and visualViewport resize retain the same pointer and rebase its next move (5.056206ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22.060073
+
+✖ failing tests:
+
+test at tests/input-ownership-regression.test.ts:1:3734
+✖ height-only window and visualViewport resize retain the same pointer and rebase its next move (5.056206ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 1
+  
+      at TestContext.<anonymous> (/workspace/gekichin/tests/input-ownership-regression.test.ts:45:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

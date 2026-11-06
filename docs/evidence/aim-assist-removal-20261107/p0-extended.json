@@ -1,0 +1,299 @@
+{
+  "head": "a44fc39d7bebb1409421993722bf9ba1f85de6e9",
+  "steeringRequests": [
+    {
+      "mode": "easy",
+      "layout": "front",
+      "input": "neutral",
+      "exposed": true,
+      "request": {
+        "turn": 0,
+        "climb": 0,
+        "responseMultiplier": 1,
+        "hasVisibleTarget": true
+      }
+    },
+    {
+      "mode": "easy",
+      "layout": "front",
+      "input": "small",
+      "exposed": true,
+      "request": {
+        "turn": 0.1,
+        "climb": 0.05,
+        "responseMultiplier": 1,
+        "hasVisibleTarget": true
+      }
+    },
+    {
+      "mode": "easy",
+      "layout": "right",
+      "input": "neutral",
+      "exposed": true,
+      "request": {
+        "turn": 0.21326861002878472,
+        "climb": 3.140958455967278e-17,
+        "responseMultiplier": 1,
+        "hasVisibleTarget": true
+      }
+    },
+    {
+      "mode": "easy",
+      "layout": "right",
+      "input": "small",
+      "exposed": true,
+      "request": {
+        "turn": 0.1,
+        "climb": 0.05,
+        "responseMultiplier": 1,
+        "hasVisibleTarget": true
+      }
+    },
+    {
+      "mode": "easy",
+      "layout": "behind",
+      "input": "neutral",
+      "exposed": true,
+      "request": {
+        "turn": 0,
+        "climb": 0,
+        "responseMultiplier": 1.65,
+        "hasVisibleTarget": false
+      }
+    },
+    {
+      "mode": "easy",
+      "layout": "behind",
+      "input": "small",
+      "exposed": true,
+      "request": {
+        "turn": 0.1,
+        "climb": 0.05,
+        "responseMultiplier": 1.65,
+        "hasVisibleTarget": false
+      }
+    },
+    {
+      "mode": "normal",
+      "layout": "front",
+      "input": "neutral",
+      "exposed": true,
+      "request": {
+        "turn": 0,
+        "climb": 0,
+        "responseMultiplier": 1,
+        "hasVisibleTarget": true
+      }
+    },
+    {
+      "mode": "normal",
+      "layout": "front",
+      "input": "small",
+      "exposed": true,
+      "request": {
+        "turn": 0.1,
+        "climb": 0.05,
+        "responseMultiplier": 1,
+        "hasVisibleTarget": true
+      }
+    },
+    {
+      "mode": "normal",
+      "layout": "right",
+      "input": "neutral",
+      "exposed": true,
+      "request": {
+        "turn": 0,
+        "climb": 0,
+        "responseMultiplier": 1,
+        "hasVisibleTarget": true
+      }
+    },
+    {
+      "mode": "normal",
+      "layout": "right",
+      "input": "small",
+      "exposed": true,
+      "request": {
+        "turn": 0.1,
+        "climb": 0.05,
+        "responseMultiplier": 1,
+        "hasVisibleTarget": true
+      }
+    },
+    {
+      "mode": "normal",
+      "layout": "behind",
+      "input": "neutral",
+      "exposed": true,
+      "request": {
+        "turn": 0,
+        "climb": 0,
+        "responseMultiplier": 1.65,
+        "hasVisibleTarget": false
+      }
+    },
+    {
+      "mode": "normal",
+      "layout": "behind",
+      "input": "small",
+      "exposed": true,
+      "request": {
+        "turn": 0.1,
+        "climb": 0.05,
+        "responseMultiplier": 1.65,
+        "hasVisibleTarget": false
+      }
+    }
+  ],
+  "resize": [
+    {
+      "mode": "easy",
+      "source": "window",
+      "from": [
+        402,
+        874
+      ],
+      "to": [
+        402,
+        820
+      ],
+      "before": {
+        "sample": {
+          "turn": 0.2845425631014566,
+          "climb": 0.1422712815507283,
+          "fire": false,
+          "loop": false,
+          "accelerate": false,
+          "brake": false,
+          "steeringRevision": 1,
+          "steeringActive": true
+        },
+        "pointer": 1
+      },
+      "after": {
+        "sample": {
+          "turn": 0,
+          "climb": 0,
+          "fire": false,
+          "loop": false,
+          "accelerate": false,
+          "brake": false,
+          "steeringRevision": 1
+        },
+        "pointer": null
+      }
+    },
+    {
+      "mode": "easy",
+      "source": "visualViewport",
+      "from": [
+        402,
+        874
+      ],
+      "to": [
+        402,
+        820
+      ],
+      "before": {
+        "sample": {
+          "turn": 0.2845425631014566,
+          "climb": 0.1422712815507283,
+          "fire": false,
+          "loop": false,
+          "accelerate": false,
+          "brake": false,
+          "steeringRevision": 1,
+          "steeringActive": true
+        },
+        "pointer": 1
+      },
+      "after": {
+        "sample": {
+          "turn": 0,
+          "climb": 0,
+          "fire": false,
+          "loop": false,
+          "accelerate": false,
+          "brake": false,
+          "steeringRevision": 1
+        },
+        "pointer": null
+      }
+    },
+    {
+      "mode": "normal",
+      "source": "window",
+      "from": [
+        402,
+        874
+      ],
+      "to": [
+        402,
+        820
+      ],
+      "before": {
+        "sample": {
+          "turn": 0.2845425631014566,
+          "climb": 0.1422712815507283,
+          "fire": false,
+          "loop": false,
+          "accelerate": false,
+          "brake": false,
+          "steeringRevision": 1,
+          "steeringActive": true
+        },
+        "pointer": 1
+      },
+      "after": {
+        "sample": {
+          "turn": 0,
+          "climb": 0,
+          "fire": false,
+          "loop": false,
+          "accelerate": false,
+          "brake": false,
+          "steeringRevision": 1
+        },
+        "pointer": null
+      }
+    },
+    {
+      "mode": "normal",
+      "source": "visualViewport",
+      "from": [
+        402,
+        874
+      ],
+      "to": [
+        402,
+        820
+      ],
+      "before": {
+        "sample": {
+          "turn": 0.2845425631014566,
+          "climb": 0.1422712815507283,
+          "fire": false,
+          "loop": false,
+          "accelerate": false,
+          "brake": false,
+          "steeringRevision": 1,
+          "steeringActive": true
+        },
+        "pointer": 1
+      },
+      "after": {
+        "sample": {
+          "turn": 0,
+          "climb": 0,
+          "fire": false,
+          "loop": false,
+          "accelerate": false,
+          "brake": false,
+          "steeringRevision": 1
+        },
+        "pointer": null
+      }
+    }
+  ]
+}

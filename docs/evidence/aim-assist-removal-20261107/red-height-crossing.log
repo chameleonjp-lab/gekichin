@@ -1,0 +1,55 @@
+✔ three pointer owners preserve micro-steering through fire/lever release and cancel, then clear on recovery (26.654974ms)
+✖ height-only window and visualViewport resize retain the same pointer and rebase its next move (50.09115ms)
+✖ main HUD resize handler preserves owned steering across square and compact-height boundaries (600.990178ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 1
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 821.888573
+
+✖ failing tests:
+
+test at tests/input-ownership-regression.test.ts:1:3832
+✖ height-only window and visualViewport resize retain the same pointer and rebase its next move (50.09115ms)
+  AssertionError [ERR_ASSERTION]: easy/window/402x430->402x390
+  
+  null !== 1
+  
+      at TestContext.<anonymous> (/workspace/gekichin/tests/input-ownership-regression.test.ts:48:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/input-ownership-regression.test.ts:1:6325
+✖ main HUD resize handler preserves owned steering across square and compact-height boundaries (600.990178ms)
+  AssertionError [ERR_ASSERTION]: easy/402x460->402x430
+  
+  null !== 7
+  
+      at TestContext.<anonymous> (/workspace/gekichin/tests/input-ownership-regression.test.ts:83:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 7,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

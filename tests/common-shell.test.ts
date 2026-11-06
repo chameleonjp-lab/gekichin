@@ -6,6 +6,7 @@ import ts from 'typescript';
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const source = read('src/main.ts');
+const removal = JSON.parse(read('docs/evidence/aim-assist-removal-20261107/source-deltas.json'));
 const css = read('src/common-shell.css');
 const hash = (text: string) => createHash('sha256').update(text).digest('hex');
 const between = (start: string, end: string) => {
@@ -15,7 +16,7 @@ const between = (start: string, end: string) => {
 };
 // The HUD is now explicitly authorized to change. Keep the complete unchanged
 // phase, fixed-step, reporting, event and disposal functions tied to the parent.
-test('HUD reorganization preserves the parent phase and simulation runtime functions', () => {
+test('HUD runtime keeps its historical baseline with explicit manual-camera presentation deltas', () => {
   const deltas = JSON.parse(read('docs/evidence/hud-fortress-20261013/source-deltas.json'));
   assert.equal(deltas.base_main, '5608761348029bb65c635ffd7ab22014020afbec');
   const names = ['selectedMode', 'pause', 'start', 'goHome', 'openSettings', 'openGuide', 'showReport', 'combatSound', 'consumeEvents', 'frame', 'dispose'];
@@ -23,7 +24,11 @@ test('HUD reorganization preserves the parent phase and simulation runtime funct
   const tree = ts.createSourceFile('main.ts', source, ts.ScriptTarget.Latest, true);
   const functions = new Map(tree.statements.filter(ts.isFunctionDeclaration)
     .filter(node => node.name).map(node => [node.name!.text, node.getText()]));
-  for (const name of names) assert.equal(hash(functions.get(name)!), deltas.unchanged_runtime_functions[name], name);
+  for (const name of names) {
+    const change = removal.runtime_functions[name];
+    if (change) { assert.equal(change.base_sha256, deltas.unchanged_runtime_functions[name], name); assert.ok(change.reason); }
+    assert.equal(hash(functions.get(name)!), change?.approved_sha256 ?? deltas.unchanged_runtime_functions[name], name);
+  }
 });
 
 test('combat HUD has explicit disclosures while preparation and sinking retain fixed-base templates', () => {
@@ -41,7 +46,7 @@ test('combat HUD has explicit disclosures while preparation and sinking retain f
 
 test('rules preserve all G-specific prose with only Easy/Normal translation', () => {
   const prose = between('      <h3>作戦の目標</h3>', '    <footer><button id="guide-done"')
-    .replaceAll('イージー', 'Easy').replaceAll('ノーマル', 'Normal');
+    .replace(removal.guide_addition, '').replaceAll('イージー', 'Easy').replaceAll('ノーマル', 'Normal');
   assert.equal(hash(prose), 'f13ae56026b2e573cfc347833efe94d56b784801b7aadc9f8c794a7635d65c11');
   assert.match(source, /class="guide-content" tabindex="0" role="region" aria-label="ルールと操作方法の本文"/);
   assert.match(source, /aria-label="説明を閉じる"/);
@@ -137,9 +142,15 @@ test('historical sources remain pinned through explicit aim-camera and authorize
     if (deltas[path]) { assert.equal(deltas[path].historical_sha256, expectedHash, path); assert.ok(deltas[path].reason); }
     const previous = deltas[path]?.approved_sha256 ?? expectedHash;
     if (hudDeltas[path]) { assert.equal(hudDeltas[path].base_sha256, previous, path); assert.ok(hudDeltas[path].reason); }
-    assert.equal(hash(read(path)), hudDeltas[path]?.approved_sha256 ?? previous, path);
+    const historical = hudDeltas[path]?.approved_sha256 ?? previous;
+    if (removal.files[path]) assert.equal(removal.files[path].base_sha256, historical, path);
+    assert.equal(hash(read(path)), removal.files[path]?.approved_sha256 ?? historical, path);
   }
   for (const [path, entry] of Object.entries(hudDeltas) as [string, { approved_sha256: string; reason: string }][]) {
+    assert.ok(entry.reason, path); assert.equal(hash(read(path)), removal.files[path]?.approved_sha256 ?? entry.approved_sha256, path);
+  }
+  assert.equal(removal.base_main, 'a44fc39d7bebb1409421993722bf9ba1f85de6e9');
+  for (const [path, entry] of Object.entries(removal.files) as [string, { approved_sha256: string; reason: string }][]) {
     assert.ok(entry.reason, path); assert.equal(hash(read(path)), entry.approved_sha256, path);
   }
 });

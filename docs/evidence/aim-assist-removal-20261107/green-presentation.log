@@ -1,0 +1,11 @@
+✔ 120Hz presentation has0/48 repeated optical directions in both modes and leaves logic unchanged (1367.507852ms)
+✔ display target enters, switches ID and exits using sampled view at alpha0 half and1 (9.974832ms)
+✔ presentation samples aircraft and rounds at one fraction and rejects pause, replacement and old operation poses (192.863475ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1593.306032

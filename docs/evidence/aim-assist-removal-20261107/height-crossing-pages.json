@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "repository": "chameleonjp-lab/gekichin",
+  "commit": "f0d97230b9520c60ddf6223460c7942012edc8ac",
+  "files": [
+    {
+      "path": "assets/index-CqEX_tlR.css",
+      "bytes": 33218,
+      "sha256": "b461a999193bb643071d39db99bbf55f4cfb699247f27aed20673f071190d023"
+    },
+    {
+      "path": "assets/index-DG4yMjkM.js",
+      "bytes": 762217,
+      "sha256": "7736e4c444257d426fec68e41ca0fedfc06d9bafb42e621abdac4a1b2591e272"
+    },
+    {
+      "path": "index.html",
+      "bytes": 610,
+      "sha256": "9cbc869e8d2c9fba3fba0e51e295368898891afb57cd223af14f28e04ab83ab1"
+    },
+    {
+      "path": "third-party-notices.txt",
+      "bytes": 1082,
+      "sha256": "97de7ac302052bcea7f20e5ae89635c10e049614f56409288d554d63fceb614f"
+    }
+  ]
+}

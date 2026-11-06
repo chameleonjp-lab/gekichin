@@ -3,7 +3,7 @@ import test from 'node:test';
 import { Quaternion, Vector3 } from 'three';
 import { CRUISE_SPEED, ENEMY_MAX_PITCH, LOOP_DURATION, MAX_SPEED, STALL_SPEED, advanceThrottle, createFlightController, normalizeAngle, updateAircraftMotion, updatePlayerLoop, updateQuaternion } from '../src/flight';
 import { FLIGHT_CAMERA_BANK_FACTOR, FLIGHT_FOV, getFlightCameraPose } from '../src/flight-view';
-import { applyEasyShotCorrection, EASY_SHOT_MAX_ANGLE, getFlightAssist } from '../src/flight-assist';
+import { getFlightAssist } from '../src/flight-assist';
 import { createPlayer, FixedStepper, FlightSession } from '../src/game-state';
 import { FIXED_DT } from '../src/rules';
 import { captureKey, DEFAULT_KEY_BINDINGS, isBindableCode, KEY_ACTIONS, parseKeyBindings, validKeyBindings } from '../src/keyboard-settings';
@@ -77,7 +77,7 @@ test('manual camera forward has equal total angle for all directions, modes, spe
   }
 });
 
-test('manual horizontal turn holds pitch, while neutral leveling is rate-limited and directly counted', () => {
+test('manual horizontal turn holds pitch, while released neutral leveling is rate-limited and directly counted', () => {
   for (const mode of ['easy', 'normal'] as const) for (const speed of [65, 85, 110, 141]) for (const pitch of [-0.9, 0.9]) {
     const player = createPlayer(); Object.assign(player, { speed, pitch, bank: 0.4, yaw: -2.2 }); updateQuaternion(player);
     const manual = { ...neutral(), turn: 0.6, steeringActive: true };
@@ -89,7 +89,7 @@ test('manual horizontal turn holds pitch, while neutral leveling is rate-limited
     assert.ok(Math.abs(actual - expected) <= 1e-12, `must measure camera forward before-to-after without subtracting leveling: ${actual} vs ${expected}`);
 
     const neutralPlayer = createPlayer(); Object.assign(neutralPlayer, { speed, pitch, bank: -0.3, yaw: 2.2 }); updateQuaternion(neutralPlayer);
-    const neutralInput = { ...neutral(), steeringActive: true };
+    const neutralInput = neutral();
     const neutralBefore = cameraForward(neutralPlayer, mode), neutralPitch = neutralPlayer.pitch;
     updatePlayerLoop(neutralPlayer, createFlightController(neutralPlayer), neutralInput, neutralInput, false,
       FIXED_DT, speed, MAX_SPEED, 1, mode);
@@ -100,12 +100,12 @@ test('manual horizontal turn holds pitch, while neutral leveling is rate-limited
   }
 });
 
-test('manual response multiplier is horizontal-only and diagonals are circularly bounded', () => {
+test('manual diagonals are circularly bounded with unit target response', () => {
   for (const mode of ['easy', 'normal'] as const) for (const pitch of [-0.9, 0.9]) for (const strength of [0.25, 0.45, 0.6]) {
     const player = createPlayer(); Object.assign(player, { speed: 110, pitch, bank: 0.2, yaw: -0.7 }); updateQuaternion(player);
     const before = cameraForward(player, mode), input = { ...neutral(), turn: strength * Math.SQRT1_2, climb: strength * Math.SQRT1_2, steeringActive: true };
-    updatePlayerLoop(player, createFlightController(player), input, input, false, FIXED_DT, 110, MAX_SPEED, 1.65, mode);
-    const expected = 0.82 * authority(110) * FIXED_DT * Math.hypot(input.turn * 1.65, input.climb);
+    updatePlayerLoop(player, createFlightController(player), input, input, false, FIXED_DT, 110, MAX_SPEED, 1, mode);
+    const expected = 0.82 * authority(110) * FIXED_DT * Math.hypot(input.turn, input.climb);
     assert.ok(Math.abs(angleBetween(before, cameraForward(player, mode)) - expected) <= 1e-12);
   }
   const player = createPlayer(); Object.assign(player, { pitch: 0, bank: 0, yaw: 0 }); updateQuaternion(player);
@@ -115,13 +115,7 @@ test('manual response multiplier is horizontal-only and diagonals are circularly
     'a keyboard diagonal above unit length must normalize to the unit circle');
 });
 
-test('Easy absolute assistance and default AI motion keep their pre-manual operation order', () => {
-  const player = createPlayer(); player.pitch = 0.6; updateQuaternion(player);
-  const userInput = neutral(), adjusted = { ...neutral(), climb: -0.2 };
-  updatePlayerLoop(player, createFlightController(player), adjusted, userInput, false, FIXED_DT, CRUISE_SPEED, CRUISE_SPEED, 1, 'easy');
-  const expectedPitch = 0.6 + (-0.2 * 0.95 - 0.6) * (1 - Math.exp(-FIXED_DT * 4.2));
-  assert.equal(player.pitch, expectedPitch, 'absolute Easy assistance keeps the old exponential pitch response');
-
+test('default AI motion keeps its existing absolute-pitch operation order', () => {
   const npc = createPlayer(); Object.assign(npc, { speed: 85, pitch: 0.4, yaw: 0.3, bank: 0.2 }); updateQuaternion(npc);
   const before = { pitch: npc.pitch, yaw: npc.yaw, bank: npc.bank };
   const turn = 0.3, climb = -0.2, response = 1.65;
@@ -158,16 +152,12 @@ test('five second loop ends once and new steering interrupts without teleportati
   }
 });
 
-test('no P1 placeholder target pulls steering; hidden/dead targets are rejected and shot correction is finite', () => {
+test('manual steering ignores placeholder, hidden and dead targets', () => {
   const aircraft = createPlayer(), input = { ...neutral(), turn: -0.5, climb: 0.3 };
   assert.deepEqual(getFlightAssist(aircraft, [], input, 'easy'), { turn: -0.5, climb: 0.3, responseMultiplier: 1, hasVisibleTarget: false });
   const result = getFlightAssist(aircraft, [{ aimPoint: new Vector3(0, 1000, 1900), alive: true, exposed: false }], neutral(), 'easy');
   assert.equal(result.hasVisibleTarget, false); assert.equal(result.turn, 0); assert.equal(result.climb, 0);
-  const forward = new Vector3(0, 0, -1), prediction = new Vector3(Math.sin(0.12), 0, -Math.cos(0.12));
-  const corrected = applyEasyShotCorrection(forward, prediction);
-  assert.ok(forward.angleTo(corrected) <= EASY_SHOT_MAX_ANGLE + 1e-10);
-  assert.deepEqual(forward.toArray(), [0, 0, -1]);
-  assert.deepEqual(applyEasyShotCorrection(forward, new Vector3(1, 0, 0)).toArray(), forward.toArray());
+
 });
 
 test('preparation, pause, report and stale callbacks keep one authoritative operation', () => {
